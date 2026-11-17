@@ -36,8 +36,17 @@ ausência desses processos não deve interromper a edição básica ou SQLite.
   encerramento. Todas saíram com código0. Perfis/projetos/displays eram próprios
   e foram removidos. A ausência de provider não disparou instalação ou confiança.
 
-Pacote: `codisseu_0.1.0~alpha.1_amd64.deb`,53.845.164bytes.
-SHA-256: `7c424fc7ee0a4b5ed924a69efc3086f37be2b18e5c7af307338a398868e90b68`.
+O ZIP foi atualizado de8.6.0 para9.0.5 após a revisão dos alertas do GitHub.
+O leitor de XLSX valida explicitamente a consistência dos cabeçalhos locais e
+centrais;19 testes de transferência/XLSX passaram, incluindo o novo arquivo
+malformado. Check, Clippy e formatação passaram. Instalação offline e as quatro
+janelas foram repetidas no `.deb` reconstruído; o candidato anterior não foi
+distribuído. As fixtures JS/PHP também tiveram seus locks corrigidos; npm audit
+e Composer audit dos locks ficaram sem alertas naquela execução. Os frameworks
+JS preservaram suas contagens esperadas, incluindo falhas intencionais.
+
+Pacote: `codisseu_0.1.0~alpha.1_amd64.deb`,53.868.940bytes.
+SHA-256: `4bad393912512311fb0e77fc0892393785b2d62c5a5ee6b2caae322c623b548f`.
 Os avisos acompanham o instalador; a coleta contém539pacotes Cargo normal/build,
 com os componentes próprios identificados separadamente, sem textos faltantes.
 As três fotos do README são imagens anteriores fornecidas e autorizadas pelo

@@ -3,6 +3,10 @@ name: Verificar Codisseu
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.jpg'
+      - 'PUBLIC_SOURCE_MANIFEST.json'
   pull_request:
   workflow_dispatch:
 
@@ -33,9 +37,9 @@ jobs:
       - name: Compilar o aplicativo
         run: cargo build --release --locked -p codisseu --jobs 2
       - name: Testar editor, sintaxe e recursos da instalação
-        run: cargo test --locked -p codisseu-runtime -p codisseu-editor -p codisseu-syntax --lib --jobs 2
+        run: cargo test --release --locked -p codisseu-runtime -p codisseu-editor -p codisseu-syntax --lib --jobs 2
       - name: Testar edição sem runtimes e provider sem resposta
-        run: cargo test --locked -p codisseu-core --test missing_runtimes --jobs 2 -- --test-threads=1
+        run: cargo test --release --locked -p codisseu-core --test missing_runtimes --jobs 2 -- --test-threads=1
       - name: Conferir empacotamento e exportação pública
         run: |
           python3 tools/test_deb_package.py

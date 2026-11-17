@@ -1,6 +1,6 @@
 # Laravel intelligence fixture
 
-Synthetic App classes/templates authored for Codisseu. Framework dependencies remain in ignored vendor and are pinned in composer.lock (Laravel12.70.1 in this corpus). No application bootstrap, Artisan, database, .env or external services are required.
+Synthetic App classes/templates authored for Codisseu. Framework dependencies remain in ignored vendor and are pinned in composer.lock (Laravel12.71.0 in this corpus). No application bootstrap, Artisan, database, .env or external services are required.
 
 Prepare only this fixture:
 

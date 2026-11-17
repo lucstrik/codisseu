@@ -16,8 +16,8 @@ declaração de que todo pacote listado integra o executável Linux.
 
 ## Inventário gerado dos metadados Cargo
 
-Cargo.lock SHA-256: `14b534b349f6818744444885e957039d1bd128845666a9c090bf5c9e05b83902`.
-Pacotes terceiros: **715**. Campo `license` ausente: **0**.
+Cargo.lock SHA-256: `82115345551efcf7a8523c68de93d11b459cebfc8c0dc07053ad2098045026e1`.
+Pacotes terceiros: **717**. Campo `license` ausente: **0**.
 
 Origem: `cargo metadata --locked --format-version 1`, workspace completo, sem filtro de plataforma. Inclui dependências de testes, build, outros alvos e pacotes resolvidos que podem não estar no executável Linux. Não é uma lista de componentes comprovadamente distribuídos nem auditoria manual de todos os arquivos. Checksums dos pacotes estão no Cargo.lock.
 
@@ -356,6 +356,7 @@ A presença de `OR GPL`/`OR LGPL` em uma expressão com alternativa permissiva n
 | [ndk-sys 0.6.0+11769913](https://crates.io/crates/ndk-sys/0.6.0+11769913) | `MIT OR Apache-2.0` | 1.60 |
 | [nix 0.28.0](https://crates.io/crates/nix/0.28.0) | `MIT` | 1.69 |
 | [nix 0.29.0](https://crates.io/crates/nix/0.29.0) | `MIT` | 1.69 |
+| [nix 0.31.4](https://crates.io/crates/nix/0.31.4) | `MIT` | 1.69 |
 | [nohash-hasher 0.2.0](https://crates.io/crates/nohash-hasher/0.2.0) | `Apache-2.0 OR MIT` | não declarado |
 | [nom 8.0.0](https://crates.io/crates/nom/8.0.0) | `MIT` | 1.65.0 |
 | [notify 8.2.1](https://crates.io/crates/notify/8.2.1) | `CC0-1.0` | 1.85 |
@@ -659,6 +660,7 @@ A presença de `OR GPL`/`OR LGPL` em uma expressão com alternativa permissiva n
 | [wayland-sys 0.31.11](https://crates.io/crates/wayland-sys/0.31.11) | `MIT` | 1.71 |
 | [web-sys 0.3.106](https://crates.io/crates/web-sys/0.3.106) | `MIT OR Apache-2.0` | 1.81 |
 | [web-time 1.1.0](https://crates.io/crates/web-time/1.1.0) | `MIT OR Apache-2.0` | 1.60 |
+| [webbrowser 1.2.6](https://crates.io/crates/webbrowser/1.2.6) | `MIT OR Apache-2.0` | 1.85 |
 | [webpki-roots 0.26.11](https://crates.io/crates/webpki-roots/0.26.11) | `CDLA-Permissive-2.0` | não declarado |
 | [webpki-roots 1.0.11](https://crates.io/crates/webpki-roots/1.0.11) | `CDLA-Permissive-2.0` | 1.71 |
 | [weezl 0.1.12](https://crates.io/crates/weezl/0.1.12) | `MIT OR Apache-2.0` | não declarado |
@@ -757,7 +759,7 @@ A presença de `OR GPL`/`OR LGPL` em uma expressão com alternativa permissiva n
 | [zerotrie 0.2.5](https://crates.io/crates/zerotrie/0.2.5) | `Unicode-3.0` | 1.82 |
 | [zerovec 0.11.9](https://crates.io/crates/zerovec/0.11.9) | `Unicode-3.0` | 1.83 |
 | [zerovec-derive 0.11.7](https://crates.io/crates/zerovec-derive/0.11.7) | `Unicode-3.0` | 1.83 |
-| [zip 8.6.0](https://crates.io/crates/zip/8.6.0) | `MIT` | 1.88 |
+| [zip 9.0.5](https://crates.io/crates/zip/9.0.5) | `MIT` | 1.88 |
 | [zlib-rs 0.6.8](https://crates.io/crates/zlib-rs/0.6.8) | `Zlib` | 1.75 |
 | [zmij 1.0.23](https://crates.io/crates/zmij/1.0.23) | `MIT` | 1.71 |
 | [zune-core 0.5.3](https://crates.io/crates/zune-core/0.5.3) | `MIT OR Apache-2.0 OR Zlib` | 1.75.0 |

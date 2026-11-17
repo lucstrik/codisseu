@@ -124,6 +124,22 @@ fn xlsx_rejects_formulas_merges_external_entities_links_and_budget_overflow() {
     assert!(transfer_xlsx::decode(&archive(&[("bomb.xml", &expanded)]), false).is_err());
 }
 #[test]
+fn xlsx_rejects_conflicting_zip_local_and_central_entry_names() {
+    let mut bytes = fixture("<worksheet/>", &[]);
+    let original = b"xl/worksheets/data.xml";
+    let replacement = b"xl/worksheets/evil.xml";
+    assert_eq!(original.len(), replacement.len());
+    let offset = bytes
+        .windows(original.len())
+        .position(|part| part == original)
+        .unwrap();
+    assert_eq!(&bytes[offset - 30..offset - 26], b"PK\x03\x04");
+    // Keep the central directory's name unchanged: the two ZIP readers must
+    // not be allowed to interpret different filenames for the same payload.
+    bytes[offset..offset + original.len()].copy_from_slice(replacement);
+    assert!(transfer_xlsx::decode(&bytes, false).is_err());
+}
+#[test]
 fn delimited_extra_formats_import_with_real_separator() {
     for (id, text) in [
         ("pipe", "id|value\n1|hello\n"),

@@ -62,9 +62,9 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "83a5d02e0b55ff91581a02fc418dd0160ccddc7fb64b84358fb040e3b26b2dea",
-      "source_sha256": "83a5d02e0b55ff91581a02fc418dd0160ccddc7fb64b84358fb040e3b26b2dea",
-      "bytes": 2342,
+      "sha256": "b234f930d3b8a783f84b7f33d208e7502b4c081a107045ef77611b7f284b40b0",
+      "source_sha256": "b234f930d3b8a783f84b7f33d208e7502b4c081a107045ef77611b7f284b40b0",
+      "bytes": 2455,
       "mode": "0o644",
       "transformations": []
     },
@@ -102,9 +102,9 @@
     },
     {
       "path": "Cargo.lock",
-      "sha256": "0de53806ae64d09af1b2e90f8f93dff0bb2755f3c20abe00e088b82d590a5ea5",
-      "source_sha256": "0de53806ae64d09af1b2e90f8f93dff0bb2755f3c20abe00e088b82d590a5ea5",
-      "bytes": 189734,
+      "sha256": "82115345551efcf7a8523c68de93d11b459cebfc8c0dc07053ad2098045026e1",
+      "source_sha256": "82115345551efcf7a8523c68de93d11b459cebfc8c0dc07053ad2098045026e1",
+      "bytes": 190018,
       "mode": "0o644",
       "transformations": []
     },
@@ -1898,8 +1898,8 @@
     },
     {
       "path": "crates/codisseu-db/Cargo.toml",
-      "sha256": "f5c9364d6176b545c8be284bf9f29d1e892c3f085c5113ca04e0a29f18116b87",
-      "source_sha256": "f5c9364d6176b545c8be284bf9f29d1e892c3f085c5113ca04e0a29f18116b87",
+      "sha256": "114388fcd21ee3a42a5ed1ff55b83ea9c8650b018b5ef6850ae7c5baedf1edeb",
+      "source_sha256": "114388fcd21ee3a42a5ed1ff55b83ea9c8650b018b5ef6850ae7c5baedf1edeb",
       "bytes": 1467,
       "mode": "0o644",
       "transformations": []
@@ -2115,9 +2115,9 @@
     },
     {
       "path": "crates/codisseu-db/src/transfer_xlsx.rs",
-      "sha256": "b9e7136381cf001f243f65dd61579070c1b9ba9b7314a3d49db43e154db12d7e",
-      "source_sha256": "b9e7136381cf001f243f65dd61579070c1b9ba9b7314a3d49db43e154db12d7e",
-      "bytes": 24486,
+      "sha256": "2793d9d0759d8487adbc9aaa59cdfba9317ec32669e873408b68fac1ecaa320c",
+      "source_sha256": "2793d9d0759d8487adbc9aaa59cdfba9317ec32669e873408b68fac1ecaa320c",
+      "bytes": 24713,
       "mode": "0o644",
       "transformations": []
     },
@@ -2344,9 +2344,9 @@
     },
     {
       "path": "crates/codisseu-db/tests/transfer_xlsx.rs",
-      "sha256": "dc675d80bb5a3170483ad7c87797ce757d963a8edbd46b26877eb59242b2c65a",
-      "source_sha256": "dc675d80bb5a3170483ad7c87797ce757d963a8edbd46b26877eb59242b2c65a",
-      "bytes": 7442,
+      "sha256": "10442bb46d8089f320ddd693f881f583434ca65df2fc70d5948b7a1c3fe51e07",
+      "source_sha256": "10442bb46d8089f320ddd693f881f583434ca65df2fc70d5948b7a1c3fe51e07",
+      "bytes": 8184,
       "mode": "0o644",
       "transformations": []
     },
@@ -7280,9 +7280,9 @@
     },
     {
       "path": "docs/public-release-status.md",
-      "sha256": "daa60227fb97bb48de306fde29114ece177c35fff7bffef935e6ffdeaa8c339f",
-      "source_sha256": "daa60227fb97bb48de306fde29114ece177c35fff7bffef935e6ffdeaa8c339f",
-      "bytes": 3275,
+      "sha256": "0b68e68d29bb4523f6e22d9216a5ce27e3016e36fba86a302d661877a19518d1",
+      "source_sha256": "0b68e68d29bb4523f6e22d9216a5ce27e3016e36fba86a302d661877a19518d1",
+      "bytes": 3910,
       "mode": "0o644",
       "transformations": []
     },
@@ -7370,9 +7370,9 @@
     },
     {
       "path": "docs/status.md",
-      "sha256": "daa60227fb97bb48de306fde29114ece177c35fff7bffef935e6ffdeaa8c339f",
+      "sha256": "0b68e68d29bb4523f6e22d9216a5ce27e3016e36fba86a302d661877a19518d1",
       "source_sha256": null,
-      "bytes": 3275,
+      "bytes": 3910,
       "mode": "0o644",
       "transformations": [
         {
@@ -7383,9 +7383,9 @@
     },
     {
       "path": "docs/third-party-inventory.md",
-      "sha256": "0d5cd0a8aabaa4c2b5195ec1e542da1e7bdfbb1f4abe814f232326ac933940ef",
+      "sha256": "9aa316b5d4937ea34efd5da0fa4c941e18436eb4e708a86ce3d260f8a82516ea",
       "source_sha256": null,
-      "bytes": 73351,
+      "bytes": 73515,
       "mode": "0o644",
       "transformations": [
         {
@@ -7668,17 +7668,17 @@
     },
     {
       "path": "fixtures/js-tests/package-lock.json",
-      "sha256": "e3dd59b70519839fe71f71484f218dd57dfdcfe4e235510f22fdf466c1cd5ab0",
-      "source_sha256": "e3dd59b70519839fe71f71484f218dd57dfdcfe4e235510f22fdf466c1cd5ab0",
-      "bytes": 195773,
+      "sha256": "7fbb06fe535e7080cd562f69dfcf63138d288bf548fac4a29fcb04eba17b7af9",
+      "source_sha256": "7fbb06fe535e7080cd562f69dfcf63138d288bf548fac4a29fcb04eba17b7af9",
+      "bytes": 185033,
       "mode": "0o644",
       "transformations": []
     },
     {
       "path": "fixtures/js-tests/package.json",
-      "sha256": "9ade74de773d7019b0745543c31078b45d933d00e54000420505b08d376cc39b",
-      "source_sha256": "9ade74de773d7019b0745543c31078b45d933d00e54000420505b08d376cc39b",
-      "bytes": 180,
+      "sha256": "6840d33c999e3e50bd8d3a93855e6253513cee0c2c762f7912e91e4e7a2228b9",
+      "source_sha256": "6840d33c999e3e50bd8d3a93855e6253513cee0c2c762f7912e91e4e7a2228b9",
+      "bytes": 250,
       "mode": "0o644",
       "transformations": []
     },
@@ -7740,8 +7740,8 @@
     },
     {
       "path": "fixtures/laravel/README.md",
-      "sha256": "b51f70b3171e2157dd953f00857f1937fc3a9f6d5628bd4ded411a931ad03d39",
-      "source_sha256": "b51f70b3171e2157dd953f00857f1937fc3a9f6d5628bd4ded411a931ad03d39",
+      "sha256": "43cbb890dcac1ef5f32279952883734681a8666f1e479c88ce11122ed95f0663",
+      "source_sha256": "43cbb890dcac1ef5f32279952883734681a8666f1e479c88ce11122ed95f0663",
       "bytes": 1820,
       "mode": "0o644",
       "transformations": []
@@ -7772,16 +7772,16 @@
     },
     {
       "path": "fixtures/laravel/composer.json",
-      "sha256": "33140b9ff07bafd4622a5a4f054ed803d87114ae307d2e9e3db8adddb4c50614",
-      "source_sha256": "33140b9ff07bafd4622a5a4f054ed803d87114ae307d2e9e3db8adddb4c50614",
-      "bytes": 409,
+      "sha256": "5e00b92ec2c260e1a8eaff8d319165d4bd0a672da02c3e9742134d7d7141e758",
+      "source_sha256": "5e00b92ec2c260e1a8eaff8d319165d4bd0a672da02c3e9742134d7d7141e758",
+      "bytes": 411,
       "mode": "0o644",
       "transformations": []
     },
     {
       "path": "fixtures/laravel/composer.lock",
-      "sha256": "72d803cabd581c1243daf24c37e0b4b83b824041b86854707b993a7c2c97d10f",
-      "source_sha256": "72d803cabd581c1243daf24c37e0b4b83b824041b86854707b993a7c2c97d10f",
+      "sha256": "c0e49ab33cc7b567ce66340de146c8afc6fa94843d522e50eed6902b35c57f18",
+      "source_sha256": "c0e49ab33cc7b567ce66340de146c8afc6fa94843d522e50eed6902b35c57f18",
       "bytes": 218668,
       "mode": "0o644",
       "transformations": []

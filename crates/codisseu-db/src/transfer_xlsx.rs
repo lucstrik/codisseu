@@ -218,6 +218,9 @@ fn parts(input: &[u8]) -> Result<BTreeMap<String, String>, String> {
     if archive.len() > MAX_PARTS {
         return Err("XLSX excede128 partes ZIP".into());
     }
+    archive
+        .validate_header_consistency()
+        .map_err(|e| format!("Cabeçalhos XLSX/ZIP inconsistentes: {e}"))?;
     let mut total = 0usize;
     let mut output = BTreeMap::new();
     let mut names = BTreeSet::new();
@@ -225,7 +228,10 @@ fn parts(input: &[u8]) -> Result<BTreeMap<String, String>, String> {
         let mut entry = archive
             .by_index(index)
             .map_err(|e| format!("Parte XLSX inválida: {e}"))?;
-        let name = entry.name().to_owned();
+        let name = entry
+            .name()
+            .map_err(|e| format!("Nome de parte XLSX inválido: {e}"))?
+            .into_owned();
         if name.len() > 1024
             || entry.enclosed_name().is_none()
             || !names.insert(name.clone())
