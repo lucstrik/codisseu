@@ -12,7 +12,7 @@ serde.workspace = true
 serde_json.workspace = true
 tempfile.workspace = true
 reqwest = { version = "=0.12.28", default-features = false, features = ["rustls-tls", "rustls-tls-native-roots", "json"] }
-tokio = { version = "=1.52.3", features = ["rt", "time", "net", "io-util", "sync", "macros"] }
+tokio = { version = "=1.54.1", features = ["rt", "time", "net", "io-util", "sync", "macros"] }
 url = "=2.5.8"
 keyring = { version = "=3.6.3", default-features = false, features = ["async-secret-service", "tokio", "crypto-rust", "apple-native", "windows-native"] }
 sha2 = "=0.10.9"
