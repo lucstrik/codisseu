@@ -8,6 +8,7 @@
 
 <p align="center">
   <a href="https://github.com/lucstrik/codisseu/releases/download/v0.1.0-alpha.1/codisseu_0.1.0-alpha.1_amd64.deb">Baixar .deb para Linux</a> ·
+  <a href="https://lucstrik.github.io/codisseu/">Site do projeto</a> ·
   <a href="#instalação">Como instalar</a> ·
   <a href="#o-que-você-vai-encontrar">Recursos</a> ·
   <a href="https://github.com/lucstrik/codisseu/issues">Problemas e ideias</a>

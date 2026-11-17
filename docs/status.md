@@ -1,3 +1,33 @@
+# Página pública no GitHub Pages — 17/11/2026
+
+M7, apresentação do projeto. Página única em `website/`, com HTML/CSS/JavaScript
+sem build ou backend, no endereço configurado https://lucstrik.github.io/codisseu/.
+Identidade escura azul/violeta do logo, fundo quadriculado com deformação no
+cursor, hover, imagem real do editor, recursos, contribuição, download e FAQ.
+Texto informa alpha core, Linux amd64/glibc2.39+, ferramentas opcionais e limites;
+foto anterior identificada, sem promessas de compatibilidade/performance novas.
+
+Canvas decorativo com fallback CSS; navegação/conteúdo sem JS, movimento reduzido
+e ponteiro coarse estáticos, pausa em repouso/aba oculta, DPR1.5 e teto30fps.
+Fonte Inter convertida para subset WOFF2 latino174.308bytes (TTF879.708bytes),
+licença OFL preservada; logo/foto sem alterações e ícone Lucide com licença ISC.
+SEO: title/description, canonical, OpenGraph/Twitter, JSON-LD SoftwareApplication,
+sitemap e robots auxiliar do subdiretório. Nenhuma garantia de indexação/posição.
+
+Arquivos: website/**, .github/workflows/pages.yml, README.md e
+ docs/website-contract.md/status.md. Workflow estático com Actions oficiais
+fixadas por SHA, permissões por job, artifact somente website/, environment
+restrito à main. Pages habilitado via API com build_type=workflow e HTTPS.
+Proteções de main/tag, CI Rust e instalador da alpha preservados.
+
+Validação local: node --check, git diff --check, Actionlint1.7.12 em contêiner,
+HTML/JSON-LD/XML/links e recursos HTTP200 sob /codisseu/,12checks isolados do
+canvas aprovados. Navegador real: grade reage ao ponteiro, foco/skiplink visível,
+FAQ expande, layout desktop e telas320/390/768px inspecionados. Overflow de
+órbitas decorativas corrigido. Publicação usa o fluxo normal PR→CI→merge→Pages;
+a verificação do endereço público ocorre no deploy. Esses checks são do site,
+sem testar novamente a interface nativa ou fechar M7 global.
+
 # Codisseu 0.1.0-alpha.1 — Linux
 
 Primeira distribuição pública do núcleo da IDE, sob licença MIT.
