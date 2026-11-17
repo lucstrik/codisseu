@@ -32,3 +32,20 @@ acordeões e links; contraste/foco e movimento reduzido; validação dos caminho
 sob `/codisseu/`, sintaxe JavaScript, HTML/metadados/JSON-LD/sitemap. CI nativo
 obrigatório e deploy Pages aprovados, HTTP público e captura da página publicada.
 Isso verifica a apresentação, sem provar compatibilidade extra da IDE nativa.
+
+## Capturas de produto — 17/11/2026
+
+O autor pediu substituir a foto com a barra do sistema por uma apresentação
+profissional apenas do Codisseu. A imagem principal e os metadados sociais
+usam captura nova da área cliente, produzida pelo próprio renderer com
+`--capture`, sem desktop, moldura do SO, recorte ou edição de pixels.
+
+O executável deve ser o mesmo da alpha pública, identificado pelo SHA do ELF.
+Projeto e SQLite são sintéticos e isolados do perfil normal; os dados da
+consulta são reais para esse exemplo, sem alegar uso em projetos de terceiros.
+A segunda captura pode ilustrar o banco no README. Fotos antigas ficam somente
+como histórico documentado; o site não deve continuar referenciando-as.
+
+Conferir PNG/dimensões, origem e hashes, texto alternativo/legenda, imagem de
+compartilhamento, layout no site e bytes publicados. Captura de sintaxe/editor
+não comprova novos recursos semânticos, providers ou outros motores.
