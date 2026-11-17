@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#090b11" />
+    <title>Codisseu — código, banco de dados, Git e IA na mesma IDE</title>
+    <meta
+      name="description"
+      content="Conheça o Codisseu: uma IDE desktop de código aberto, feita em Rust. PHP, JavaScript, TypeScript, bancos de dados e Git no mesmo lugar. Baixe a alpha para Linux."
+    />
+    <link rel="canonical" href="https://lucstrik.github.io/codisseu/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Codisseu" />
+    <meta
+      property="og:title"
+      content="Codisseu — seu código. Um só universo."
+    />
+    <meta
+      property="og:description"
+      content="Código, banco de dados, Git e IA na mesma janela. Conheça a IDE desktop de código aberto feita em Rust e baixe a alpha para Linux."
+    />
+    <meta property="og:url" content="https://lucstrik.github.io/codisseu/" />
+    <meta
+      property="og:image"
+      content="https://lucstrik.github.io/codisseu/assets/codisseu-javascript-ai.jpg"
+    />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="801" />
+    <meta
+      property="og:image:alt"
+      content="Codisseu com código JavaScript e AI Chat lado a lado"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Codisseu — seu código. Um só universo."
+    />
+    <meta
+      name="twitter:description"
+      content="Uma IDE desktop de código aberto, feita em Rust. Conheça o projeto e baixe a alpha para Linux."
+    />
+    <meta
+      name="twitter:image"
+      content="https://lucstrik.github.io/codisseu/assets/codisseu-javascript-ai.jpg"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="Editor JavaScript e AI Chat no Codisseu"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="64x64"
+      href="./assets/codisseu-64.png"
+    />
+    <link rel="apple-touch-icon" href="./assets/codisseu-256.png" />
+    <link
+      rel="preload"
+      href="./assets/Inter-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Codisseu",
+        "url": "https://lucstrik.github.io/codisseu/",
+        "description": "IDE desktop de código aberto feita em Rust, com editor de código, bancos de dados, Git e integrações de IA.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Linux x86_64 (glibc 2.39 ou superior)",
+        "softwareVersion": "0.1.0-alpha.1",
+        "releaseNotes": "https://github.com/lucstrik/codisseu/releases/tag/v0.1.0-alpha.1",
+        "downloadUrl": "https://github.com/lucstrik/codisseu/releases/download/v0.1.0-alpha.1/codisseu_0.1.0-alpha.1_amd64.deb",
+        "license": "https://github.com/lucstrik/codisseu/blob/main/LICENSE",
+        "sameAs": "https://github.com/lucstrik/codisseu",
+        "image": "https://lucstrik.github.io/codisseu/assets/codisseu-javascript-ai.jpg",
+        "inLanguage": "pt-BR",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
+        "author": {
+          "@type": "Person",
+          "name": "Lucas Torres",
+          "url": "https://github.com/lucstrik"
+        }
+      }
+    </script>
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+    <div class="space-grid" aria-hidden="true"></div>
+    <canvas id="space-mesh" aria-hidden="true"></canvas>
+    <svg
+      class="svg-library"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <defs>
+        <symbol id="icon-github" viewBox="0 0 24 24">
+          <path
+            d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+          />
+          <path d="M9 18c-4.51 2-5-2-7-2" />
+        </symbol>
+        <symbol id="icon-arrow" viewBox="0 0 24 24">
+          <path d="M7 17 17 7M7 7h10v10" />
+        </symbol>
+        <symbol id="icon-download" viewBox="0 0 24 24">
+          <path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4" />
+        </symbol>
+        <symbol id="icon-code" viewBox="0 0 24 24">
+          <path d="m7 7-5 5 5 5m10-10 5 5-5 5M14 4l-4 16" />
+        </symbol>
+        <symbol id="icon-database" viewBox="0 0 24 24">
+          <ellipse cx="12" cy="5" rx="8" ry="3" />
+          <path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0" />
+        </symbol>
+        <symbol id="icon-spark" viewBox="0 0 24 24">
+          <path
+            d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"
+          />
+        </symbol>
+        <symbol id="icon-check" viewBox="0 0 24 24">
+          <path d="m5 12 4 4L19 6" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <header class="site-header wrap">
+      <a class="brand" href="#inicio" aria-label="Codisseu, início">
+        <img src="./assets/codisseu-64.png" alt="" width="38" height="38" />
+        <span>codisseu<span class="brand-dot">.</span></span>
+      </a>
+      <nav aria-label="Navegação principal">
+        <a class="nav-text" href="#workspace">O workspace</a>
+        <a class="nav-text" href="#projeto">O projeto</a>
+        <a
+          class="github-nav"
+          href="https://github.com/lucstrik/codisseu"
+          aria-label="Ver o Codisseu no GitHub"
+        >
+          <svg aria-hidden="true" focusable="false" class="icon">
+            <use href="#icon-github" /></svg
+          ><span>GitHub</span
+          ><svg aria-hidden="true" focusable="false" class="icon nav-arrow">
+            <use href="#icon-arrow" />
+          </svg>
+        </a>
+      </nav>
+    </header>
+
+    <main id="conteudo">
+      <section class="hero wrap" id="inicio" aria-labelledby="hero-title">
+        <div class="hero-orbit" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="hero-content">
+          <a
+            class="release-badge"
+            href="https://github.com/lucstrik/codisseu/releases/tag/v0.1.0-alpha.1"
+          >
+            <span class="status-dot"></span
+            ><span>O começo de uma nova jornada</span
+            ><span class="badge-version">ALPHA 01</span
+            ><svg aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-arrow" />
+            </svg>
+          </a>
+          <h1 id="hero-title">Seu código.<br /><span>Um só universo.</span></h1>
+          <p class="hero-description">
+            Código, banco de dados, Git e IA no mesmo lugar.<br
+              class="desktop-break"
+            />
+            Uma IDE desktop em Rust, feita pra você construir.
+          </p>
+          <div class="hero-actions">
+            <a
+              class="button button-primary"
+              href="https://github.com/lucstrik/codisseu/releases/download/v0.1.0-alpha.1/codisseu_0.1.0-alpha.1_amd64.deb"
+            >
+              <svg aria-hidden="true" focusable="false" class="icon">
+                <use href="#icon-download" /></svg
+              >Baixar para Linux<span class="button-format">.deb</span>
+            </a>
+            <a class="button button-secondary" href="#workspace"
+              >Conheça o Codisseu<svg
+                aria-hidden="true"
+                focusable="false"
+                class="icon"
+              >
+                <use href="#icon-arrow" /></svg
+            ></a>
+          </div>
+          <p class="hero-note">
+            Gratuito e de código aberto <span aria-hidden="true">/</span> Linux
+            x86_64 · glibc 2.39+ <span aria-hidden="true">/</span> Em
+            desenvolvimento
+          </p>
+        </div>
+        <div class="hero-coordinates" aria-hidden="true">
+          <span><i></i> SEU PRÓXIMO WORKSPACE</span
+          ><span id="coordinates">X 0.000 &nbsp; Y 0.000</span>
+        </div>
+        <figure class="workspace-preview" id="workspace">
+          <div class="preview-toolbar">
+            <span class="window-dots" aria-hidden="true"
+              ><i></i><i></i><i></i></span
+            ><span>codisseu <b>/</b> workspace de desenvolvimento</span
+            ><span class="preview-live"><i></i> NATIVE · RUST</span>
+          </div>
+          <img
+            src="./assets/codisseu-javascript-ai.jpg"
+            width="1280"
+            height="801"
+            fetchpriority="high"
+            alt="Interface real do Codisseu: árvore do projeto à esquerda, código JavaScript ao centro, AI Chat à direita e ferramentas na parte inferior."
+          />
+          <figcaption>
+            Um projeto aberto. Suas ferramentas por perto.<span
+              >Registro do projeto em uma versão anterior à alpha atual.</span
+            >
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="tools-section wrap" aria-labelledby="tools-title">
+        <div class="section-heading">
+          <p class="eyebrow">
+            <span aria-hidden="true">01 /</span> MENOS TROCA DE CONTEXTO
+          </p>
+          <h2 id="tools-title">
+            Abra o projeto.<br /><span>Encontre o seu ritmo.</span>
+          </h2>
+          <p>
+            Tem hora que você está no PHP. Daqui a pouco, no JavaScript ou em
+            uma consulta SQL. A ideia é ter tudo ali, sem sair da mesma janela.
+          </p>
+        </div>
+        <div class="tools-grid">
+          <article class="tool">
+            <div class="tool-top">
+              <svg aria-hidden="true" focusable="false" class="icon">
+                <use href="#icon-code" /></svg
+              ><span>01</span>
+            </div>
+            <h3>Um editor, várias linguagens.</h3>
+            <p>
+              PHP, JavaScript, TypeScript, HTML, CSS, JSON e SQL. Abas, busca e
+              destaque de sintaxe no mesmo editor.
+            </p>
+            <div class="tool-tags" aria-label="Linguagens">
+              <span>PHP</span><span>JS / TS</span><span>SQL</span>
+            </div>
+          </article>
+          <article class="tool">
+            <div class="tool-top">
+              <svg aria-hidden="true" focusable="false" class="icon">
+                <use href="#icon-database" /></svg
+              ><span>02</span>
+            </div>
+            <h3>Do código aos dados.</h3>
+            <p>
+              Abra o terminal, acompanhe as alterações no Git e consulte seu
+              banco. O SQLite local já vem com a IDE.
+            </p>
+            <div class="tool-tags">
+              <span>Git</span><span>Terminal</span><span>Database</span>
+            </div>
+          </article>
+          <article class="tool">
+            <div class="tool-top">
+              <svg aria-hidden="true" focusable="false" class="icon">
+                <use href="#icon-spark" /></svg
+              ><span>03</span>
+            </div>
+            <h3>IA no contexto do projeto.</h3>
+            <p>
+              Converse no AI Chat com o provedor que você configurar. Seu
+              projeto e a conversa, lado a lado.
+            </p>
+            <div class="tool-tags">
+              <span>Codex</span><span>Claude Code</span>
+            </div>
+          </article>
+        </div>
+        <p class="tools-note">
+          Recursos de linguagem, Git e IA usam as ferramentas e contas que você
+          configurar.
+          <a
+            href="https://github.com/lucstrik/codisseu/blob/main/docs/optional-tools.md"
+            >Veja como funciona <span aria-hidden="true">↗</span></a
+          >
+        </p>
+      </section>
+
+      <section
+        class="project-section wrap"
+        id="projeto"
+        aria-labelledby="project-title"
+      >
+        <div class="project-copy">
+          <p class="eyebrow">
+            <span aria-hidden="true">02 /</span> UM PROJETO EM CONSTRUÇÃO
+          </p>
+          <h2 id="project-title">
+            Aberto pra usar.<br /><span>E pra fazer parte.</span>
+          </h2>
+          <p>
+            O Codisseu está dando os primeiros passos. A proposta é simples: uma
+            IDE nativa, com as ferramentas que a gente usa no dia a dia,
+            reunidas em um lugar só.
+          </p>
+          <p>
+            Encontrou um problema? Teve uma ideia? Cola no GitHub. Você pode
+            acompanhar, testar e ajudar a construir o que vem por aí.
+          </p>
+          <a class="project-link" href="https://github.com/lucstrik/codisseu"
+            ><svg aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-github" /></svg
+            >Conheça o repositório<svg
+              aria-hidden="true"
+              focusable="false"
+              class="icon"
+            >
+              <use href="#icon-arrow" /></svg
+          ></a>
+          <div class="project-facts">
+            <span
+              ><svg aria-hidden="true" focusable="false" class="icon">
+                <use href="#icon-check" /></svg
+              >Licença MIT</span
+            ><span
+              ><svg aria-hidden="true" focusable="false" class="icon">
+                <use href="#icon-check" /></svg
+              >Linux primeiro</span
+            >
+          </div>
+        </div>
+        <div class="project-visual" aria-hidden="true">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="orbit orbit-three"></div>
+          <span class="orbit-label label-rust">Rust</span
+          ><span class="orbit-label label-open">Open source</span
+          ><span class="orbit-label label-native">Native desktop</span>
+          <div class="project-logo">
+            <img
+              src="./assets/codisseu-256.png"
+              width="144"
+              height="144"
+              alt=""
+            />
+          </div>
+          <span class="visual-coordinate">CONSTRUINDO O PRÓXIMO PASSO_</span>
+        </div>
+      </section>
+
+      <section
+        class="download-section wrap"
+        id="download"
+        aria-labelledby="download-title"
+      >
+        <div class="download-heading">
+          <p class="eyebrow"><span class="status-dot"></span> V0.1.0-ALPHA.1</p>
+          <h2 id="download-title">
+            Seu próximo projeto<br />começa por aqui<span>.</span>
+          </h2>
+          <p>Baixe, explore e conte pra gente como foi.</p>
+        </div>
+        <div class="download-panel">
+          <div class="download-platform">
+            <div class="platform-symbol" aria-hidden="true">&gt;_</div>
+            <div>
+              <h3>Codisseu para Linux</h3>
+              <p>
+                Pacote .deb <span>·</span> x86_64 / amd64 <span>·</span> 51,4
+                MiB
+              </p>
+            </div>
+            <span class="alpha-label">ALPHA</span>
+          </div>
+          <a
+            class="button button-primary download-button"
+            href="https://github.com/lucstrik/codisseu/releases/download/v0.1.0-alpha.1/codisseu_0.1.0-alpha.1_amd64.deb"
+            ><svg aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-download" /></svg
+            >Baixar o Codisseu<svg
+              aria-hidden="true"
+              focusable="false"
+              class="icon"
+            >
+              <use href="#icon-arrow" /></svg
+          ></a>
+          <div class="download-links">
+            <a
+              href="https://github.com/lucstrik/codisseu/blob/main/docs/install-linux.md"
+              >Como instalar <span aria-hidden="true">↗</span></a
+            ><a
+              href="https://github.com/lucstrik/codisseu/releases/tag/v0.1.0-alpha.1"
+              >Versão e checksums <span aria-hidden="true">↗</span></a
+            >
+          </div>
+          <p class="requirements">
+            Requer glibc 2.39 ou superior. Validado em Debian 13 com X11.
+            Confira o guia de instalação para os requisitos completos.
+          </p>
+        </div>
+        <div class="questions">
+          <details>
+            <summary>
+              Preciso ter PHP ou Node instalado?<span aria-hidden="true"
+                >+</span
+              >
+            </summary>
+            <p>
+              Você pode abrir, editar e salvar seus arquivos sem eles. O SQLite
+              local também já está incluído. Para rodar seu projeto, configure o
+              PHP, Node ou a ferramenta na versão que ele precisa. O Codisseu
+              não substitui as versões do seu sistema.
+              <a
+                href="https://github.com/lucstrik/codisseu/blob/main/docs/optional-tools.md"
+                >Veja as ferramentas opcionais.</a
+              >
+            </p>
+          </details>
+          <details>
+            <summary>
+              O que preciso saber sobre esta alpha?<span aria-hidden="true"
+                >+</span
+              >
+            </summary>
+            <p>
+              Este download inclui o núcleo da IDE. Alguns recursos exigem
+              ferramentas externas; depuração, navegador integrado e outros
+              motores adicionais ainda não fazem parte deste pacote público.
+              Windows, macOS, ARM e Wayland ainda não foram validados.
+              <a
+                href="https://github.com/lucstrik/codisseu#o-que-você-vai-encontrar"
+                >Confira os recursos e limites da versão.</a
+              >
+            </p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer wrap">
+      <a class="brand footer-brand" href="#inicio"
+        ><img
+          src="./assets/codisseu-64.png"
+          width="30"
+          height="30"
+          alt=""
+        /><span>codisseu<span class="brand-dot">.</span></span></a
+      >
+      <p>Feito em Rust. Construído com ideias.</p>
+      <div>
+        <a href="https://github.com/lucstrik/codisseu/blob/main/LICENSE">MIT</a
+        ><a href="https://github.com/lucstrik/codisseu/issues/new/choose"
+          >Ideias e problemas
+          <svg aria-hidden="true" focusable="false" class="icon">
+            <use href="#icon-arrow" /></svg></a
+        ><a
+          href="https://github.com/lucstrik/codisseu"
+          aria-label="Codisseu no GitHub"
+          ><svg aria-hidden="true" focusable="false" class="icon">
+            <use href="#icon-github" /></svg
+        ></a>
+      </div>
+    </footer>
+  </body>
+</html>
