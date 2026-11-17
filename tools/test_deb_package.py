@@ -76,11 +76,14 @@ class DebianPackage(unittest.TestCase):
     def test_real_deb_preserves_bundle_and_contains_only_explicit_launchers(self):
         report = build_deb.build_package(self.bundle, self.root / "output", "0.1.0~alpha.1", "Test <test@example.invalid>", "https://github.com/example/test")
         package = self.root / "output" / report["package"]
+        self.assertEqual(package.name, "codisseu_0.1.0-alpha.1_amd64.deb")
+        self.assertEqual(report["version"], "0.1.0~alpha.1")
         self.assertEqual(report["sha256"], build_deb.digest(package))
         extracted = self.root / "extracted"
         subprocess.run(["dpkg-deb", "--raw-extract", package, extracted], check=True, capture_output=True)
         self.assertEqual(build_deb.verify_bundle(self.bundle), build_deb.verify_bundle(extracted / "opt/codisseu"))
         control = (extracted / "DEBIAN/control").read_text()
+        self.assertIn("\nVersion: 0.1.0~alpha.1\n", control)
         depends = next(row for row in control.splitlines() if row.startswith("Depends:"))
         self.assertNotIn("php", depends)
         self.assertNotIn("node", depends)

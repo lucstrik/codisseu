@@ -153,7 +153,10 @@ def build_package(bundle, output, version, maintainer, homepage):
         raise ValueError("Invalid package system dependencies")
     core = build.get("package_variant") == "core"
     output.mkdir(parents=True, exist_ok=True)
-    package = output / f"codisseu_{version}_amd64.deb"
+    # GitHub sanitizes '~' in release asset names. Keep Debian version ordering
+    # in control while choosing a stable downloadable external filename.
+    filename_version = version.replace("~", "-")
+    package = output / f"codisseu_{filename_version}_amd64.deb"
     if package.exists() or package.with_suffix(".deb.sha256").exists():
         raise FileExistsError("Output exists; prior release artifacts preserved")
     with tempfile.TemporaryDirectory(prefix="codisseu-deb-", dir=output) as temporary:

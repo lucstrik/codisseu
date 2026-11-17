@@ -22,6 +22,9 @@ ser fornecida junto à release; a existência do `.deb` não fecha essa auditori
 O bundle completo antigo tem obrigações separadas e não é o artefato público
 desta entrega.
 Novas versões são explícitas, sem atualizador/download automático no primeiro uso.
+O nome externo usa `codisseu_0.1.0-alpha.1_amd64.deb`, compatível com os assets do
+GitHub. O campo `Version` do pacote preserva `0.1.0~alpha.1`, para manter a ordem
+de versões Debian. Renomear o download não altera o conteúdo do `.deb` nem o ELF.
 
 Validação: testes do empacotador, inspeção/extracão do `.deb`, hashes depois da
 extração, CLI e editor sem motores configurados. Teste gráfico usa

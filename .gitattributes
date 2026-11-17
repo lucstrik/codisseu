@@ -1,2 +1,6 @@
 # Preserve fixtures, font assets, and upstream notices byte for byte.
 * -text
+
+# Public upstream reference material and the maintained upstream fork.
+reference/public/** linguist-vendored=true
+vendor/** linguist-vendored=true

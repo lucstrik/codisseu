@@ -45,7 +45,7 @@ distribuído. As fixtures JS/PHP também tiveram seus locks corrigidos; npm audi
 e Composer audit dos locks ficaram sem alertas naquela execução. Os frameworks
 JS preservaram suas contagens esperadas, incluindo falhas intencionais.
 
-Pacote: `codisseu_0.1.0~alpha.1_amd64.deb`,53.868.940bytes.
+Pacote: `codisseu_0.1.0-alpha.1_amd64.deb`,53.868.940bytes.
 SHA-256: `4bad393912512311fb0e77fc0892393785b2d62c5a5ee6b2caae322c623b548f`.
 Os avisos acompanham o instalador; a coleta contém539pacotes Cargo normal/build,
 com os componentes próprios identificados separadamente, sem textos faltantes.

@@ -49,7 +49,7 @@ jobs:
           cargo fetch --locked
           python3 tools/release_notices.py --output artifacts/ci-notices
           python3 tools/build_deb.py --core-binary target/release/codisseu --notices artifacts/ci-notices --output dist --version 0.1.0~alpha.1 --maintainer 'Lucas Torres <18267941+lucstrik@users.noreply.github.com>'
-          python3 tools/verify_deb.py --package dist/codisseu_0.1.0~alpha.1_amd64.deb --output artifacts/ci-deb-check
+          python3 tools/verify_deb.py --package dist/codisseu_0.1.0-alpha.1_amd64.deb --output artifacts/ci-deb-check
       - name: Guardar instalador e checksum
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
