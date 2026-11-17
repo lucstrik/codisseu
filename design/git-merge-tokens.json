@@ -1,0 +1,84 @@
+{
+  "chrome": [
+    43,
+    45,
+    48
+  ],
+  "editor": [
+    30,
+    31,
+    34
+  ],
+  "border": [
+    50,
+    52,
+    56
+  ],
+  "foreground": [
+    223,
+    225,
+    229
+  ],
+  "muted": [
+    159,
+    160,
+    162
+  ],
+  "line_number": [
+    76,
+    80,
+    88
+  ],
+  "conflict": [
+    45,
+    38,
+    38
+  ],
+  "conflict_word": [
+    66,
+    49,
+    44
+  ],
+  "added": [
+    47,
+    67,
+    55
+  ],
+  "modified": [
+    38,
+    50,
+    62
+  ],
+  "accent": [
+    69,
+    115,
+    232
+  ],
+  "link": [
+    94,
+    150,
+    255
+  ],
+  "tooltip": [
+    57,
+    59,
+    64
+  ],
+  "title_height": 28.0,
+  "toolbar_height": 32.0,
+  "header_height": 22.0,
+  "footer_height": 46.0,
+  "font_size": 13.0,
+  "line_height": 22.0,
+  "connector_width": 28.0,
+  "number_width": 34.0,
+  "actions_width": 40.0,
+  "button_border": [
+    79,
+    81,
+    86
+  ],
+  "code_padding_x": 12.0,
+  "code_padding_y": 4.0,
+  "tooltip_padding": 8
+}

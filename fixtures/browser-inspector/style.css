@@ -1,0 +1,12 @@
+:root { color-scheme: light; font: 15px system-ui, sans-serif; background: #f4f6f8; color: #17222f; }
+body { margin: 0; }
+header { display: flex; align-items: center; gap: 20px; padding: 10px 16px; background: #e6edf4; border-bottom: 1px solid #b9c9d8; }
+header span { font-size: 12px; }
+main { padding: 12px 16px; }
+h1 { margin: 0 0 10px; font-size: 21px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+button, input { font: inherit; padding: 6px 10px; }
+button { cursor: pointer; }
+label, output, fixture-counter { display: block; margin-top: 10px; }
+output, pre { padding: 8px; background: white; border: 1px solid #c7d3df; }
+pre { white-space: pre-wrap; overflow-wrap: anywhere; }

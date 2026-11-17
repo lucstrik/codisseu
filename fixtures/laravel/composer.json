@@ -1,0 +1,9 @@
+{
+  "name": "codisseu/laravel-intelligence-fixture",
+  "description": "Isolated Laravel semantic fixture; do not boot an application or use external services",
+  "license": "MIT",
+  "require": {"laravel/framework": "^12.0"},
+  "autoload": {"psr-4": {"App\\": "app/"}},
+  "config": {"allow-plugins": false},
+  "scripts": {"post-autoload-dump": "@php -r \"file_put_contents('HOOK_EXECUTED', 'forbidden');\""}
+}

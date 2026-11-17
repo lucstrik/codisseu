@@ -1,0 +1,2122 @@
+{
+  "schema_version": 6,
+  "date": "2026-10-22",
+  "scenario": "M3.6 rename PHP/TS; diálogo e Refactoring Preview PhpStorm262 Dark",
+  "reference_product": "PhpStorm",
+  "reference_build": "262.10968.76",
+  "local_reference_measurement": true,
+  "sources": [
+    {
+      "id": "intellij-theme",
+      "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/platform/platform-resources/src/themes/expUI/expUI_dark.theme.json",
+      "revision": "441b046f2985d841fd90bc64b7f312636644718d",
+      "sha256": "54ced18704b8847426ebca5552627072c8b01bd3a0ee25f6f2c924b1d2c49a3d",
+      "license": "Apache-2.0",
+      "license_confidence": "inferred",
+      "license_basis": "Fonte pública IntelliJ Platform; documentação oficial declara Apache-2.0 e os termos na raiz também identificam OSS Apache-2.0. Arquivo sem cabeçalho individual; sem licença mais estreita encontrada nas pastas ancestrais inspecionadas. Ver docs/visual-reference-m2.md."
+    },
+    {
+      "id": "storm-m1",
+      "description": "Valores próprios da M1 preservados; origem visual original desconhecida."
+    },
+    {
+      "id": "intellij-jbui",
+      "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/platform/util/ui/src/com/intellij/util/ui/JBUI.java",
+      "revision": "441b046f2985d841fd90bc64b7f312636644718d",
+      "sha256": "f992f9bdd9e1dcdd80b1c70726b1ffce4cdedf0ca8fd926ac899fa66fa98cb05",
+      "license": "Apache-2.0",
+      "license_confidence": "documented",
+      "local_file": "reference/public/visual-v3/upstream/platform/util/ui/src/com/intellij/util/ui/JBUI.java"
+    },
+    {
+      "id": "intellij-header",
+      "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/platform/platform-impl/src/com/intellij/openapi/wm/impl/customFrameDecorations/header/CustomHeader.kt",
+      "revision": "441b046f2985d841fd90bc64b7f312636644718d",
+      "sha256": "5fb7dc2b887bae10c0ca70fedd256ca1af1b2202ff578e3272cf2506a71a6f47",
+      "license": "Apache-2.0",
+      "license_confidence": "documented",
+      "local_file": "reference/public/visual-v3/upstream/platform/platform-impl/src/com/intellij/openapi/wm/impl/customFrameDecorations/header/CustomHeader.kt"
+    },
+    {
+      "id": "intellij-laf",
+      "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/platform/platform-impl/src/com/intellij/ide/ui/laf/LafManagerImpl.kt",
+      "revision": "441b046f2985d841fd90bc64b7f312636644718d",
+      "sha256": "5b2928a33b8dc1c06f56b7a5fd5d6dd34ac6f35e3b45c8390f7f636730aeff33",
+      "license": "Apache-2.0",
+      "license_confidence": "documented",
+      "local_file": "reference/public/visual-v3/upstream/platform/platform-impl/src/com/intellij/ide/ui/laf/LafManagerImpl.kt"
+    },
+    {
+      "id": "intellij-editor-tabs",
+      "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/platform/platform-impl/src/com/intellij/openapi/fileEditor/impl/EditorTabbedContainer.kt",
+      "revision": "441b046f2985d841fd90bc64b7f312636644718d",
+      "sha256": "4e52d9ac0f0ba3372a85749ec9a2f333745f2751d349a9b2249a3db534a48ace",
+      "license": "Apache-2.0",
+      "license_confidence": "documented",
+      "local_file": "reference/public/visual-v3/upstream/platform/platform-impl/src/com/intellij/openapi/fileEditor/impl/EditorTabbedContainer.kt"
+    },
+    {
+      "id": "storm-v4",
+      "description": "Adaptações independentes documentadas em docs/visual-spec-v4.md; fonte completa preservada em reference/public/visual-v4/files.json."
+    },
+    {
+      "id": "community-driver-252",
+      "product": "IntelliJ IDEA Community",
+      "version": "2025.2.6.3",
+      "build": "IC-252.28539.97",
+      "source": "artifacts/starter-driver-20261020/final/evidence/editor-measurements.json",
+      "scenario": "Starter/Driver abre laboratory.txt e edita em perfil isolado, Xvfb X11",
+      "confidence": "observed"
+    },
+    {
+      "id": "storm-m3",
+      "description": "Contrato próprio M3.1 em docs/contracts/ui.md e reference/scenarios/M3-SEARCH.md."
+    },
+    {
+      "id": "intellij-scheme",
+      "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/platform/platform-resources/src/themes/expUI/expUI_darkScheme.xml",
+      "revision": "441b046f2985d841fd90bc64b7f312636644718d",
+      "sha256": "4f86266fa515e6ae3fbff8df21e71d4eb9d91eef7cbb4c95b92dea73aaafeb48",
+      "local_file": "reference/public/visual-v3/upstream/platform/platform-resources/src/themes/expUI/expUI_darkScheme.xml",
+      "license": "Apache-2.0",
+      "license_confidence": "inferred",
+      "license_basis": "Mesmo arquivo/esquema previamente auditado em docs/visual-reference-m2.md e tooling-source.md; sem cabeçalho individual. Só valoresdeaparência, sem código/assets extraídos."
+    },
+    {
+      "id": "phpstorm-262-definition",
+      "product": "PhpStorm",
+      "version": "2026.2.3",
+      "build": "262.10968.76",
+      "theme": "Dark",
+      "scale": 1,
+      "source": "artifacts/m3-definition-20261020/reference-original/",
+      "scenario": "PHP/TS Ctrl+B, Editor Font Settings, UI Inspector; perfil isolado autorizado pelo usuário",
+      "confidence": "observed"
+    },
+    {
+      "id": "phpstorm-262-completion",
+      "product": "PhpStorm",
+      "version": "2026.2.3",
+      "build": "262.10968.76",
+      "theme": "Dark",
+      "scale": 1,
+      "source": "artifacts/m3-completion-20261020/reference-original/popup-measurements.json",
+      "scenario": "Weather member prefix rain, Ctrl+Space, Down, Enter/Tab, Escape/undo; variant no parameter hints",
+      "confidence": "observed"
+    },
+    {
+      "id": "phpstorm-262-references",
+      "product": "PhpStorm",
+      "version": "2026.2.3",
+      "build": "262.10968.76",
+      "theme": "Dark",
+      "scale": 1,
+      "confidence": "observed",
+      "measurements": "artifacts/m3-references-20261020/reference-original/find-measurements.json",
+      "report": "artifacts/m3-references-20261020/reference-original/reference-report.md"
+    },
+    {
+      "id": "phpstorm-262-editor-viewport",
+      "product": "PhpStorm",
+      "version": "2026.2.3",
+      "build": "PS-262.10968.76",
+      "theme": "Dark / ExperimentalDark",
+      "scale": 1,
+      "scenario": "fresh private native viewport/tabs/caret/selection/10001 lines",
+      "confidence": "observed",
+      "evidence": "artifacts/m3-editor-viewport-20261022/reference-original/reference-report.md"
+    },
+    {
+      "id": "phpstorm-262-rename-symbols-complete",
+      "product": "PhpStorm",
+      "version": "2026.2.3",
+      "build": "262.10968.76",
+      "theme": "Dark/ExperimentalDark",
+      "scale": 1,
+      "source": "artifacts/m3-rename-complete-20261023/reference-original/reference-report.md",
+      "confidence": "observed",
+      "scenario": "Native property/class/function rename; modal, inline options, preview, apply/save/undo and related-file move. Canonical dialogs use fixtures/rename-symbols-complete byte-exact."
+    },
+    {
+      "id": "phpstorm-262-git-search-scm",
+      "product": "PhpStorm",
+      "version": "2026.2.3",
+      "build": "PS-262.10968.76",
+      "theme": "Islands Dark",
+      "scale": 1,
+      "source": "artifacts/m5-git-search-scm-20261024/reference-original/frame-insets.txt",
+      "scenario": "Own 1400x1000 fixture; public window/root/header/rail/island geometry, canonical Window.paintAll RGB distinct from compositor capture",
+      "confidence": "observed"
+    },
+    {
+      "id": "php-navigation-20261027",
+      "description": "PhpStorm 2026.2.3 PS-262.10968.76; existing isolated profile; theme ExperimentalDark from laf.xml; deviceScale1 explicitly set. Runtime popup and PNG pixels observed on owned Composer fixture. No proprietary code/assets imported.",
+      "local_file": "artifacts/php-navigation-20261027/reference-original/implementation-observed.png",
+      "sha256": "2d4458eade9ae7971f3c3b0f956fee4917953932a44d05bb0197f88cf751d470",
+      "source_status": "observed",
+      "report": "docs/m3-php-navigation-reference.md"
+    }
+  ],
+  "tokens": {
+    "editor": {
+      "value": [
+        30,
+        31,
+        34
+      ],
+      "hex": "#1E1F22",
+      "source": "intellij-theme",
+      "source_key": "ui.EditorTabs.background",
+      "palette_key": "colors.Gray1",
+      "confidence": "documented",
+      "mapping": "Adotado de fonte OSS; valor reconfirmado na captura/UI Inspector PhpStorm262 Dark nesta M3.3.",
+      "local_verification": {
+        "source": "phpstorm-262-definition",
+        "confidence": "observed",
+        "artifact": "reference-original/dark-pixel-measurements.json"
+      }
+    },
+    "panel": {
+      "value": [
+        43,
+        45,
+        48
+      ],
+      "hex": "#2B2D30",
+      "source": "intellij-theme",
+      "source_key": "ui.*.background",
+      "palette_key": "colors.Gray2",
+      "confidence": "documented",
+      "mapping": "Adotado de fonte OSS; valor reconfirmado na captura/UI Inspector PhpStorm262 Dark nesta M3.3.",
+      "local_verification": {
+        "source": "phpstorm-262-definition",
+        "confidence": "observed",
+        "artifact": "reference-original/dark-pixel-measurements.json"
+      }
+    },
+    "bar": {
+      "value": [
+        43,
+        45,
+        48
+      ],
+      "hex": "#2B2D30",
+      "source": "intellij-theme",
+      "source_key": "ui.MainToolbar.background",
+      "palette_key": "colors.Gray2",
+      "confidence": "documented",
+      "mapping": "Adotado de fonte OSS; valor reconfirmado na captura/UI Inspector PhpStorm262 Dark nesta M3.3.",
+      "local_verification": {
+        "source": "phpstorm-262-definition",
+        "confidence": "observed",
+        "artifact": "reference-original/dark-pixel-measurements.json"
+      }
+    },
+    "border": {
+      "value": [
+        57,
+        59,
+        64
+      ],
+      "hex": "#393B40",
+      "source": "intellij-theme",
+      "source_key": "ui.EditorTabs.underTabsBorderColor",
+      "palette_key": "colors.Gray3",
+      "confidence": "documented",
+      "mapping": "Adotado no papel equivalente Storm; não medido em instalação do PhpStorm."
+    },
+    "text": {
+      "value": [
+        223,
+        225,
+        229
+      ],
+      "hex": "#DFE1E5",
+      "source": "intellij-theme",
+      "source_key": "ui.*.foreground",
+      "palette_key": "colors.Gray12",
+      "confidence": "documented",
+      "mapping": "Adotado de fonte OSS; valor reconfirmado na captura/UI Inspector PhpStorm262 Dark nesta M3.3.",
+      "local_verification": {
+        "source": "phpstorm-262-definition",
+        "confidence": "observed",
+        "artifact": "reference-original/dark-pixel-measurements.json"
+      }
+    },
+    "muted": {
+      "value": [
+        157,
+        160,
+        168
+      ],
+      "hex": "#9DA0A8",
+      "source": "intellij-theme",
+      "source_key": "ui.StatusBar.Widget.foreground",
+      "palette_key": "colors.Gray9",
+      "confidence": "documented",
+      "mapping": "Adotado no papel equivalente Storm; não medido em instalação do PhpStorm."
+    },
+    "accent": {
+      "value": [
+        53,
+        116,
+        240
+      ],
+      "hex": "#3574F0",
+      "source": "intellij-theme",
+      "source_key": "ui.*.focusColor",
+      "palette_key": "colors.Blue6",
+      "confidence": "documented",
+      "mapping": "Adotado no papel equivalente Storm; não medido em instalação do PhpStorm."
+    },
+    "selection": {
+      "value": [
+        46,
+        67,
+        110
+      ],
+      "hex": "#2E436E",
+      "source": "intellij-theme",
+      "source_key": "ui.*.selectionBackground",
+      "palette_key": "colors.Blue2",
+      "confidence": "documented",
+      "mapping": "Adotado no papel equivalente Storm; não medido em instalação do PhpStorm."
+    },
+    "error": {
+      "value": [
+        219,
+        92,
+        92
+      ],
+      "hex": "#DB5C5C",
+      "source": "intellij-theme",
+      "source_key": "ui.Label.errorForeground",
+      "palette_key": "colors.Red7",
+      "confidence": "documented",
+      "mapping": "Adotado no papel equivalente Storm; não medido em instalação do PhpStorm."
+    },
+    "ui_font_size": {
+      "value": 13.0,
+      "source": "intellij-laf",
+      "source_key": "INTER_SIZE = 13; L171-L172",
+      "confidence": "documented",
+      "mapping": "Base Inter no código OSS, sujeita a escala/override. O valor Storm13 antes marcado unknown foi reconfirmado nesta V3; rasterização/build comercial continuam não medidos."
+    },
+    "editor_font_size": {
+      "value": 13.0,
+      "source": "phpstorm-262-definition",
+      "source_key": "Settings > Editor > Font",
+      "confidence": "observed",
+      "mapping": "JetBrains Mono13.0 observado naSettings; fonte Storm OSS OFL. Rasterização de renderers distintos não é idêntica."
+    },
+    "row_height": {
+      "value": 24.0,
+      "source": "intellij-theme",
+      "source_key": "ui.Tree.rowHeight; ui.List.rowHeight",
+      "confidence": "documented",
+      "mapping": "Valor lógico do tema OSS; escala física depende de DPI."
+    },
+    "sidebar_width": {
+      "value": 245.0,
+      "source": "storm-m1",
+      "source_key": null,
+      "confidence": "unknown",
+      "mapping": "Escolha Storm preservada. Não é medição nem valor confirmado do original."
+    },
+    "tool_header_height": {
+      "value": 41.0,
+      "source": "intellij-jbui",
+      "source_key": "CurrentTheme.ToolWindow.defaultHeaderHeight = 41; L1187-L1188",
+      "confidence": "documented",
+      "mapping": "Altura lógica do conteúdo; o código upstream pode adicionar borda superior1. Storm desenha separador próprio."
+    },
+    "main_toolbar_height": {
+      "value": 40.0,
+      "source": "intellij-header",
+      "source_key": "HEADER_HEIGHT_NORMAL = 40; L72",
+      "confidence": "documented",
+      "mapping": "Modo normal; compacto32 e distração30 existem na fonte. Não equivale à decoração externa do compositor."
+    },
+    "main_button_size": {
+      "value": 30.0,
+      "source": "intellij-jbui",
+      "source_key": "CurrentTheme.Toolbar.defaultExperimentalToolbarButtonSize = size(30,30); L1283-L1284",
+      "confidence": "documented",
+      "mapping": "Caixa lógica30, ícone20; adaptada ao widget egui próprio."
+    },
+    "rail_width": {
+      "value": 40.0,
+      "source": "intellij-jbui",
+      "source_key": "CurrentTheme.Toolbar.defaultStripeToolbarButtonSize = size(40,40); L1331-L1332",
+      "confidence": "documented",
+      "mapping": "Rail40 deriva da caixa do botão40; fonte não comprova largura total com todas as bordas de um build comercial."
+    },
+    "tab_height": {
+      "value": 42.0,
+      "source": "intellij-editor-tabs",
+      "source_key": "EditorTabLabel.getPreferredHeight; L917-L923; JBUI.EditorTabs.tabInsets=(-7,8,-7,8)",
+      "confidence": "inferred",
+      "mapping": "Base28 - (-7) - (-7) =42 antes de subtrair borda de layout e somar extensão. Storm usa42 na fila total; não é medição da aba comercial nem o TabbedPane genérico40."
+    },
+    "control_border": {
+      "value": [
+        78,
+        81,
+        87
+      ],
+      "source": "intellij-theme",
+      "source_key": "ui.Component.borderColor / Gray5",
+      "confidence": "documented",
+      "mapping": "Borda1 em formulários; não aplicada como borda do editor."
+    },
+    "popup_border": {
+      "value": [
+        67,
+        69,
+        74
+      ],
+      "source": "intellij-theme",
+      "source_key": "ui.Menu.borderColor / Gray4",
+      "confidence": "documented",
+      "mapping": "Borda de popup egui traduzida do tema público."
+    },
+    "control_height": {
+      "value": 28.0,
+      "source": "intellij-theme",
+      "source_key": "ui.Button.minimumSize=72,28; ui.TextField.minimumSize=49,28",
+      "confidence": "documented",
+      "mapping": "Altura mínima de campos simples e botões; layout observado no Storm."
+    },
+    "dialog_button_min_width": {
+      "value": 72.0,
+      "source": "intellij-theme",
+      "source_key": "ui.Button.minimumSize=72,28",
+      "confidence": "documented",
+      "mapping": "Mínimo72; texto em português pode exigir largura maior."
+    },
+    "control_corner_radius": {
+      "value": 4,
+      "source": "intellij-theme",
+      "source_key": "ui.Component.arc=8; ui.Button.arc=8",
+      "confidence": "inferred",
+      "mapping": "Arco Swing8 traduzido para raio egui4; rasterização não equivalente."
+    },
+    "menu_row_height": {
+      "value": 24.0,
+      "source": "storm-v4",
+      "source_key": "Altura de linha de menu própria",
+      "confidence": "inferred",
+      "mapping": "24 é escolha Storm, não medição do original."
+    },
+    "find_field_min_width": {
+      "value": 80.0,
+      "source": "storm-m3",
+      "confidence": "inferred",
+      "mapping": "Limite próprio para busca responsiva; não medido no original."
+    },
+    "find_field_max_width": {
+      "value": 340.0,
+      "source": "storm-m3",
+      "confidence": "inferred",
+      "mapping": "Largura máxima própria do campo; linhas quebram em editor estreito."
+    },
+    "find_padding": {
+      "value": [
+        8,
+        5
+      ],
+      "source": "storm-m3",
+      "confidence": "inferred",
+      "mapping": "Padding horizontal/vertical do painel próprio."
+    },
+    "documentation_width": {
+      "value": 420,
+      "confidence": "inferred",
+      "source": "Storm M3.2",
+      "mapping": "Dimensão própria provisória para documentação LSP; não medida no PhpStorm."
+    },
+    "documentation_max_height": {
+      "value": 280,
+      "confidence": "inferred",
+      "source": "Storm M3.2",
+      "mapping": "Dimensão própria provisória para documentação LSP; não medida no PhpStorm."
+    },
+    "caret_row": {
+      "value": [
+        38,
+        40,
+        46
+      ],
+      "source": "intellij-scheme",
+      "source_key": "CARET_ROW_COLOR",
+      "confidence": "documented",
+      "mapping": "expUI_darkScheme.xml revisão441b046f, fonte pública já preservada; aplicado ao feedback do cursor Storm.",
+      "local_verification": {
+        "source": "phpstorm-262-definition",
+        "confidence": "observed",
+        "artifact": "reference-original/dark-pixel-measurements.json"
+      }
+    },
+    "caret_line_number": {
+      "value": [
+        161,
+        163,
+        171
+      ],
+      "source": "intellij-scheme",
+      "source_key": "LINE_NUMBER_ON_CARET_ROW_COLOR",
+      "confidence": "documented",
+      "mapping": "expUI_darkScheme.xml revisão441b046f; sem medição de equivalência completa de rasterização.",
+      "local_verification": {
+        "source": "phpstorm-262-definition",
+        "confidence": "observed",
+        "artifact": "reference-original/dark-pixel-measurements.json"
+      }
+    },
+    "editor_line_height": {
+      "value": 22.0,
+      "source": "phpstorm-262-definition",
+      "confidence": "observed",
+      "mapping": "Passo22px medido em linhas consecutivas do PhpStorm262 Dark, Settings line height1.2; egui recebe altura22 lógica na escala1."
+    },
+    "editor_gutter_width": {
+      "value": 61.0,
+      "source": "phpstorm-262-editor-viewport",
+      "confidence": "inferred",
+      "mapping": "Storm base gutter61 +8spacing gives source354; measured separator351; +7px per digit beyond2 derived from source375 at10001lines."
+    },
+    "editor_line_number_offset": {
+      "value": 24.0,
+      "source": "phpstorm-262-definition",
+      "confidence": "inferred",
+      "mapping": "Borda direita do número simples próxima de24px após a borda do editor, observada em dark-ts-definition-no-codevision.png; adaptação de alinhamento egui."
+    },
+    "editor_top_padding": {
+      "value": 1.0,
+      "source": "phpstorm-262-definition",
+      "confidence": "inferred",
+      "mapping": "Correção de1px para alinhar a linha de texto y94 no cenário1280x800/escala1, sem deslocar screenshots."
+    },
+    "completion_width": {
+      "value": 314.0,
+      "source": "phpstorm-262-completion",
+      "confidence": "observed",
+      "mapping": "Valor medido na variante Weather PHP/TS, não contrato de todos os tamanhos/conteúdos."
+    },
+    "completion_row_height": {
+      "value": 24.0,
+      "source": "phpstorm-262-completion",
+      "confidence": "observed",
+      "mapping": "Valor medido na variante Weather PHP/TS, não contrato de todos os tamanhos/conteúdos."
+    },
+    "completion_footer_height": {
+      "value": 27.0,
+      "source": "phpstorm-262-completion",
+      "confidence": "observed",
+      "mapping": "Valor medido na variante Weather PHP/TS, não contrato de todos os tamanhos/conteúdos."
+    },
+    "completion_max_rows": {
+      "value": 8,
+      "source": "phpstorm-262-completion",
+      "confidence": "inferred",
+      "mapping": "Limite próprio de oito linhas visíveis, com rolagem; original nesta fixture tem duas."
+    },
+    "completion_padding": {
+      "value": 4,
+      "source": "phpstorm-262-completion",
+      "confidence": "observed",
+      "mapping": "Valor medido na variante Weather PHP/TS, não contrato de todos os tamanhos/conteúdos."
+    },
+    "completion_icon_color": {
+      "value": [
+        206,
+        81,
+        77
+      ],
+      "source": "phpstorm-262-completion",
+      "confidence": "inferred",
+      "mapping": "Ícone vetorial próprio: círculo e letra m, sem extrair assets comerciais. Tonalidade aproximada."
+    },
+    "completion_php_width": {
+      "value": 364.0,
+      "source": "phpstorm-262-completion",
+      "confidence": "observed",
+      "mapping": "Valor medido na variante Weather PHP/TS, não contrato de todos os tamanhos/conteúdos."
+    },
+    "completion_footer_font_size": {
+      "value": 12.0,
+      "source": "phpstorm-262-completion",
+      "confidence": "observed",
+      "mapping": "Valor medido na variante Weather PHP/TS, não contrato de todos os tamanhos/conteúdos."
+    },
+    "completion_footer_text": {
+      "value": [
+        111,
+        115,
+        122
+      ],
+      "source": "phpstorm-262-completion",
+      "confidence": "observed",
+      "mapping": "Valor medido na variante Weather PHP/TS, não contrato de todos os tamanhos/conteúdos."
+    },
+    "completion_anchor_offset": {
+      "value": [
+        -33.0,
+        -2.0
+      ],
+      "source": "phpstorm-262-completion",
+      "confidence": "inferred",
+      "mapping": "Alinha coluna de texto ao prefixo: frame33px antes do prefixo e2px acima do bottom do caret egui. Diferença de avanço de glyphs continua medida separadamente."
+    },
+    "completion_match_color": {
+      "value": [
+        84,
+        138,
+        247
+      ],
+      "source": "intellij-theme",
+      "confidence": "documented",
+      "mapping": "CompletionPopup.matchForeground=Blue8/#548AF7 no snapshot OSS441b046f; pixels dessa cor observados no prefixo do popup TS."
+    },
+    "completion_frame_corner_radius": {
+      "value": 0,
+      "source": "phpstorm-262-completion",
+      "confidence": "observed",
+      "mapping": "Valor medido na variante Weather PHP/TS, não contrato de todos os tamanhos/conteúdos."
+    },
+    "editor_gutter_separator": {
+      "value": [
+        49,
+        52,
+        56
+      ],
+      "source": "phpstorm-262-editor-viewport",
+      "confidence": "observed",
+      "mapping": "Original pixel #313438 at351/372. Storm renders at code-origin minus3."
+    },
+    "editor_line_number_font_size": {
+      "value": 12.0,
+      "source": "phpstorm-262-editor-viewport",
+      "confidence": "inferred",
+      "mapping": "Storm-specific calibration against original glyph bbox; original font setting not reinspected. Rasterizer still differs by~1px on left bearing."
+    },
+    "editor_line_number_y": {
+      "value": 4.0,
+      "source": "phpstorm-262-editor-viewport",
+      "confidence": "inferred",
+      "mapping": "Storm glyph bbox refined fromy87..96 to89..97 against original89..97; local adaptation, not original internal token."
+    },
+    "editor_bottom_padding": {
+      "value": 3.0,
+      "source": "phpstorm-262-editor-viewport",
+      "confidence": "inferred",
+      "mapping": "Storm fullheight text viewport ends768 after3px reserve; reference editor/breadcrumb boundary768. Whole shell/breadcrumbs remain different."
+    },
+    "rename_ts_dialog_width": {
+      "value": 482,
+      "source": "phpstorm-262-rename-symbols-complete",
+      "confidence": "observed",
+      "measurement": "Native screenshot modal bounds at device scale1; PHP field/class height254 and TS field/class/function482×254. Controls remain limited to implemented actions."
+    },
+    "rename_extended_dialog_height": {
+      "value": 254,
+      "source": "phpstorm-262-rename-symbols-complete",
+      "confidence": "observed",
+      "measurement": "Native screenshot modal bounds at device scale1; PHP field/class height254 and TS field/class/function482×254. Controls remain limited to implemented actions."
+    },
+    "rename_input_text": {
+      "value": [
+        188,
+        190,
+        196
+      ],
+      "source": "phpstorm-262-rename-symbols-complete",
+      "confidence": "inferred",
+      "measurement": "Foreground reconstructed from per-channel glyph maxima (188,190,196) in canonical-ts-class-name.png at scale1; native input region differs from brighter dialog labels. Raster verification is separate from internal theme-token provenance."
+    },
+    "rename_scope_fill": {
+      "value": [
+        57,
+        59,
+        64
+      ],
+      "source": "phpstorm-262-rename-symbols-complete",
+      "confidence": "observed",
+      "measurement": "Dominant interior pixel color of Project Files selector in canonical-php-property-dialog.png; crop x424..820,y439..465."
+    },
+    "rename_checkbox_border": {
+      "value": [
+        90,
+        93,
+        99
+      ],
+      "source": "phpstorm-262-rename-symbols-complete",
+      "confidence": "observed",
+      "measurement": "40 exact border pixels in unchecked comments checkbox crop [424,352,440,368] of canonical-php-property-dialog.png. Corner antialiasing remains independently measured."
+    },
+    "ai_panel_width": {
+      "value": 380.0,
+      "status": "provisional",
+      "source": "Codisseu own AI Chat design,2026-10-25; not a measured PhpStorm width"
+    },
+    "ai_content_bottom_inset": {
+      "value": 4,
+      "confidence": "provisional",
+      "source": "Codisseu design, explicit user request2026-10-30: move Agente/Cota closer to panel bottom and give transcript more height; not a measured reference IDE value"
+    },
+    "ai_content_inset": {
+      "value": 16,
+      "confidence": "provisional",
+      "source": "Codisseu design, explicit user request2026-10-25: inset title and text; no measured PhpStorm claim"
+    },
+    "ai_history_row_height": {
+      "value": 29,
+      "confidence": "observed",
+      "source": "reference/codex-conversations-20261110.md; VS Code1.145.2 c4453f8ea430795f941c1b2ff6c9321135a74a02/openai.chatgpt26.1021.22027; Default Dark Modern zoom0 DPR1; DOM runtime sintético,10/11/2026",
+      "scope": "Somente popup/lista de conversas; geometria reimplementada Rust/egui. Paleta e header Codisseu conservados."
+    },
+    "ai_history_title_size": {
+      "value": 14,
+      "confidence": "observed",
+      "source": "reference/codex-conversations-20261110.md; VS Code1.145.2 c4453f8ea430795f941c1b2ff6c9321135a74a02/openai.chatgpt26.1021.22027; Default Dark Modern zoom0 DPR1; DOM runtime sintético,10/11/2026",
+      "scope": "Somente popup/lista de conversas; geometria reimplementada Rust/egui. Paleta e header Codisseu conservados."
+    },
+    "ai_history_meta_size": {
+      "value": 12,
+      "confidence": "observed",
+      "source": "reference/codex-conversations-20261110.md; VS Code1.145.2 c4453f8ea430795f941c1b2ff6c9321135a74a02/openai.chatgpt26.1021.22027; Default Dark Modern zoom0 DPR1; DOM runtime sintético,10/11/2026",
+      "scope": "Somente popup/lista de conversas; geometria reimplementada Rust/egui. Paleta e header Codisseu conservados."
+    },
+    "ai_history_popup_radius": {
+      "value": 16,
+      "confidence": "observed",
+      "source": "reference/codex-conversations-20261110.md; VS Code1.145.2 c4453f8ea430795f941c1b2ff6c9321135a74a02/openai.chatgpt26.1021.22027; Default Dark Modern zoom0 DPR1; DOM runtime sintético,10/11/2026",
+      "scope": "Somente popup/lista de conversas; geometria reimplementada Rust/egui. Paleta e header Codisseu conservados."
+    },
+    "ai_history_padding": {
+      "value": 4,
+      "confidence": "observed",
+      "source": "reference/codex-conversations-20261110.md; VS Code1.145.2 c4453f8ea430795f941c1b2ff6c9321135a74a02/openai.chatgpt26.1021.22027; Default Dark Modern zoom0 DPR1; DOM runtime sintético,10/11/2026",
+      "scope": "Somente popup/lista de conversas; geometria reimplementada Rust/egui. Paleta e header Codisseu conservados."
+    },
+    "editor_wrap_right_padding": {
+      "value": 16.0,
+      "confidence": "provisional",
+      "source": "Codisseu2026-11-10; reserva lateral própria para texto e scrollbar em soft wrap, respeitando preferência de respiro. Não é medição de pixels de VS Code/PhpStorm.",
+      "scope": "somente largura útil da quebra visual; layout sem wrap preservado"
+    }
+  },
+  "fonts": {
+    "ui": {
+      "family": "Inter Variable",
+      "file": "reference/public/fonts/InterVariable.ttf",
+      "license": "OFL-1.1",
+      "confidence": "documented",
+      "reference": "https://www.jetbrains.com/help/phpstorm/new-ui.html"
+    },
+    "editor": {
+      "family": "JetBrains Mono",
+      "file": "reference/public/fonts/JetBrainsMono-Regular.ttf",
+      "license": "OFL-1.1",
+      "confidence": "documented",
+      "reference": "https://github.com/JetBrains/JetBrainsMono"
+    },
+    "completion_php": {
+      "family": "JetBrains Mono Bold",
+      "file": "reference/public/fonts/JetBrainsMono-Bold.ttf",
+      "license": "OFL-1.1",
+      "confidence": "observed",
+      "reference": "phpstorm-262-completion; asset identity in reference/public/asset-sources.json"
+    }
+  },
+  "limits": [
+    "Os valores do tema e código público não comprovam valores de uma instalação comercial específica.",
+    "Há referência comercial local PHP/TS nesta M3.3; rasterização e interface inteira ainda diferem, sem paridade completa comprovada.",
+    "Geometria exposta no contrato Tokens foi ampliada para V3; sidebar245 continua escolha Storm; editor13 foi calibrado naCommunity252 nestaV4. As demais medidas têm fonte ou inferência acima.",
+    "Os helpers usam ícones próprios. Arcos, stroke, área pintada e estados precisam de comparação visual; passar teste geométrico Storm não prova identidade com o original.",
+    "DataGrip2026.2 documenta tool window bar no header; rails verticais vêm da referência PhpStorm. O shell combinado é decisão Storm.",
+    "Fonte de métricas e regras completa em docs/visual-spec-v3.md; snapshots OSS preservados em reference/public/visual-v3, separados do build."
+  ],
+  "component_styles": {
+    "hover_overlay": {
+      "rgba": "#FFFFFF16",
+      "source": "intellij-theme",
+      "source_key": "ui.ActionButton.hoverBackground",
+      "confidence": "documented"
+    },
+    "pressed_overlay": {
+      "rgba": "#FFFFFF26",
+      "source": "intellij-theme",
+      "source_key": "ui.ActionButton.pressedBackground",
+      "confidence": "documented"
+    },
+    "button_corner_radius": {
+      "value": 6.0,
+      "source": "intellij-jbui",
+      "source_key": "MainToolbar.Button.arc=12; StripeToolbar arc=12 normal",
+      "confidence": "inferred",
+      "mapping": "Raio egui adotado6; parâmetro upstream é arco Swing, não raio. Verificar rasterização por região."
+    },
+    "tab_indicator_height": {
+      "value": 4.0,
+      "source": "intellij-theme",
+      "source_key": "ui.EditorTabs.underlineHeight",
+      "confidence": "documented"
+    },
+    "tab_indicator_radius": {
+      "value": 2.0,
+      "source": "intellij-theme",
+      "source_key": "ui.EditorTabs.underlineArc=4",
+      "confidence": "inferred"
+    },
+    "tree_icon_size": {
+      "value": 16.0,
+      "source": "https://plugins.jetbrains.com/docs/intellij/icons.html",
+      "confidence": "documented",
+      "mapping": "Desenho geométrico original Storm no canvas16; não cópia de ícone JetBrains."
+    },
+    "icon_stroke": {
+      "value": 1.4,
+      "confidence": "inferred",
+      "mapping": "Escolha Storm para ícones próprios; guia geral recomenda2, mas esta implementação não afirma equivalência de desenho."
+    },
+    "modal_body_margin": {
+      "value": 20,
+      "confidence": "inferred",
+      "mapping": "Padding próprio Storm; largura550 do corpo, não medida no original."
+    },
+    "menu_shortcuts": {
+      "confidence": "inferred",
+      "mapping": "Colunas separadas label/atalho via widget egui; largura mínima260 e padding10 do título são escolhas Storm."
+    }
+  },
+  "local_reference_measurement_scope": {
+    "product": "PhpStorm",
+    "version": "2026.2.3",
+    "build": "262.10968.76",
+    "source": "phpstorm-262-definition",
+    "measured": [
+      "Dark editor/panel/caret row colors",
+      "editor font family and size",
+      "row pitch 22px",
+      "text offset 68px",
+      "window/tool bounds",
+      "PHP/TS Ctrl+B caret"
+    ],
+    "commercial_products_measured": true,
+    "other_reference": "Community252 remains historical; WebStorm/DataGrip metadata only in this round"
+  },
+  "references_component": {
+    "source": "phpstorm-262-references",
+    "confidence": "observed",
+    "panel_xywh": [
+      40,
+      505,
+      1200,
+      264
+    ],
+    "header_height": 41,
+    "row_height": 24,
+    "font": "Inter Regular13",
+    "normal": "#2B2D30",
+    "selected_active": "#2E436E",
+    "selected_inactive": "#43454A",
+    "foreground": "#DFE1E5",
+    "preview": "#1E1F22",
+    "underline": "#3574F0",
+    "underline_height": 3,
+    "mapping": "Panel height264 is only the default at1280x800; resizable. ratio.515 is inferred from measured boundaryx658 atwidth1200; splitter8px. status_height32 includes top separator; header allocates40px plus seam to reproduce measured41. Preview footer39 plus seam. Indent19 and language/workspace/folder grouping are Storm choices, no measured semantic usage kinds. Inter and mono fonts remain public OFL; icons are own. Tree top padding3 aligns measured selected-row y716..739; main editor caret row retained when Find has focus. Splitter8 is a Storm resize control; the original same region contains a vertical scrollbar, a documented difference."
+  },
+  "m3_6_rename": {
+    "confidence": "observed",
+    "reference": "PhpStorm PS-262.10968.76 Dark scale1 1280x800",
+    "source": "artifacts/m3-rename-20261020/reference-original",
+    "dialog_php": [
+      408,
+      287,
+      463,
+      225
+    ],
+    "dialog_ts": [
+      399,
+      273,
+      482,
+      254
+    ],
+    "dialog_mapping": "Storm usa geometria PHP463x225 para ambas linguagens; não oferece opções do original não implementadas. Margem12 e offset-1,-1 são adaptações inferidas após captura nativa. Fundo modal transparente preserva cores do editor. Campo/nome funcional, sem opções fictícias.",
+    "actionbar_height": 35,
+    "preview_body": [
+      40,
+      546,
+      1200,
+      187
+    ],
+    "preview_footer_height": 40,
+    "primary_paint": "#3675F0",
+    "secondary_paint": "#2C2E31",
+    "secondary_border": "#4F5258",
+    "font": "Inter Regular13",
+    "provider_difference": "Storm exibe todos3edits/declaration inclusa, original conta2usages; warning de conflitos é diferença necessária, não mascarada."
+  },
+  "m3_7_rename_conflicts": {
+    "confidence": "observed",
+    "reference": "PhpStorm2026.2.3 PS-262.10968.76 Dark scale1 1280x800",
+    "source": "artifacts/m3-rename-conflicts-20261020/reference-original/conflict-measurements.json",
+    "dialog": [
+      240,
+      100,
+      800,
+      600
+    ],
+    "toolbar_height": 35,
+    "tree_plus_divider_height": 206,
+    "preview_header_height": 37,
+    "footer_height": 51,
+    "annotation_body": {
+      "php": [
+        266,
+        498,
+        416,
+        37
+      ],
+      "ts": [
+        266,
+        454,
+        416,
+        55
+      ],
+      "text_inset": [
+        13,
+        10
+      ],
+      "original_fill": "pixel variation #5C5C5D/#5C5D5D/#5D5D5D",
+      "storm_fill": "#5D5D5D inferred flat approximation",
+      "corner_radius": "3px Storm choice; observed3–4px approximate"
+    },
+    "adaptations": "Portuguese truthful local-scope labels and Change name instead of Refactor Anyway; button padding8 compensates translated Cancelar width; tree top padding4 and code glyph offset2 tuned by captures; persistent annotation preserved; public OFL fonts and own icons; hint minimum height37 PHP/55 TS preserves measured containers although Portuguese messages are shorter"
+  },
+  "m3_8_rename_hierarchy": {
+    "confidence": "observed",
+    "source": "artifacts/m3-rename-inheritance-20261020/name-marker-provenance.json",
+    "name_background": [
+      55,
+      59,
+      57
+    ],
+    "mapping": "Primary conflict range is the actual AST UTF16 before-range. Galley scalar cursor positions determine paint width, preserving emoji/combining/fallback. This is an approximation of the dominant original marker RGB; original also contains secondary selection and text antialiasing. M3.9 also uses this measured token for the ordinary rename occurrence marker; see m3_9_rename_overrides. Existing modal geometry reused from M3.7; hierarchy labels are truthful Storm behavior."
+  },
+  "m3_9_rename_overrides": {
+    "confidence": "observed",
+    "reference": "PhpStorm2026.2.3 PS-262.10968.76 Dark scale1 1280x800",
+    "source": "artifacts/m3-rename-overrides-20261022/reference-original/measurements.json",
+    "name_background": [
+      55,
+      59,
+      57
+    ],
+    "mapping": "Ordinary rename before-preview uses exact proposed edit UTF16 range converted to scalar columns in the syntax galley. Same existing conflict token, independently observed in fresh PHP/TS ordinary previews. Tree selection remains blue. Font rasterization, marker height and other regions still differ; no pixel parity claimed."
+  },
+  "m3_10_related_methods": {
+    "confidence": "observed",
+    "reference": "PhpStorm2026.2.3 PS-262.10968.76 ExperimentalDark/Dark scale1 1280x800",
+    "source": "artifacts/m3-related-editor-20261022/reference-original/reference-report.md",
+    "dialog": [
+      181,
+      138,
+      918,
+      525
+    ],
+    "table": [
+      193,
+      178,
+      894,
+      180
+    ],
+    "header_height": 25,
+    "row_height": 21,
+    "source_preview": [
+      193,
+      416,
+      894,
+      197
+    ],
+    "bulk_visible": {
+      "all": [
+        890,
+        361,
+        83,
+        28
+      ],
+      "none": [
+        984,
+        361,
+        100,
+        28
+      ]
+    },
+    "footer_visible": {
+      "ok": [
+        928,
+        624,
+        72,
+        28
+      ],
+      "cancel": [
+        1012,
+        624,
+        72,
+        28
+      ]
+    },
+    "mapping": "Measured geometry and existing measured colors mapped to own egui widgets. Storm shows two actual changed declarations; original shows one related method. Portuguese truthful chain scope and mandatory complete-chain confirmation differ. Todos/Nenhum fit measured button widths with accessible full labels. Source marker uses actual UTF16 AST range converted in galley; syntax/font rendering and header separators still differ. No proprietary code/assets incorporated."
+  },
+  "m3_11_editor_history": {
+    "confidence": "observed",
+    "reference": "PhpStorm2026.2.3 PS-262.10968.76 Dark,1280x800,scale1,own fixture main.ts",
+    "source": "artifacts/m3-editor-history-20261022/reference-original/pixel-samples.json",
+    "editor_selection": "#214283",
+    "editor_caret": "#CED0D6",
+    "caret_px": [
+      2,
+      18
+    ],
+    "mapping": "Code-only selection color and separately rendered single caret from actual galley head. Public fonts retained. Selected glyph text uses existing Storm text color (adaptation), not a claim of matching semantic syntax. Blink follows existing egui timings, not a measured original interval. Shell/tree/forms retain their existing selection tokens.",
+    "geometry_adaptation": {
+      "source": "artifacts/m3-editor-history-20261022/reference-original/reference-report.md",
+      "editor_gutter_width": 61,
+      "editor_top_padding": 0,
+      "editor_letter_spacing": 0.2,
+      "confidence": "inferred",
+      "reason": "Original ASCII cell8px and selection y104..125 measured. Own egui spacing compensates native glyph advance7.8px; no proprietary asset or code."
+    }
+  },
+  "m3_12_editor_viewport": {
+    "reference": "phpstorm-262-editor-viewport",
+    "tokens": "design/tokens.json",
+    "source_origin_small": [
+      354,
+      82
+    ],
+    "source_origin_10001_lines": [
+      375,
+      82
+    ],
+    "row_height": 22,
+    "weather_selection_inclusive": [
+      402,
+      104,
+      457,
+      125
+    ],
+    "caret_target_eof_inclusive": [
+      375,
+      638,
+      376,
+      655
+    ],
+    "status": "measured regions; final captures and comparison report retain residual differences",
+    "fonts": "Original observed JetBrainsMono13 previously; Storm uses13+0.2spacing, gutter12/y4 adaptation, OFL CJK face2 and NotoColorEmoji/CBDT. No original font asset copied.",
+    "boundaries": "Grapheme-safe movement deliberately differs from scalar movement observed original; universal bidi/complex shaping unknown."
+  },
+  "m3_13_views_delimiters": {
+    "reference": "PhpStorm2026.2.3 PS-262.10968.76 Dark,1280x800 scale1",
+    "confidence": "observed",
+    "source": "artifacts/m3-editor-views-20261022/reference-original/pixel-measurements.json",
+    "editor_matching_bracket": "#43454A",
+    "inactive_tab_underline": "#5A5D63",
+    "splitter": "1px #393B40",
+    "editor_scrollbar": "#43454A sampled from original native split;8px thickness observed",
+    "status_height": 32,
+    "editor_bottom_padding": 0,
+    "font": "Public OFL JetBrainsMono Italic at audited revision for PHPDoc only; line comments PHP/TS Regular as individually observed",
+    "limits": "egui rasterization, semantic highlighting/inlays, tab icons and shell remain different; no pixel-perfect parity claim",
+    "inactive_caret_row": "observed original retains row #26282E in both editor groups, independently of keyboard focus; native split-right/down scenarios",
+    "remaining_font_difference": "inferred: fringes RGB in original PNG suggest LCD/subpixel antialiasing; current output differs. Screenshot evidence is not an audit of the font engine."
+  },
+  "m3_14_editor_polish": {
+    "date": "2026-10-22",
+    "reference": "artifacts/m3-editor-polish-20261022/reference-original/measurements.json",
+    "build": "PS-262.10968.76",
+    "theme": "Dark / ExperimentalDark",
+    "scale": 1,
+    "observed": {
+      "editor_phpdoc": "#5F826B, PHPDoc foreground maximum RGB and exact pixels",
+      "editor_php_variable": "#9876AA, local variable foreground maximum RGB and exact pixels",
+      "tabs": "editor background, no vertical borders, small trailing close, underline4",
+      "project_inactive_selection": "#43454A",
+      "editor_bounds": "x286..1239; gutter x351; text x354; separator y404",
+      "rail_selection": "#4A4B4E, selected Project rail, sample x12 y50",
+      "splitter_endpoint": "Horizontal y404: x286 is editor background; #393B40 begins x287. Own paint inset1 without moving hit target."
+    },
+    "codisseu_adaptations": {
+      "raw_font_coverage": "epaint Off replaces dark TwoCoverageMinusCoverageSq; no source font or rendering dependency changed",
+      "editor_glyph_y_offset": ".5 logical pixels, measured by before/after error; does not change shaping advances or cursor positions",
+      "sidebar_width": "246 including boundary; gutter60 retains text origin354",
+      "right_rail": "40 button +1 boundary",
+      "tab_text_inset": 34,
+      "tab_trailing_space": 33,
+      "tab_close_size": 16,
+      "file_badges": "Own procedural text and rectangles, file extension from real path; blue #548AF7 reused from existing palette"
+    },
+    "limitations": "Grayscale egui coverage cannot reproduce all observed RGB fringes. No claim of original renderer settings or complete shell/semantic parity."
+  },
+  "m3_16_editor_groups": {
+    "reference": "artifacts/m3-editor-groups-20261022/reference-original/pixel-measurements.json",
+    "build": "PS-262.10968.76",
+    "theme": "Dark/ExperimentalDark",
+    "scale": 1,
+    "confidence": "observed",
+    "geometry": "Vertical divider x680, gutter boundary x745 and text origin x748 after drag; original right editor measures gutter from divider itself. Tabs start after divider at681.",
+    "adaptation": "Second vertical editor layout origin shifts left by divider width1; inherited group clip excludes divider, preserving its color/hit target. Single and horizontal views unchanged.",
+    "remaining": "Text rasterization, semantic decorations, shell and per-group tab membership still differ."
+  },
+  "m3_17_editor_tabs": {
+    "build": "PS-262.10968.76",
+    "theme": "Dark/ExperimentalDark",
+    "scale": 1,
+    "reference": "artifacts/m3-editor-tabs-20261022/reference-original/pixel-measurements.json",
+    "confidence": "observed",
+    "observed": {
+      "tab_ts": "Inspector x287,y41,157x41; label/icon x299,y52,115x19, Inter Regular13",
+      "close": "Inspector component x420,y34,16x55; visibleRect0,7,16,41 => x420,y41,16x41; glyph bounds424..431,57..64",
+      "underlines": "active #3574F0, passive #5A5D63;4px y78..81; rounded tips",
+      "gap": "bottom y81 #393B40; other sampled pixels #1E1F22",
+      "php": "label/icon x849,y52,121x19 observed; tab x837,y41,163x41 inferred from underline/label geometry"
+    },
+    "codisseu_adaptations": {
+      "tab_trailing_space": 32,
+      "tab_spacing": -1,
+      "width_rounding": "floor points after measuring real proportional label; no filename-specific widths",
+      "leading_border": "1 point inset at left panel boundary; vertical second group already starts after divider",
+      "close": "16x41 target,16px centered glyph, disjoint from activation",
+      "underlines": "4px,corner radius2; exact solid RGB runs in three focus combinations at scale1; AA tips still differ",
+      "tab_background_gap": "1px bottom separator across available row width"
+    },
+    "limitations": "Private reference pixels only evidence, no screenshot/icon/font asset copied. Glyph/AA tips/fonts/semantic decorations/shell still differ. Scale1.25 original unknown."
+  },
+  "m3_18_tab_polish": {
+    "reference": "artifacts/m3-editor-tab-polish-20261022/reference-original/reference-report.md",
+    "build": "PS-262.10968.76",
+    "theme": "Dark/ExperimentalDark",
+    "scale": 1,
+    "observed": {
+      "close_normal_dominant": "#686C72 raster pixel; vector source color unknown",
+      "close_hover_dominant": "#7F838A glyph, #393A3D feedback circle; hover/down exact",
+      "unselected_hover": "label/icon brighten; close appears; background unchanged",
+      "inactive_badge": "solid #476FC2 vs selected #548AF7; .75 sRGB mix with #1E1F22",
+      "underline": "active #3574F0; passive #5A5D63;4px"
+    },
+    "own_adaptation_inferred": {
+      "tab_close_foreground": [
+        111,
+        115,
+        122
+      ],
+      "tab_close_hover_foreground": [
+        134,
+        138,
+        145
+      ],
+      "tab_close_hover_background": [
+        57,
+        58,
+        61
+      ],
+      "tab_close_padding": 4.87,
+      "tab_close_stroke": 0.995,
+      "tab_close_hover_radius": 7.97,
+      "tab_underline_radius": [
+        2.142,
+        2.002
+      ],
+      "tab_inactive_opacity": 0.75,
+      "method": "Own capsule/circle/ellipse coverage, bounded mesh cache32entries/1MiB, pixel phase/DPI in key. No image assets or observed alpha tables. Integer compositing adaptation is inferred, not an audit of original rasterizer."
+    },
+    "limitations": "Active underline exact in measured DPI1 patches only. Passive tips max1; close max3; label/icon RGB, decorations and shell remain different. Original zoom125 is distinct from product DPI125."
+  },
+  "m3_19_tab_finish": {
+    "reference": "artifacts/m3-editor-tab-finish-20261022/reference-original/reference-report.md",
+    "product": "PhpStorm2026.2.3 PS-262.10968.76",
+    "theme": "Dark/ExperimentalDark",
+    "scale_observed": 1,
+    "observed": {
+      "tab_text_component_origin_ts": [
+        299,
+        52
+      ],
+      "tab_text_paint_origin_ts": [
+        319,
+        52
+      ],
+      "tab_text_component_size_ts": [
+        115,
+        19
+      ],
+      "tab_text_component_size_php": [
+        121,
+        19
+      ],
+      "font": "Inter Regular13; installedmetadata Inter3.019; publicdownload hash-identical",
+      "more_bounds_left": [
+        648,
+        49,
+        26,
+        24
+      ],
+      "more_bounds_right": [
+        1207,
+        49,
+        26,
+        24
+      ],
+      "more_dots": "2x2 squares, verticalstep5; leftx660,y55/60/65",
+      "tab_more_foreground": [
+        165,
+        167,
+        172
+      ],
+      "tab_more_hover_foreground": [
+        169,
+        171,
+        176
+      ],
+      "tab_more_hover_background": [
+        48,
+        49,
+        52
+      ]
+    },
+    "own_adaptation_inferred": {
+      "tab_text_inset": 34.0,
+      "tab_trailing_space": 32.0,
+      "tab_close_padding": [
+        4.9,
+        4.85
+      ],
+      "tab_close_stroke": 1.0,
+      "tab_close_hover_radius": 7.965,
+      "tab_underline_radius": [
+        2.028,
+        1.988
+      ],
+      "tab_underline_inset": 0.024,
+      "tab_more_hover_radius": 4.11
+    },
+    "label_method": "Existing Inter4.001 and full-run painting preserved. Public Inter3.019 is hash-identical to original font but integer/whole-run/hinting/scale candidates did not jointly improve the measured labels; rejected sources and measurements retained in artifacts. No product font change.",
+    "editor_unnecessary_text": {
+      "value": [
+        111,
+        115,
+        122
+      ],
+      "status": "observed",
+      "source": "artifacts/m3-editor-tab-finish-20261022/reference-unused/unused-foreground-picker.png",
+      "scenario": "Native Jump to Colors and Fonts on exact unused TS symbol; General > Errors and Warnings > Unused code; Foreground picker R111 G115 B122 A100%, canceled without change",
+      "public_documented_source": "artifacts/m3-editor-tab-finish-20261022/reference-unused/public-scheme-source.json"
+    },
+    "limits": "DPI1 patches only, not whole-window identity; original IDE125 zoom differs from product DPI125. All sources/failed experiments retained."
+  },
+  "m3_20_tab_label_lcd": {
+    "reference": "artifacts/m3-tab-label-lcd-20261022/reference-original/reference-report.md",
+    "product": "PhpStorm PS-262.10968.76 Dark/ExperimentalDark deviceScale1",
+    "font_correction": "Inter3.019 found in JBR is not proof of UI face. Family probe logs load newer system Inter4.001. Product preserves its audited public InterVariable4.001.",
+    "tab_unselected_text_blend": {
+      "value": 0.7,
+      "confidence": "documented; native result measured separately",
+      "source": "reference/public/visual-v4/upstream/platform/platform-resources/src/themes/expUI/expUI_dark.theme.json",
+      "behavior_source": "reference/public/visual-v3/upstream/platform/platform-impl/src/com/intellij/openapi/fileEditor/impl/EditorTabbedContainer.kt:936",
+      "method": "Blend squared foreground/background channels then square root and round; color is blended before LCD glyph coverage. Badge alpha0.75 unchanged.",
+      "color_math_source": "artifacts/m3-tab-label-lcd-20261022/reference-original/label-blend-source.json"
+    },
+    "lcd_method": {
+      "confidence": "inferred and compared natively",
+      "font": "reference/public/fonts/InterVariable.ttf",
+      "library": "FreeType2.13.3",
+      "raster": "FT_LOAD_TARGET_LCD | FT_LOAD_NO_BITMAP, FT_RENDER_MODE_LCD, FT_LCD_FILTER_DEFAULT",
+      "anchor_bearing_x": -1,
+      "baseline_relative_to_tab_center": 5,
+      "limits": "ASCII plus dirty bullet, optional Linux adapter; egui fallback; original pixel tables not incorporated",
+      "composition": "Integer source-over separately per channel and per glyph, preserving rounding at overlapping filter fringes."
+    }
+  },
+  "m3_21_signature_help": {
+    "reference": "artifacts/m3-signature-help-20261023/reference-original/reference-report.md",
+    "product": "PhpStorm PS-262.10968.76 Dark/ExperimentalDark; native X11 deviceScale1 Zoom100",
+    "confidence": "observed native pixels and Inspector; own drawing implementation",
+    "tokens": {
+      "background": "#1E1F22",
+      "border": "#313234",
+      "foreground": "#BCBEC4",
+      "TS_type": "#CF8E6D",
+      "TS_inactive_name": "#939499",
+      "TS_inactive_type": "#A17057",
+      "overload_active_background": "#252D26",
+      "font_size": 13,
+      "body_height": 51,
+      "baseline_from_top": 29,
+      "padding_x_php": 20,
+      "padding_x_ts": 16,
+      "ts_code_padding": 3
+    },
+    "font": "Existing public InterVariable4.001; synthetic outline bold size26_6/32 preserving advance, not weight700",
+    "font_evidence": "artifacts/m3-signature-help-20261023/core/font-probe/report.json",
+    "lsp": "https://raw.githubusercontent.com/microsoft/language-server-protocol/gh-pages/_specifications/lsp/3.17/language/signatureHelp.md",
+    "limits": "LSP supplies active signature/parameter but no argument mismatch presentation. Scale1.25 reference not observed. Absolute TS placement includes missing original inlays; no arbitrary offset to hide this.",
+    "frame": {
+      "source": "artifacts/m3-signature-help-20261023/reference-original/public-popup/BalloonImpl.source.json",
+      "confidence": "documented quadratic corners; dimensions and pointer observed; coverage model inferred and measured natively",
+      "implementation": "Own procedural quadratic body, inside border and continuous pointer; 20pt minimum tip margin; pointer physical center phase0.5 and diagonal stroke extent1/sqrt2. Shadow remains egui; residuals documented.",
+      "research": "artifacts/m3-signature-help-20261023/frame-lab/README.md"
+    }
+  },
+  "m3_rename_contracts_20261023": {
+    "reference": "artifacts/m3-rename-overrides-20261022/reference-original/measurements.json",
+    "product": "PhpStorm 2026.2.3 PS-262.10968.76 Dark scale1",
+    "confidence": "observed; retained prior native/Inspector measurement",
+    "tokens": {
+      "rename_tree_selection": "#2E436E",
+      "rename_text": "#DFE1E5"
+    },
+    "implementation": "Rename previews now share the editor shaping/ligature policy and tab-to-scalar mapping; no source pixels incorporated. Related declaration labels use existing bounded public Inter LCD renderer with egui fallback, scoped to row clipping.",
+    "fresh_reference": "artifacts/m3-rename-contracts-20261023/reference-original/inspector-rename-title.png; inspector-conflict-row.png",
+    "dialog_offsets": {
+      "confidence": "observed",
+      "source": "artifacts/m3-rename-contracts-20261023/reference-original/php-trait-dialog.png",
+      "title": {
+        "left": 12,
+        "top": 8,
+        "height": 17
+      },
+      "input": {
+        "left": 15,
+        "top": 36,
+        "height": 28
+      },
+      "scope_label_top": 112,
+      "scope_value_top": 136,
+      "action_top_from_bottom": 39,
+      "note": "Offsets within the observed 463x225 body. Fixed project scope, two actions and localized text remain product differences; unsupported original options are not present."
+    },
+    "related_cells": {
+      "confidence": "observed",
+      "source": "artifacts/m3-rename-contracts-20261023/visual-review/precipitation-translation.json",
+      "text_foreground": "#DFE1E5",
+      "first_rename_to_ink": [
+        657,
+        210,
+        76,
+        12
+      ],
+      "checked_box": [
+        199,
+        206,
+        16,
+        16
+      ],
+      "check_background": "#3574F0",
+      "check_shape": "Own procedural stroke; radius 3 and check path inferred from pixels, not an exact parity claim.",
+      "note": "No egui checkbox paint under the own response. Accessible checked state and keyboard interaction retained; own visible focus ring."
+    },
+    "call_preview": {
+      "confidence": "observed",
+      "sources": [
+        "artifacts/m3-rename-contracts-20261023/reference-original/php-interface-preview-canonical.png",
+        "artifacts/m3-rename-contracts-20261023/reference-original/ts-interface-preview-step.png"
+      ],
+      "clip_top": 546,
+      "selected_row_top": 595,
+      "row_height": 22,
+      "source_start": "selected line minus 2, top padding5",
+      "rename_preview_ratio": 0.5162635529608006,
+      "renderer_difference": "Source glyphs still use egui grayscale AA; original LCD color fringes observed."
+    }
+  },
+  "m3_23_rename_name": {
+    "confidence": "observed",
+    "product": "PhpStorm2026.2.3 PS-262.10968.76",
+    "theme": "Dark/ExperimentalDark",
+    "scale": 1,
+    "source": "artifacts/m3-rename-finish-20261023/reference-original/php-method2-dialog.png",
+    "name_field": [
+      423,
+      323,
+      856,
+      351
+    ],
+    "focused_outline": [
+      422,
+      322,
+      857,
+      352
+    ],
+    "selection_background": "#214283",
+    "selection_bounds": [
+      432,
+      328,
+      473,
+      345
+    ],
+    "rename_name_padding": [
+      9,
+      5
+    ],
+    "note": "Padding inferred from selected-text background origin relative to field origin; own egui frame and selection foreground kept independent. Glyph/rounded-corner raster equality is not certified."
+  },
+  "m3_24_rename_inheritor_file": {
+    "confidence": "observed",
+    "product": "PhpStorm 2026.2.3 PS-262.10968.76",
+    "theme": "Dark/ExperimentalDark",
+    "scale": 1,
+    "source": "artifacts/m3-rename-complete-20261023/inheritors-original/inheritors-list-bottom.png",
+    "scenario": "Selected file WetWeather.php in Rename inheritors chooser",
+    "rename_file_highlight": [
+      45,
+      84,
+      63
+    ],
+    "sample_pixels": [
+      [
+        900,
+        430
+      ],
+      [
+        900,
+        450
+      ],
+      [
+        900,
+        470
+      ]
+    ],
+    "note": "Own rendering uses sampled background; no commercial pixels or assets incorporated."
+  },
+  "shell_productivity_20261023": {
+    "source": "artifacts/m3-shell-20261023/reference-original/shell-pixel-measurements.json",
+    "product": "PhpStorm2026.2.3 PS-262.10968.76",
+    "theme": "Dark/ExperimentalDark",
+    "device_scale": 1,
+    "ide_zoom": 100,
+    "confidence": "observed",
+    "tokens": {
+      "main_toolbar_height": 40,
+      "rail_width": 40,
+      "status_height": 30,
+      "bar": "#2B2D30",
+      "panel": "#2B2D30",
+      "editor": "#1E1F22"
+    },
+    "note": "Pixel samples and Inspector in docs/m3-shell-reference.md; resizeable widths not universal."
+  },
+  "shell_rounding_20261023": {
+    "confidence": "documented",
+    "source": "Explicit user follow-up requesting slight rounding and borders throughout",
+    "tokens": {
+      "shell_corner_radius": 4,
+      "shell_border": "#393B40"
+    },
+    "note": "Own design values fulfilling user preference; not claimed exact local IDE measurements."
+  },
+  "m4_database_reference_20261023": {
+    "confidence": "observed",
+    "source": "docs/m4-database-reference.md",
+    "product": "PhpStorm2026.2.3 PS-262.10968.76 Database Tools and SQL; functional DataGrip UI unknown",
+    "theme": "Dark/ExperimentalDark",
+    "device_scale": 1,
+    "ide_zoom": 100,
+    "evidence": [
+      "artifacts/m4-database-20261023/reference-original/inspector-result-grid.png",
+      "artifacts/m4-database-20261023/reference-original/inspector-table-properties.png",
+      "artifacts/m4-database-20261023/reference-original/pixel-measurements.json"
+    ],
+    "tokens": {
+      "database_grid_row_height": 27,
+      "database_grid_font_size": 13,
+      "database_grid_header": "#2E2F32",
+      "database_grid_separator": "#313438",
+      "database_grid_selection": "#214283"
+    },
+    "other_observed": {
+      "grid_background": "#1E1F22",
+      "grid_foreground": "#BCBEC4",
+      "font": "JetBrains Mono Regular13px",
+      "cell_renderer_px": [
+        163,
+        27
+      ],
+      "cell_inner_px": [
+        162,
+        26
+      ],
+      "cell_insets_px": {
+        "top": 2,
+        "left": 3,
+        "bottom": 2,
+        "right": 3
+      },
+      "modal_background": "#2B2D30",
+      "input_border": "#4E5157",
+      "tab_underline": "#3574F0"
+    },
+    "limits": "Specific native scale1/fixture/states only; no original scale1.25 or whole-window identity claimed. Inspector/pixels are private evidence, not incorporated assets."
+  },
+  "m4_database_own_palette_20261023": {
+    "confidence": "provisional",
+    "source": "Own Codisseu design decisions for differentiating engine badges and pending edits",
+    "tokens": {
+      "database_dirty": [
+        66,
+        61,
+        39
+      ],
+      "database_engine_mysql": [
+        77,
+        177,
+        202
+      ],
+      "database_engine_postgres": [
+        111,
+        160,
+        220
+      ],
+      "database_engine_mongo": [
+        106,
+        177,
+        113
+      ],
+      "database_engine_redis": [
+        224,
+        112,
+        111
+      ],
+      "database_engine_memcached": [
+        147,
+        125,
+        208
+      ]
+    },
+    "limits": "Own engine hues and dirty fill, not measured DataGrip/PhpStorm brand icons. No commercial icon paths or image pixels incorporated."
+  },
+  "javascript_badge_20261023": {
+    "confidence": "documented user requirement; exact RGB own choice",
+    "source": "User request23/10/2026: JavaScript yellow, TypeScript blue",
+    "tokens": {
+      "file_type_js_background": [
+        247,
+        223,
+        30
+      ],
+      "file_type_js_foreground": [
+        30,
+        31,
+        34
+      ]
+    },
+    "background_hex": "#F7DF1E",
+    "limits": "Yellow implements explicit user preference; exact hex and own JS lettering are Codisseu choices, not claimed local IDE measurements. TypeScript existing audited source unchanged."
+  },
+  "m4_db_visual_20261023": {
+    "scope": "DataGrip real local UI plus user-provided screenshot; independent Rust implementation",
+    "reference_product": "DataGrip",
+    "build": "DB-262.10315.24",
+    "confidence": "observed live DataGrip MySQL table and PostgreSQL console grid; public Swing properties plus actual Swing rendering, not physical Wayland screenshot",
+    "sources": [
+      "artifacts/m4-db-visual-20261023/reference-original/datagrip-new-mysql-awt-properties.json",
+      "artifacts/m4-db-visual-20261023/reference-original/datagrip-normal-defaults.json",
+      "artifacts/m4-db-visual-20261023/reference-original/datagrip-new-mysql-swing-render.png",
+      "artifacts/m4-db-visual-20261023/reference-original/own-pg-console-result-swing-render.png",
+      "artifacts/m4-db-visual-20261023/reference-original/own-pg-query-grid-metrics.txt",
+      "artifacts/m4-db-visual-20261023/reference-original/own-grid-selected-swing-render.png",
+      "artifacts/m4-db-visual-20261023/reference-original/own-grid-dirty-swing-render.png"
+    ],
+    "observed": {
+      "UI_font": "Inter13",
+      "panel_background": [
+        25,
+        26,
+        28
+      ],
+      "UI_foreground": [
+        209,
+        211,
+        217
+      ],
+      "modal_size": [
+        994,
+        708
+      ],
+      "tree_plus_rail_width": 298,
+      "tabs": "rounded pills; approximately12px text",
+      "field_height": 28
+    },
+    "user_screenshot": {
+      "path": "/tmp/codex-clipboard-99e76c63-ec2b-480d-b6e2-6f7b5489768c.png",
+      "sha256": "c97c4f764da4b1beb696e16d1611d0ad01876325cbf9e8d715b732fed3e7d346",
+      "confidence": "observed pixels; product/build/theme name not confirmed by screenshot alone",
+      "panel": [
+        25,
+        26,
+        28
+      ],
+      "gap_background": [
+        38,
+        40,
+        44
+      ],
+      "gap": 5,
+      "corner_radius": "10 logical units fitted design; exact original radius not inspected"
+    },
+    "defaults_not_live_grid": {
+      "Table.background": [
+        25,
+        26,
+        28
+      ],
+      "Table.foreground": [
+        209,
+        211,
+        217
+      ],
+      "Table.selectionBackground": [
+        42,
+        67,
+        113
+      ],
+      "TableHeader.background": [
+        25,
+        26,
+        28
+      ]
+    },
+    "prior_reference": {
+      "product": "PhpStorm PS-262.10968.76 Database Tools",
+      "theme": "ExperimentalDark",
+      "scale": 1,
+      "grid_row_header_font": [
+        27,
+        25,
+        13
+      ],
+      "PK_badge": [
+        242,
+        197,
+        92
+      ],
+      "dirty_selected": [
+        56,
+        85,
+        112
+      ],
+      "SQL_completion_foreground": [
+        206,
+        208,
+        214
+      ],
+      "paths": [
+        "artifacts/m4-database-20261023/reference-original/inspector-result-grid.png",
+        "artifacts/m4-sql-workflow-20261023/reference-original/column-completion.png"
+      ]
+    },
+    "own_choices": [
+      "Engine vectors are independently drawn; no extracted commercial images or paths",
+      "Memcached icon has no observed original equivalent",
+      "Preview width420 accommodates parameterized SQL, original short SQLite preview249",
+      "Only implemented tabs/actions are shown; no fake SSH/cloud/driver-management/schema settings"
+    ],
+    "limits": "Different renderers; no claim of pixel identity or complete DataGrip feature coverage. Native1.25 is Codisseu validation, not original1.25 measurement.",
+    "live_grid": {
+      "scenario": "DataGrip own project; PostgreSQL18.6 EXAMPLE_DB localhost5432, read-only SELECT synthetic constants; MySQL8.4.11 owned fixture staging/Revert only",
+      "font": "JetBrains Mono Regular13",
+      "row_and_header_height": 27,
+      "header_painted": [
+        41,
+        42,
+        44
+      ],
+      "body_foreground": [
+        188,
+        190,
+        196
+      ],
+      "selection_background": [
+        33,
+        66,
+        131
+      ],
+      "selected_foreground": [
+        209,
+        211,
+        217
+      ],
+      "separator": [
+        50,
+        52,
+        56
+      ],
+      "active_row_and_selected_header": [
+        31,
+        32,
+        36
+      ],
+      "dirty_cell_and_gutter": [
+        56,
+        85,
+        112
+      ],
+      "pg_column_widths": [
+        163,
+        163,
+        189,
+        163
+      ],
+      "pg_table_width": 678,
+      "pg_header_viewport_width": 903,
+      "mysql_column_widths": [
+        149,
+        149,
+        149
+      ],
+      "resize": "Columns retain widths and leave trailing blank; sizes are scenarios, not universal defaults",
+      "null": "Observed gray <null>; canonical HEX unknown because public wrapper exposes generic foreground and LCD raster does not determine it",
+      "services_inactive_selection": [
+        51,
+        53,
+        59
+      ],
+      "services_inactive_pixel_samples": {
+        "image": "artifacts/m4-db-visual-20261023/reference-original/own-pg-console-result-swing-render.png",
+        "points": [
+          [
+            60,
+            790
+          ],
+          [
+            300,
+            785
+          ],
+          [
+            435,
+            780
+          ]
+        ]
+      }
+    },
+    "own_layout_choices": {
+      "column_width": "Measured bounded text with 163px minimum and own cap; no viewport stretch",
+      "row_header_font_size": 11,
+      "row_header_font_reason": "Fits 3 digits inside25px gutter; not an inspected DataGrip font property",
+      "preview_width": 420,
+      "preview_reason": "Own optimistic SQL with parameters needs more room than simple observed DML",
+      "shell_radius": 10,
+      "separator_placement": "Inside0.5px to avoid next cell fill erasing line",
+      "modal_geometry_comparison": "artifacts/m4-db-visual-20261023/comparisons/modal-geometry.json",
+      "services_left_width": "360px default,180px minimum,up to45% of pane; adjustable, not measured universal DataGrip width",
+      "null_tint": "111,115,122 own muted token; exact original NULL HEX unknown"
+    }
+  },
+  "git_completion_20261024": {
+    "confidence": "observed",
+    "product": "PhpStorm PS-262.10968.76",
+    "theme": "Islands Dark",
+    "scale": 1,
+    "source": "artifacts/m5-git-20261024/reference-original/report.md",
+    "new_source": "artifacts/m5-git-completion-20261024/reference-original/interactive-rebase.txt",
+    "tokens": [
+      "git_push_width",
+      "git_push_body_height",
+      "git_sync_footer_height",
+      "git_pull_width",
+      "git_rebase_width",
+      "git_rebase_height",
+      "git_rebase_row_height",
+      "git_tree_row_height",
+      "git_changelist_width",
+      "git_shelve_width",
+      "git_shelve_height"
+    ],
+    "limitations": "Geometria da janela própria em escala1; não certifica todas fontes/escalas."
+  },
+  "git_visual_matched_20261024": {
+    "confidence": "observed",
+    "product": "PhpStorm 2026.2.3 PS-262.10968.76",
+    "theme": "Islands Dark",
+    "scale": 1,
+    "source": "artifacts/m5-git-visual-20261024/reference-original/report.md",
+    "pixel_source": "artifacts/m5-git-visual-20261024/reference-original/pixel-measurements.json",
+    "tokens": [
+      "git_log_toolbar_width",
+      "git_log_row_height",
+      "git_log_branch_width",
+      "git_log_details_width",
+      "git_focus_selection",
+      "git_log_selection",
+      "git_log_head",
+      "git_popup_background"
+    ],
+    "values": {
+      "git_log_toolbar_width": 39,
+      "git_log_row_height": 26,
+      "git_log_branch_width": 382,
+      "git_log_details_width": 268,
+      "git_focus_selection": [
+        42,
+        67,
+        113
+      ],
+      "git_log_selection": [
+        42,
+        67,
+        113
+      ],
+      "git_log_head": [
+        29,
+        35,
+        54
+      ],
+      "git_popup_background": [
+        38,
+        40,
+        44
+      ]
+    },
+    "derived_layout": {
+      "git_log_filter_height": {
+        "value": 36,
+        "confidence": "inferred",
+        "reason": "Content budget before the painted divider; observed original filter container is37px. Product table remains3px lower in the matched1400x1000 viewport, retained in comparison report."
+      }
+    },
+    "limitations": "Canonical RGB Swing paint rather than physical compositor screenshot; product125% QA does not establish observed reference125%."
+  },
+  "m5_3_shell": {
+    "reference_visible_islands": {
+      "commit": [
+        42,
+        44,
+        457,
+        924
+      ],
+      "log": [
+        42,
+        643,
+        1317,
+        325
+      ],
+      "log_commit_row": [
+        464,
+        721,
+        625,
+        26
+      ]
+    },
+    "implementation": {
+      "shell_body_insets": [
+        2,
+        4,
+        1,
+        4
+      ],
+      "git_log_toolbar_allocation": 38,
+      "git_log_toolbar_including_divider": 39,
+      "git_log_filter_height": 37,
+      "git_log_details_width": 269
+    },
+    "confidence": "observed reference; own layout mapping verified in native final corpus",
+    "source": "artifacts/m5-git-visual-20261024/comparisons/measurements.json"
+  },
+  "m6_content_insets_20261025": {
+    "status": "product_design_supported_by_observation",
+    "tokens": {
+      "panel_content_inset_x": 12,
+      "panel_content_inset_y": 8,
+      "dialog_content_inset": 16,
+      "providers_content_inset": 20
+    },
+    "reference": "docs/m6-shell-polish-reference.md",
+    "basis": "Pedido explícito; PS-262.10968.76 Dark/AWT1 observou gutter terminal13, Settings laterais16, Database vazio12. Os quatro tokens não são alegados como medidas universais exatas do original. Providers é formulário próprio."
+  },
+  "ai_chat_20261025": {
+    "confidence": "product_design_supported_by_observation",
+    "reference": "docs/ai-chat-vscode-reference.md",
+    "source_build": "VS Code1.143.1 / openai.chatgpt26.1021.22027 / Dark Modern / DPR1",
+    "observed": {
+      "composer_radius": 22,
+      "input_padding_x": 12,
+      "input_height_min": 44,
+      "footer_button_size": 28
+    },
+    "product_tokens": {
+      "ai_panel_width": 380,
+      "ai_content_inset": 16,
+      "ai_composer_background": [
+        31,
+        31,
+        31
+      ],
+      "ai_composer_border": [
+        44,
+        44,
+        44
+      ],
+      "ai_composer_radius": 20
+    },
+    "limits": "Product palette/radius20/width380 are design choices, not exact sampled reference values. Insets16 and monochrome footer explicitly requested by user. Sidebar symbol redrawn from user attachment; no proprietary extension paths copied."
+  },
+  "ai_chat_usage_20261025": {
+    "confidence": "product_design",
+    "source": "docs/ai-chat-access-contract.md",
+    "decision": "Rodapé na mesma linha do status, fonte Small e cor muted existentes; ícones cinza preservados. Espaçamento deriva das métricas do tema, sem valores medidos atribuídos ao VS Code. Aproximação do contexto e cota da conta são separados nos detalhes."
+  },
+  "git_insights_20261025": {
+    "reference": "GitLens19.4.0 / VSCode1.143.1 / Dark Modern / zoom0 / DPR1",
+    "scenario": "Cursor invoice.ts:6, hover e fileblame na fixture própria",
+    "source": "artifacts/gitlens-20261025/reference/{environment.json,hover-line.json,file-blame-final.json}",
+    "tokens": {
+      "git_authorship_gap": {
+        "value": 42,
+        "confidence": "observed",
+        "basis": "margin-left42px local no editor14px; adapte egui sem prometer pixels iguais"
+      },
+      "git_authorship_color": {
+        "value": [
+          153,
+          153,
+          153,
+          89
+        ],
+        "confidence": "observed",
+        "basis": "rgba(153,153,153,0.35), alpha arredondado a8bits"
+      },
+      "git_blame_max_width": {
+        "value": 460,
+        "confidence": "designed",
+        "basis": "teto próprio, coluna referência ≈612px não copiada como universal"
+      },
+      "git_blame_width_fraction": {
+        "value": 0.42,
+        "confidence": "designed",
+        "basis": "limite proporcional para preservar código em larguras menores"
+      }
+    }
+  },
+  "shell_panel_layout_20261026": {
+    "confidence": "designed",
+    "source": "docs/m6-panel-layout-contract.md",
+    "basis": "Pedido do usuário com screenshots do Codisseu em26/10/2026; sem medição nova de IDE comercial. Uma dimensão comum por região; defaults próprios.",
+    "values": {
+      "shell_bottom_height": 387,
+      "shell_right_width": 300,
+      "status_height": 30,
+      "status_right_inset": "rail_width + 12"
+    }
+  },
+  "folding_spacing_20261026": {
+    "status": "designed",
+    "source": "Pedido e screenshot do usuário em26/10/2026",
+    "token": "editor_fold_center_offset",
+    "previous": 9,
+    "current": 13,
+    "units": "egui logical points",
+    "effect": "Move glyph and shared hitbox4points left; separator/code/numbers unchanged. No new reference IDE measurement."
+  },
+  "breakpoint_spacing_20261026": {
+    "status": "designed",
+    "source": "Pedido explícito do usuário em26/10/2026",
+    "token": "editor_breakpoint_center_offset",
+    "value": 29,
+    "units": "egui logical points from code origin",
+    "effect": "Line number then breakpoint then folding arrow; shared painting and18pt hitbox center. Folding center remains13pt from code origin."
+  },
+  "php_navigation_20261027": {
+    "source": "php-navigation-20261027",
+    "tokens": {
+      "navigation_popup_background": {
+        "value": [
+          43,
+          45,
+          48
+        ],
+        "confidence": "observed"
+      },
+      "popup_border": {
+        "value": [
+          67,
+          69,
+          74
+        ],
+        "confidence": "observed"
+      },
+      "navigation_popup_selection": {
+        "value": [
+          46,
+          67,
+          110
+        ],
+        "confidence": "observed"
+      },
+      "navigation_popup_text": {
+        "value": [
+          223,
+          225,
+          229
+        ],
+        "confidence": "observed: opaque glyph cores in screenshot"
+      },
+      "navigation_popup_public_color": {
+        "value": [
+          87,
+          150,
+          92
+        ],
+        "confidence": "observed: icon opaque cores"
+      },
+      "navigation_popup_row_height": {
+        "value": 24,
+        "confidence": "observed"
+      },
+      "navigation_popup_padding": {
+        "value": 8,
+        "confidence": "inferred subdivision from measured bounds"
+      },
+      "navigation_popup_header_height": {
+        "value": 24,
+        "confidence": "inferred subdivision from measured bounds"
+      },
+      "navigation_popup_header_gap": {
+        "value": 7,
+        "confidence": "inferred subdivision from measured bounds"
+      },
+      "navigation_popup_min_width": {
+        "value": 300,
+        "confidence": "provisional viewport policy"
+      }
+    },
+    "typography": {
+      "title": "Inter13/weight600: inferred approximation; same licensed variable font already bundled",
+      "rows": "JetBrainsMono13 plus existing0.2tracking: inferred adaptation to measured glyph positions"
+    },
+    "limits": "Reference chooser includes interface declaration plus two implementations; Phpactor returns two concrete implementations. Counts are never fabricated. No universal pixel equality or original125% observation claimed."
+  },
+  "php_tests_20261030": {
+    "source": "https://resources.jetbrains.com/help/img/idea/2026.2/ps_test_result_phpunit.png",
+    "sha256": "56a696d9e8cc493d687b2a00580ef015f83984fa2ca4dce1cb6b20b4131f6cda",
+    "confidence": "documented image; observed image pixels, not installed runtime",
+    "image_size": [
+      2060,
+      588
+    ],
+    "image_build": null,
+    "image_dpi": null,
+    "local_theme_scale": null,
+    "measured_pixels": {
+      "failed_rgb": [
+        255,
+        175,
+        17
+      ],
+      "passed_rgb": [
+        85,
+        167,
+        106
+      ],
+      "tree_divider_x": [
+        902,
+        903
+      ],
+      "row_step": 48,
+      "indent_step": 38
+    },
+    "tokens": {
+      "php_test_failed": "dominant solid RGB in image crop [68,168,96,196]",
+      "php_test_passed": "check interior RGB from image crop [220,410,248,438]",
+      "php_test_tree_fraction": "902/2060, initial resizable proportion",
+      "php_test_tree_row_height": "inferred design:48 image pixels divided by assumed2; image DPI unknown",
+      "php_test_indent": "inferred design:38 image pixels divided by assumed2; image DPI unknown",
+      "php_test_toolbar_height": "existing shell density32 logical units; not original runtime measurement"
+    },
+    "limitations": "Dark panel/font/selection continue existing Codisseu tokens; exact local PhpStorm pixel parity not certified."
+  },
+  "editor_selection_highlight_20261103": {
+    "status": "provisional",
+    "origin": "Codisseu design: muted blue fill and thin border, distinguish passive occurrence from primary blue selection",
+    "tokens": [
+      "editor_selection_highlight",
+      "editor_selection_highlight_border"
+    ],
+    "reference": "docs/editor-selection-highlight-reference-20261103.md",
+    "limitations": "Behavior observed locally in VSCode1.144.1; these Codisseu RGBA values are product choices, not sampled VSCode colors."
+  },
+  "copilot_inline_20261106": {
+    "reference": "reference/copilot-inline-reference-20261106.md",
+    "source": "VS Code1.145.0 commit a717861c07586a53d83b80d742cd3f59b20a6273 ghostTextView.css and computed runtime styles",
+    "confidence": "observed",
+    "tokens": {
+      "copilot_ghost_opacity": 0.7
+    },
+    "typography": "Existing licensed JetBrains Mono italic; shared editor size/lineHeight/tab stops and own syntax palette",
+    "padding": "Settings12 are own Codisseu insets. Inline toolbar/buttons removed at explicit user request; VSCode showToolbar=never documented in pinned editorOptions."
+  },
+  "ai_chat_conversations_20261110": {
+    "reference": "reference/codex-conversations-20261110.md; VS Code1.145.2 c4453f8ea430795f941c1b2ff6c9321135a74a02/openai.chatgpt26.1021.22027; Default Dark Modern zoom0 DPR1; DOM runtime sintético,10/11/2026",
+    "implementation": "popup acompanha largura painel-16; busca e linhas únicas; idade somente quando conhecida; recentes3; excluir no hover/foco e dois cliques (decisão Codisseu)",
+    "intentional_differences": [
+      "histórico restrito à pasta efetiva; referência All chats incluiu outra pasta",
+      "apagar em2cliques em vez de Archive chat",
+      "header/paleta/margens do compositor seguem escolhas anteriores do usuário"
+    ],
+    "limits": "Não comprova igualdade raster de todos os estados nem cópia de ativos/código da extensão."
+  },
+  "editor_history_comparison_20261110": {
+    "confidence": "designed",
+    "source": "User request10/11/2026 and reference/editor-history-navigation-20261110.md; existing Codisseu geometry/colors, no pixel-equivalence claim",
+    "layout": {
+      "outer_clearance": "dialog_content_inset + navigation_popup_padding",
+      "frame_inset": "rename_dialog_margin",
+      "code_inset": "navigation_popup_padding",
+      "row_height": "database_toolbar_height"
+    },
+    "icons": "Existing Previous/Next/Close shared licensed icon set, no new assets",
+    "colors": "Existing panel/editor/border/muted tokens"
+  },
+  "search_everywhere_preview_20261110": {
+    "confidence": "observed reference layout; designed Codisseu renderer and colors",
+    "source": "reference/search-everywhere-20261110.md; PhpStorm2026.2.3 PS-262.10968.76 Islands Dark COMPACT scale1, private profile/fixture; reference receipt",
+    "reference_observation": "Preview below results, separate gray gutter, syntax colors, indentation, independent scrolling, approximately15 source rows in measured scenario",
+    "implementation": "Existing Codisseu editor lexer/PreviewSyntax, tab expansion, font/shaping/ligatures and token palette; no proprietary code, asset or new dependency",
+    "geometry": "Height derived from15 editor lines and available viewport; separate fixed gutter; navigation popup padding and editor line height; virtual content origin stable before visible row allocation",
+    "validation": "Kittest and native X11 at100/125%, final captures inspected; no full raster or semantic-highlighter equivalence claim",
+    "limits": "Lexical palette, read-only painted labels without source selection/copy; bounded1MiB/100000lines/16KiB per line"
+  },
+  "explorer_multi_selection_20261110": {
+    "confidence": "observed behavior; designed Codisseu colors and geometry",
+    "reference": "VS Code1.145.2 stable c4453f8ea430795f941c1b2ff6c9321135a74a02 / Dark Modern /1x; reference/explorer-multi-20261110.md",
+    "observed": "All selected rows highlighted together; focused row has outline; Ctrl toggle and Shift range; rightclick preserves selected group; disclosure collapse preserves hidden selected descendants",
+    "product": "Existing Codisseu selection.bg_fill/stroke and references_inactive_selection; shared tree row24px,16px per depth,24px inset and12px selection inset remain unchanged. No HEX copied or new asset/dependency.",
+    "focus": "Active Explorer group gives each selected row the same active fill; last focused row outline uses existing selection stroke; selected AccessKit attribute explicit even on Button role",
+    "dialog": "Existing Modal/dialog buttons,420logical width bounded by viewport, relative names virtualized in22logical rows, full path hover; no pixel equivalence claim",
+    "verification": "Final native100/125 and kittest evidence in docs/explorer-multi-receipt-20261110.json when complete"
+  },
+  "breadcrumbs-20261111": {
+    "source": "User Foto1; official PhpStorm Navigation Bar/Breadcrumbs docs; Codisseu existing status tokens",
+    "confidence": "inferred",
+    "values": {
+      "breadcrumb_padding": 4,
+      "breadcrumb_icon_size": 14,
+      "breadcrumb_max_label_width": 160,
+      "breadcrumb_gap": 2
+    },
+    "note": "Own adaptation to existing 30px status row; not a measurement of compressed reference photo. Existing folder/file artwork; own scope letters/circles, no extracted proprietary assets."
+  },
+  "documentation-visual-20261111": {
+    "source": "User screenshots; existing Codisseu popup colors/fonts and editor syntax palette",
+    "confidence": "inferred",
+    "values": {
+      "documentation_width": 500,
+      "documentation_max_height": 340,
+      "documentation_padding": 10,
+      "documentation_code_padding": 8,
+      "documentation_block_gap": 8,
+      "documentation_line_height": 18
+    },
+    "note": "Compact read-only Markdown documentation; shared editor highlighter and font. No new commercial measurement or new assets."
+  }
+}

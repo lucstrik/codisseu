@@ -1,0 +1,64 @@
+[
+  {
+    "crate": "tree-sitter",
+    "version": "0.27.1",
+    "license": "MIT",
+    "vcs": {
+      "git": {
+        "sha1": "10eb5ac119eec9cb4267a8e035066473983f5f3a"
+      },
+      "path_in_vcs": "lib"
+    },
+    "license_source": "https://static.crates.io/crates/tree-sitter/tree-sitter-0.27.1.crate#LICENSE",
+    "license_sha256": "c5cfb43042b6b72045f4ba997834d0a7786d2793d91680868b5815b39f14fc78",
+    "archive_sha256": "a5129de2ccc97808c4583d48f1fb44576d015cf241e432800572bda11ef30c3b",
+    "subcomponent_notices": {
+      "path_in_crate": "src/unicode/LICENSE",
+      "file": "tree-sitter-unicode-ICU-LICENSE.txt",
+      "sha256": "6a18c5fac70d7860b57f5b72b4e2c9a1ba6b3d2741eef7ff9767c5379364f10d",
+      "scope": "Bundled UTF8/UTF16/umachine ICU headers; Unicode/ICU terms + retained third-party notices, distinct from runtime MIT package license",
+      "readme": "tree-sitter-unicode-ICU-README.md"
+    },
+    "other_source_components": [
+      {
+        "path": "src/portable/endian.h",
+        "license_header": "Public Domain with permissive BSD/MIT/Apache fallback declared in source",
+        "sha256": "528ca0666737e1a66218e2179004d5af2154393c6564ac9c57c110c5d8f57f85"
+      },
+      {
+        "path": "src/wasm-stdlib/libc/LICENSE",
+        "license_header": "musl MIT and compatible retained notices",
+        "feature_status": "wasm feature disabled in storm-syntax; no claim this code is included in native executable",
+        "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af"
+      }
+    ]
+  },
+  {
+    "crate": "tree-sitter-php",
+    "version": "0.25.1",
+    "license": "MIT",
+    "vcs": {
+      "git": {
+        "sha1": "58d5643086ae60e93a3746cca648363ee97c8761"
+      },
+      "path_in_vcs": ""
+    },
+    "license_source": "https://static.crates.io/crates/tree-sitter-php/tree-sitter-php-0.25.1.crate#LICENSE",
+    "license_sha256": "664764fabf40c0b318e06324a5a12379092a2df25b8cbf2415f71bc0bb352346",
+    "archive_sha256": "d9779e392d38af4254f48be0e57b7eed4d50ec7a6e55a7e5e2e74df8f8f032d3"
+  },
+  {
+    "crate": "tree-sitter-typescript",
+    "version": "0.23.2",
+    "license": "MIT",
+    "vcs": {
+      "git": {
+        "sha1": "f975a621f4e7f532fe322e13c4f79495e0a7b2e7"
+      },
+      "path_in_vcs": ""
+    },
+    "license_source": "https://raw.githubusercontent.com/tree-sitter/tree-sitter-typescript/f975a621f4e7f532fe322e13c4f79495e0a7b2e7/LICENSE",
+    "license_sha256": "49bf33cf78ef5897e4e161ce1517df7de1ae5042a65b6bcfd44401e0fc606559",
+    "archive_sha256": "6c5f76ed8d947a75cc446d5fccd8b602ebf0cde64ccf2ffa434d873d7a575eff"
+  }
+]

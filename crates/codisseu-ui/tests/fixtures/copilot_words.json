@@ -1,0 +1,719 @@
+{
+  "source": "VS Code installed1.145.0 exact wordDefinition data plus inlineCompletionsModel.ts acceptance algorithm, Node24.22.0 RegExp; research spec, not Codisseu test",
+  "cases": [
+    {
+      "language": "php",
+      "text": "const result",
+      "accepted": "const",
+      "utf16": 5,
+      "scalars": 5
+    },
+    {
+      "language": "php",
+      "text": "); return",
+      "accepted": "); ",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "php",
+      "text": " ;return",
+      "accepted": " ",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "php",
+      "text": "   return",
+      "accepted": "   ",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "php",
+      "text": "-12",
+      "accepted": "-",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "php",
+      "text": "-12.5f next",
+      "accepted": "-12.5f",
+      "utf16": 6,
+      "scalars": 6
+    },
+    {
+      "language": "php",
+      "text": ".5foo bar",
+      "accepted": ".5foo",
+      "utf16": 5,
+      "scalars": 5
+    },
+    {
+      "language": "php",
+      "text": "$value",
+      "accepted": "$value",
+      "utf16": 6,
+      "scalars": 6
+    },
+    {
+      "language": "php",
+      "text": "#private",
+      "accepted": "#",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "php",
+      "text": "áb",
+      "accepted": "áb",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "php",
+      "text": "🦀name",
+      "accepted": "🦀name",
+      "utf16": 6,
+      "scalars": 5
+    },
+    {
+      "language": "php",
+      "text": "__word__ next",
+      "accepted": "__word__",
+      "utf16": 8,
+      "scalars": 8
+    },
+    {
+      "language": "php",
+      "text": "foo__bar",
+      "accepted": "foo__bar",
+      "utf16": 8,
+      "scalars": 8
+    },
+    {
+      "language": "php",
+      "text": "\r\n    return",
+      "accepted": "\r\n    ",
+      "utf16": 6,
+      "scalars": 6
+    },
+    {
+      "language": "php",
+      "text": "(); ",
+      "accepted": "(); ",
+      "utf16": 4,
+      "scalars": 4
+    },
+    {
+      "language": "php",
+      "text": "(); next",
+      "accepted": "(); ",
+      "utf16": 4,
+      "scalars": 4
+    },
+    {
+      "language": "php",
+      "text": "-.5é",
+      "accepted": "-.5",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "javascript",
+      "text": "const result",
+      "accepted": "const",
+      "utf16": 5,
+      "scalars": 5
+    },
+    {
+      "language": "javascript",
+      "text": "); return",
+      "accepted": "); ",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "javascript",
+      "text": " ;return",
+      "accepted": " ",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "javascript",
+      "text": "   return",
+      "accepted": "   ",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "javascript",
+      "text": "-12",
+      "accepted": "-",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "javascript",
+      "text": "-12.5f next",
+      "accepted": "-12.5f",
+      "utf16": 6,
+      "scalars": 6
+    },
+    {
+      "language": "javascript",
+      "text": ".5foo bar",
+      "accepted": ".5foo",
+      "utf16": 5,
+      "scalars": 5
+    },
+    {
+      "language": "javascript",
+      "text": "$value",
+      "accepted": "$value",
+      "utf16": 6,
+      "scalars": 6
+    },
+    {
+      "language": "javascript",
+      "text": "#private",
+      "accepted": "#private",
+      "utf16": 8,
+      "scalars": 8
+    },
+    {
+      "language": "javascript",
+      "text": "áb",
+      "accepted": "áb",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "javascript",
+      "text": "🦀name",
+      "accepted": "🦀name",
+      "utf16": 6,
+      "scalars": 5
+    },
+    {
+      "language": "javascript",
+      "text": "__word__ next",
+      "accepted": "__word__",
+      "utf16": 8,
+      "scalars": 8
+    },
+    {
+      "language": "javascript",
+      "text": "foo__bar",
+      "accepted": "foo__bar",
+      "utf16": 8,
+      "scalars": 8
+    },
+    {
+      "language": "javascript",
+      "text": "\r\n    return",
+      "accepted": "\r\n    ",
+      "utf16": 6,
+      "scalars": 6
+    },
+    {
+      "language": "javascript",
+      "text": "(); ",
+      "accepted": "(); ",
+      "utf16": 4,
+      "scalars": 4
+    },
+    {
+      "language": "javascript",
+      "text": "(); next",
+      "accepted": "(); ",
+      "utf16": 4,
+      "scalars": 4
+    },
+    {
+      "language": "javascript",
+      "text": "-.5é",
+      "accepted": "-.5",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "typescript-basics",
+      "text": "const result",
+      "accepted": "const",
+      "utf16": 5,
+      "scalars": 5
+    },
+    {
+      "language": "typescript-basics",
+      "text": "); return",
+      "accepted": "); ",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "typescript-basics",
+      "text": " ;return",
+      "accepted": " ",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "typescript-basics",
+      "text": "   return",
+      "accepted": "   ",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "typescript-basics",
+      "text": "-12",
+      "accepted": "-",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "typescript-basics",
+      "text": "-12.5f next",
+      "accepted": "-12.5f",
+      "utf16": 6,
+      "scalars": 6
+    },
+    {
+      "language": "typescript-basics",
+      "text": ".5foo bar",
+      "accepted": ".5foo",
+      "utf16": 5,
+      "scalars": 5
+    },
+    {
+      "language": "typescript-basics",
+      "text": "$value",
+      "accepted": "$value",
+      "utf16": 6,
+      "scalars": 6
+    },
+    {
+      "language": "typescript-basics",
+      "text": "#private",
+      "accepted": "#private",
+      "utf16": 8,
+      "scalars": 8
+    },
+    {
+      "language": "typescript-basics",
+      "text": "áb",
+      "accepted": "áb",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "typescript-basics",
+      "text": "🦀name",
+      "accepted": "🦀name",
+      "utf16": 6,
+      "scalars": 5
+    },
+    {
+      "language": "typescript-basics",
+      "text": "__word__ next",
+      "accepted": "__word__",
+      "utf16": 8,
+      "scalars": 8
+    },
+    {
+      "language": "typescript-basics",
+      "text": "foo__bar",
+      "accepted": "foo__bar",
+      "utf16": 8,
+      "scalars": 8
+    },
+    {
+      "language": "typescript-basics",
+      "text": "\r\n    return",
+      "accepted": "\r\n    ",
+      "utf16": 6,
+      "scalars": 6
+    },
+    {
+      "language": "typescript-basics",
+      "text": "(); ",
+      "accepted": "(); ",
+      "utf16": 4,
+      "scalars": 4
+    },
+    {
+      "language": "typescript-basics",
+      "text": "(); next",
+      "accepted": "(); ",
+      "utf16": 4,
+      "scalars": 4
+    },
+    {
+      "language": "typescript-basics",
+      "text": "-.5é",
+      "accepted": "-.5",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "markdown-basics",
+      "text": "const result",
+      "accepted": "const",
+      "utf16": 5,
+      "scalars": 5
+    },
+    {
+      "language": "markdown-basics",
+      "text": "); return",
+      "accepted": "); ",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "markdown-basics",
+      "text": " ;return",
+      "accepted": " ",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "markdown-basics",
+      "text": "   return",
+      "accepted": "   ",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "markdown-basics",
+      "text": "-12",
+      "accepted": "-",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "markdown-basics",
+      "text": "-12.5f next",
+      "accepted": "-",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "markdown-basics",
+      "text": ".5foo bar",
+      "accepted": ".",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "markdown-basics",
+      "text": "$value",
+      "accepted": "$",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "markdown-basics",
+      "text": "#private",
+      "accepted": "#",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "markdown-basics",
+      "text": "áb",
+      "accepted": "áb",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "markdown-basics",
+      "text": "🦀name",
+      "accepted": "🦀",
+      "utf16": 2,
+      "scalars": 1
+    },
+    {
+      "language": "markdown-basics",
+      "text": "__word__ next",
+      "accepted": "__",
+      "utf16": 2,
+      "scalars": 2
+    },
+    {
+      "language": "markdown-basics",
+      "text": "foo__bar",
+      "accepted": "foo",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "markdown-basics",
+      "text": "\r\n    return",
+      "accepted": "\r\n    ",
+      "utf16": 6,
+      "scalars": 6
+    },
+    {
+      "language": "markdown-basics",
+      "text": "(); ",
+      "accepted": "(); ",
+      "utf16": 4,
+      "scalars": 4
+    },
+    {
+      "language": "markdown-basics",
+      "text": "(); next",
+      "accepted": "(); ",
+      "utf16": 4,
+      "scalars": 4
+    },
+    {
+      "language": "markdown-basics",
+      "text": "-.5é",
+      "accepted": "-.",
+      "utf16": 2,
+      "scalars": 2
+    },
+    {
+      "language": "sql",
+      "text": "const result",
+      "accepted": "const",
+      "utf16": 5,
+      "scalars": 5
+    },
+    {
+      "language": "sql",
+      "text": "); return",
+      "accepted": "); ",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "sql",
+      "text": " ;return",
+      "accepted": " ",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "sql",
+      "text": "   return",
+      "accepted": "   ",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "sql",
+      "text": "-12",
+      "accepted": "-",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "sql",
+      "text": "-12.5f next",
+      "accepted": "-12.5f",
+      "utf16": 6,
+      "scalars": 6
+    },
+    {
+      "language": "sql",
+      "text": ".5foo bar",
+      "accepted": ".5foo",
+      "utf16": 5,
+      "scalars": 5
+    },
+    {
+      "language": "sql",
+      "text": "$value",
+      "accepted": "$",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "sql",
+      "text": "#private",
+      "accepted": "#",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "sql",
+      "text": "áb",
+      "accepted": "áb",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "sql",
+      "text": "🦀name",
+      "accepted": "🦀name",
+      "utf16": 6,
+      "scalars": 5
+    },
+    {
+      "language": "sql",
+      "text": "__word__ next",
+      "accepted": "__word__",
+      "utf16": 8,
+      "scalars": 8
+    },
+    {
+      "language": "sql",
+      "text": "foo__bar",
+      "accepted": "foo__bar",
+      "utf16": 8,
+      "scalars": 8
+    },
+    {
+      "language": "sql",
+      "text": "\r\n    return",
+      "accepted": "\r\n    ",
+      "utf16": 6,
+      "scalars": 6
+    },
+    {
+      "language": "sql",
+      "text": "(); ",
+      "accepted": "(); ",
+      "utf16": 4,
+      "scalars": 4
+    },
+    {
+      "language": "sql",
+      "text": "(); next",
+      "accepted": "(); ",
+      "utf16": 4,
+      "scalars": 4
+    },
+    {
+      "language": "sql",
+      "text": "-.5é",
+      "accepted": "-.5",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "default; sql fallback",
+      "text": "const result",
+      "accepted": "const",
+      "utf16": 5,
+      "scalars": 5
+    },
+    {
+      "language": "default; sql fallback",
+      "text": "); return",
+      "accepted": "); ",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "default; sql fallback",
+      "text": " ;return",
+      "accepted": " ",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "default; sql fallback",
+      "text": "   return",
+      "accepted": "   ",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "default; sql fallback",
+      "text": "-12",
+      "accepted": "-",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "default; sql fallback",
+      "text": "-12.5f next",
+      "accepted": "-12.5f",
+      "utf16": 6,
+      "scalars": 6
+    },
+    {
+      "language": "default; sql fallback",
+      "text": ".5foo bar",
+      "accepted": ".5foo",
+      "utf16": 5,
+      "scalars": 5
+    },
+    {
+      "language": "default; sql fallback",
+      "text": "$value",
+      "accepted": "$",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "default; sql fallback",
+      "text": "#private",
+      "accepted": "#",
+      "utf16": 1,
+      "scalars": 1
+    },
+    {
+      "language": "default; sql fallback",
+      "text": "áb",
+      "accepted": "áb",
+      "utf16": 3,
+      "scalars": 3
+    },
+    {
+      "language": "default; sql fallback",
+      "text": "🦀name",
+      "accepted": "🦀name",
+      "utf16": 6,
+      "scalars": 5
+    },
+    {
+      "language": "default; sql fallback",
+      "text": "__word__ next",
+      "accepted": "__word__",
+      "utf16": 8,
+      "scalars": 8
+    },
+    {
+      "language": "default; sql fallback",
+      "text": "foo__bar",
+      "accepted": "foo__bar",
+      "utf16": 8,
+      "scalars": 8
+    },
+    {
+      "language": "default; sql fallback",
+      "text": "\r\n    return",
+      "accepted": "\r\n    ",
+      "utf16": 6,
+      "scalars": 6
+    },
+    {
+      "language": "default; sql fallback",
+      "text": "(); ",
+      "accepted": "(); ",
+      "utf16": 4,
+      "scalars": 4
+    },
+    {
+      "language": "default; sql fallback",
+      "text": "(); next",
+      "accepted": "(); ",
+      "utf16": 4,
+      "scalars": 4
+    },
+    {
+      "language": "default; sql fallback",
+      "text": "-.5é",
+      "accepted": "-.5",
+      "utf16": 3,
+      "scalars": 3
+    }
+  ]
+}

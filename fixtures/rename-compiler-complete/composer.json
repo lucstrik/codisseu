@@ -1,0 +1,8 @@
+{
+  "name": "codisseu/rename-compiler-fixture",
+  "autoload": {
+    "classmap": [
+      "php-variance"
+    ]
+  }
+}

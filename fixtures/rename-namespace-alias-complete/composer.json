@@ -1,0 +1,13 @@
+{
+  "name": "codisseu/rename-namespace-alias-fixture",
+  "autoload": {
+    "classmap": [
+      "php-class/",
+      "php-alias/"
+    ],
+    "files": [
+      "php-function/functions.php",
+      "php-alias/model.php"
+    ]
+  }
+}

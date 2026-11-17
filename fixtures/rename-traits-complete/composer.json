@@ -1,0 +1,10 @@
+{
+  "name": "storm/rename-traits-fixture",
+  "autoload": {
+    "psr-4": {
+      "TraitFixture\\": "php-trait/",
+      "AliasFixture\\": "php-alias/",
+      "ExternalAliasFixture\\": "php-external-alias/"
+    }
+  }
+}

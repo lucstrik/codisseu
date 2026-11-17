@@ -1,0 +1,72 @@
+[
+  {
+    "id": "php-function-parameters",
+    "origin": "php-function/functions.php",
+    "old": "city",
+    "new": "place",
+    "files": [
+      "php-function/functions.php",
+      "php-function/main.php",
+      "php-function/closed.php"
+    ],
+    "expected": {
+      "php-function/functions.php": "<?php\nnamespace ParamFunctions;\nfunction greet(string $place): string { return $place; }\nfunction other(string $city): string { return $city; }\n",
+      "php-function/main.php": "<?php\nuse function ParamFunctions\\greet as hello;\nuse function ParamFunctions\\other;\necho hello(place: 'Paris');\necho other(city: 'Lima');\n",
+      "php-function/closed.php": "<?php\nuse function ParamFunctions\\greet as closedHello;\necho closedHello(place: 'Oslo');\n"
+    }
+  },
+  {
+    "id": "php-method-parameters",
+    "origin": "php-method/Greeter.php",
+    "old": "city",
+    "new": "place",
+    "files": [
+      "php-method/Greeter.php",
+      "php-method/main.php"
+    ],
+    "expected": {
+      "php-method/Greeter.php": "<?php\nnamespace ParamMethods;\nclass Greeter { public function greet(string $place): string { return $place; } }\n",
+      "php-method/main.php": "<?php\nuse ParamMethods\\Greeter;\n$greeter = new Greeter();\necho $greeter->greet(place: 'Paris');\n"
+    }
+  },
+  {
+    "id": "php-static-parameters",
+    "origin": "php-static/Formatter.php",
+    "old": "city",
+    "new": "place",
+    "files": [
+      "php-static/Formatter.php",
+      "php-static/main.php"
+    ],
+    "expected": {
+      "php-static/Formatter.php": "<?php\nnamespace ParamStatic;\nclass Formatter { public static function format(string $place): string { return $place; } }\n",
+      "php-static/main.php": "<?php\nuse ParamStatic\\Formatter;\necho Formatter::format(place: 'Paris');\n"
+    }
+  },
+  {
+    "id": "php-constructor-parameters",
+    "origin": "php-constructor/Base.php",
+    "old": "city",
+    "new": "place",
+    "files": [
+      "php-constructor/Base.php",
+      "php-constructor/main.php"
+    ],
+    "expected": {
+      "php-constructor/Base.php": "<?php\nnamespace ParamConstructors;\nclass Base { public string $value; public function __construct(string $place) { $this->value = $place; } }\nclass Child extends Base {}\n",
+      "php-constructor/main.php": "<?php\nuse ParamConstructors\\Child;\n$item = new Child(place: 'Paris');\necho $item->value;\n"
+    }
+  },
+  {
+    "id": "ts-baseline-parameters",
+    "origin": "ts/main.ts",
+    "old": "city",
+    "new": "place",
+    "files": [
+      "ts/main.ts"
+    ],
+    "expected": {
+      "ts/main.ts": "export function greet(place: string): string { return place; }\nconsole.log(greet('Paris'));\n"
+    }
+  }
+]

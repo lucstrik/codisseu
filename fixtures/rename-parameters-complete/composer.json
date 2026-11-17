@@ -1,0 +1,13 @@
+{
+  "name": "codisseu/rename-parameters-complete",
+  "autoload": {
+    "classmap": [
+      "php-method",
+      "php-static",
+      "php-constructor"
+    ],
+    "files": [
+      "php-function/functions.php"
+    ]
+  }
+}

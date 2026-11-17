@@ -1,0 +1,8 @@
+{
+  "name": "codisseu/rename-receivers-fixture",
+  "autoload": {
+    "classmap": [
+      "php-receiver"
+    ]
+  }
+}

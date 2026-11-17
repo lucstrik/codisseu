@@ -1,0 +1,59 @@
+[
+  {
+    "language": "php",
+    "definition": "(-?\\d*\\.\\d\\w*)|([^\\-\\`\\~\\!\\@\\#\\%\\^\\&\\*\\(\\)\\=\\+\\[\\{\\]\\}\\\\\\|\\;\\:\\'\\\"\\,\\.\\<\\>\\/\\?\\s]+)",
+    "source_installed": "/usr/share/code/resources/app/extensions/php/language-configuration.json",
+    "installed_sha256": "efdb6e1522c57cbcc846cf799ae08d37af1a15a08fe55bc3986ae62acfd17b2d",
+    "source_url": "https://github.com/microsoft/vscode/blob/a717861c07586a53d83b80d742cd3f59b20a6273/extensions/php/language-configuration.json",
+    "license": "MIT; Copyright Microsoft Corporation; upstream-LICENSE.txt preserved"
+  },
+  {
+    "language": "javascript",
+    "definition": {
+      "pattern": "(-?\\d*\\.\\d\\w*)|([^\\`\\@\\~\\!\\%\\^\\&\\*\\(\\)\\-\\=\\+\\[\\{\\]\\}\\\\\\|\\;\\:\\'\\\"\\,\\.\\<\\>/\\?\\s]+)"
+    },
+    "source_installed": "/usr/share/code/resources/app/extensions/javascript/javascript-language-configuration.json",
+    "installed_sha256": "90b5120d045ebc68c06caf3b18f022e0ac8ce5097c10040941ed9ac7fe33ef9d",
+    "source_url": "https://github.com/microsoft/vscode/blob/a717861c07586a53d83b80d742cd3f59b20a6273/extensions/javascript/javascript-language-configuration.json",
+    "license": "MIT; Copyright Microsoft Corporation; upstream-LICENSE.txt preserved"
+  },
+  {
+    "language": "typescript-basics",
+    "definition": {
+      "pattern": "(-?\\d*\\.\\d\\w*)|([^\\`\\@\\~\\!\\%\\^\\&\\*\\(\\)\\-\\=\\+\\[\\{\\]\\}\\\\\\|\\;\\:\\'\\\"\\,\\.\\<\\>/\\?\\s]+)"
+    },
+    "source_installed": "/usr/share/code/resources/app/extensions/typescript-basics/language-configuration.json",
+    "installed_sha256": "8481e77aa40ba99173988a8319b766ef9cce5f250183f01711e54f7a03baf6df",
+    "source_url": "https://github.com/microsoft/vscode/blob/a717861c07586a53d83b80d742cd3f59b20a6273/extensions/typescript-basics/language-configuration.json",
+    "license": "MIT; Copyright Microsoft Corporation; upstream-LICENSE.txt preserved"
+  },
+  {
+    "language": "markdown-basics",
+    "definition": {
+      "pattern": "(\\p{Alphabetic}|\\p{Number}|\\p{Nonspacing_Mark})(((\\p{Alphabetic}|\\p{Number}|\\p{Nonspacing_Mark})|[_])?(\\p{Alphabetic}|\\p{Number}|\\p{Nonspacing_Mark}))*",
+      "flags": "ug"
+    },
+    "source_installed": "/usr/share/code/resources/app/extensions/markdown-basics/language-configuration.json",
+    "installed_sha256": "9c5e97d575a631f61a6dd97ce42e4020d0e45a40173bc5c486f669375468b2e5",
+    "source_url": "https://github.com/microsoft/vscode/blob/a717861c07586a53d83b80d742cd3f59b20a6273/extensions/markdown-basics/language-configuration.json",
+    "license": "MIT; Copyright Microsoft Corporation; upstream-LICENSE.txt preserved"
+  },
+  {
+    "language": "sql",
+    "definition": null,
+    "source_installed": "/usr/share/code/resources/app/extensions/sql/language-configuration.json",
+    "installed_sha256": "4ae7c09a37324c36e498f3a8ef618115e81ead471c7c20a120af0e94d3a82e62",
+    "source_url": "https://github.com/microsoft/vscode/blob/a717861c07586a53d83b80d742cd3f59b20a6273/extensions/sql/language-configuration.json",
+    "license": "MIT; Copyright Microsoft Corporation; upstream-LICENSE.txt preserved"
+  },
+  {
+    "language": "default; sql fallback",
+    "definition": {
+      "pattern": "(-?\\d*\\.\\d\\w*)|([^\\`\\~\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\-\\=\\+\\[\\{\\]\\}\\\\\\|\\;\\:\\'\\\"\\,\\.\\<\\>\\/\\?\\s]+)",
+      "flags": "g"
+    },
+    "separator_characters": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
+    "source_url": "https://github.com/microsoft/vscode/blob/a717861c07586a53d83b80d742cd3f59b20a6273/src/vs/editor/common/core/wordHelper.ts",
+    "license": "MIT; Copyright Microsoft Corporation"
+  }
+]

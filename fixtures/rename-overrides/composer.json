@@ -1,0 +1,8 @@
+{
+  "name": "storm/references-fixture",
+  "autoload": {
+    "psr-4": {
+      "StormFixture\\": "src/"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "php-resource",
+    "origin": "php-resource/Weather.php",
+    "old": "Weather",
+    "new": "Forecast",
+    "files": [
+      "php-resource/Weather.php",
+      "php-resource/main.php",
+      "php-resource/alias.php"
+    ],
+    "move": [
+      "php-resource/Weather.php",
+      "php-resource/Forecast.php"
+    ],
+    "expected": {
+      "php-resource/Weather.php": "<?php\nnamespace ResourceFixture;\nclass Forecast { public function value(): string { return 'wet'; } }\n",
+      "php-resource/main.php": "<?php\nrequire __DIR__ . '/Forecast.php';\nuse ResourceFixture\\Forecast;\n/* 😀 é */ echo (new Forecast())->value();\n// Weather and Weather.php remain text\n$literal = 'Weather';\n",
+      "php-resource/alias.php": "<?php\nuse ResourceFixture\\Forecast as Sky;\nfunction resourceReport(Sky $source): string { return $source->value(); }\n"
+    }
+  },
+  {
+    "id": "ts-resource",
+    "origin": "ts-resource/Weather.ts",
+    "old": "Weather",
+    "new": "Forecast",
+    "files": [
+      "ts-resource/Weather.ts",
+      "ts-resource/main.ts",
+      "ts-resource/alias.ts"
+    ],
+    "move": [
+      "ts-resource/Weather.ts",
+      "ts-resource/Forecast.ts"
+    ],
+    "expected": {
+      "ts-resource/Weather.ts": "export class Forecast { value(): string { return 'wet'; } }\n",
+      "ts-resource/main.ts": "import { Forecast } from './Forecast';\n/* 😀 é */ console.log(new Forecast().value());\n// Weather and Weather.ts remain text\nconst literal = 'Weather';\n",
+      "ts-resource/alias.ts": "import { Forecast as Sky } from './Forecast';\nexport function resourceReport(source: Sky): string { return source.value(); }\n"
+    }
+  }
+]

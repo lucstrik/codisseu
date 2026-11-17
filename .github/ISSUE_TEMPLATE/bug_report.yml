@@ -1,0 +1,65 @@
+name: Algo não funcionou
+description: Conte o que aconteceu para a gente conseguir reproduzir.
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por ajudar a melhorar o Codisseu. Não inclua senhas, tokens ou dados privados.
+        Para falhas de segurança, siga o SECURITY.md do repositório.
+  - type: input
+    id: version
+    attributes:
+      label: Versão do Codisseu
+      description: Você pode consultar com codisseu --version. Informe também a versão do pacote, se possível.
+      placeholder: "0.1.0 / pacote alpha.1"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Seu ambiente
+      description: Distribuição e versão do Linux, arquitetura e X11 ou Wayland.
+      placeholder: "Debian 13, amd64, KDE/X11"
+    validations:
+      required: true
+  - type: dropdown
+    id: installation
+    attributes:
+      label: Como você instalou?
+      options:
+        - Pacote .deb
+        - Pacote portátil .tar.xz
+        - Compilei a partir dos fontes
+        - Outra forma (explique nos detalhes)
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Como reproduzir
+      description: Descreva os passos. Se puder, inclua um exemplo pequeno com dados fictícios.
+      placeholder: |
+        1. Abri o projeto…
+        2. Cliquei em…
+        3. Aconteceu…
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: O que você esperava?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: O que aconteceu?
+      description: Inclua a mensagem de erro e uma imagem, se ajudar.
+    validations:
+      required: true
+  - type: textarea
+    id: tools
+    attributes:
+      label: Ferramentas e detalhes extras
+      description: Se envolver PHP, Node, um provider ou banco, informe a versão e se usou o motor do pacote ou uma configuração própria. Remova dados privados dos logs.

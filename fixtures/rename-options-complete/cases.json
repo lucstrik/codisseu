@@ -1,0 +1,43 @@
+[
+  {
+    "id": "php-options",
+    "origin": "php-options/functions.php",
+    "old": "rainPhp",
+    "new": "snowPhp",
+    "files": [
+      "php-options/functions.php",
+      "php-options/main.php",
+      "php-options/README.md"
+    ],
+    "expected": {
+      "php-options/functions.php": "<?php\nnamespace OptionsFixture;\nfunction snowPhp(int $days): int { return $days + 1; }\n// snowPhp in comment\n$description = 'snowPhp';\n",
+      "php-options/main.php": "<?php\nuse function OptionsFixture\\snowPhp;\n/* 😀 é */ echo snowPhp(2);\n// snowPhp in consumer comment\n$description = 'snowPhp';\n",
+      "php-options/README.md": "# snowPhp\nCall snowPhp; rainPhpSuffix stays.\n"
+    },
+    "options": {
+      "comments": true,
+      "text": true
+    },
+    "direct_refactor": true
+  },
+  {
+    "id": "ts-options",
+    "origin": "ts-options/functions.ts",
+    "old": "rainTs",
+    "new": "snowTs",
+    "files": [
+      "ts-options/functions.ts",
+      "ts-options/main.ts"
+    ],
+    "expected": {
+      "ts-options/functions.ts": "export function snowTs(days: number): number { return days + 1; }\n// snowTs in origin\nconst description = 'snowTs';\n",
+      "ts-options/main.ts": "import { snowTs } from './functions';\n/* 😀 é */ console.log(snowTs(2));\n// rainTs in consumer stays\nconst description = 'rainTs';\n"
+    },
+    "options": {
+      "comments": true,
+      "text": true,
+      "scope": "Current File"
+    },
+    "direct_refactor": true
+  }
+]

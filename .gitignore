@@ -1,0 +1,17 @@
+target/
+/artifacts/
+**/artifacts/
+/dist/
+/reference/screens/
+*.new.png
+*.diff.png
+
+/.tools/
+
+# Material de consulta pessoal e arquivos gerados localmente.
+/artigo.md
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example

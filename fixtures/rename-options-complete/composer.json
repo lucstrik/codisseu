@@ -1,0 +1,8 @@
+{
+  "name": "codisseu/rename-options-fixture",
+  "autoload": {
+    "files": [
+      "php-options/functions.php"
+    ]
+  }
+}

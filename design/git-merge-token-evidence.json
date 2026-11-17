@@ -1,0 +1,219 @@
+{
+  "date": "2026-11-04",
+  "reference_build": "unknown for supplied image; installed metadata PS-262.10968.76 is separate",
+  "tokens": {
+    "chrome": {
+      "value": [
+        43,
+        45,
+        48
+      ],
+      "confidence": "observed",
+      "origin": "user screenshot pixels",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "editor": {
+      "value": [
+        30,
+        31,
+        34
+      ],
+      "confidence": "observed",
+      "origin": "user screenshot pixels",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "border": {
+      "value": [
+        50,
+        52,
+        56
+      ],
+      "confidence": "observed",
+      "origin": "user screenshot pixels",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "foreground": {
+      "value": [
+        223,
+        225,
+        229
+      ],
+      "confidence": "observed",
+      "origin": "user screenshot pixels",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "muted": {
+      "value": [
+        159,
+        160,
+        162
+      ],
+      "confidence": "observed",
+      "origin": "user screenshot pixels",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "line_number": {
+      "value": [
+        76,
+        80,
+        88
+      ],
+      "confidence": "observed",
+      "origin": "user screenshot pixels",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "conflict": {
+      "value": [
+        45,
+        38,
+        38
+      ],
+      "confidence": "observed",
+      "origin": "user screenshot pixels",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "conflict_word": {
+      "value": [
+        66,
+        49,
+        44
+      ],
+      "confidence": "observed",
+      "origin": "user screenshot pixels",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "added": {
+      "value": [
+        47,
+        67,
+        55
+      ],
+      "confidence": "observed",
+      "origin": "user screenshot pixels",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "modified": {
+      "value": [
+        38,
+        50,
+        62
+      ],
+      "confidence": "inferred",
+      "origin": "Codisseu provisional design",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "accent": {
+      "value": [
+        69,
+        115,
+        232
+      ],
+      "confidence": "observed",
+      "origin": "user screenshot pixels",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "link": {
+      "value": [
+        94,
+        150,
+        255
+      ],
+      "confidence": "inferred",
+      "origin": "Codisseu existing hyperlink color; not verified by source sample",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "tooltip": {
+      "value": [
+        57,
+        59,
+        64
+      ],
+      "confidence": "observed",
+      "origin": "user screenshot pixels",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "title_height": {
+      "value": 28.0,
+      "confidence": "inferred",
+      "origin": "2x geometry inference and own design",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "toolbar_height": {
+      "value": 32.0,
+      "confidence": "inferred",
+      "origin": "2x geometry inference and own design",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "header_height": {
+      "value": 22.0,
+      "confidence": "inferred",
+      "origin": "2x geometry inference and own design",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "footer_height": {
+      "value": 46.0,
+      "confidence": "inferred",
+      "origin": "2x geometry inference and own design",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "font_size": {
+      "value": 13.0,
+      "confidence": "inferred",
+      "origin": "2x geometry inference and own design",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "line_height": {
+      "value": 22.0,
+      "confidence": "inferred",
+      "origin": "2x geometry inference and own design",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "connector_width": {
+      "value": 28.0,
+      "confidence": "inferred",
+      "origin": "2x geometry inference and own design",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "number_width": {
+      "value": 34.0,
+      "confidence": "inferred",
+      "origin": "2x geometry inference and own design",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "actions_width": {
+      "value": 40.0,
+      "confidence": "inferred",
+      "origin": "2x geometry inference and own design",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "button_border": {
+      "value": [
+        79,
+        81,
+        86
+      ],
+      "confidence": "observed",
+      "origin": "user screenshot pixels",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "code_padding_x": {
+      "value": 12.0,
+      "confidence": "inferred",
+      "origin": "Codisseu design per padding request",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "code_padding_y": {
+      "value": 4.0,
+      "confidence": "inferred",
+      "origin": "Codisseu design per padding request",
+      "source": "docs/git-merge-reference-20261104.md"
+    },
+    "tooltip_padding": {
+      "value": 8,
+      "confidence": "inferred",
+      "origin": "Codisseu design per padding request",
+      "source": "docs/git-merge-reference-20261104.md"
+    }
+  },
+  "limits": "Pixel samples are image evidence, not local theme defaults. Geometry is inferred. PHP syntax uses existing Codisseu lexer."
+}

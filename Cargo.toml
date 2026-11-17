@@ -1,0 +1,47 @@
+[workspace]
+resolver = "3"
+members = ["crates/codisseu-jira", "crates/codisseu-browser", "crates/codisseu-runtime", "crates/codisseu-api", "apps/codisseu", "crates/codisseu-core", "crates/codisseu-editor", "crates/codisseu-ui", "crates/codisseu-db", "crates/codisseu-language", "crates/codisseu-syntax", "crates/codisseu-git", "crates/codisseu-debug", "crates/codisseu-ai"]
+default-members = ["apps/codisseu"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.95"
+license = "MIT"
+repository = "https://github.com/lucstrik/codisseu"
+
+[workspace.dependencies]
+codisseu-jira = { path = "crates/codisseu-jira" }
+codisseu-browser = { path = "crates/codisseu-browser" }
+codisseu-runtime = { path = "crates/codisseu-runtime" }
+codisseu-api = { path = "crates/codisseu-api" }
+codisseu-ai = { path = "crates/codisseu-ai" }
+eframe = { version = "=0.37.0", default-features = false, features = ["accesskit", "clipboard", "default_fonts", "links", "wgpu", "wayland", "x11"] }
+egui = { version = "=0.37.0", features = ["monochrome_emoji_fonts"] }
+epaint = { version = "=0.37.0", features = ["color_fonts"] }
+egui_kittest = { version = "=0.37.0", features = ["eframe", "wgpu", "snapshot", "x11"] }
+ropey = { version = "=1.6.1", default-features = false, features = ["simd", "cr_lines"] }
+unicode-segmentation = "=1.13.3"
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = "=1.0.154"
+tempfile = "=3.27.0"
+image = { version = "=0.25.10", default-features = false, features = ["png", "jpeg", "gif", "webp"] }
+codisseu-git = { path = "crates/codisseu-git" }
+codisseu-debug = { path = "crates/codisseu-debug" }
+codisseu-core = { path = "crates/codisseu-core" }
+codisseu-editor = { path = "crates/codisseu-editor" }
+codisseu-ui = { path = "crates/codisseu-ui" }
+codisseu-db = { path = "crates/codisseu-db" }
+codisseu-language = { path = "crates/codisseu-language" }
+codisseu-syntax = { path = "crates/codisseu-syntax" }
+
+[profile.dev]
+debug = 0
+incremental = false
+
+[profile.test]
+debug = 0
+incremental = false
+
+[patch.crates-io]
+egui-winit = { path = "vendor/egui-winit" }

@@ -1,0 +1,60 @@
+[
+  {
+    "id": "php-trait",
+    "origin": "php-trait/Rain.php",
+    "old": "rainfall",
+    "new": "forecast",
+    "files": [
+      "php-trait/Rain.php",
+      "php-trait/Weather.php",
+      "php-trait/main.php"
+    ],
+    "expected": {
+      "php-trait/Rain.php": "<?php\nnamespace TraitFixture;\ntrait Rain { public function forecast(): int { return 1; } }\n",
+      "php-trait/Weather.php": "<?php\nnamespace TraitFixture;\nclass Weather { use Rain { Rain::forecast as drizzle; } }\n",
+      "php-trait/main.php": "<?php\nuse TraitFixture\\Weather;\nfunction traitfixtureReport(Weather $weather): int { return $weather->forecast() + $weather->drizzle(); }\necho traitfixtureReport(new Weather());\n"
+    }
+  },
+  {
+    "id": "php-alias",
+    "origin": "php-alias/Weather.php",
+    "old": "drizzle",
+    "new": "forecast",
+    "files": [
+      "php-alias/Weather.php",
+      "php-alias/main.php"
+    ],
+    "expected": {
+      "php-alias/Weather.php": "<?php\nnamespace AliasFixture;\nclass Weather { use Rain { Rain::rainfall as forecast; } }\n",
+      "php-alias/main.php": "<?php\nuse AliasFixture\\Weather;\nfunction aliasfixtureReport(Weather $weather): int { return $weather->rainfall() + $weather->forecast(); }\necho aliasfixtureReport(new Weather());\n"
+    }
+  },
+  {
+    "id": "php-external-alias",
+    "origin": "php-external-alias/main.php",
+    "old": "drizzle",
+    "new": "forecast",
+    "files": [
+      "php-external-alias/Weather.php",
+      "php-external-alias/main.php"
+    ],
+    "expected": {
+      "php-external-alias/Weather.php": "<?php\nnamespace ExternalAliasFixture;\nclass Weather { use Rain { Rain::rainfall as forecast; } }\n",
+      "php-external-alias/main.php": "<?php\nuse ExternalAliasFixture\\Weather;\nfunction externalAliasReport(Weather $weather): int { return $weather->rainfall() + $weather->forecast(); }\necho externalAliasReport(new Weather());\n"
+    }
+  },
+  {
+    "id": "ts-property",
+    "origin": "ts-property/weather.ts",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "ts-property/weather.ts",
+      "ts-property/main.ts"
+    ],
+    "expected": {
+      "ts-property/weather.ts": "export class Weather {\n    precipitation: string = 'wet';\n    read(): string { return this.precipitation; }\n}\nexport class OtherWeather { rainfall: string = 'other'; }\n",
+      "ts-property/main.ts": "import { Weather, OtherWeather } from './weather';\nexport function propertyReport(weather: Weather): string { return weather.precipitation; }\n/* \ud83d\ude00 e\u0301 */ console.log(new Weather().precipitation, new OtherWeather().rainfall);\n// rainfall must stay in this comment\nconst literal = 'rainfall';\n"
+    }
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "name": "codisseu/rename-mixed-fixture",
+  "autoload": {
+    "classmap": [
+      "php-baseline"
+    ]
+  }
+}

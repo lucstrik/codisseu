@@ -1,0 +1,52 @@
+[
+  {
+    "id": "php-accessors",
+    "origin": "php-accessors/Weather.php",
+    "old": "weather",
+    "new": "forecast",
+    "files": [
+      "php-accessors/Weather.php",
+      "php-accessors/main.php"
+    ],
+    "expected": {
+      "php-accessors/Weather.php": "<?php\nnamespace AccessorEnabled;\nclass Weather {\n    public string $forecast = 'wet';\n    public function getForecast(): string { return $this->forecast; }\n    public function setForecast(string $value): void { $this->forecast = $value; }\n}\nclass OtherWeather { public function getWeather(): string { return 'other'; } }\n",
+      "php-accessors/main.php": "<?php\nuse AccessorEnabled\\Weather;\nuse AccessorEnabled\\OtherWeather;\nfunction reportAccessorEnabled(Weather $source): string { $source->setForecast('rain'); return $source->getForecast() . $source->forecast; }\n/* 😀 é */ echo reportAccessorEnabled(new Weather()), (new OtherWeather())->getWeather();\n// weather and getWeather stay text\n$literal='weather';\n"
+    },
+    "options": {
+      "accessors": true
+    },
+    "direct_refactor": true
+  },
+  {
+    "id": "php-noaccessors",
+    "origin": "php-noaccessors/Weather.php",
+    "old": "weather",
+    "new": "forecast",
+    "files": [
+      "php-noaccessors/Weather.php",
+      "php-noaccessors/main.php"
+    ],
+    "expected": {
+      "php-noaccessors/Weather.php": "<?php\nnamespace AccessorDisabled;\nclass Weather {\n    public string $forecast = 'wet';\n    public function getWeather(): string { return $this->forecast; }\n    public function setWeather(string $value): void { $this->forecast = $value; }\n}\nclass OtherWeather { public function getWeather(): string { return 'other'; } }\n",
+      "php-noaccessors/main.php": "<?php\nuse AccessorDisabled\\Weather;\nuse AccessorDisabled\\OtherWeather;\nfunction reportAccessorDisabled(Weather $source): string { $source->setWeather('rain'); return $source->getWeather() . $source->forecast; }\n/* 😀 é */ echo reportAccessorDisabled(new Weather()), (new OtherWeather())->getWeather();\n// weather and getWeather stay text\n$literal='weather';\n"
+    },
+    "options": {
+      "accessors": false
+    },
+    "direct_refactor": true
+  },
+  {
+    "id": "ts-property",
+    "origin": "ts-property/weather.ts",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "ts-property/weather.ts",
+      "ts-property/main.ts"
+    ],
+    "expected": {
+      "ts-property/weather.ts": "export class Weather {\n    precipitation: string = 'wet';\n    read(): string { return this.precipitation; }\n}\nexport class OtherWeather { rainfall: string = 'other'; }\n",
+      "ts-property/main.ts": "import { Weather, OtherWeather } from './weather';\nexport function propertyReport(weather: Weather): string { return weather.precipitation; }\n/* 😀 é */ console.log(new Weather().precipitation, new OtherWeather().rainfall);\n// rainfall must stay in this comment\nconst literal = 'rainfall';\n"
+    }
+  }
+]

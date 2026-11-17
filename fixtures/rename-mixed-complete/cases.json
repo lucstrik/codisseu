@@ -1,0 +1,88 @@
+[
+  {
+    "id": "php-baseline-mixed",
+    "origin": "php-baseline/Weather.php",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "php-baseline/Weather.php",
+      "php-baseline/main.php"
+    ],
+    "expected": {
+      "php-baseline/Weather.php": "<?php\nnamespace MixedFixture;\nclass Weather { public string $precipitation = \"Paris\"; }\n",
+      "php-baseline/main.php": "<?php\nuse MixedFixture\\Weather;\necho (new Weather())->precipitation;\n"
+    }
+  },
+  {
+    "id": "ts-consumers-mixed",
+    "origin": "mixed/weather.ts",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "mixed/weather.ts",
+      "mixed/main.ts",
+      "mixed/consumer.js",
+      "mixed/view.tsx",
+      "mixed/widget.jsx"
+    ],
+    "expected": {
+      "mixed/weather.ts": "export function precipitation(city: string): string { return city; }\n",
+      "mixed/main.ts": "import { precipitation } from './weather';\n/* 😀 é */ console.log(precipitation('Paris'));\n",
+      "mixed/consumer.js": "import { precipitation } from './weather';\nexport const city = precipitation('Oslo');\n",
+      "mixed/view.tsx": "import { precipitation } from './weather';\nexport const view = <div>{precipitation('Rome')}</div>;\n",
+      "mixed/widget.jsx": "import { precipitation } from './weather';\nexport const view = <div>{precipitation('Lima')}</div>;\n"
+    }
+  },
+  {
+    "id": "js-origin-mixed",
+    "origin": "js-origin/weather.js",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "js-origin/weather.js",
+      "js-origin/main.ts"
+    ],
+    "expected": {
+      "js-origin/weather.js": "/** @param {string} city @returns {string} */\nexport function precipitation(city) { return city; }\n",
+      "js-origin/main.ts": "import { precipitation } from './weather';\nconsole.log(precipitation('Paris'));\n"
+    }
+  },
+  {
+    "id": "ts-shorthand-mixed",
+    "origin": "shorthand/weather.ts",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "shorthand/weather.ts",
+      "shorthand/main.ts"
+    ],
+    "expected": {
+      "shorthand/weather.ts": "export const precipitation = 1;\nexport const box = { rainfall: precipitation };\n",
+      "shorthand/main.ts": "import { precipitation, box } from './weather';\nconsole.log(precipitation, box.rainfall);\n"
+    }
+  },
+  {
+    "id": "ts-excluded-scope",
+    "origin": "excluded/weather.ts",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "excluded/weather.ts",
+      "excluded/main.ts",
+      "excluded/consumer.js",
+      "excluded/view.tsx",
+      "excluded/widget.jsx"
+    ],
+    "expected": {
+      "excluded/weather.ts": "export function rainfall(city: string): string { return city; }\n",
+      "excluded/main.ts": "import { rainfall } from './weather';\n/* 😀 é */ console.log(rainfall('Paris'));\n",
+      "excluded/consumer.js": "import { rainfall } from './weather';\nexport const city = rainfall('Oslo');\n",
+      "excluded/view.tsx": "import { rainfall } from './weather';\nexport const view = <div>{rainfall('Rome')}</div>;\n",
+      "excluded/widget.jsx": "import { rainfall } from './weather';\nexport const view = <div>{rainfall('Lima')}</div>;\n"
+    },
+    "options": {
+      "javascript": false
+    },
+    "expect_blocked": true
+  }
+]

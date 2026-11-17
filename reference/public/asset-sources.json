@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-22",
+  "files": [
+    {
+      "file": "fonts/JetBrainsMono-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/JetBrains/JetBrainsMono/19371302b95d218af43299bce79ddbddd0bc364d/fonts/ttf/JetBrainsMono-Regular.ttf",
+      "license": "OFL-1.1",
+      "sha256": "e6fd0d7e91550b3ed2b735d4312474362c4716edc4fc0577a0f61ed782d5aed1",
+      "bytes": 270224,
+      "modified": false
+    },
+    {
+      "file": "fonts/JetBrainsMono-OFL.txt",
+      "url": "https://raw.githubusercontent.com/JetBrains/JetBrainsMono/19371302b95d218af43299bce79ddbddd0bc364d/OFL.txt",
+      "license": "OFL-1.1",
+      "sha256": "a76abf002c49097d146e86740a3105a5d00450b1592e820a1109a8c5680cd697",
+      "bytes": 4399,
+      "modified": false
+    },
+    {
+      "file": "fonts/InterVariable.ttf",
+      "url": "https://raw.githubusercontent.com/rsms/inter/353b61b9f4430d5f420d56605a6e7993e0941470/docs/font-files/InterVariable.ttf",
+      "license": "OFL-1.1",
+      "sha256": "4989b125924991b90d05b2d16e0e388c48f7d5bb8b30539bbf9c755278d0ccaf",
+      "bytes": 879708,
+      "modified": false
+    },
+    {
+      "file": "fonts/Inter-OFL.txt",
+      "url": "https://raw.githubusercontent.com/rsms/inter/353b61b9f4430d5f420d56605a6e7993e0941470/LICENSE.txt",
+      "license": "OFL-1.1",
+      "sha256": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a",
+      "bytes": 4380,
+      "modified": false
+    },
+    {
+      "file": "intellij-oss/NOTICE.txt",
+      "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/NOTICE.txt",
+      "license": "Apache-2.0",
+      "sha256": "2262ebb5abcd81ca9d05581c37ad2ebbb9d431115fce1b23a5812b414415ebff",
+      "bytes": 110,
+      "modified": false
+    },
+    {
+      "file": "intellij-oss/LICENSE-APACHE-2.0.txt",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+      "license": "Apache-2.0",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "modified": false
+    },
+    {
+      "file": "fonts/NotoSansSymbols2-Regular.ttf",
+      "url": "https://snapshot.debian.org/package/fonts-noto/20201225-2/",
+      "installed_source": "/usr/share/fonts/truetype/noto/NotoSansSymbols2-Regular.ttf",
+      "package": "fonts-noto-core",
+      "package_version": "20201225-2",
+      "license": "OFL-1.1",
+      "sha256": "876598db5f1e3bef2bc77c4d94c5b0d5d2c1620be4878a06f18fb5434e331688",
+      "bytes": 656852,
+      "modified": false,
+      "note": "TTF inalterado do pacote instalado; dpkg confirma propriet\u00e1rio; fc-query confirma U+1F327."
+    },
+    {
+      "file": "fonts/NotoSansSymbols2-OFL.txt",
+      "url": "https://snapshot.debian.org/package/fonts-noto/20201225-2/",
+      "installed_source": "/usr/share/doc/fonts-noto-core/copyright",
+      "package": "fonts-noto-core",
+      "package_version": "20201225-2",
+      "license": "OFL-1.1",
+      "sha256": "99fb70c054f81de5ae01619f0c4109253dec20ad2c217c5fcaba969325111309",
+      "bytes": 4157,
+      "modified": true,
+      "note": "Avisos copyright e texto OFL extra\u00eddos de copyright Debian; retirados somente metadados de empacotamento e formata\u00e7\u00e3o DEP-5. GPL-3+ da pasta debian/ n\u00e3o \u00e9 licen\u00e7a do TTF."
+    },
+    {
+      "file": "fonts/JetBrainsMono-Bold.ttf",
+      "url": "https://raw.githubusercontent.com/JetBrains/JetBrainsMono/19371302b95d218af43299bce79ddbddd0bc364d/fonts/ttf/JetBrainsMono-Bold.ttf",
+      "license": "OFL-1.1",
+      "sha256": "d22c4f3821d725eb01210d278d95dfcfcaadc34699a06658d47c8a5cc5830ada",
+      "bytes": 274096,
+      "modified": false,
+      "purpose": "M3.4 PHP completion primary font measured in original; same audited revision and OFL as Regular"
+    },
+    {
+      "file": "fonts/NotoSansCJK-Regular.ttc",
+      "url": "https://snapshot.debian.org/package/fonts-noto-cjk/1%3A20240730%2Brepack1-1/",
+      "installed_source": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+      "package": "fonts-noto-cjk",
+      "package_version": "1:20240730+repack1-1",
+      "license": "OFL-1.1",
+      "sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
+      "bytes": 19484784,
+      "modified": false,
+      "note": "Font byte-exact unchanged; face index2 Noto Sans CJK SC. License transcription removes Debian continuation dots; Debian packaging GPL does not apply to font."
+    },
+    {
+      "file": "fonts/NotoSansCJK-OFL.txt",
+      "url": "https://snapshot.debian.org/package/fonts-noto-cjk/1%3A20240730%2Brepack1-1/",
+      "installed_source": "/usr/share/doc/fonts-noto-cjk/copyright",
+      "package": "fonts-noto-cjk",
+      "package_version": "1:20240730+repack1-1",
+      "license": "OFL-1.1",
+      "sha256": "38bb604c3c31322122ec1adf7353d0b85e28bfb322a9033deb4ccfea4ce7677c",
+      "bytes": 4173,
+      "modified": true,
+      "note": "Font byte-exact unchanged; face index2 Noto Sans CJK SC. License transcription removes Debian continuation dots; Debian packaging GPL does not apply to font."
+    },
+    {
+      "file": "fonts/NotoColorEmoji.ttf",
+      "url": "https://snapshot.debian.org/package/fonts-noto-color-emoji/2.051-0%2Bdeb13u1/",
+      "installed_source": "/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf",
+      "package": "fonts-noto-color-emoji",
+      "package_version": "2.051-0+deb13u1",
+      "license": "OFL-1.1 (fonts/*); Apache-2.0 (other source), distinguished in copyright",
+      "bytes": 11260748,
+      "sha256": "dac5c27651082d6c53dab5081f50d2022ddf6877d730fa919cf6a4fc2af22de0",
+      "modified": false
+    },
+    {
+      "file": "fonts/NotoColorEmoji-copyright.txt",
+      "url": "https://snapshot.debian.org/package/fonts-noto-color-emoji/2.051-0%2Bdeb13u1/",
+      "installed_source": "/usr/share/doc/fonts-noto-color-emoji/copyright",
+      "package": "fonts-noto-color-emoji",
+      "package_version": "2.051-0+deb13u1",
+      "license": "OFL-1.1 (fonts/*); Apache-2.0 (other source), distinguished in copyright",
+      "bytes": 5087,
+      "sha256": "3720722d2046accb40e1696f096b57c658b0b47d74031b3d114cf7545b840b3c",
+      "modified": false
+    },
+    {
+      "file": "fonts/JetBrainsMono-Italic.ttf",
+      "url": "https://raw.githubusercontent.com/JetBrains/JetBrainsMono/19371302b95d218af43299bce79ddbddd0bc364d/fonts/ttf/JetBrainsMono-Italic.ttf",
+      "license": "OFL-1.1",
+      "sha256": "6dc8e1322d4b2013b64e277bf66abc6748207c46a590471d4296876c2c235d0c",
+      "bytes": 276084,
+      "modified": false,
+      "purpose": "PHP comments observed PS-262.10968.76; same audited revision and OFL as Regular"
+    },
+    {
+      "file": "icons/typeScript_dark.svg",
+      "upstream_path": "platform/icons/src/expui/fileTypes/typeScript_dark.svg",
+      "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/platform/icons/src/expui/fileTypes/typeScript_dark.svg",
+      "revision": "441b046f2985d841fd90bc64b7f312636644718d",
+      "license": "Apache-2.0",
+      "license_confidence": "documented",
+      "license_basis": "Individual source header explicitly states Apache 2.0.",
+      "sha256": "18f56081e42916c7a3109062359ff41aeff6372d10bdb8942de6dce5e19f624e",
+      "bytes": 2144,
+      "modified": false,
+      "purpose": "M3.19 file-tab badge path source for native procedural mesh; source SVG retained unchanged, adaptation must be attributed.",
+      "license_file": "reference/public/intellij-oss/LICENSE-APACHE-2.0.txt",
+      "notice_file": "reference/public/intellij-oss/NOTICE.txt"
+    },
+    {
+      "file": "icons/php_dark.svg",
+      "upstream_path": "platform/icons/src/expui/language/php_dark.svg",
+      "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/platform/icons/src/expui/language/php_dark.svg",
+      "revision": "441b046f2985d841fd90bc64b7f312636644718d",
+      "license": "Apache-2.0",
+      "license_confidence": "inferred",
+      "license_basis": "Public IntelliJ Platform source. Official platform documentation and root build terms identify OSS under Apache 2.0. No individual license header and no narrower license in inspected ancestor directories; same criterion as previously audited public theme.",
+      "sha256": "2ea27e0e07315aa1af1d7690f159cf7170734acfaad88bd9821ffcd37fb406d6",
+      "bytes": 2071,
+      "modified": false,
+      "purpose": "M3.19 file-tab badge path source for native procedural mesh; source SVG retained unchanged, adaptation must be attributed.",
+      "license_file": "reference/public/intellij-oss/LICENSE-APACHE-2.0.txt",
+      "notice_file": "reference/public/intellij-oss/NOTICE.txt"
+    }
+  ]
+}

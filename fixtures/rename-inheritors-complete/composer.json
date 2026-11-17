@@ -1,0 +1,12 @@
+{
+  "name": "storm/rename-inheritors-fixture",
+  "autoload": {
+    "psr-4": {
+      "InheritorsDefault\\": "php-inheritors-default/",
+      "InheritorsOff\\": "php-inheritors-off/",
+      "InheritorsClassOnly\\": "php-inheritors-class-only/",
+      "InheritorsFileOnly\\": "php-inheritors-file-only/",
+      "InheritorsCollision\\": "php-inheritors-collision/"
+    }
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "accessed_at": "2026-10-20",
+  "route": "A — documentação pública e componentes OSS; sem instrumentação proprietária",
+  "product_version": "PhpStorm and DataGrip public documentation 2026.2",
+  "original_runtime_build": null,
+  "official_screenshots": {
+    "downloaded": false,
+    "pixel_measurements": false,
+    "note": "Links de figuras públicas, sem incorporar imagens à UI e sem reutilizar ícones/marcas. Não é captura local do IDE."
+  },
+  "sources": [
+    {
+      "id": "new-ui",
+      "url": "https://www.jetbrains.com/help/phpstorm/new-ui.html",
+      "date_on_page": "2026-08-17",
+      "confidence": "documented",
+      "scenario": "Tema, fonte Inter, header, rails, abas e compact mode",
+      "image_url": "https://resources.jetbrains.com/help/img/idea/2026.2/ps_new_ui_dark_theme.png"
+    },
+    {
+      "id": "interface",
+      "url": "https://www.jetbrains.com/help/phpstorm/guided-tour-around-the-user-interface.html",
+      "confidence": "documented",
+      "scenario": "Editor, Project, gutter, status e dock das ferramentas",
+      "image_url": "https://resources.jetbrains.com/help/img/idea/2026.2/ps_mainWindow_new_ui.png"
+    },
+    {
+      "id": "database",
+      "url": "https://www.jetbrains.com/help/phpstorm/database-tool-window.html",
+      "confidence": "documented",
+      "scenario": "Árvore de data sources, schemas, tabelas e ações de contexto",
+      "image_url": "https://resources.jetbrains.com/help/img/idea/2026.2/db_database_tool_window.png"
+    },
+    {
+      "id": "query-results",
+      "url": "https://www.jetbrains.com/help/phpstorm/viewing-query-results.html",
+      "confidence": "documented",
+      "scenario": "Resultados por padrão no Services; opção em editor"
+    },
+    {
+      "id": "services",
+      "url": "https://www.jetbrains.com/help/phpstorm/services-tool-window.html",
+      "confidence": "documented",
+      "scenario": "Abas Output e Result"
+    },
+    {
+      "id": "platform-license",
+      "url": "https://plugins.jetbrains.com/docs/intellij/intellij-platform.html",
+      "confidence": "documented",
+      "scenario": "Licença Apache-2.0 da plataforma; plugins comerciais separados"
+    },
+    {
+      "id": "intellij-theme",
+      "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/platform/platform-resources/src/themes/expUI/expUI_dark.theme.json",
+      "revision": "441b046f2985d841fd90bc64b7f312636644718d",
+      "sha256": "54ced18704b8847426ebca5552627072c8b01bd3a0ee25f6f2c924b1d2c49a3d",
+      "license": "Apache-2.0",
+      "license_confidence": "inferred",
+      "license_basis": "Fonte pública IntelliJ Platform; documentação oficial declara Apache-2.0 e os termos na raiz também identificam OSS Apache-2.0. Arquivo sem cabeçalho individual; sem licença mais estreita encontrada nas pastas ancestrais inspecionadas. Ver docs/visual-reference-m2.md."
+    },
+    {
+      "id": "root-build-terms",
+      "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/LICENSE.txt",
+      "sha256": "3f382c8820a51e4d1e22b2f50408a52eb6fe6cfff36bcf8a8dfe104df00251a3",
+      "confidence": "documented",
+      "scenario": "JetBrains Open-Source Build Terms1.3 de15jun2026; distingue OSS Apache-2.0 de condições do produto binário"
+    },
+    {
+      "id": "datagrip-interface",
+      "url": "https://www.jetbrains.com/help/datagrip/guided-tour-around-the-user-interface.html",
+      "date_on_page": "2026-08-17",
+      "confidence": "documented",
+      "scenario": "Toolbar no header; editor, Database Explorer, Files e Services; docks redimensionáveis"
+    },
+    {
+      "id": "datagrip-database",
+      "url": "https://www.jetbrains.com/help/datagrip/database-explorer.html",
+      "confidence": "documented",
+      "scenario": "Árvore de data sources, schemas e tabelas; introspecção após conexão",
+      "image_url": "https://resources.jetbrains.com/help/img/idea/2026.2/db_database_explorer.png"
+    },
+    {
+      "id": "datagrip-results",
+      "url": "https://www.jetbrains.com/help/datagrip/viewing-query-results.html",
+      "date_on_page": "2026-08-17",
+      "confidence": "documented",
+      "scenario": "Ctrl+Enter, Result no Services, aba reutilizada por padrão",
+      "image_url": "https://resources.jetbrains.com/help/img/idea/2026.2/db_data_editor_query_result_tab_glossary.png"
+    },
+    {
+      "id": "datagrip-services",
+      "url": "https://www.jetbrains.com/help/datagrip/services-tool-window.html",
+      "confidence": "documented",
+      "scenario": "Output/Result, sessões, autocommit/manual, commit/rollback/cancelamento",
+      "image_url": "https://resources.jetbrains.com/help/img/idea/2026.2/db_services_tool_window_database_services_intro.png"
+    },
+    {
+      "id": "datagrip-data-editor",
+      "url": "https://www.jetbrains.com/help/datagrip/data-editor-and-viewer.html",
+      "confidence": "documented",
+      "scenario": "Grade Table padrão, seleção/edição/sort/filter/export documentados no original, sem alegar implementação no Storm"
+    }
+  ],
+  "database_reference_correction": {
+    "decision": "DataGrip é a referência de banco correta; QueryGrip não integra a reutilização M2.",
+    "origin": "Correção explícita do usuário, repassada pelo integrador nesta sessão",
+    "date": "2026-10-20"
+  }
+}

@@ -1,0 +1,252 @@
+[
+  {
+    "name": "color_quant",
+    "version": "1.1.0",
+    "license": "MIT",
+    "repository": "https://github.com/image-rs/color_quant.git",
+    "source": "registry+https://github.com/rust-lang/crates.io-index",
+    "files": [
+      {
+        "path": "reference/public/editor-productivity-dependencies/color_quant-1.1.0/LICENSE",
+        "sha256": "592dc80f1a865d20d61a2006a2d29ce34a2bc28cd7e868ab300fdeed6da154ca"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/color_quant-1.1.0/.cargo_vcs_info.json",
+        "sha256": "e4c6e8ce6d9a7aa2db6ce95040c7d8aec8b2134c80d91c15da9f93b7e257524f"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/color_quant-1.1.0/Cargo.toml",
+        "sha256": "4ec438714084877d63c79e99191599a3694839c74842f81ca69de836a5889c75"
+      }
+    ]
+  },
+  {
+    "name": "gif",
+    "version": "0.14.2",
+    "license": "MIT OR Apache-2.0",
+    "repository": "https://github.com/image-rs/image-gif",
+    "source": "registry+https://github.com/rust-lang/crates.io-index",
+    "files": [
+      {
+        "path": "reference/public/editor-productivity-dependencies/gif-0.14.2/.cargo_vcs_info.json",
+        "sha256": "e6caec69c5138ad98b4e84f109721c9ba655c752869aa109508b4d70e1474571"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/gif-0.14.2/LICENSE-APACHE",
+        "sha256": "769f80b5bcb42ed0af4e4d2fd74e1ac9bf843cb80c5a29219d1ef3544428a6bb"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/gif-0.14.2/LICENSE-MIT",
+        "sha256": "77257f3d2181236b1aee78920238062ae64efe13c5d858b2db126e79c9e1b14f"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/gif-0.14.2/Cargo.toml",
+        "sha256": "46fc2e9680048ac63668bb39b1ce086b9195a142a31d5f82869dbe0ccc417ca9"
+      }
+    ]
+  },
+  {
+    "name": "image",
+    "version": "0.25.10",
+    "license": "MIT OR Apache-2.0",
+    "repository": "https://github.com/image-rs/image",
+    "source": "registry+https://github.com/rust-lang/crates.io-index",
+    "files": [
+      {
+        "path": "reference/public/editor-productivity-dependencies/image-0.25.10/.cargo_vcs_info.json",
+        "sha256": "f231a3e6ec6fd66ebd2522b6a118982bf468ba1b07c96a1778edfa135936a693"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/image-0.25.10/LICENSE-APACHE",
+        "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/image-0.25.10/LICENSE-MIT",
+        "sha256": "c77a4cf9da729987d0fe7ccd811e3bd27393914ddf3d23467c18cc22954513b3"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/image-0.25.10/Cargo.toml",
+        "sha256": "b45592b42e4f065d5258379bac78e2a00ab6e50bbeec265fcceeea9cf5829c26"
+      }
+    ]
+  },
+  {
+    "name": "image-webp",
+    "version": "0.2.4",
+    "license": "MIT OR Apache-2.0",
+    "repository": "https://github.com/image-rs/image-webp",
+    "source": "registry+https://github.com/rust-lang/crates.io-index",
+    "files": [
+      {
+        "path": "reference/public/editor-productivity-dependencies/image-webp-0.2.4/.cargo_vcs_info.json",
+        "sha256": "0b5acdc5e994925d76cb7285f79bc3c5c958a564baa7c84e9c943cefcb1c998d"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/image-webp-0.2.4/LICENSE-APACHE",
+        "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/image-webp-0.2.4/LICENSE-MIT",
+        "sha256": "c77a4cf9da729987d0fe7ccd811e3bd27393914ddf3d23467c18cc22954513b3"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/image-webp-0.2.4/Cargo.toml",
+        "sha256": "c05cc68c768c57e79c581b2ad6c112759556df9689b83313e35d5943f2951262"
+      }
+    ]
+  },
+  {
+    "name": "pulldown-cmark",
+    "version": "0.13.4",
+    "license": "MIT",
+    "repository": "https://github.com/raphlinus/pulldown-cmark",
+    "source": "registry+https://github.com/rust-lang/crates.io-index",
+    "files": [
+      {
+        "path": "reference/public/editor-productivity-dependencies/pulldown-cmark-0.13.4/LICENSE",
+        "sha256": "c4f10f55904bdb9f27d3fbf94c354926d6cfe8b982276e556238c258941b243b"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/pulldown-cmark-0.13.4/.cargo_vcs_info.json",
+        "sha256": "b2f072c7ef609ef30fad777d9fef73e832b412db98e4e61301ac345d2ed5ce7f"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/pulldown-cmark-0.13.4/Cargo.toml",
+        "sha256": "631421b4c7f58856cd6ec45a1e27da28b70154f69b268a62d70587c2068927d0"
+      }
+    ]
+  },
+  {
+    "name": "quick-error",
+    "version": "2.0.1",
+    "license": "MIT/Apache-2.0",
+    "repository": "http://github.com/tailhook/quick-error",
+    "source": "registry+https://github.com/rust-lang/crates.io-index",
+    "files": [
+      {
+        "path": "reference/public/editor-productivity-dependencies/quick-error-2.0.1/.cargo_vcs_info.json",
+        "sha256": "27a3b8124e45550708ca600232fa1ffdcc364ca02e81835b51440317223193bb"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/quick-error-2.0.1/LICENSE-APACHE",
+        "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/quick-error-2.0.1/LICENSE-MIT",
+        "sha256": "058f01fe181608d027fcde7e528fc03ea3cf90f30903c407644b0a9bbc54f500"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/quick-error-2.0.1/Cargo.toml",
+        "sha256": "d36aca49b7f7fe25c35e8ef7c3a68f7a94fdc777ac80d52b8fe360608a7d9af1"
+      }
+    ]
+  },
+  {
+    "name": "unicase",
+    "version": "2.10.0",
+    "license": "MIT OR Apache-2.0",
+    "repository": "https://github.com/seanmonstar/unicase",
+    "source": "registry+https://github.com/rust-lang/crates.io-index",
+    "files": [
+      {
+        "path": "reference/public/editor-productivity-dependencies/unicase-2.10.0/.cargo_vcs_info.json",
+        "sha256": "803e97f196b21d2732ada6cf1a57c8d7ec54fed595da7b59dc273ec583890e31"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/unicase-2.10.0/LICENSE-APACHE",
+        "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/unicase-2.10.0/LICENSE-MIT",
+        "sha256": "4f6bd11a0f17fe5b085ace1daaedb7b002a08316850dd9577c246c6a68a68e8c"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/unicase-2.10.0/Cargo.toml",
+        "sha256": "8e8d11c783859686450d60b9edc7ec577645c878ba143c70eb7ab87d64292f16"
+      }
+    ]
+  },
+  {
+    "name": "weezl",
+    "version": "0.1.12",
+    "license": "MIT OR Apache-2.0",
+    "repository": "https://github.com/image-rs/weezl",
+    "source": "registry+https://github.com/rust-lang/crates.io-index",
+    "files": [
+      {
+        "path": "reference/public/editor-productivity-dependencies/weezl-0.1.12/.cargo_vcs_info.json",
+        "sha256": "b65026a35ec50a4da63f8998cf28192be7dfb9296fb3c485d3a0b43a51dffb8f"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/weezl-0.1.12/LICENSE-APACHE",
+        "sha256": "769f80b5bcb42ed0af4e4d2fd74e1ac9bf843cb80c5a29219d1ef3544428a6bb"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/weezl-0.1.12/LICENSE-MIT",
+        "sha256": "573f5227db835cd30bbdd3aed3f82615f80119a4d5c82b4daf642dbfe2b6afde"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/weezl-0.1.12/Cargo.toml",
+        "sha256": "66fd92299a4c1ddb2027d51387c1e78e0839b94bba152bf482b90932122302d0"
+      }
+    ]
+  },
+  {
+    "name": "zune-core",
+    "version": "0.5.3",
+    "license": "MIT OR Apache-2.0 OR Zlib",
+    "repository": "https://github.com/etemesi254/zune-image",
+    "source": "registry+https://github.com/rust-lang/crates.io-index",
+    "files": [
+      {
+        "path": "reference/public/editor-productivity-dependencies/zune-core-0.5.3/.cargo_vcs_info.json",
+        "sha256": "049594709a0517a401fb6b9d58a9c04aa6ca9dc79a9cc13c9fc730d981f4d009"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/zune-core-0.5.3/LICENSE-APACHE",
+        "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/zune-core-0.5.3/LICENSE-MIT",
+        "sha256": "d30047bca3b516639339a3c279bb84c3483124fb5a9dafe3c75056a85090e745"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/zune-core-0.5.3/LICENSE-ZLIB",
+        "sha256": "d201d14804d3bcd3b944147173175e4abfbd838b7c8069b6bd3452496bf13e6c"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/zune-core-0.5.3/Cargo.toml",
+        "sha256": "c17da79ddd25919908712cdd9a9e7e0273d53bda0b5be554a08270431a325b28"
+      }
+    ]
+  },
+  {
+    "name": "zune-jpeg",
+    "version": "0.5.15",
+    "license": "MIT OR Apache-2.0 OR Zlib",
+    "repository": "https://github.com/etemesi254/zune-image/tree/dev/crates/zune-jpeg",
+    "source": "registry+https://github.com/rust-lang/crates.io-index",
+    "files": [
+      {
+        "path": "reference/public/editor-productivity-dependencies/zune-jpeg-0.5.15/.cargo_vcs_info.json",
+        "sha256": "d4d2001e82c8ce49f692132594557f20691b99891eddb273957d2cac07002d9e"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/zune-jpeg-0.5.15/LICENSE-APACHE",
+        "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/zune-jpeg-0.5.15/LICENSE-MIT",
+        "sha256": "d30047bca3b516639339a3c279bb84c3483124fb5a9dafe3c75056a85090e745"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/zune-jpeg-0.5.15/LICENSE-ZLIB",
+        "sha256": "d201d14804d3bcd3b944147173175e4abfbd838b7c8069b6bd3452496bf13e6c"
+      },
+      {
+        "path": "reference/public/editor-productivity-dependencies/zune-jpeg-0.5.15/Cargo.toml",
+        "sha256": "0ff579eaf0dbe4cb0529bc3e5256cd25eff1ae146289f40a4f77442171b5995b"
+      }
+    ]
+  }
+]

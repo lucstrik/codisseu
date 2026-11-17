@@ -1,0 +1,10 @@
+{
+  "name": "PHP CS Fixer",
+  "version": "3.95.27",
+  "commit_short": "730c761",
+  "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/releases/download/v3.95.27/php-cs-fixer.phar",
+  "sha256": "47231757eefdd08778e2bd047d98a63dfaad881006c8c1d1bc870d63be7f6a9b",
+  "license": "MIT",
+  "php_runtime_observed": "8.4.27",
+  "reference": "documented upstream; no new PhpStorm runtime observation"
+}

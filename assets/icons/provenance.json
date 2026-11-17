@@ -1,0 +1,142 @@
+{
+  "source": "PNG supplied by user on2026-10-30 at /home/usuario/Downloads/codisseu.png",
+  "creator": "User-supplied artwork; creator not independently verified",
+  "authorization": "User explicitly requested replacing all application branding with this image",
+  "scope": "Application/window/desktop/dock/portable branding; language and action icons retain their meanings",
+  "transformations": "Master bytes unchanged; proportional square Lanczos resizes, no crop/redraw/color/background changes",
+  "sizes": [
+    16,
+    24,
+    32,
+    48,
+    64,
+    96,
+    128,
+    256,
+    512,
+    1024
+  ],
+  "master_dimensions": [
+    1254,
+    1254
+  ],
+  "renderer": "Version: ImageMagick 7.1.2-34 Q16-HDRI x86_64 c5d4ca8a0:20261014 https://imagemagick.org",
+  "files": [
+    {
+      "path": "codisseu.png",
+      "sha256": "9e9c8a1ce31af266ee968b661d27ddfa2a350e2fac490dff51c367c88b33de7c",
+      "bytes": 1340997,
+      "dimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "path": "assets/icons/io.codisseu.Codisseu-16.png",
+      "sha256": "00cec24c0c8e1bb30063a1386965ace73163694ce968addc79516ccb221941a4",
+      "bytes": 762,
+      "dimensions": [
+        16,
+        16
+      ]
+    },
+    {
+      "path": "assets/icons/io.codisseu.Codisseu-24.png",
+      "sha256": "87077109f33b9dccd753261f9bb866a2a3cad184a1c178af25f1288d8ab228da",
+      "bytes": 1377,
+      "dimensions": [
+        24,
+        24
+      ]
+    },
+    {
+      "path": "assets/icons/io.codisseu.Codisseu-32.png",
+      "sha256": "3bdbea71cd5aba3e0ed21fc0e694c39bd74ce448a01c2b06810c10b32f1b3a1d",
+      "bytes": 2144,
+      "dimensions": [
+        32,
+        32
+      ]
+    },
+    {
+      "path": "assets/icons/io.codisseu.Codisseu-48.png",
+      "sha256": "1ef1403730be79bbc983932542c1cfc50b85fc3262f2373e8c556f424f195516",
+      "bytes": 3956,
+      "dimensions": [
+        48,
+        48
+      ]
+    },
+    {
+      "path": "assets/icons/io.codisseu.Codisseu-64.png",
+      "sha256": "e93ec91ba77b28e4833aea887a506a2e8dcc94334a636a1bfdd68f0c94206987",
+      "bytes": 5973,
+      "dimensions": [
+        64,
+        64
+      ]
+    },
+    {
+      "path": "assets/icons/io.codisseu.Codisseu-96.png",
+      "sha256": "15504ac418909b2d478d0ab36089eedd1345d05fce8339bb2f102246e49d59ba",
+      "bytes": 11313,
+      "dimensions": [
+        96,
+        96
+      ]
+    },
+    {
+      "path": "assets/icons/io.codisseu.Codisseu-128.png",
+      "sha256": "9a4816c97cb5140c9f6bd895ccaf4156649ebb3e193c11eaa750390d4b25ef52",
+      "bytes": 17483,
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "assets/icons/io.codisseu.Codisseu-256.png",
+      "sha256": "94d5f8e54493551e261e6c26eac537736ae92cb55bb949ab929cd04b3b151f07",
+      "bytes": 53819,
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "assets/icons/io.codisseu.Codisseu-512.png",
+      "sha256": "2920dffae92b3d32c6dba8180b0b6fd22c580cbb4114fb1da06bab6cf9581a03",
+      "bytes": 195460,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "path": "assets/icons/io.codisseu.Codisseu-1024.png",
+      "sha256": "cadd8abb7eecd88803d897a3fc2091f9662d7d919d95de315d6f4c6589b4e4f6",
+      "bytes": 757832,
+      "dimensions": [
+        1024,
+        1024
+      ]
+    }
+  ],
+  "previous_assets": [
+    {
+      "path": "assets/icons/io.codisseu.Codisseu-512.png",
+      "sha256": "fef8c8cd9015f2dc49ca048143905b6a973af6125d5de8a96be23d5823d621d6",
+      "bytes": 166059
+    },
+    {
+      "path": "assets/icons/io.codisseu.Codisseu-128.png",
+      "sha256": "41e9dbca606772cede966c085e9dcddb6540f4212cc6329c0d242f877a6c826b",
+      "bytes": 15494
+    },
+    {
+      "path": "assets/icons/io.codisseu.Codisseu-256.png",
+      "sha256": "ccbfee780d1c93b6ae48ffcb9a982830a217dd54bd0017fa3f03cd21fc04b8e6",
+      "bytes": 46823
+    }
+  ]
+}

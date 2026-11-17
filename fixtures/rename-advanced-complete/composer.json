@@ -1,0 +1,8 @@
+{
+  "name": "codisseu/rename-advanced-fixture",
+  "autoload": {
+    "classmap": [
+      "php-advanced"
+    ]
+  }
+}

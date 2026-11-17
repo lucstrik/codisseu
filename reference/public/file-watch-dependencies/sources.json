@@ -1,0 +1,95 @@
+{
+  "source": "Crates.io Cargo.lock packages; licenses read from downloaded crate manifests",
+  "packages": [
+    {
+      "name": "inotify",
+      "version": "0.11.5",
+      "checksum": "4cc00ea907cab49550b7da656f80ebb97be1b997d931fbcd28d39734e17ce592",
+      "license": "ISC",
+      "repository": "https://github.com/hannobraun/inotify-rs",
+      "licenses": [
+        {
+          "path": "inotify-0.11.5/LICENSE",
+          "sha256": "7f78b31de4e7a3e2ac8de40e2b409eda313f03637aa62b8416fbde9bdc5ce4c9"
+        }
+      ]
+    },
+    {
+      "name": "inotify-sys",
+      "version": "0.1.8",
+      "checksum": "c033f80b2c113cdf91ab7a33faa9cbc014726dcad99880c8609af2a370edf37d",
+      "license": "ISC",
+      "repository": "https://github.com/hannobraun/inotify-sys",
+      "licenses": [
+        {
+          "path": "inotify-sys-0.1.8/LICENSE",
+          "sha256": "f68878c9ca61b25d4b2c470de571cb85ce97804a62bb153607f7e0e0d2684c8a"
+        }
+      ]
+    },
+    {
+      "name": "kqueue",
+      "version": "1.2.1",
+      "checksum": "8d763e5b24120b4ddf50de6c92308156765aabfbbccebf401da7cff2d70a41ea",
+      "license": "MIT",
+      "repository": "https://gitlab.com/rust-kqueue/rust-kqueue",
+      "licenses": [
+        {
+          "path": "kqueue-1.2.1/LICENSE",
+          "sha256": "9dc7535841863372cb757676c5acd69c010572a85df23d3467d6bb3cc2829e84"
+        }
+      ]
+    },
+    {
+      "name": "kqueue-sys",
+      "version": "1.1.2",
+      "checksum": "07293a4e297ac234359b510362495713f75ea345d5307140414f20c69ffeb087",
+      "license": "MIT",
+      "repository": "https://gitlab.com/rust-kqueue/rust-kqueue-sys",
+      "licenses": [
+        {
+          "path": "kqueue-sys-1.1.2/LICENSE",
+          "sha256": "9dc7535841863372cb757676c5acd69c010572a85df23d3467d6bb3cc2829e84"
+        }
+      ]
+    },
+    {
+      "name": "notify",
+      "version": "8.2.1",
+      "checksum": "82f812702fbc75d35416d3f884e04925be7e9498f4eceea2e24ba34559284674",
+      "license": "CC0-1.0",
+      "repository": "https://github.com/notify-rs/notify.git",
+      "licenses": [
+        {
+          "path": "notify-8.2.1/LICENSE-CC0",
+          "sha256": "e0456cbab4f7b5e7203e678faff37eadbdfef02e822db3b7a52a1dd9d3dc514a"
+        }
+      ]
+    },
+    {
+      "name": "notify-types",
+      "version": "2.1.0",
+      "checksum": "42b8cfee0e339a0337359f3c88165702ac6e600dc01c0cc9579a92d62b08477a",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/notify-rs/notify.git",
+      "licenses": [
+        {
+          "path": "notify-types-2.1.0/LICENSE-APACHE",
+          "sha256": "b5b413d7421d728c14f33d78198d6e255a0018beef717d78c4c3f6188be3dfb4"
+        },
+        {
+          "path": "notify-types-2.1.0/LICENSE-MIT",
+          "sha256": "b63e167d61ced1d872a588c5ac764b0dda477d62209dc4f6b6bfea5517d0a24c"
+        }
+      ]
+    },
+    {
+      "name": "objc2-core-services",
+      "version": "0.3.2",
+      "checksum": "583300ad934cba24ff5292aee751ecc070f7ca6b39a574cc21b7b5e588e06a0b",
+      "license": "Zlib OR Apache-2.0 OR MIT",
+      "repository": "https://github.com/madsmtm/objc2",
+      "licenses": []
+    }
+  ]
+}

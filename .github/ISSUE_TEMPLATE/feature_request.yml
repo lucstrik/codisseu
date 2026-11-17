@@ -1,0 +1,23 @@
+name: Tenho uma ideia
+description: Sugira uma melhoria para o Codisseu.
+title: "[Ideia] "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: O que você está tentando fazer?
+      description: Conte a situação e o que está faltando hoje.
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Como você imagina que poderia funcionar?
+      description: Um exemplo de uso ajuda mais do que uma lista de botões.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Você já tentou outro caminho?
+      description: Conte como resolve isso hoje ou inclua referências públicas que ajudem a explicar.

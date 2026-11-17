@@ -1,0 +1,67 @@
+{
+  "rasterizer": "librsvg 2.60.0 / Cairo 1.18.4 (system shared libraries, build-time only)",
+  "icons": [
+    {
+      "name": "docker-tool-window",
+      "svg_sha256": "ffa489f5d1aa5312534a692d3fe3a0dc7c720559e955829481ee02c6d68b8bfb",
+      "source_status": "derived",
+      "source": "Container Tools 2.5.3/resources/dark/docker.svg",
+      "upstream_sha256": "2b28b0c35621c58f2f1601c05c5fac1becc5cfd3567f7c090d595f4087879cd4",
+      "png_sha256": "60ae96586a022d08dbf04a05cb1296f0ddf5a0d376364014549f404b2ed6aa3d",
+      "modification": "Only fill #f6f6f6 replaced by Codisseu existing neutral #CED0D6. Original geometry/viewBox28 unchanged. Transparent64x64 PNG rendered by librsvg/Cairo."
+    }
+  ],
+  "checked_at": "2026-10-26",
+  "package": {
+    "name": "ms-azuretools.vscode-containers",
+    "version": "2.5.3",
+    "license": "MIT",
+    "license_file": "ContainerTools-LICENSE.md",
+    "package_json_sha256": "5d1dffe8bec2b4eefef11306b73eed5ad747b09f46c16e9f13cabe8eddcd2370",
+    "repository": "https://github.com/microsoft/vscode-containers",
+    "runtime_execution": false
+  },
+  "runtime_asset": "crates/codisseu-ui/assets/docker/docker-tool-window.png",
+  "source_type": "observed local package static resource",
+  "scope": "Docker integration identification only; does not imply Docker affiliation, endorsement, or ownership of trademarks.",
+  "official_documentation": [
+    {
+      "url": "https://code.visualstudio.com/docs/containers/overview",
+      "status": "documented",
+      "checked_at": "2026-10-26"
+    },
+    {
+      "url": "https://www.jetbrains.com/help/phpstorm/docker.html",
+      "version": "Help2026.2",
+      "status": "documented",
+      "checked_at": "2026-10-26"
+    },
+    {
+      "url": "https://www.jetbrains.com/help/phpstorm/docker-containers.html",
+      "version": "Help2026.2",
+      "status": "documented",
+      "checked_at": "2026-10-26"
+    },
+    {
+      "url": "https://www.jetbrains.com/help/phpstorm/services-tool-window.html",
+      "version": "Help2026.2",
+      "status": "documented",
+      "checked_at": "2026-10-26"
+    },
+    {
+      "url": "https://docs.docker.com/reference/cli/docker/container/exec/",
+      "status": "documented",
+      "checked_at": "2026-10-26"
+    }
+  ],
+  "rea": {
+    "evidence_id": "ev_ff6916b0beec09ee09cfd609edf9427eddd1dd7de415bd636f9d7e17aca7a53e",
+    "path": "artifacts/docker-reference-20261026/rea-manifests.json",
+    "selection": [
+      "package.json",
+      "package.nls.json"
+    ],
+    "unselected_files": 6,
+    "executed_target": false
+  }
+}

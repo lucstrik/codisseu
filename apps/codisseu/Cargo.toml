@@ -1,0 +1,12 @@
+[package]
+name = "codisseu"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+[dependencies]
+codisseu-runtime.workspace = true
+eframe.workspace = true
+codisseu-core.workspace = true
+codisseu-ui.workspace = true

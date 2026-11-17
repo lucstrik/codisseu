@@ -1,0 +1,11 @@
+{
+  "name": "codisseu/php-navigation-fixture",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": { "CodisseuNavigation\\": "src/" },
+    "files": ["src/helpers.php"]
+  },
+  "scripts": {
+    "post-autoload-dump": "@php -r \"file_put_contents('HOOK_EXECUTED', 'forbidden');\""
+  }
+}

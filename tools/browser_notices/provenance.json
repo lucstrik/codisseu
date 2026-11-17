@@ -1,0 +1,15 @@
+{
+  "cef-rs-LICENSE-APACHE.txt": {
+    "url": "https://raw.githubusercontent.com/tauri-apps/cef-rs/cef-v156.3.0%2B156.0.15/LICENSE-APACHE",
+    "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+  },
+  "cef-rs-LICENSE-MIT.txt": {
+    "url": "https://raw.githubusercontent.com/tauri-apps/cef-rs/cef-v156.3.0%2B156.0.15/LICENSE-MIT",
+    "sha256": "968a067d2458015543add393bbde51ef3f330ea122cf7b3380ea62e5a8945aee"
+  },
+  "DevTools-LICENSE.txt": {
+    "origin": "Unmodified Devtools-Frontend license in exact CEF SDK CREDITS.html",
+    "source_sha256": "8de6e17eb43cce00aea049179433608219423bb2bf41d34c6e651015a88e6d6a",
+    "sha256": "efa976e1ef4329f500e4acb771c9be90821a7b997e359f3228dd5b13336789c4"
+  }
+}

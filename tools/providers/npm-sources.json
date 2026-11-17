@@ -1,0 +1,18 @@
+[
+  {
+    "name": "typescript-language-server",
+    "version": "6.0.2",
+    "url": "https://registry.npmjs.org/typescript-language-server/-/typescript-language-server-6.0.2.tgz",
+    "integrity": "sha512-Ph7Ql+xkUJvMamnkh1h+aKP6HxLR7lrWIYkPn9/LZBkJdJZgtIj7OoVhkDYtQ7zFPTPmqZHOVXaUKGyz9M2q1Q==",
+    "license": "Apache-2.0",
+    "dependencies": {}
+  },
+  {
+    "name": "typescript",
+    "version": "6.0.3",
+    "url": "https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz",
+    "integrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+    "license": "Apache-2.0",
+    "dependencies": {}
+  }
+]

@@ -1,0 +1,1 @@
+const ts=require('typescript');module.exports={process(source,path){return {code:ts.transpileModule(source,{fileName:path,compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,sourceMap:true,inlineSources:true}}).outputText}}};

@@ -1,0 +1,897 @@
+{
+  "phpactor_reference": "ac2857bdf1c52424d753e328606511242c6ba694",
+  "lock_url": "https://raw.githubusercontent.com/phpactor/phpactor/ac2857bdf1c52424d753e328606511242c6ba694/composer.lock",
+  "lock_sha256": "6dffec433e483a47c769adca530b0b011a45a98bfd8e81a6b653e380cb38d27a",
+  "packages": [
+    {
+      "name": "amphp/amp",
+      "reference": "d7dda98dae26e56f3f6fcfbf1c1f819c9a993207",
+      "version": "v2.6.5",
+      "source": "https://github.com/amphp/amp.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/amphp/amp/LICENSE",
+          "sha256": "9d3a008014f3c155a2944a9d72bb576761d2ea0622f2b3428505acde33bc500b",
+          "origin": "https://raw.githubusercontent.com/amphp/amp/d7dda98dae26e56f3f6fcfbf1c1f819c9a993207/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "amphp/byte-stream",
+      "reference": "4f0e968ba3798a423730f567b1b50d3441c16ddc",
+      "version": "v1.8.2",
+      "source": "https://github.com/amphp/byte-stream.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/amphp/byte-stream/LICENSE",
+          "sha256": "71eb7c2703b98f5991e1b29a62f13a41682069adbf786e6d5e47b2538e168a7e",
+          "origin": "https://raw.githubusercontent.com/amphp/byte-stream/4f0e968ba3798a423730f567b1b50d3441c16ddc/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "amphp/cache",
+      "reference": "fe78cfae2fb8c92735629b8cd1893029c73c9b63",
+      "version": "v1.5.1",
+      "source": "https://github.com/amphp/cache.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/amphp/cache/LICENSE",
+          "sha256": "379ea8214dc392c496bd4d1bf53936bfb9816ef770a28dc73e776f7993f6c39f",
+          "origin": "https://raw.githubusercontent.com/amphp/cache/fe78cfae2fb8c92735629b8cd1893029c73c9b63/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "amphp/dns",
+      "reference": "4a13ffdc5e088593eb01860fc5002ebd9316d562",
+      "version": "v1.2.4",
+      "source": "https://github.com/amphp/dns.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/amphp/dns/LICENSE",
+          "sha256": "f786bbb9fd1ef1905cdd056d27488351991c655e73b18d409788b79da4d7ed33",
+          "origin": "https://raw.githubusercontent.com/amphp/dns/4a13ffdc5e088593eb01860fc5002ebd9316d562/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "amphp/parser",
+      "reference": "3cf1f8b32a0171d4b1bed93d25617637a77cded7",
+      "version": "v1.1.1",
+      "source": "https://github.com/amphp/parser.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/amphp/parser/LICENSE",
+          "sha256": "16ac45b95d11c9e4b805ae5392d069cab777f8085779ad3869b47030ccf47734",
+          "origin": "https://raw.githubusercontent.com/amphp/parser/3cf1f8b32a0171d4b1bed93d25617637a77cded7/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "amphp/process",
+      "reference": "55b837d4f1857b9bd7efb7bb859ae6b0e804f13f",
+      "version": "v1.1.9",
+      "source": "https://github.com/amphp/process.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/amphp/process/LICENSE",
+          "sha256": "18ceafcf39afd1ea4a86a5e0e321c7be81df83f3e3b590180f251a6b05fa4c86",
+          "origin": "https://raw.githubusercontent.com/amphp/process/55b837d4f1857b9bd7efb7bb859ae6b0e804f13f/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "amphp/serialization",
+      "reference": "fdf2834d78cebb0205fb2672676c1b1eb84371f0",
+      "version": "v1.1.0",
+      "source": "https://github.com/amphp/serialization.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/amphp/serialization/LICENSE",
+          "sha256": "9cbfa9126ef8d331fdada832a7f7048fbd9723870ad79844f2e38b56398c3662",
+          "origin": "https://raw.githubusercontent.com/amphp/serialization/fdf2834d78cebb0205fb2672676c1b1eb84371f0/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "amphp/socket",
+      "reference": "1e360dbed3d336ced183f103d65c129f3ddeafb0",
+      "version": "v1.2.2",
+      "source": "https://github.com/amphp/socket.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/amphp/socket/LICENSE",
+          "sha256": "b5a99f9adf9c6f1ab6bd8c56fc54722fa02d088d76ea96927e0c095a27b8a536",
+          "origin": "https://raw.githubusercontent.com/amphp/socket/1e360dbed3d336ced183f103d65c129f3ddeafb0/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "amphp/sync",
+      "reference": "85ab06764f4f36d63b1356b466df6111cf4b89cf",
+      "version": "v1.4.2",
+      "source": "https://github.com/amphp/sync.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/amphp/sync/LICENSE",
+          "sha256": "22aa8f0e0681cb0e16839e2858ce2a92c917b4927dc3f5f071e2edd5ae87fab6",
+          "origin": "https://raw.githubusercontent.com/amphp/sync/85ab06764f4f36d63b1356b466df6111cf4b89cf/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "amphp/windows-registry",
+      "reference": "0f56438b9197e224325e88f305346f0221df1f71",
+      "version": "v0.3.3",
+      "source": "https://github.com/amphp/windows-registry.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/amphp/windows-registry/LICENSE",
+          "sha256": "6f4bf97f41677efe2f700a7c09cbee720bb66c8eaa86c6e1e828acad027005f7",
+          "origin": "https://raw.githubusercontent.com/amphp/windows-registry/0f56438b9197e224325e88f305346f0221df1f71/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "brick/math",
+      "reference": "2effe05d2177c451b86c6a073196a4034c02f211",
+      "version": "1.0.0",
+      "source": "https://github.com/brick/math.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/brick/math/LICENSE",
+          "sha256": "d2625cc652e6ffa9f16827f1dba2d83ac12b050dc8150a38720420dbb810cae3",
+          "origin": "https://raw.githubusercontent.com/brick/math/2effe05d2177c451b86c6a073196a4034c02f211/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "composer/pcre",
+      "reference": "d5a341b3fb61f3001970940afb1d332968a183ed",
+      "version": "3.4.0",
+      "source": "https://github.com/composer/pcre.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/composer/pcre/LICENSE",
+          "sha256": "984627c7eb714851bb191d4d463aec6e5bb71bf2f373c8b898304bd8298bfe48",
+          "origin": "https://raw.githubusercontent.com/composer/pcre/d5a341b3fb61f3001970940afb1d332968a183ed/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "composer/semver",
+      "reference": "198166618906cb2de69b95d7d47e5fa8aa1b2b95",
+      "version": "3.4.4",
+      "source": "https://github.com/composer/semver.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/composer/semver/LICENSE",
+          "sha256": "6bb16991cf366c84116c5f6a4d5078f7113ebc47d1f245ea9b57b8c10abd7479",
+          "origin": "https://raw.githubusercontent.com/composer/semver/198166618906cb2de69b95d7d47e5fa8aa1b2b95/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "composer/xdebug-handler",
+      "reference": "6c1925561632e83d60a44492e0b344cf48ab85ef",
+      "version": "3.0.5",
+      "source": "https://github.com/composer/xdebug-handler.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/composer/xdebug-handler/LICENSE",
+          "sha256": "d2f4e7216d04f806c41a43cdccddb1ba47eb61bd2a1aae65a5a21db77304e32e",
+          "origin": "https://raw.githubusercontent.com/composer/xdebug-handler/6c1925561632e83d60a44492e0b344cf48ab85ef/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "dantleech/argument-resolver",
+      "reference": "e34fabf7d6e53e5194f745ad069c4a87cc4b34cc",
+      "version": "1.1.0",
+      "source": "https://gitlab.com/dantleech/argument-resolver.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-missing",
+      "notices": []
+    },
+    {
+      "name": "dantleech/invoke",
+      "reference": "9b002d746d2c1b86cfa63a47bb5909cee58ef50c",
+      "version": "2.0.0",
+      "source": "https://github.com/dantleech/invoke.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-missing",
+      "notices": []
+    },
+    {
+      "name": "dantleech/object-renderer",
+      "reference": "942ad54a22e5ffb9ac3421d7bb06fa76bc45ad30",
+      "version": "0.1.1",
+      "source": "https://github.com/dantleech/object-renderer.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/dantleech/object-renderer/LICENSE",
+          "sha256": "6c3036591cae532bd106d2df05927b906272f6dce3ada5a5d44c399e4b301b6a",
+          "origin": "https://raw.githubusercontent.com/dantleech/object-renderer/942ad54a22e5ffb9ac3421d7bb06fa76bc45ad30/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "daverandom/libdns",
+      "reference": "b84c94e8fe6b7ee4aecfe121bfe3b6177d303c8a",
+      "version": "v2.1.0",
+      "source": "https://github.com/DaveRandom/LibDNS.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/daverandom/libdns/LICENSE",
+          "sha256": "3378b771ef8e0b6e09d1a5dd7d3daeaf5b06a41f8cf7ab43f20df3b646c18dc9",
+          "origin": "https://raw.githubusercontent.com/DaveRandom/LibDNS/b84c94e8fe6b7ee4aecfe121bfe3b6177d303c8a/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "dnoegel/php-xdg-base-dir",
+      "reference": "8f8a6e48c5ecb0f991c2fdcf5f154a47d85f9ffd",
+      "version": "v0.1.1",
+      "source": "https://github.com/dnoegel/php-xdg-base-dir.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/dnoegel/php-xdg-base-dir/LICENSE",
+          "sha256": "e5981243caad9bd9ac1e05cdf4183dc07277bf7a7a063adf54ed77fc0dc1e9a4",
+          "origin": "https://raw.githubusercontent.com/dnoegel/php-xdg-base-dir/8f8a6e48c5ecb0f991c2fdcf5f154a47d85f9ffd/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "fidry/cpu-core-counter",
+      "reference": "db9508f7b1474469d9d3c53b86f817e344732678",
+      "version": "1.3.0",
+      "source": "https://github.com/theofidry/cpu-core-counter.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/fidry/cpu-core-counter/LICENSE.md",
+          "sha256": "cdfb6ec3ac1800c006d6c91ec1da73f83e9decbd643aceb33396321a9e3bfc22",
+          "origin": "https://raw.githubusercontent.com/theofidry/cpu-core-counter/db9508f7b1474469d9d3c53b86f817e344732678/LICENSE.md"
+        }
+      ]
+    },
+    {
+      "name": "jetbrains/phpstorm-stubs",
+      "reference": "e4f5f6c3de39f3bab3e9f3fca4b8cdb8b061e681",
+      "version": "dev-master",
+      "source": "https://github.com/JetBrains/phpstorm-stubs",
+      "license": [
+        "Apache-2.0"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/jetbrains/phpstorm-stubs/LICENSE",
+          "sha256": "0b6bf6984e35b44f04c68ec5e18950cc10fea56b04576fab95fde116d0290408",
+          "origin": "https://raw.githubusercontent.com/JetBrains/phpstorm-stubs/e4f5f6c3de39f3bab3e9f3fca4b8cdb8b061e681/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "kelunik/certificate",
+      "reference": "7e00d498c264d5eb4f78c69f41c8bd6719c0199e",
+      "version": "v1.1.3",
+      "source": "https://github.com/kelunik/certificate.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/kelunik/certificate/LICENSE",
+          "sha256": "4da4ff63fb9bf3961df2e1210e74a654c32f5c82414997977ca58e56d9eb2fba",
+          "origin": "https://raw.githubusercontent.com/kelunik/certificate/7e00d498c264d5eb4f78c69f41c8bd6719c0199e/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "league/uri-parser",
+      "reference": "671548427e4c932352d9b9279fdfa345bf63fa00",
+      "version": "1.4.1",
+      "source": "https://github.com/thephpleague/uri-parser.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/league/uri-parser/LICENSE",
+          "sha256": "bb7f984073bf5083be5cd56d144bf3508181409ee6a866b51538725a3dd8ce24",
+          "origin": "https://raw.githubusercontent.com/thephpleague/uri-parser/671548427e4c932352d9b9279fdfa345bf63fa00/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "monolog/monolog",
+      "reference": "bf2403f591c5a431b6e0e1170cbadd3d64499564",
+      "version": "2.11.1",
+      "source": "https://github.com/Seldaek/monolog.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/monolog/monolog/LICENSE",
+          "sha256": "3a351f8f434ff941f4946afb534f7df1185523638b311c22901631d8882f70e1",
+          "origin": "https://raw.githubusercontent.com/Seldaek/monolog/bf2403f591c5a431b6e0e1170cbadd3d64499564/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "myclabs/deep-copy",
+      "reference": "8680aa248f8e07bc8fb43f56f0f5fc77a0c96aae",
+      "version": "1.14.0",
+      "source": "https://github.com/myclabs/DeepCopy.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/myclabs/deep-copy/LICENSE",
+          "sha256": "90007d13610253dfbbe382190c336b50718f8344d5bff230d0580282fb16a7d6",
+          "origin": "https://raw.githubusercontent.com/myclabs/DeepCopy/8680aa248f8e07bc8fb43f56f0f5fc77a0c96aae/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "phpactor/amp-fswatch",
+      "reference": "8b79e76b451d40a3367aae460883d90455dbeb1a",
+      "version": "0.3.0",
+      "source": "https://github.com/phpactor/amp-fswatch.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/phpactor/amp-fswatch/LICENSE",
+          "sha256": "d3b580aa363c3883ffa7824a7aee16e8aa568a1bcdc2b0734e983760370bd553",
+          "origin": "https://raw.githubusercontent.com/phpactor/amp-fswatch/8b79e76b451d40a3367aae460883d90455dbeb1a/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "phpactor/class-to-file",
+      "reference": "2fcf99a39f830b0d57c374bacaa9471e5c0483e3",
+      "version": "0.6.0",
+      "source": "https://github.com/phpactor/class-to-file.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/phpactor/class-to-file/LICENSE",
+          "sha256": "6c3036591cae532bd106d2df05927b906272f6dce3ada5a5d44c399e4b301b6a",
+          "origin": "https://raw.githubusercontent.com/phpactor/class-to-file/2fcf99a39f830b0d57c374bacaa9471e5c0483e3/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "phpactor/container",
+      "reference": "143bbd987da798f2d7e5cedafd35b49d5051e167",
+      "version": "3.0.1",
+      "source": "https://github.com/phpactor/container.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/phpactor/container/LICENSE",
+          "sha256": "6c3036591cae532bd106d2df05927b906272f6dce3ada5a5d44c399e4b301b6a",
+          "origin": "https://raw.githubusercontent.com/phpactor/container/143bbd987da798f2d7e5cedafd35b49d5051e167/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "phpactor/language-server",
+      "reference": "3b54a2bbe10c8ef7ecf9a2f1d534396fd9376e84",
+      "version": "8.0.0",
+      "source": "https://github.com/phpactor/language-server.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/phpactor/language-server/LICENSE",
+          "sha256": "6c3036591cae532bd106d2df05927b906272f6dce3ada5a5d44c399e4b301b6a",
+          "origin": "https://raw.githubusercontent.com/phpactor/language-server/3b54a2bbe10c8ef7ecf9a2f1d534396fd9376e84/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "phpactor/language-server-protocol",
+      "reference": "d5bfa9258b27c9dd0215e22ebd00e65c1905c89e",
+      "version": "3.17.6",
+      "source": "https://github.com/phpactor/language-server-protocol.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/phpactor/language-server-protocol/LICENSE.md",
+          "sha256": "2241b664bb88573693c380cdfebd0ce2e597872ac1c720dc64aaf327d176f11f",
+          "origin": "https://raw.githubusercontent.com/phpactor/language-server-protocol/d5bfa9258b27c9dd0215e22ebd00e65c1905c89e/LICENSE.md"
+        }
+      ]
+    },
+    {
+      "name": "phpactor/map-resolver",
+      "reference": "a1ed625b9aa93ca9520f85a0d54e9359e70d7276",
+      "version": "1.7.0",
+      "source": "https://github.com/phpactor/map-resolver.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/phpactor/map-resolver/LICENSE",
+          "sha256": "6c3036591cae532bd106d2df05927b906272f6dce3ada5a5d44c399e4b301b6a",
+          "origin": "https://raw.githubusercontent.com/phpactor/map-resolver/a1ed625b9aa93ca9520f85a0d54e9359e70d7276/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "phpactor/phly-event-dispatcher",
+      "reference": "9817636e907075494e6a95479552cbe9a301ca6d",
+      "version": "2.2.0",
+      "source": "https://github.com/phpactor/phly-event-dispatcher.git",
+      "license": [
+        "BSD-3-Clause"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/phpactor/phly-event-dispatcher/LICENSE.md",
+          "sha256": "06673223c95e289686a6c019884de24c257cd533a57ea6e812731fe5889aef4b",
+          "origin": "https://raw.githubusercontent.com/phpactor/phly-event-dispatcher/9817636e907075494e6a95479552cbe9a301ca6d/LICENSE.md"
+        }
+      ]
+    },
+    {
+      "name": "phpactor/tolerant-php-parser",
+      "reference": "960913636ee651899dc39a6968bc7425f6a32660",
+      "version": "dev-phan-phactor-fixes",
+      "source": "https://github.com/phpactor/tolerant-php-parser.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/phpactor/tolerant-php-parser/LICENSE.txt",
+          "sha256": "315c9a222c0f10acbb60b62053c47b1a82624f956e0229c3c828bc525ebc23ca",
+          "origin": "https://raw.githubusercontent.com/phpactor/tolerant-php-parser/960913636ee651899dc39a6968bc7425f6a32660/LICENSE.txt"
+        }
+      ]
+    },
+    {
+      "name": "psr/container",
+      "reference": "513e0666f7216c7459170d56df27dfcefe1689ea",
+      "version": "1.1.2",
+      "source": "https://github.com/php-fig/container.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/psr/container/LICENSE",
+          "sha256": "0688ee39285c33067ad77d82349cdacb5569756bea4398b34bb223af9e57f1c0",
+          "origin": "https://raw.githubusercontent.com/php-fig/container/513e0666f7216c7459170d56df27dfcefe1689ea/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "psr/event-dispatcher",
+      "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0",
+      "version": "1.0.0",
+      "source": "https://github.com/php-fig/event-dispatcher.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/psr/event-dispatcher/LICENSE",
+          "sha256": "d2e70341a9667b93ad542e4842b0b7022d302aa7c2d2a909b156b8f1e3c4cca8",
+          "origin": "https://raw.githubusercontent.com/php-fig/event-dispatcher/dbefd12671e8a14ec7f180cab83036ed26714bb0/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "psr/log",
+      "reference": "d49695b909c3b7628b6289db5479a1c204601f11",
+      "version": "1.1.4",
+      "source": "https://github.com/php-fig/log.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/psr/log/LICENSE",
+          "sha256": "6e944907067bae93c00a9f2ad51032243820b22df34b77c77690d46cb2e98e24",
+          "origin": "https://raw.githubusercontent.com/php-fig/log/d49695b909c3b7628b6289db5479a1c204601f11/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "ramsey/collection",
+      "reference": "344572933ad0181accbf4ba763e85a0306a8c5e2",
+      "version": "2.1.1",
+      "source": "https://github.com/ramsey/collection.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/ramsey/collection/LICENSE",
+          "sha256": "aa1e787bd6d05172d2962fa865a592af00ec474984d6b5bcb9a0df91abe8717d",
+          "origin": "https://raw.githubusercontent.com/ramsey/collection/344572933ad0181accbf4ba763e85a0306a8c5e2/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "ramsey/uuid",
+      "reference": "75d73f48d02797c2c285a7e9f348fadc0102ffe2",
+      "version": "4.9.4",
+      "source": "https://github.com/ramsey/uuid.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/ramsey/uuid/LICENSE",
+          "sha256": "9e8bf008e16a9ee5cc2d3bfe60701ec2351a2ddf29e9092275f71441a6d5a167",
+          "origin": "https://raw.githubusercontent.com/ramsey/uuid/75d73f48d02797c2c285a7e9f348fadc0102ffe2/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "sebastian/diff",
+      "reference": "c41e007b4b62af48218231d6c2275e4c9b975b2e",
+      "version": "5.1.1",
+      "source": "https://github.com/sebastianbergmann/diff.git",
+      "license": [
+        "BSD-3-Clause"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/sebastian/diff/LICENSE",
+          "sha256": "dc5746cd2037c14e4d128465c52403e388d582b9a5b29182c0ff24e1e26d890b",
+          "origin": "https://raw.githubusercontent.com/sebastianbergmann/diff/c41e007b4b62af48218231d6c2275e4c9b975b2e/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "symfony/console",
+      "reference": "9e118dd9e3b94544ff3cce860457c2951a0a2bd6",
+      "version": "v6.4.46",
+      "source": "https://github.com/symfony/console.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/symfony/console/LICENSE",
+          "sha256": "18da7e490d2aa77197a0619b25bcc771a0110132a9d76071665718d3295e73cb",
+          "origin": "https://raw.githubusercontent.com/symfony/console/9e118dd9e3b94544ff3cce860457c2951a0a2bd6/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "symfony/deprecation-contracts",
+      "reference": "f3202fa1b5097b0af062dc978b32ecf63404e31d",
+      "version": "v3.7.1",
+      "source": "https://github.com/symfony/deprecation-contracts.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/symfony/deprecation-contracts/LICENSE",
+          "sha256": "b92809182501f0fa422167ea44484b41877e1736e8283d0377fdc9664bb9a02d",
+          "origin": "https://raw.githubusercontent.com/symfony/deprecation-contracts/f3202fa1b5097b0af062dc978b32ecf63404e31d/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "symfony/filesystem",
+      "reference": "6dabf41c21957a2060f101bd7bf7e322989866bd",
+      "version": "v6.4.45",
+      "source": "https://github.com/symfony/filesystem.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/symfony/filesystem/LICENSE",
+          "sha256": "18da7e490d2aa77197a0619b25bcc771a0110132a9d76071665718d3295e73cb",
+          "origin": "https://raw.githubusercontent.com/symfony/filesystem/6dabf41c21957a2060f101bd7bf7e322989866bd/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "symfony/polyfill-ctype",
+      "reference": "141046a8f9477948ff284fa65be2095baafb94f2",
+      "version": "v1.37.0",
+      "source": "https://github.com/symfony/polyfill-ctype.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/symfony/polyfill-ctype/LICENSE",
+          "sha256": "375396ec5755e9c27dd9c513c0eb4c2923881aba98b941f156e92ed6ec1cfa19",
+          "origin": "https://raw.githubusercontent.com/symfony/polyfill-ctype/141046a8f9477948ff284fa65be2095baafb94f2/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "symfony/polyfill-intl-grapheme",
+      "reference": "bb899c1db0aa8127dc3afe8cda4a67eb24915f8d",
+      "version": "v1.41.0",
+      "source": "https://github.com/symfony/polyfill-intl-grapheme.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/symfony/polyfill-intl-grapheme/LICENSE",
+          "sha256": "eaa5d6e59ff1d5322ae36d3ab9124460df72d2d0c8af60a99222e8a90dcbdf31",
+          "origin": "https://raw.githubusercontent.com/symfony/polyfill-intl-grapheme/bb899c1db0aa8127dc3afe8cda4a67eb24915f8d/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "symfony/polyfill-intl-normalizer",
+      "reference": "aa20edea75bd9c48cfecc8360922e5a6e5c44502",
+      "version": "v1.42.0",
+      "source": "https://github.com/symfony/polyfill-intl-normalizer.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/symfony/polyfill-intl-normalizer/LICENSE",
+          "sha256": "eaa5d6e59ff1d5322ae36d3ab9124460df72d2d0c8af60a99222e8a90dcbdf31",
+          "origin": "https://raw.githubusercontent.com/symfony/polyfill-intl-normalizer/aa20edea75bd9c48cfecc8360922e5a6e5c44502/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "symfony/polyfill-mbstring",
+      "reference": "d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6",
+      "version": "v1.38.2",
+      "source": "https://github.com/symfony/polyfill-mbstring.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/symfony/polyfill-mbstring/LICENSE",
+          "sha256": "eaa5d6e59ff1d5322ae36d3ab9124460df72d2d0c8af60a99222e8a90dcbdf31",
+          "origin": "https://raw.githubusercontent.com/symfony/polyfill-mbstring/d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "symfony/process",
+      "reference": "b9f3d9ddf67543b92dbfa6d210c407d7a7982781",
+      "version": "v6.4.46",
+      "source": "https://github.com/symfony/process.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/symfony/process/LICENSE",
+          "sha256": "18da7e490d2aa77197a0619b25bcc771a0110132a9d76071665718d3295e73cb",
+          "origin": "https://raw.githubusercontent.com/symfony/process/b9f3d9ddf67543b92dbfa6d210c407d7a7982781/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "symfony/service-contracts",
+      "reference": "15e6a07ec2a2c75ceb1b21dd98105ee8456d2257",
+      "version": "v3.7.3",
+      "source": "https://github.com/symfony/service-contracts.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/symfony/service-contracts/LICENSE",
+          "sha256": "375396ec5755e9c27dd9c513c0eb4c2923881aba98b941f156e92ed6ec1cfa19",
+          "origin": "https://raw.githubusercontent.com/symfony/service-contracts/15e6a07ec2a2c75ceb1b21dd98105ee8456d2257/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "symfony/string",
+      "reference": "02731ce2bd26514bec9efc0baef2cd0b0cf67f46",
+      "version": "v7.4.19",
+      "source": "https://github.com/symfony/string.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/symfony/string/LICENSE",
+          "sha256": "0bedd88a1c55457e9731dd9b99ceb976675bee5412d9565eb31ac84533df7bb5",
+          "origin": "https://raw.githubusercontent.com/symfony/string/02731ce2bd26514bec9efc0baef2cd0b0cf67f46/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "symfony/yaml",
+      "reference": "ae0bbb46f77ff56591d0a0259c7f458f4b3e1f77",
+      "version": "v5.4.53",
+      "source": "https://github.com/symfony/yaml.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/symfony/yaml/LICENSE",
+          "sha256": "18da7e490d2aa77197a0619b25bcc771a0110132a9d76071665718d3295e73cb",
+          "origin": "https://raw.githubusercontent.com/symfony/yaml/ae0bbb46f77ff56591d0a0259c7f458f4b3e1f77/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "twig/twig",
+      "reference": "45a3c6e9224c3377a39c7b150bb29d5d97d2c75d",
+      "version": "v3.29.0",
+      "source": "https://github.com/twigphp/Twig.git",
+      "license": [
+        "BSD-3-Clause"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/twig/twig/LICENSE",
+          "sha256": "316323176f9305a06009399e36725413f7e3ef69858c9ef5213a39dc8e914609",
+          "origin": "https://raw.githubusercontent.com/twigphp/Twig/45a3c6e9224c3377a39c7b150bb29d5d97d2c75d/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "webmozart/assert",
+      "reference": "9be6926d8b485f55b9229203f962b51ed377ba68",
+      "version": "1.12.1",
+      "source": "https://github.com/webmozarts/assert.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/webmozart/assert/LICENSE",
+          "sha256": "5f82f5e664e8683e3d97d3bec6f74620b9d0a4d8669f9e617da96bce8767d4d3",
+          "origin": "https://raw.githubusercontent.com/webmozarts/assert/9be6926d8b485f55b9229203f962b51ed377ba68/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "webmozart/glob",
+      "reference": "8a2842112d6916e61e0e15e316465b611f3abc17",
+      "version": "4.7.0",
+      "source": "https://github.com/webmozarts/glob.git",
+      "license": [
+        "MIT"
+      ],
+      "status": "notice-preserved",
+      "notices": [
+        {
+          "file": "phpactor-notices/webmozart/glob/LICENSE",
+          "sha256": "5f82f5e664e8683e3d97d3bec6f74620b9d0a4d8669f9e617da96bce8767d4d3",
+          "origin": "https://raw.githubusercontent.com/webmozarts/glob/8a2842112d6916e61e0e15e316465b611f3abc17/LICENSE"
+        }
+      ]
+    }
+  ],
+  "complete": false
+}

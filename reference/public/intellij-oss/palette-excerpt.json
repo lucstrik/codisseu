@@ -1,0 +1,66 @@
+{
+  "description": "Trecho de valores do tema público; seleção e organização adaptadas por Storm. Ícones e implementação não copiados.",
+  "copyright": "Copyright (C) JetBrains s.r.o.",
+  "source": {
+    "id": "intellij-theme",
+    "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/platform/platform-resources/src/themes/expUI/expUI_dark.theme.json",
+    "revision": "441b046f2985d841fd90bc64b7f312636644718d",
+    "sha256": "54ced18704b8847426ebca5552627072c8b01bd3a0ee25f6f2c924b1d2c49a3d",
+    "license": "Apache-2.0",
+    "license_confidence": "inferred",
+    "license_basis": "Fonte pública IntelliJ Platform; documentação oficial declara Apache-2.0 e os termos na raiz também identificam OSS Apache-2.0. Arquivo sem cabeçalho individual; sem licença mais estreita encontrada nas pastas ancestrais inspecionadas. Ver docs/visual-reference-m2.md."
+  },
+  "scheme_source": {
+    "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/platform/platform-resources/src/themes/expUI/expUI_darkScheme.xml",
+    "sha256": "4f86266fa515e6ae3fbff8df21e71d4eb9d91eef7cbb4c95b92dea73aaafeb48",
+    "revision": "441b046f2985d841fd90bc64b7f312636644718d",
+    "name": "Dark",
+    "version": "142",
+    "note": "Versão do formato/esquema; não é build do PhpStorm."
+  },
+  "palette": {
+    "Blue2": "#2E436E",
+    "Blue6": "#3574F0",
+    "Gray1": "#1E1F22",
+    "Gray12": "#DFE1E5",
+    "Gray2": "#2B2D30",
+    "Gray3": "#393B40",
+    "Gray9": "#9DA0A8",
+    "Red7": "#DB5C5C"
+  },
+  "geometry": {
+    "Tree.rowHeight": 24,
+    "List.rowHeight": 24,
+    "EditorTabs.underlineHeight": 4,
+    "EditorTabs.underlineArc": 4,
+    "Tree.border": "4,12,4,12"
+  },
+  "editor_colors": {
+    "CARET_COLOR": "ced0d6",
+    "CARET_ROW_COLOR": "26282e",
+    "LINE_NUMBERS_COLOR": "4b5059",
+    "LINE_NUMBER_ON_CARET_ROW_COLOR": "a1a3ab"
+  },
+  "editor_attributes": {
+    "TEXT": {
+      "FOREGROUND": "bcbec4",
+      "BACKGROUND": "1e1f22"
+    },
+    "DEFAULT_KEYWORD": {
+      "FOREGROUND": "cf8e6d"
+    },
+    "DEFAULT_STRING": {
+      "FOREGROUND": "6aab73",
+      "FONT_TYPE": null
+    },
+    "DEFAULT_NUMBER": {
+      "FOREGROUND": "2aacb8"
+    },
+    "DEFAULT_LINE_COMMENT": {
+      "FOREGROUND": "7a7e85"
+    },
+    "DEFAULT_FUNCTION_DECLARATION": {
+      "FOREGROUND": "56a8f5"
+    }
+  }
+}

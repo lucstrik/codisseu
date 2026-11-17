@@ -1,0 +1,30 @@
+[
+  {
+    "id": "php-receiver",
+    "origin": "php-receiver/Weather.php",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "php-receiver/Weather.php",
+      "php-receiver/main.php"
+    ],
+    "expected": {
+      "php-receiver/Weather.php": "<?php\nnamespace ReceiverFixture;\nclass Weather { public function precipitation(): int { return 1; } }\nclass Box { public Weather $item; public function get(): Weather { return new Weather(); } }\nfunction makeWeather(): Weather { return new Weather(); }\n",
+      "php-receiver/main.php": "<?php\nuse ReceiverFixture\\Box;\nuse function ReceiverFixture\\makeWeather;\nfunction show(Box $box): int { return $box->item->precipitation(); }\n/* 😀 é */ echo (new Box())->get()->precipitation(), makeWeather()->precipitation();\n"
+    }
+  },
+  {
+    "id": "ts-receiver",
+    "origin": "ts-receiver/weather.ts",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "ts-receiver/weather.ts",
+      "ts-receiver/main.ts"
+    ],
+    "expected": {
+      "ts-receiver/weather.ts": "export class Weather { precipitation(): number { return 1; } }\nexport class Box { item: Weather = new Weather(); get(): Weather { return new Weather(); } }\nexport function makeWeather(): Weather { return new Weather(); }\n",
+      "ts-receiver/main.ts": "import { Box, makeWeather } from './weather';\nconst source = makeWeather();\n/* 😀 é */ console.log(new Box().item.precipitation(), new Box().get().precipitation(), source.precipitation());\n"
+    }
+  }
+]

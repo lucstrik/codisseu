@@ -1,0 +1,80 @@
+[
+  {
+    "id": "php-standalone-file",
+    "file_rename": true,
+    "origin": "php-file/StandaloneTools.php",
+    "old": "StandaloneTools.php",
+    "new": "RenamedTools.php",
+    "files": [
+      "php-file/StandaloneTools.php",
+      "php-file/main.php"
+    ],
+    "expected": {
+      "php-file/StandaloneTools.php": "<?php\nnamespace DirectFilePhp;\nfunction toolValue(): int { return 7; }\n",
+      "php-file/main.php": "<?php\nnamespace DirectFilePhp;\nrequire __DIR__ . '/RenamedTools.php';\necho toolValue();\n// RenamedTools.php StandaloneTools\n"
+    },
+    "moves": [
+      [
+        "php-file/StandaloneTools.php",
+        "php-file/RenamedTools.php"
+      ]
+    ],
+    "options": {
+      "references": true,
+      "comments": true,
+      "text": false
+    }
+  },
+  {
+    "id": "ts-standalone-file",
+    "file_rename": true,
+    "origin": "ts-file/StandaloneTools.ts",
+    "old": "StandaloneTools.ts",
+    "new": "RenamedTools.ts",
+    "files": [
+      "ts-file/StandaloneTools.ts",
+      "ts-file/main.ts",
+      "ts-file/notes.txt"
+    ],
+    "expected": {
+      "ts-file/StandaloneTools.ts": "export function toolValue(): number { return 7; }\n",
+      "ts-file/main.ts": "import { toolValue } from './RenamedTools';\nexport const value = toolValue();\nconst file = 'RenamedTools.ts';\n// RenamedTools.ts StandaloneTools\n",
+      "ts-file/notes.txt": "RenamedTools.ts StandaloneTools\n"
+    },
+    "moves": [
+      [
+        "ts-file/StandaloneTools.ts",
+        "ts-file/RenamedTools.ts"
+      ]
+    ],
+    "options": {
+      "references": true,
+      "comments": true,
+      "text": true
+    }
+  },
+  {
+    "id": "ts-path-only-file",
+    "file_rename": true,
+    "origin": "ts-file/orphan.ts",
+    "old": "orphan.ts",
+    "new": "renamed-orphan.ts",
+    "files": [
+      "ts-file/orphan.ts"
+    ],
+    "expected": {
+      "ts-file/orphan.ts": "export function orphanValue(): number { return 11; }\n"
+    },
+    "moves": [
+      [
+        "ts-file/orphan.ts",
+        "ts-file/renamed-orphan.ts"
+      ]
+    ],
+    "options": {
+      "references": false,
+      "comments": false,
+      "text": false
+    }
+  }
+]

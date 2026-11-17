@@ -1,0 +1,183 @@
+[
+  {
+    "id": "php-inheritors-default",
+    "origin": "php-inheritors-default/Weather.php",
+    "old": "Weather",
+    "new": "Climate",
+    "files": [
+      "php-inheritors-default/Weather.php",
+      "php-inheritors-default/WetWeather.php",
+      "php-inheritors-default/WeatherChild.php",
+      "php-inheritors-default/ChildWeatherChild.php",
+      "php-inheritors-default/main.php"
+    ],
+    "expected": {
+      "php-inheritors-default/Weather.php": "<?php\nnamespace InheritorsDefault;\nclass Climate {}\n",
+      "php-inheritors-default/WetWeather.php": "<?php\nnamespace InheritorsDefault;\n/* 😀 é */ class WetClimate extends Climate {}\n",
+      "php-inheritors-default/WeatherChild.php": "<?php\nnamespace InheritorsDefault;\nclass ClimateChild extends Climate {}\n",
+      "php-inheritors-default/ChildWeatherChild.php": "<?php\nnamespace InheritorsDefault;\nclass ChildWeatherChild extends ClimateChild {}\n",
+      "php-inheritors-default/main.php": "<?php\nnamespace InheritorsDefault;\nrequire __DIR__ . '/Climate.php';\nrequire __DIR__ . '/WetClimate.php';\nrequire __DIR__ . '/ClimateChild.php';\nrequire __DIR__ . '/ChildWeatherChild.php';\nnew Climate();\nnew WetClimate();\nnew ClimateChild();\nnew ChildWeatherChild();\n// Weather WetWeather WeatherChild remain in comments\n"
+    },
+    "moves": [
+      [
+        "php-inheritors-default/Weather.php",
+        "php-inheritors-default/Climate.php"
+      ],
+      [
+        "php-inheritors-default/WetWeather.php",
+        "php-inheritors-default/WetClimate.php"
+      ],
+      [
+        "php-inheritors-default/WeatherChild.php",
+        "php-inheritors-default/ClimateChild.php"
+      ]
+    ],
+    "options": {
+      "inheritors": true
+    }
+  },
+  {
+    "id": "php-inheritors-off",
+    "origin": "php-inheritors-off/Weather.php",
+    "old": "Weather",
+    "new": "Climate",
+    "files": [
+      "php-inheritors-off/Weather.php",
+      "php-inheritors-off/WetWeather.php",
+      "php-inheritors-off/WeatherChild.php",
+      "php-inheritors-off/ChildWeatherChild.php",
+      "php-inheritors-off/main.php"
+    ],
+    "expected": {
+      "php-inheritors-off/Weather.php": "<?php\nnamespace InheritorsOff;\nclass Climate {}\n",
+      "php-inheritors-off/WetWeather.php": "<?php\nnamespace InheritorsOff;\n/* 😀 é */ class WetWeather extends Climate {}\n",
+      "php-inheritors-off/WeatherChild.php": "<?php\nnamespace InheritorsOff;\nclass WeatherChild extends Climate {}\n",
+      "php-inheritors-off/ChildWeatherChild.php": "<?php\nnamespace InheritorsOff;\nclass ChildWeatherChild extends WeatherChild {}\n",
+      "php-inheritors-off/main.php": "<?php\nnamespace InheritorsOff;\nrequire __DIR__ . '/Weather.php';\nrequire __DIR__ . '/WetWeather.php';\nrequire __DIR__ . '/WeatherChild.php';\nrequire __DIR__ . '/ChildWeatherChild.php';\nnew Climate();\nnew WetWeather();\nnew WeatherChild();\nnew ChildWeatherChild();\n// Weather WetWeather WeatherChild remain in comments\n"
+    },
+    "options": {
+      "inheritors": false
+    }
+  },
+  {
+    "id": "php-inheritors-class-only",
+    "origin": "php-inheritors-class-only/Weather.php",
+    "old": "Weather",
+    "new": "Climate",
+    "files": [
+      "php-inheritors-class-only/Weather.php",
+      "php-inheritors-class-only/WetWeather.php",
+      "php-inheritors-class-only/WeatherChild.php",
+      "php-inheritors-class-only/ChildWeatherChild.php",
+      "php-inheritors-class-only/main.php"
+    ],
+    "expected": {
+      "php-inheritors-class-only/Weather.php": "<?php\nnamespace InheritorsClassOnly;\nclass Climate {}\n",
+      "php-inheritors-class-only/WetWeather.php": "<?php\nnamespace InheritorsClassOnly;\n/* 😀 é */ class WetWeather extends Climate {}\n",
+      "php-inheritors-class-only/WeatherChild.php": "<?php\nnamespace InheritorsClassOnly;\nclass ChosenChild extends Climate {}\n",
+      "php-inheritors-class-only/ChildWeatherChild.php": "<?php\nnamespace InheritorsClassOnly;\nclass ChildWeatherChild extends ChosenChild {}\n",
+      "php-inheritors-class-only/main.php": "<?php\nnamespace InheritorsClassOnly;\nrequire __DIR__ . '/Weather.php';\nrequire __DIR__ . '/WetWeather.php';\nrequire __DIR__ . '/WeatherChild.php';\nrequire __DIR__ . '/ChildWeatherChild.php';\nnew Climate();\nnew WetWeather();\nnew ChosenChild();\nnew ChildWeatherChild();\n// Weather WetWeather WeatherChild remain in comments\n"
+    },
+    "inheritors": [
+      {
+        "old": "WeatherChild",
+        "kind": "class",
+        "selected": true,
+        "new": "ChosenChild"
+      }
+    ],
+    "options": {
+      "inheritors": true
+    }
+  },
+  {
+    "id": "php-inheritors-file-only",
+    "origin": "php-inheritors-file-only/Weather.php",
+    "old": "Weather",
+    "new": "Climate",
+    "files": [
+      "php-inheritors-file-only/Weather.php",
+      "php-inheritors-file-only/WetWeather.php",
+      "php-inheritors-file-only/WeatherChild.php",
+      "php-inheritors-file-only/ChildWeatherChild.php",
+      "php-inheritors-file-only/main.php"
+    ],
+    "expected": {
+      "php-inheritors-file-only/Weather.php": "<?php\nnamespace InheritorsFileOnly;\nclass Climate {}\n",
+      "php-inheritors-file-only/WetWeather.php": "<?php\nnamespace InheritorsFileOnly;\n/* 😀 é */ class WetWeather extends Climate {}\n",
+      "php-inheritors-file-only/WeatherChild.php": "<?php\nnamespace InheritorsFileOnly;\nclass WeatherChild extends Climate {}\n",
+      "php-inheritors-file-only/ChildWeatherChild.php": "<?php\nnamespace InheritorsFileOnly;\nclass ChildWeatherChild extends WeatherChild {}\n",
+      "php-inheritors-file-only/main.php": "<?php\nnamespace InheritorsFileOnly;\nrequire __DIR__ . '/ChosenRoot.php';\nrequire __DIR__ . '/WetWeather.php';\nrequire __DIR__ . '/WeatherChild.php';\nrequire __DIR__ . '/ChildWeatherChild.php';\nnew Climate();\nnew WetWeather();\nnew WeatherChild();\nnew ChildWeatherChild();\n// Weather WetWeather WeatherChild remain in comments\n"
+    },
+    "inheritors": [
+      {
+        "old": "Weather.php",
+        "kind": "file",
+        "selected": true,
+        "new": "ChosenRoot.php"
+      }
+    ],
+    "moves": [
+      [
+        "php-inheritors-file-only/Weather.php",
+        "php-inheritors-file-only/ChosenRoot.php"
+      ]
+    ],
+    "options": {
+      "inheritors": true
+    }
+  },
+  {
+    "id": "ts-property",
+    "origin": "ts-property/weather.ts",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "ts-property/weather.ts",
+      "ts-property/main.ts"
+    ],
+    "expected": {
+      "ts-property/weather.ts": "export class Weather {\n    precipitation: string = 'wet';\n    read(): string { return this.precipitation; }\n}\nexport class OtherWeather { rainfall: string = 'other'; }\n",
+      "ts-property/main.ts": "import { Weather, OtherWeather } from './weather';\nexport function propertyReport(weather: Weather): string { return weather.precipitation; }\n/* 😀 é */ console.log(new Weather().precipitation, new OtherWeather().rainfall);\n// rainfall must stay in this comment\nconst literal = 'rainfall';\n"
+    },
+    "inline_refactor": true
+  },
+  {
+    "id": "php-inheritors-collision",
+    "origin": "php-inheritors-collision/Weather.php",
+    "old": "Weather",
+    "new": "Climate",
+    "files": [
+      "php-inheritors-collision/Weather.php",
+      "php-inheritors-collision/WetWeather.php",
+      "php-inheritors-collision/WeatherChild.php",
+      "php-inheritors-collision/ChildWeatherChild.php",
+      "php-inheritors-collision/main.php"
+    ],
+    "expected": {
+      "php-inheritors-collision/Weather.php": "<?php\nnamespace InheritorsCollision;\nclass Weather {}\n",
+      "php-inheritors-collision/WetWeather.php": "<?php\nnamespace InheritorsCollision;\n/* 😀 é */ class WetWeather extends Weather {}\n",
+      "php-inheritors-collision/WeatherChild.php": "<?php\nnamespace InheritorsCollision;\nclass WeatherChild extends Weather {}\n",
+      "php-inheritors-collision/ChildWeatherChild.php": "<?php\nnamespace InheritorsCollision;\nclass ChildWeatherChild extends WeatherChild {}\n",
+      "php-inheritors-collision/main.php": "<?php\nnamespace InheritorsCollision;\nrequire __DIR__ . '/Weather.php';\nrequire __DIR__ . '/WetWeather.php';\nrequire __DIR__ . '/WeatherChild.php';\nrequire __DIR__ . '/ChildWeatherChild.php';\nnew Weather();\nnew WetWeather();\nnew WeatherChild();\nnew ChildWeatherChild();\n// Weather WetWeather WeatherChild remain in comments\n"
+    },
+    "expect_blocked": true,
+    "inheritors": [
+      {
+        "old": "WetWeather",
+        "kind": "class",
+        "selected": true,
+        "new": "Twin"
+      },
+      {
+        "old": "WeatherChild",
+        "kind": "class",
+        "selected": true,
+        "new": "Twin"
+      }
+    ],
+    "options": {
+      "inheritors": true
+    }
+  }
+]

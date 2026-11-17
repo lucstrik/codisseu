@@ -1,0 +1,10 @@
+{
+  "name": "codisseu/php-tests-fixture",
+  "require-dev": {
+    "pestphp/pest": "v4.7.8"
+  },
+  "config": {
+    "allow-plugins": false,
+    "sort-packages": true
+  }
+}

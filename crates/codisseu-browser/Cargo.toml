@@ -1,0 +1,15 @@
+[package]
+name = "codisseu-browser"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+[dependencies]
+codisseu-runtime.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tempfile.workspace = true
+url = "=2.5.8"
+[target.'cfg(unix)'.dependencies]
+libc = "=0.2.191"

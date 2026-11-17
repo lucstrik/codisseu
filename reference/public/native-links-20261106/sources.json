@@ -1,0 +1,13 @@
+{
+  "package": "webbrowser",
+  "version": "1.2.6",
+  "registry": "https://crates.io/crates/webbrowser/1.2.6",
+  "repository": "https://github.com/amodm/webbrowser-rs",
+  "license": "MIT OR Apache-2.0",
+  "cargo_checksum": "fe8d20d0214027baf11b8b0cc307c1da7657d8f4db9aa956f7de27a6fb1acbd5",
+  "purpose": "eframe/links native URL dispatcher",
+  "files": {
+    "LICENSE-MIT": "7f0f4f8802c102d35110806d1755b7681127575b644f64750810cc47fa78df5b",
+    "LICENSE-APACHE": "b0f7d40eaa9577d99132579866bf1eaf448577dc737582b8a34f1b3e7fab8994"
+  }
+}

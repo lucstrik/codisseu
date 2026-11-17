@@ -1,0 +1,8 @@
+{
+  "name": "codisseu/rename-resource-fixture",
+  "autoload": {
+    "psr-4": {
+      "ResourceFixture\\": "php-resource/"
+    }
+  }
+}

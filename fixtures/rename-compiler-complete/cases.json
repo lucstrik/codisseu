@@ -1,0 +1,50 @@
+[
+  {
+    "id": "php-variance-compiler",
+    "origin": "php-variance/Port.php",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "php-variance/Port.php",
+      "php-variance/Weather.php",
+      "php-variance/main.php"
+    ],
+    "expected": {
+      "php-variance/Port.php": "<?php\nnamespace VarianceFixture;\nclass Animal {}\nclass Dog extends Animal {}\nabstract class Port { abstract public function precipitation(Dog $animal): Animal; }\n",
+      "php-variance/Weather.php": "<?php\nnamespace VarianceFixture;\nclass Weather extends Port { public function precipitation(Animal $animal): Dog { return new Dog(); } }\n",
+      "php-variance/main.php": "<?php\nuse VarianceFixture\\Weather;\nuse VarianceFixture\\Dog;\n/* 😀 é */ echo get_class((new Weather())->precipitation(new Dog()));\n"
+    }
+  },
+  {
+    "id": "ts-generic-compiler",
+    "origin": "ts-generic/weather.ts",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "ts-generic/weather.ts",
+      "ts-generic/main.ts",
+      "ts-generic/consumer.ts"
+    ],
+    "expected": {
+      "ts-generic/weather.ts": "export class Weather<T> { precipitation(value: T): T { return value; } }\n",
+      "ts-generic/main.ts": "import { Weather } from './weather';\nconst source: Weather<string> = new Weather<string>();\n/* 😀 é */ console.log(source.precipitation('Paris'));\n",
+      "ts-generic/consumer.ts": "import { Weather } from './weather';\nexport function consumer(source: Weather<number>): number { return source.precipitation(3); }\n"
+    }
+  },
+  {
+    "id": "ts-structural-compiler",
+    "origin": "ts-structural/port.ts",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "ts-structural/port.ts",
+      "ts-structural/main.ts",
+      "ts-structural/consumer.ts"
+    ],
+    "expected": {
+      "ts-structural/port.ts": "export type Port = { precipitation: string };\nexport const source: Port = { precipitation: 'Paris' };\n",
+      "ts-structural/main.ts": "import { Port, source } from './port';\nfunction show(port: Port): string { return port.precipitation; }\n/* 😀 é */ console.log(show(source), source.precipitation);\n",
+      "ts-structural/consumer.ts": "import { Port } from './port';\nexport function consumer(source: Port): string { return source.precipitation; }\n"
+    }
+  }
+]

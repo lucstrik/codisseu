@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-22",
+  "repository": "https://github.com/JetBrains/intellij-community",
+  "revision": "441b046f2985d841fd90bc64b7f312636644718d",
+  "official_platform_license_statement": "https://plugins.jetbrains.com/docs/intellij/intellij-platform.html",
+  "root_build_terms": {
+    "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/LICENSE.txt",
+    "sha256": "3f382c8820a51e4d1e22b2f50408a52eb6fe6cfff36bcf8a8dfe104df00251a3",
+    "note": "These are Open-Source Build terms, not the Apache 2.0 license text; distinguish underlying source license."
+  },
+  "ancestor_inventory": "artifacts/m3-editor-tab-finish-20261022/reference-original/oss/ancestor-license-inventory.json",
+  "commercial_boundary": "Obtained from public source only; no commercial install code/assets extracted. Public source licensing does not resolve trademark endorsement or grant commercial IDE reverse engineering permission.",
+  "files": [
+    {
+      "file": "icons/typeScript_dark.svg",
+      "upstream_path": "platform/icons/src/expui/fileTypes/typeScript_dark.svg",
+      "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/platform/icons/src/expui/fileTypes/typeScript_dark.svg",
+      "revision": "441b046f2985d841fd90bc64b7f312636644718d",
+      "license": "Apache-2.0",
+      "license_confidence": "documented",
+      "license_basis": "Individual source header explicitly states Apache 2.0.",
+      "sha256": "18f56081e42916c7a3109062359ff41aeff6372d10bdb8942de6dce5e19f624e",
+      "bytes": 2144,
+      "modified": false,
+      "purpose": "M3.19 file-tab badge path source for native procedural mesh; source SVG retained unchanged, adaptation must be attributed.",
+      "license_file": "reference/public/intellij-oss/LICENSE-APACHE-2.0.txt",
+      "notice_file": "reference/public/intellij-oss/NOTICE.txt"
+    },
+    {
+      "file": "icons/php_dark.svg",
+      "upstream_path": "platform/icons/src/expui/language/php_dark.svg",
+      "url": "https://raw.githubusercontent.com/JetBrains/intellij-community/441b046f2985d841fd90bc64b7f312636644718d/platform/icons/src/expui/language/php_dark.svg",
+      "revision": "441b046f2985d841fd90bc64b7f312636644718d",
+      "license": "Apache-2.0",
+      "license_confidence": "inferred",
+      "license_basis": "Public IntelliJ Platform source. Official platform documentation and root build terms identify OSS under Apache 2.0. No individual license header and no narrower license in inspected ancestor directories; same criterion as previously audited public theme.",
+      "sha256": "2ea27e0e07315aa1af1d7690f159cf7170734acfaad88bd9821ffcd37fb406d6",
+      "bytes": 2071,
+      "modified": false,
+      "purpose": "M3.19 file-tab badge path source for native procedural mesh; source SVG retained unchanged, adaptation must be attributed.",
+      "license_file": "reference/public/intellij-oss/LICENSE-APACHE-2.0.txt",
+      "notice_file": "reference/public/intellij-oss/NOTICE.txt"
+    }
+  ]
+}

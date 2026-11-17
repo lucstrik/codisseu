@@ -1,0 +1,33 @@
+[
+  {
+    "id": "php-function-dynamic-baseline",
+    "origin": "php-baseline/functions.php",
+    "old": "rainQuantity",
+    "new": "precipitation",
+    "files": [
+      "php-baseline/functions.php",
+      "php-baseline/main.php"
+    ],
+    "expected": {
+      "php-baseline/functions.php": "<?php\nnamespace DynamicFixture;\nfunction precipitation(): string { return \"Paris\"; }\n",
+      "php-baseline/main.php": "<?php\nnamespace DynamicFixture;\necho precipitation();\n"
+    }
+  },
+  {
+    "id": "ts-uncertain-dynamic",
+    "origin": "dynamic/weather.ts",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "dynamic/weather.ts"
+    ],
+    "expected": {
+      "dynamic/weather.ts": "export class DynamicWeather { rainfall = 1; }\nexport function read(source: any): number { return source.rainfall; }\n"
+    },
+    "options": {
+      "dynamic": true
+    },
+    "expect_blocked": true,
+    "show_dynamic_candidates": true
+  }
+]

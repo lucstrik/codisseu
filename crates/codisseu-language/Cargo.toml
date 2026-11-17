@@ -1,0 +1,17 @@
+[package]
+name = "codisseu-language"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+[dependencies]
+codisseu-runtime.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tree-sitter = "=0.27.1"
+tree-sitter-php = "=0.25.1"
+[target.'cfg(unix)'.dependencies]
+libc = "=0.2.191"
+[dev-dependencies]
+tempfile.workspace = true

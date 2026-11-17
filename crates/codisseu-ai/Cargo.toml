@@ -1,0 +1,16 @@
+[package]
+name = "codisseu-ai"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+[dependencies]
+serde.workspace = true
+image.workspace = true
+tempfile.workspace = true
+serde_json.workspace = true
+[target.'cfg(unix)'.dependencies]
+nix = { version = "=0.28.0", features = ["signal", "process"] }
+[dev-dependencies]
+tempfile.workspace = true

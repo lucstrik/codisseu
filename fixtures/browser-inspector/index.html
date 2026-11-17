@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Inspector fixture · pronta</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header><strong>Inspector local</strong><span>Fixture própria · sem conta externa</span></header>
+  <main>
+    <h1 id="marker" data-value="42">DOM real: 42</h1>
+    <div class="actions">
+      <button id="request" type="button">Enviar POST42</button>
+      <button id="compute" type="button">Pausar cálculo42</button>
+      <button id="storage-check" type="button">Conferir storage</button>
+    </div>
+    <p id="editable">Texto original42</p>
+    <label>Texto local <input id="text" value="ação😀 + 🦀"></label>
+    <output id="answer">aguardando</output>
+    <fixture-counter></fixture-counter>
+    <pre id="status" aria-live="polite">pronta</pre>
+  </main>
+</body>
+</html>

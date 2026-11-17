@@ -1,0 +1,12 @@
+{
+  "name": "codisseu/rename-symbols-complete",
+  "autoload": {
+    "classmap": [
+      "php-property",
+      "php-class"
+    ],
+    "files": [
+      "php-function/functions.php"
+    ]
+  }
+}

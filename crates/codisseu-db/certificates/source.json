@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-27",
+  "url": "https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem",
+  "documentation": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html",
+  "upstream_sha256": "90a6f1a7978a1b1b096dca6c57511ca48d3b8cf052f8e704baf358f34ea2f21b",
+  "upstream_certificates": 114,
+  "selected_roots": 114,
+  "embedded_sha256": "90a6f1a7978a1b1b096dca6c57511ca48d3b8cf052f8e704baf358f34ea2f21b",
+  "selection": "subject == issuer; openssl checkend0 passed; no intermediates; public X.509 data"
+}

@@ -1,0 +1,198 @@
+[
+  {
+    "package": "portable-pty",
+    "version": "0.9.0",
+    "license_declared": "MIT",
+    "repository": "https://github.com/wezterm/wezterm",
+    "source": "crates.io published archive via Cargo.lock checksum",
+    "notices": [
+      {
+        "file": "reference/public/terminal-dependencies/portable-pty-0.9.0/LICENSE.md",
+        "sha256": "191c46fcf52061382b1c51a70311eb9081381cc158e5899f3739473a9432185b"
+      }
+    ],
+    "limitation": null
+  },
+  {
+    "package": "vt100",
+    "version": "0.18.1",
+    "license_declared": "MIT",
+    "repository": "https://github.com/doy/vt100-rust",
+    "source": "crates.io published archive via Cargo.lock checksum",
+    "notices": [
+      {
+        "file": "reference/public/terminal-dependencies/vt100-0.18.1/LICENSE",
+        "sha256": "53a04b0a11073f3d0183c31a4b7bdf9a3f68d453adeec136e59e5a9d9a554370"
+      }
+    ],
+    "limitation": null
+  },
+  {
+    "package": "vte",
+    "version": "0.15.0",
+    "license_declared": "Apache-2.0 OR MIT",
+    "repository": "https://github.com/alacritty/vte",
+    "source": "crates.io published archive via Cargo.lock checksum",
+    "notices": [
+      {
+        "file": "reference/public/terminal-dependencies/vte-0.15.0/LICENSE-APACHE",
+        "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+      },
+      {
+        "file": "reference/public/terminal-dependencies/vte-0.15.0/LICENSE-MIT",
+        "sha256": "e4c9b06fa850cb9b540a5e400e9f6394cf15efcf4098144de477d1d3dae10150"
+      }
+    ],
+    "limitation": null
+  },
+  {
+    "package": "nix",
+    "version": "0.28.0",
+    "license_declared": "MIT",
+    "repository": "https://github.com/nix-rust/nix",
+    "source": "crates.io published archive via Cargo.lock checksum",
+    "notices": [
+      {
+        "file": "reference/public/terminal-dependencies/nix-0.28.0/LICENSE",
+        "sha256": "66e3ee1fa7f909ad3c612d556f2a0cdabcd809ad6e66f3b0605015ac64841b70"
+      }
+    ],
+    "limitation": null
+  },
+  {
+    "package": "filedescriptor",
+    "version": "0.8.3",
+    "license_declared": "MIT",
+    "repository": "https://github.com/wezterm/wezterm",
+    "source": "crates.io published archive via Cargo.lock checksum",
+    "notices": [
+      {
+        "file": "reference/public/terminal-dependencies/filedescriptor-0.8.3/LICENSE.md",
+        "sha256": "191c46fcf52061382b1c51a70311eb9081381cc158e5899f3739473a9432185b"
+      }
+    ],
+    "limitation": null
+  },
+  {
+    "package": "serial2",
+    "version": "0.2.38",
+    "license_declared": "BSD-2-Clause OR Apache-2.0",
+    "repository": "https://github.com/de-vri-es/serial2-rs",
+    "source": "crates.io published archive via Cargo.lock checksum",
+    "notices": [
+      {
+        "file": "reference/public/terminal-dependencies/serial2-0.2.38/LICENSE-APACHE",
+        "sha256": "da4d60bfcfd15870aa69e0d0891796d7075a860c54e7b38ec5ccd353c66049ed"
+      },
+      {
+        "file": "reference/public/terminal-dependencies/serial2-0.2.38/LICENSE-BSD",
+        "sha256": "8db3a8bca21e298fa56df51250b723d4253755966a5c7a92f8027cdd3aaf5972"
+      }
+    ],
+    "limitation": null
+  },
+  {
+    "package": "shared_library",
+    "version": "0.1.9",
+    "license_declared": "Apache-2.0/MIT",
+    "repository": "https://github.com/tomaka/shared_library/",
+    "source": "crates.io published archive via Cargo.lock checksum",
+    "notices": [
+      {
+        "file": "reference/public/terminal-dependencies/shared_library-0.1.9/LICENSE-APACHE",
+        "sha256": "c144680885b29e4719e2a51f0aab5439a1e02d980692b5aaf086cae12727f28b"
+      },
+      {
+        "file": "reference/public/terminal-dependencies/shared_library-0.1.9/LICENSE-MIT",
+        "sha256": "1c07d19ccbe2578665ab7d8c63f71559f890eb8d2a82fa39d0206b7a3414064f"
+      }
+    ],
+    "limitation": null
+  },
+  {
+    "package": "shell-words",
+    "version": "1.1.1",
+    "license_declared": "MIT/Apache-2.0",
+    "repository": "https://github.com/tmiasko/shell-words",
+    "source": "crates.io published archive via Cargo.lock checksum",
+    "notices": [
+      {
+        "file": "reference/public/terminal-dependencies/shell-words-1.1.1/LICENSE-APACHE",
+        "sha256": "848d7bf14c618c39f1e29fcac2318a2fcc4254045ba7e2f6f5fa799e057225cb"
+      },
+      {
+        "file": "reference/public/terminal-dependencies/shell-words-1.1.1/LICENSE-MIT",
+        "sha256": "f76b7831ee8f42d3ac38919101e4ceb9f56aeb7796cdfe8a5ef52e26acedcbbf"
+      }
+    ],
+    "limitation": null
+  },
+  {
+    "package": "cfg_aliases",
+    "version": "0.1.1",
+    "license_declared": "MIT",
+    "repository": "https://github.com/katharostech/cfg_aliases",
+    "source": "crates.io published archive via Cargo.lock checksum",
+    "notices": [
+      {
+        "file": "reference/public/terminal-dependencies/cfg_aliases-0.1.1/LICENSE",
+        "sha256": "31b94860253d8ec7b4529f51901044d3b459d6292d996504a36b1bae3a36a812"
+      },
+      {
+        "file": "reference/public/terminal-dependencies/cfg_aliases-0.1.1/NOTICES.md",
+        "sha256": "1e2b7ade3fb228130408b9990cae6a7618eb314c75aa0b164bfe485d9d9756ee"
+      }
+    ],
+    "limitation": null
+  },
+  {
+    "package": "winapi",
+    "version": "0.3.9",
+    "license_declared": "MIT/Apache-2.0",
+    "repository": "https://github.com/retep998/winapi-rs",
+    "source": "crates.io published archive via Cargo.lock checksum",
+    "notices": [
+      {
+        "file": "reference/public/terminal-dependencies/winapi-0.3.9/LICENSE-APACHE",
+        "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+      },
+      {
+        "file": "reference/public/terminal-dependencies/winapi-0.3.9/LICENSE-MIT",
+        "sha256": "ce7bc3499fee93d5022ef430d5e4201e79a6d9154f3974e42f41349f0569e09b"
+      }
+    ],
+    "limitation": null
+  },
+  {
+    "package": "winapi-i686-pc-windows-gnu",
+    "version": "0.4.0",
+    "license_declared": "MIT/Apache-2.0",
+    "repository": "https://github.com/retep998/winapi-rs",
+    "source": "crates.io published archive via Cargo.lock checksum",
+    "notices": [],
+    "limitation": "No standalone license file in published package; Windows-only package not distributed/tested in Linux build"
+  },
+  {
+    "package": "winapi-x86_64-pc-windows-gnu",
+    "version": "0.4.0",
+    "license_declared": "MIT/Apache-2.0",
+    "repository": "https://github.com/retep998/winapi-rs",
+    "source": "crates.io published archive via Cargo.lock checksum",
+    "notices": [],
+    "limitation": "No standalone license file in published package; Windows-only package not distributed/tested in Linux build"
+  },
+  {
+    "package": "winreg",
+    "version": "0.10.1",
+    "license_declared": "MIT",
+    "repository": "https://github.com/gentoo90/winreg-rs",
+    "source": "crates.io published archive via Cargo.lock checksum",
+    "notices": [
+      {
+        "file": "reference/public/terminal-dependencies/winreg-0.10.1/LICENSE",
+        "sha256": "ea021d8c6383c84d19c15ce90d3b1602cf448fdcc0bf3772c98e43c7bf1bf1d1"
+      }
+    ],
+    "limitation": null
+  }
+]

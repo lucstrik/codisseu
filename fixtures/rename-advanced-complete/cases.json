@@ -1,0 +1,34 @@
+[
+  {
+    "id": "php-advanced",
+    "origin": "php-advanced/Port.php",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "php-advanced/Port.php",
+      "php-advanced/Weather.php",
+      "php-advanced/main.php"
+    ],
+    "expected": {
+      "php-advanced/Port.php": "<?php\nnamespace AdvancedFixture;\nabstract class Port { abstract public function precipitation(string $city = 'Paris', string ...$labels): string; }\n",
+      "php-advanced/Weather.php": "<?php\nnamespace AdvancedFixture;\nclass Weather extends Port { public function precipitation(string $city = 'Paris', string ...$labels): string { return $city; } }\n",
+      "php-advanced/main.php": "<?php\nuse AdvancedFixture\\Port;\nuse AdvancedFixture\\Weather;\nfunction advancedReport(Port $source): string { return $source->precipitation(); }\n/* 😀 é */ echo advancedReport(new Weather()), (new Weather())->precipitation('London','wet');\n// rainfall stays text\n"
+    }
+  },
+  {
+    "id": "ts-advanced",
+    "origin": "ts-advanced/port.ts",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "ts-advanced/port.ts",
+      "ts-advanced/weather.ts",
+      "ts-advanced/main.ts"
+    ],
+    "expected": {
+      "ts-advanced/port.ts": "export interface Port { precipitation<T extends string = string>(city: T, label?: string, ...extra: string[]): T; }\n",
+      "ts-advanced/weather.ts": "import { Port } from './port';\nexport class Weather implements Port { precipitation<U extends string = string>(city: U, label?: string, ...extra: string[]): U { return city; } }\n",
+      "ts-advanced/main.ts": "import { Port } from './port';\nimport { Weather } from './weather';\nexport function advancedReport(source: Port): string { return source.precipitation('Paris'); }\n/* 😀 é */ console.log(advancedReport(new Weather()),new Weather().precipitation('London','wet'));\n// rainfall stays text\n"
+    }
+  }
+]

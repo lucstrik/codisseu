@@ -1,0 +1,59 @@
+{
+  "accessed_at": "2026-10-20",
+  "original_runtime_build": null,
+  "original_screenshot_inspected": false,
+  "browser_inventory": {
+    "apps": [],
+    "browsers": []
+  },
+  "sources": [
+    {
+      "id": "phpstorm-new-ui",
+      "url": "https://www.jetbrains.com/help/phpstorm/new-ui.html",
+      "confidence": "documented"
+    },
+    {
+      "id": "datagrip-interface",
+      "url": "https://www.jetbrains.com/help/datagrip/guided-tour-around-the-user-interface.html",
+      "confidence": "documented"
+    },
+    {
+      "id": "tool-window",
+      "url": "https://plugins.jetbrains.com/docs/intellij/tool-window.html",
+      "confidence": "documented"
+    },
+    {
+      "id": "toolbar",
+      "url": "https://plugins.jetbrains.com/docs/intellij/toolbar.html",
+      "confidence": "documented"
+    },
+    {
+      "id": "icons-sizes",
+      "url": "https://plugins.jetbrains.com/docs/intellij/icons.html",
+      "confidence": "documented"
+    },
+    {
+      "id": "icons-style",
+      "url": "https://plugins.jetbrains.com/docs/intellij/icons-style.html",
+      "confidence": "documented"
+    },
+    {
+      "id": "tabs",
+      "url": "https://plugins.jetbrains.com/docs/intellij/tabs.html",
+      "confidence": "documented"
+    }
+  ],
+  "official_image_references": [
+    {
+      "url": "https://resources.jetbrains.com/help/img/idea/2026.2/ps_new_ui_dark_theme.png",
+      "downloaded": false,
+      "visually_inspected": false,
+      "pixel_measurements": false
+    }
+  ],
+  "apache_license": {
+    "source_local": "reference/public/intellij-oss/LICENSE-APACHE-2.0.txt",
+    "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  }
+}

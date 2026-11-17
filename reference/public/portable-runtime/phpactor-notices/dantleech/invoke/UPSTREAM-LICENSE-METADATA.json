@@ -1,0 +1,18 @@
+{
+  "name": "dantleech/invoke",
+  "version": "2.0.0",
+  "license": [
+    "MIT"
+  ],
+  "authors": [
+    {
+      "name": "daniel leech",
+      "email": "daniel@dantleech.com"
+    }
+  ],
+  "source": {
+    "type": "git",
+    "url": "https://github.com/dantleech/invoke.git",
+    "reference": "9b002d746d2c1b86cfa63a47bb5909cee58ef50c"
+  }
+}

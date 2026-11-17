@@ -1,0 +1,10 @@
+[package]
+name = "codisseu-fixture-app"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+codisseu-fixture-library = { path = "../library" }
+
+[features]
+bonus = ["codisseu-fixture-library/bonus"]

@@ -1,0 +1,13 @@
+{
+  "package": "unicode-segmentation",
+  "version": "1.13.3",
+  "source": "crates.io registry; Cargo.lock checksum c6f5d3c3b1bf09027a88a6bc961fc00497d651009560b5463668dc81b0fa87a8",
+  "license": "MIT OR Apache-2.0",
+  "local_read": "LICENSE-MIT and manifest reviewed; preserve both notices and COPYRIGHT",
+  "use": "extended grapheme and Unicode word boundaries over Rope snapshots",
+  "files": {
+    "COPYRIGHT": "23860c2a7b5d96b21569afedf033469bab9fe14a1b24a35068b8641c578ce24d",
+    "LICENSE-APACHE": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+    "LICENSE-MIT": "7b63ecd5f1902af1b63729947373683c32745c16a10e8e6292e2e2dcd7e90ae0"
+  }
+}

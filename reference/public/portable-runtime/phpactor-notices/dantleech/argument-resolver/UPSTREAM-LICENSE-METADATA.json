@@ -1,0 +1,18 @@
+{
+  "name": "dantleech/argument-resolver",
+  "version": "1.1.0",
+  "license": [
+    "MIT"
+  ],
+  "authors": [
+    {
+      "name": "Daniel Leech",
+      "email": "daniel@dantleech.com"
+    }
+  ],
+  "source": {
+    "type": "git",
+    "url": "https://gitlab.com/dantleech/argument-resolver.git",
+    "reference": "e34fabf7d6e53e5194f745ad069c4a87cc4b34cc"
+  }
+}

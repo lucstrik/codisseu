@@ -1,0 +1,260 @@
+{
+  "schema_version": 1,
+  "installation": "project-local, explicit installer only",
+  "adapters": [
+    {
+      "id": "javascript",
+      "version": "1.140.0",
+      "source": "https://github.com/microsoft/vscode-js-debug/tree/v1.140.0",
+      "commit": "bccbbafdcb6bb96ab0706f411a1e66681d5bc4de",
+      "license": "MIT",
+      "url": "https://github.com/microsoft/vscode-js-debug/releases/download/v1.140.0/js-debug-dap-v1.140.0.tar.gz",
+      "archive": "js-debug-dap-v1.140.0.tar.gz",
+      "archive_sha256": "27dab92937ec1ab35821ae955aac867544fe06a1b6307229049f2d789af10968",
+      "archive_bytes": 1249709,
+      "directory": "js",
+      "entrypoint": "js-debug/src/dapDebugServer.js",
+      "entrypoint_sha256": "6b1e6058901a1d733a0687ef4a4840665f694f45e8863d34fe64a9e62c68c844",
+      "license_path": "js-debug/LICENSE",
+      "license_sha256": "dea9265341829002e2c23a7372393eb2ed6e26085fb623f38a4ba0af833f30a6"
+    },
+    {
+      "id": "php",
+      "version": "1.40.2",
+      "source": "https://github.com/xdebug/vscode-php-debug/tree/v1.40.2",
+      "commit": "5cee2626f227e0ebe88df2c03a1a88b4b4295173",
+      "license": "MIT",
+      "url": "https://github.com/xdebug/vscode-php-debug/releases/download/v1.40.2/php-debug-1.40.2.vsix",
+      "archive": "php-debug-1.40.2.vsix",
+      "archive_sha256": "17631993fe800083a2fc89a6782c8bf58a79603ad201ddff60d9b59ba2345d5f",
+      "archive_bytes": 1797181,
+      "directory": "php",
+      "entrypoint": "extension/out/phpDebug.js",
+      "entrypoint_sha256": "e832528e26d7baba93bcd2e673e42108cfe51eb71d09f1505d633519b0c7b4ca",
+      "license_path": "extension/LICENSE.txt",
+      "license_sha256": "5f7443d752d32f8d0d8e7a58ad899ae2c1397928a6fa698861c40a7b045aab1a"
+    }
+  ],
+  "php_packages": [
+    {
+      "name": "@vscode/debugadapter",
+      "version": "1.68.0",
+      "license": "MIT",
+      "path": "extension/node_modules/@vscode/debugadapter",
+      "notices": [
+        {
+          "path": "extension/node_modules/@vscode/debugadapter/License.txt",
+          "sha256": "3ead76b8e8e547ef05a426db189c584fcc681e02db87cdc0bba59b832a5a5360"
+        },
+        {
+          "path": "extension/node_modules/@vscode/debugadapter/thirdpartynotices.txt",
+          "sha256": "628a92e587cfcf84263c84a0c3cf81ab5f88402803c98c0328b2c5555129fb48"
+        }
+      ]
+    },
+    {
+      "name": "@vscode/debugprotocol",
+      "version": "1.68.0",
+      "license": "MIT",
+      "path": "extension/node_modules/@vscode/debugprotocol",
+      "notices": [
+        {
+          "path": "extension/node_modules/@vscode/debugprotocol/License.txt",
+          "sha256": "3ead76b8e8e547ef05a426db189c584fcc681e02db87cdc0bba59b832a5a5360"
+        }
+      ]
+    },
+    {
+      "name": "@xmldom/xmldom",
+      "version": "0.9.10",
+      "license": "MIT",
+      "path": "extension/node_modules/@xmldom/xmldom",
+      "notices": [
+        {
+          "path": "extension/node_modules/@xmldom/xmldom/LICENSE",
+          "sha256": "4da724fc305d81606b245b324d4d2586916b9d248b23d82183df753ace0fdf71"
+        }
+      ]
+    },
+    {
+      "name": "buffer-crc32",
+      "version": "1.0.0",
+      "license": "MIT",
+      "path": "extension/node_modules/buffer-crc32",
+      "notices": [
+        {
+          "path": "extension/node_modules/buffer-crc32/LICENSE",
+          "sha256": "ddc9158fa20e427bc12fa8e1e6d07c642ed4d2c618607df768b30ae2986b3b7c"
+        }
+      ]
+    },
+    {
+      "name": "dotenv",
+      "version": "17.2.1",
+      "license": "BSD-2-Clause",
+      "path": "extension/node_modules/dotenv",
+      "notices": [
+        {
+          "path": "extension/node_modules/dotenv/LICENSE",
+          "sha256": "74b629b24865e1e83c5277ee84590b7937644d6fd959d0c7bdce758676cd2ced"
+        }
+      ]
+    },
+    {
+      "name": "file-url",
+      "version": "3.0.0",
+      "license": "MIT",
+      "path": "extension/node_modules/file-url",
+      "notices": [
+        {
+          "path": "extension/node_modules/file-url/license",
+          "sha256": "48da2f39e100d4085767e94966b43f4fa95ff6a0698fba57ed460914e35f94a0"
+        }
+      ]
+    },
+    {
+      "name": "iconv-lite",
+      "version": "0.6.3",
+      "license": "MIT",
+      "path": "extension/node_modules/iconv-lite",
+      "notices": [
+        {
+          "path": "extension/node_modules/iconv-lite/LICENSE",
+          "sha256": "ac779f7314c74f232ef847ea86e714abe25cf6eeb5cc97b69451b74e2af6492d"
+        }
+      ]
+    },
+    {
+      "name": "balanced-match",
+      "version": "4.0.4",
+      "license": "MIT",
+      "path": "extension/node_modules/minimatch/node_modules/balanced-match",
+      "notices": [
+        {
+          "path": "extension/node_modules/minimatch/node_modules/balanced-match/LICENSE.md",
+          "sha256": "d408f38ffa3355c5faec517153295338892eb0f1ea43f57874bb23c6075979b5"
+        }
+      ]
+    },
+    {
+      "name": "brace-expansion",
+      "version": "5.0.5",
+      "license": "MIT",
+      "path": "extension/node_modules/minimatch/node_modules/brace-expansion",
+      "notices": [
+        {
+          "path": "extension/node_modules/minimatch/node_modules/brace-expansion/LICENSE",
+          "sha256": "9c63a23124d68cd30cd316a94a1a0bca34f032786df6df69fc4b5f136bac8d2e"
+        }
+      ]
+    },
+    {
+      "name": "minimatch",
+      "version": "10.2.3",
+      "license": "BlueOak-1.0.0",
+      "path": "extension/node_modules/minimatch",
+      "notices": [
+        {
+          "path": "extension/node_modules/minimatch/LICENSE.md",
+          "sha256": "2c7c5d22ed5a8ee968c64757710979afcd77438c48b4a265b94e615babd8a901"
+        }
+      ]
+    },
+    {
+      "name": "moment",
+      "version": "2.30.1",
+      "license": "MIT",
+      "path": "extension/node_modules/moment",
+      "notices": [
+        {
+          "path": "extension/node_modules/moment/LICENSE",
+          "sha256": "8f38f320bbf5eb84c08e08676f7ee1d2204ebe5797f6a090d077329cf212fca3"
+        }
+      ]
+    },
+    {
+      "name": "relateurl",
+      "version": "0.2.7",
+      "license": "MIT",
+      "path": "extension/node_modules/relateurl",
+      "notices": [
+        {
+          "path": "extension/node_modules/relateurl/license",
+          "sha256": "4c97d11c3d10ddede28b756f4d834e660bc49d67d9a8aae16bda5e59efcd479f"
+        }
+      ]
+    },
+    {
+      "name": "safer-buffer",
+      "version": "2.1.2",
+      "license": "MIT",
+      "path": "extension/node_modules/safer-buffer",
+      "notices": [
+        {
+          "path": "extension/node_modules/safer-buffer/LICENSE",
+          "sha256": "4bc935e71be198c67ddf3c2b5fddb195f6edc182bfc155a96a6db61b44b494b9"
+        }
+      ]
+    },
+    {
+      "name": "semver",
+      "version": "7.7.2",
+      "license": "ISC",
+      "path": "extension/node_modules/semver",
+      "notices": [
+        {
+          "path": "extension/node_modules/semver/LICENSE",
+          "sha256": "4ec3d4c66cd87f5c8d8ad911b10f99bf27cb00cdfcff82621956e379186b016b"
+        }
+      ]
+    },
+    {
+      "name": "string-replace-async",
+      "version": "2.0.0",
+      "license": "MIT",
+      "path": "extension/node_modules/string-replace-async",
+      "notices": [
+        {
+          "path": "extension/node_modules/string-replace-async/license",
+          "sha256": "a04b864651815d0b7da87b8727c24350e335bbf0219dc0919db712ff5640307b"
+        }
+      ]
+    },
+    {
+      "name": "isexe",
+      "version": "3.1.1",
+      "license": "ISC",
+      "path": "extension/node_modules/which/node_modules/isexe",
+      "notices": [
+        {
+          "path": "extension/node_modules/which/node_modules/isexe/LICENSE",
+          "sha256": "6dab8081cbcd304cfe3958576d6680cb33f49d39a5f43c53a1d0cf3666d29bd3"
+        }
+      ]
+    },
+    {
+      "name": "which",
+      "version": "5.0.0",
+      "license": "ISC",
+      "path": "extension/node_modules/which",
+      "notices": [
+        {
+          "path": "extension/node_modules/which/LICENSE",
+          "sha256": "4ec3d4c66cd87f5c8d8ad911b10f99bf27cb00cdfcff82621956e379186b016b"
+        }
+      ]
+    },
+    {
+      "name": "php-debug",
+      "version": "1.40.2",
+      "license": "MIT",
+      "path": "extension",
+      "notices": [
+        {
+          "path": "extension/LICENSE.txt",
+          "sha256": "5f7443d752d32f8d0d8e7a58ad899ae2c1397928a6fa698861c40a7b045aab1a"
+        }
+      ]
+    }
+  ]
+}

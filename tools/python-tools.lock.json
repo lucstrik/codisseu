@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "host": "x86_64-unknown-linux-gnu",
+  "sources": [
+    {
+      "name": "cpython",
+      "version": "3.13.18",
+      "release": "20261026",
+      "filename": "cpython-3.13.18+20261026-x86_64-unknown-linux-gnu-install_only.tar.gz",
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.13.18%2B20261026-x86_64-unknown-linux-gnu-install_only.tar.gz",
+      "sha256": "126343c54daff4068efc1ac269518d0cc202d57857794948103dd1454e8881be",
+      "bytes": 76935188,
+      "kind": "python"
+    },
+    {
+      "name": "basedpyright",
+      "version": "1.40.2",
+      "url": "https://registry.npmjs.org/basedpyright/-/basedpyright-1.40.2.tgz",
+      "integrity": "sha512-9uld8+5tZC2Gxf8nIynyunK0N4xn01W1ApzLMXDAcuA8uJq2QSfldYn9gSbxn9MWR8wmHDo7GaEHLhlnLFHaJA==",
+      "kind": "npm"
+    },
+    {
+      "name": "ruff",
+      "version": "0.17.3",
+      "filename": "ruff-0.17.3-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "url": "https://files.pythonhosted.org/packages/f0/20/fecedea2209f574ab92033b344e01a7f0c2dc76c6d6d19a14c9f8141173f/ruff-0.17.3-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "7fa4b0f931cdbcb8a52044f370a3eb429fb42eb88807b0e800fcaa98dd42b24e",
+      "bytes": 10577491,
+      "kind": "wheel"
+    },
+    {
+      "name": "debugpy",
+      "version": "1.8.22",
+      "filename": "debugpy-1.8.22-cp313-cp313-manylinux_2_34_x86_64.whl",
+      "url": "https://files.pythonhosted.org/packages/bc/4f/8df91270afbf61fc5ab202951f28451194a7eb093704b26da11cb0ecd308/debugpy-1.8.22-cp313-cp313-manylinux_2_34_x86_64.whl",
+      "sha256": "c1ffb9953708b648ecf6acd2e5ad2c002bf68785ed618197dd4463a2a7226f39",
+      "bytes": 3994351,
+      "kind": "wheel"
+    },
+    {
+      "name": "pytest",
+      "version": "9.2.0",
+      "filename": "pytest-9.2.0-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/51/39/1f5d8c8877a0fa327db959c19341d4be61660de1ab6b7391f9eb805bcd67/pytest-9.2.0-py3-none-any.whl",
+      "sha256": "07acdcf88ec174f907dc01af70bf52d49b014bbab03faeeade31c96b18c2e588",
+      "bytes": 411776,
+      "kind": "wheel"
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.1",
+      "filename": "iniconfig-2.3.1-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/56/43/4ca9e49d27a1fcf6bece6f6aec0ea46bb9112489b93d4b688fb415457bdb/iniconfig-2.3.1-py3-none-any.whl",
+      "sha256": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7",
+      "bytes": 7552,
+      "kind": "wheel"
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "filename": "packaging-26.3-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+      "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+      "bytes": 129956,
+      "kind": "wheel"
+    },
+    {
+      "name": "pluggy",
+      "version": "1.7.0",
+      "filename": "pluggy-1.7.0-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/40/9e/2b38731e0fc536806f16490e1a12d7f0dc2a1235aa8cc07bcc75416a7daa/pluggy-1.7.0-py3-none-any.whl",
+      "sha256": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec",
+      "bytes": 27082,
+      "kind": "wheel"
+    },
+    {
+      "name": "pygments",
+      "version": "2.21.0",
+      "filename": "pygments-2.21.0-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/71/46/17f022dd3e953bf20a04a028a21ec746d942f8d2af30fa0f124fa0e6a684/pygments-2.21.0-py3-none-any.whl",
+      "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+      "bytes": 1250147,
+      "kind": "wheel"
+    },
+    {
+      "name": "cpython-notices",
+      "version": "3.13.18",
+      "release": "20261026",
+      "filename": "cpython-3.13.18+20261026-x86_64-unknown-linux-gnu-pgo+lto-full.tar.zst",
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.13.18%2B20261026-x86_64-unknown-linux-gnu-pgo%2Blto-full.tar.zst",
+      "sha256": "f003449a05408c2e4b184f2a7abd1ea277081ff1a9100289075243ab5ed81207",
+      "bytes": 113051719,
+      "kind": "notices"
+    }
+  ]
+}

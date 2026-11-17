@@ -1,0 +1,96 @@
+[
+  {
+    "id": "php-property",
+    "origin": "php-property/Weather.php",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "php-property/Weather.php",
+      "php-property/main.php"
+    ],
+    "expected": {
+      "php-property/Weather.php": "<?php\nnamespace PropertyFixture;\nclass Weather {\n    public string $precipitation = 'wet';\n    public function read(): string { return $this->precipitation; }\n}\nclass OtherWeather { public string $rainfall = 'other'; }\n",
+      "php-property/main.php": "<?php\nuse PropertyFixture\\Weather;\nuse PropertyFixture\\OtherWeather;\nfunction propertyReport(Weather $weather): string { return $weather->precipitation; }\n/* 😀 é */ echo (new Weather())->precipitation, (new OtherWeather())->rainfall;\n// rainfall must stay in this comment\n$literal = 'rainfall';\n"
+    },
+    "inline_refactor": true
+  },
+  {
+    "id": "php-class",
+    "origin": "php-class/Weather.php",
+    "old": "CloudSource",
+    "new": "RainSource",
+    "files": [
+      "php-class/Weather.php",
+      "php-class/main.php",
+      "php-class/alias.php"
+    ],
+    "expected": {
+      "php-class/Weather.php": "<?php\nnamespace ClassFixture;\nclass RainSource { public function value(): string { return 'wet'; } }\n",
+      "php-class/main.php": "<?php\nuse ClassFixture\\RainSource;\nfunction classReport(RainSource $source): string { return $source->value(); }\n/* 😀 é */ echo classReport(new RainSource());\n// CloudSource stays here\n$literal = 'CloudSource';\n",
+      "php-class/alias.php": "<?php\nuse ClassFixture\\RainSource as Sky;\nfunction aliasedClassReport(Sky $source): string { return $source->value(); }\n"
+    }
+  },
+  {
+    "id": "php-function",
+    "origin": "php-function/functions.php",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "php-function/functions.php",
+      "php-function/main.php",
+      "php-function/alias.php"
+    ],
+    "expected": {
+      "php-function/functions.php": "<?php\nnamespace FunctionFixture;\nfunction precipitation(int $days): int { return $days + 1; }\nfunction other(int $days): int { return $days; }\n",
+      "php-function/main.php": "<?php\nuse function FunctionFixture\\precipitation;\n/* 😀 é */ echo precipitation(2);\n// rainfall stays here\n$literal = 'rainfall';\n",
+      "php-function/alias.php": "<?php\nuse function FunctionFixture\\precipitation as rain;\necho rain(3);\n"
+    }
+  },
+  {
+    "id": "ts-property",
+    "origin": "ts-property/weather.ts",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "ts-property/weather.ts",
+      "ts-property/main.ts"
+    ],
+    "expected": {
+      "ts-property/weather.ts": "export class Weather {\n    precipitation: string = 'wet';\n    read(): string { return this.precipitation; }\n}\nexport class OtherWeather { rainfall: string = 'other'; }\n",
+      "ts-property/main.ts": "import { Weather, OtherWeather } from './weather';\nexport function propertyReport(weather: Weather): string { return weather.precipitation; }\n/* 😀 é */ console.log(new Weather().precipitation, new OtherWeather().rainfall);\n// rainfall must stay in this comment\nconst literal = 'rainfall';\n"
+    },
+    "inline_refactor": true
+  },
+  {
+    "id": "ts-class",
+    "origin": "ts-class/weather.ts",
+    "old": "CloudSource",
+    "new": "RainSource",
+    "files": [
+      "ts-class/weather.ts",
+      "ts-class/main.ts",
+      "ts-class/alias.ts"
+    ],
+    "expected": {
+      "ts-class/weather.ts": "export class RainSource { value(): string { return 'wet'; } }\n",
+      "ts-class/main.ts": "import { RainSource } from './weather';\nexport function classReport(source: RainSource): string { return source.value(); }\n/* 😀 é */ console.log(classReport(new RainSource()));\n// CloudSource stays here\nconst literal = 'CloudSource';\n",
+      "ts-class/alias.ts": "import { RainSource as Sky } from './weather';\nexport function aliasedClassReport(source: Sky): string { return source.value(); }\n"
+    }
+  },
+  {
+    "id": "ts-function",
+    "origin": "ts-function/functions.ts",
+    "old": "rainfall",
+    "new": "precipitation",
+    "files": [
+      "ts-function/functions.ts",
+      "ts-function/main.ts",
+      "ts-function/alias.ts"
+    ],
+    "expected": {
+      "ts-function/functions.ts": "export function precipitation(days: number): number { return days + 1; }\nexport function other(days: number): number { return days; }\n",
+      "ts-function/main.ts": "import { precipitation } from './functions';\n/* 😀 é */ console.log(precipitation(2));\n// rainfall stays here\nconst literal = 'rainfall';\n",
+      "ts-function/alias.ts": "import { precipitation as rain } from './functions';\nconsole.log(rain(3));\n"
+    }
+  }
+]

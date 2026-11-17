@@ -1,0 +1,9 @@
+{
+  "name": "codisseu/rename-accessors-fixture",
+  "autoload": {
+    "classmap": [
+      "php-accessors",
+      "php-noaccessors"
+    ]
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "source": "artifacts/visual-v3-20261020/native-approved/results.png",
+  "sha256": "3e2472629c9c41b84b0ebd104f64cf3457f920cfb999544c1fbfe3abdc9514ee",
+  "binary_sha256": "465b519114a5072f7b743ab2e9cacc655c179bfbf24c82deaeec91f7da0a6d18",
+  "size_px": [
+    1280,
+    800
+  ],
+  "pixels_per_point": 1,
+  "confidence": "observed",
+  "tool": "ImageMagick pixel reading; view_image visual inspection",
+  "samples": [
+    {
+      "region": "main header background",
+      "point": [
+        600,
+        20
+      ],
+      "rgb": [
+        43,
+        45,
+        48
+      ]
+    },
+    {
+      "region": "Arquivo menu idle background",
+      "point": [
+        74,
+        12
+      ],
+      "rgb": [
+        50,
+        50,
+        50
+      ]
+    },
+    {
+      "region": "selected project row",
+      "point": [
+        60,
+        166
+      ],
+      "rgb": [
+        46,
+        67,
+        110
+      ]
+    },
+    {
+      "region": "database background",
+      "point": [
+        1000,
+        100
+      ],
+      "rgb": [
+        43,
+        45,
+        48
+      ]
+    }
+  ],
+  "observations": [
+    "Menu titles have a permanent fill distinct from header.",
+    "Workspace label is at the right of the main header.",
+    "Project and Database use visibly different disclosure/icon/indentation rendering."
+  ],
+  "limit": "No original screenshot or runtime measurement; code source confirms dialog defaults but this screenshot contains no dialog."
+}

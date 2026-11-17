@@ -1,0 +1,36 @@
+[package]
+name = "codisseu-db"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+rusqlite = { version = "=0.40.2", default-features = false, features = ["bundled", "hooks", "limits"] }
+serde = { workspace = true, features = ["rc"] }
+serde_json.workspace = true
+tempfile.workspace = true
+tokio = { version = "=1.52.3", features = ["rt", "time", "net", "io-util", "sync", "macros"] }
+sqlx-core = { version = "=0.8.6", default-features = false, features = ["_rt-tokio", "_tls-rustls-ring-webpki"] }
+sqlx-postgres = { version = "=0.8.6", features = ["chrono", "bigdecimal", "uuid", "json"] }
+sqlx-mysql = { version = "=0.8.6", features = ["chrono", "bigdecimal", "uuid", "json"] }
+sqlparser = "=0.59.0"
+futures-util = "0.3"
+mongodb = "=3.7.0"
+keyring = { version = "=3.6.3", default-features = false, features = ["async-secret-service", "tokio", "crypto-rust", "apple-native", "windows-native"] }
+sha2 = "=0.10.9"
+zeroize = "=1.9.1"
+rustls-native-certs = "=0.8.5"
+rustls-pki-types = "=1.15.1"
+base64 = "=0.22.1"
+redis = { version = "=0.32.7", features = ["tokio-comp", "tokio-rustls-comp"] }
+
+zip = { version = "=8.6.0", default-features = false, features = ["deflate-flate2"] }
+flate2 = { version = "=1.1.10", default-features = false, features = ["rust_backend"] }
+quick-xml = "=0.41.0"
+sqlformat = "=0.5.0"
+
+[dev-dependencies]
+tempfile.workspace = true

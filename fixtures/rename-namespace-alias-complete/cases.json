@@ -1,0 +1,54 @@
+[
+  {
+    "id": "php-class-namespace-alias",
+    "origin": "php-class/model.php",
+    "old": "Weather",
+    "new": "Climate",
+    "files": [
+      "php-class/model.php",
+      "php-class/main.php"
+    ],
+    "expected": {
+      "php-class/model.php": "<?php\nnamespace PrefixClass\\Model;\nclass Climate {}\n",
+      "php-class/main.php": "<?php\nuse PrefixClass\\Model as Api;\n$item = new Api\\Climate();\necho 'class';\n"
+    }
+  },
+  {
+    "id": "php-function-namespace-alias",
+    "origin": "php-function/functions.php",
+    "old": "forecast",
+    "new": "predict",
+    "files": [
+      "php-function/functions.php",
+      "php-function/main.php"
+    ],
+    "expected": {
+      "php-function/functions.php": "<?php\nnamespace PrefixFunction\\Model;\nfunction predict(): string { return \"Paris\"; }\n",
+      "php-function/main.php": "<?php\nuse PrefixFunction\\Model as Api;\necho Api\\predict();\n"
+    }
+  },
+  {
+    "id": "php-alias-namespace-alias",
+    "origin": "php-alias/main.php",
+    "old": "Api",
+    "new": "Model",
+    "files": [
+      "php-alias/main.php"
+    ],
+    "expected": {
+      "php-alias/main.php": "<?php\nuse PrefixAlias\\Model as Model;\n$item = new Model\\Weather();\necho Model\\forecast();\n"
+    }
+  },
+  {
+    "id": "ts-baseline-namespace-alias",
+    "origin": "ts/main.ts",
+    "old": "forecast",
+    "new": "predict",
+    "files": [
+      "ts/main.ts"
+    ],
+    "expected": {
+      "ts/main.ts": "export function predict(): string { return \"Paris\"; }\nconsole.log(predict());\n"
+    }
+  }
+]

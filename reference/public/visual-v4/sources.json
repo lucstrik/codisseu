@@ -1,0 +1,56 @@
+{
+  "accessed_at": "2026-10-20",
+  "original_runtime_build": null,
+  "original_screenshot_inspected": false,
+  "browser_inventory": {
+    "apps": [],
+    "browsers": []
+  },
+  "image_tool_result": "Official image URLs opened but no pixels rendered; image search returned no results. No media downloaded.",
+  "sources": [
+    {
+      "id": "phpstorm-new-ui",
+      "url": "https://www.jetbrains.com/help/phpstorm/new-ui.html",
+      "version": "2026.2",
+      "confidence": "documented"
+    },
+    {
+      "id": "datagrip-database-explorer",
+      "url": "https://www.jetbrains.com/help/datagrip/database-explorer.html",
+      "version": "2026.2",
+      "confidence": "documented"
+    },
+    {
+      "id": "button",
+      "url": "https://plugins.jetbrains.com/docs/intellij/button.html",
+      "version": "page updated 2024-12-20",
+      "confidence": "documented"
+    },
+    {
+      "id": "empty-state",
+      "url": "https://plugins.jetbrains.com/docs/intellij/empty-state.html",
+      "version": "page updated 2025-07-04",
+      "confidence": "documented"
+    }
+  ],
+  "official_images": [
+    {
+      "url": "https://resources.jetbrains.com/help/img/idea/2026.2/ps_new_ui_dark_theme.png",
+      "visually_inspected": false,
+      "downloaded": false,
+      "measurements": null
+    },
+    {
+      "url": "https://resources.jetbrains.com/help/img/idea/2026.2/ps_new_ui_window_header.png",
+      "visually_inspected": false,
+      "downloaded": false,
+      "measurements": null
+    },
+    {
+      "url": "https://plugins.jetbrains.com/docs/intellij/images/button_default.png",
+      "visually_inspected": false,
+      "downloaded": false,
+      "measurements": null
+    }
+  ]
+}

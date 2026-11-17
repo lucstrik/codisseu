@@ -1,0 +1,23 @@
+[
+  {
+    "name": "rfd",
+    "version": "0.17.2",
+    "registry": "https://crates.io/crates/rfd/0.17.2",
+    "files": {
+      "LICENSE": "65fc947f4bac882a2cd104ef73c246b1b037059df9f2b3a58b7f77f0b9e56071",
+      "Cargo.toml": "b98351241be56428b9e422eab911906b68ec80b77d0e41f0ed1a633b9b12312d",
+      ".cargo_vcs_info.json": "69185ac7c46bf3c7825ddc4b1737bd3b0fe831bbc941879269bf542aa65363cf"
+    }
+  },
+  {
+    "name": "pollster",
+    "version": "0.4.0",
+    "registry": "https://crates.io/crates/pollster/0.4.0",
+    "files": {
+      "LICENSE-APACHE": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+      "LICENSE-MIT": "cc02a53316678ca2575cc69d12daa7b1833935d4b7742c31fbab7bd74a481077",
+      "Cargo.toml": "dc91cb6fb89f9d0b93cbf133821368d1ea656df20bcc01a0635f2286ef90c8d3",
+      ".cargo_vcs_info.json": "cb80fe2f93a5d55fdfefd9db15bb90b92bc4ea4dec61e4d0654f9a46d112b9c6"
+    }
+  }
+]

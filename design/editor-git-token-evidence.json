@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-05",
+  "scenario": "Marcas de alteração junto aos números de linha",
+  "reference": {
+    "source": "/tmp/codex-clipboard-6d046ec9-d653-45c4-a223-b440cf9b6137.png",
+    "kind": "user supplied screenshot",
+    "product": "VS Code (identified by user)",
+    "build": null,
+    "theme": null,
+    "pixels_per_point": null,
+    "preserved_evidence": "artifacts/editor-git-autosave-20261105/user-reference.png",
+    "sha256": "900bae57139e164b46c35ed95eb3c3e5706d716489b6200975aaaaf483ed48a8"
+  },
+  "tokens": {
+    "editor_git_added": {
+      "value": [
+        113,
+        199,
+        145
+      ],
+      "confidence": "observed",
+      "method": "PIL RGB frequency in image crop x48..54,y78..252;513 pixels with exact RGB"
+    },
+    "editor_git_width": {
+      "value": 3.0,
+      "confidence": "inferred",
+      "note": "3 physical pixels in supplied screenshot; adapted to logical egui units"
+    },
+    "editor_git_number_gap": {
+      "value": 6.0,
+      "confidence": "inferred",
+      "note": "Codisseu gutter spacing preserving existing input targets"
+    },
+    "editor_git_modified": {
+      "value": [
+        12,
+        125,
+        157
+      ],
+      "confidence": "inferred",
+      "note": "Own blue token; not measured in supplied screenshot"
+    },
+    "editor_git_deleted": {
+      "value": [
+        249,
+        81,
+        81
+      ],
+      "confidence": "inferred",
+      "note": "Own red token; not measured in supplied screenshot"
+    },
+    "editor_git_lane_width": {
+      "value": 10.0,
+      "confidence": "inferred",
+      "note": "Own reserved layout space after user observed PHP usage icon over Git stripe on05/11/2026; checked against actual gutter widget/paint bounds at100/125%."
+    }
+  },
+  "code_and_assets_incorporated": "none; independent Rust/egui implementation"
+}
