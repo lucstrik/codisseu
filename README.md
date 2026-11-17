@@ -21,7 +21,7 @@ JavaScript, consultar o banco, ver o Git e conversar com a IA, tudo na mesma jan
 É uma IDE desktop feita em **Rust com egui/eframe**, com um único editor para as
 linguagens do projeto. O foco agora é Linux.
 
-![Codisseu com projeto JavaScript, editor e AI Chat lado a lado](docs/images/codisseu-javascript-ai.jpg)
+![Editor PHP do Codisseu, com árvore do projeto, abas TypeScript e SQL e painel Database](docs/images/codisseu-workspace.png)
 
 > **Estamos na fase alpha.** Já tem bastante coisa funcionando, e o projeto
 > continua evoluindo. Confira os limites abaixo antes de usar no seu dia a dia.
@@ -115,16 +115,15 @@ privadas exigem motores adicionais que ainda não fazem parte desta distribuiç�
 pública. Instalar apenas PHP ou Node no sistema não habilita esses motores.
 
 <details>
-<summary><strong>Ver o Codisseu com PHP, Git, terminal e banco</strong></summary>
+<summary><strong>Ver uma consulta SQLite no mesmo workspace</strong></summary>
 
-![Editor PHP com árvore do projeto, histórico Git e AI Chat](docs/images/codisseu-php-git.jpg)
-
-![Alterações Git, terminal integrado e painel de conexões de banco](docs/images/codisseu-terminal-database.jpg)
+![Console SQL do Codisseu e resultado real de uma consulta SQLite com seis linhas de demonstração](docs/images/codisseu-database.png)
 
 </details>
 
-As fotos foram fornecidas pelo autor e mostram o Codisseu em uso em uma versão
-anterior. A interface atual pode ter diferenças. [Origem das imagens](docs/images/README.md).
+As capturas mostram a alpha **v0.1.0-alpha.1** com um projeto de demonstração e
+dados fictícios. Foram geradas pelo próprio aplicativo, sem a barra do sistema
+operacional. [Origem das imagens](docs/images/README.md).
 
 ## Primeiro projeto
 

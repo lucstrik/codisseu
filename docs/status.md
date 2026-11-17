@@ -1,3 +1,25 @@
+# Capturas de produto sem desktop — 17/11/2026
+
+Nova apresentação solicitada pelo autor: imagens somente do Codisseu, sem o
+painel do sistema operacional. Geradas duas capturas reais pelo próprio
+renderer da alpha pública v0.1.0-alpha.1 core (`--capture`), ELF SHA
+cc28c8f87daf7654a3c8844a3cb75a3286dbe4d431c5819c0506a7ed84e0e9fd.
+PNG1920×1200/escala1.5, sem recorte, recompressão ou edição de pixels.
+
+Projeto codisseu-demo e perfil separados, em display Xvfb autenticado. Capturas
+PHP e consulta SQLite com seis linhas reais de dados sintéticos; dois processos
+encerraram0; display, cookie e diretório XDG_RUNTIME temporários foram limpos.
+O perfil de demonstração permanece somente nas evidências locais.
+Instalação/perfil normais preservados; não houve rebuild ou alteração de código
+nativo. Verificação de SHA/PNG/dimensões/metadados/resultado SQL aprovada.
+
+Arquivos: docs/images/{codisseu-workspace,codisseu-database}.png, procedência
+em docs/images/README.md, README principal, website/assets/codisseu-workspace.png,
+website/index.html (alt, legenda, dimensões e metadados sociais/JSON-LD),
+website/README.md e docs/website-contract.md/status.md. JPGs antigos permanecem
+como histórico; deixaram de ser exibidos no README/site. Fonte e pixels das
+novas capturas são rastreáveis. Publicação segue PR, CI e Pages.
+
 # Página pública no GitHub Pages — 17/11/2026
 
 M7, apresentação do projeto. Página única em `website/`, com HTML/CSS/JavaScript

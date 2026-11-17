@@ -25,9 +25,12 @@ exibir a página.
 - Logo: cópia dos ícones fornecidos pelo autor, já presentes em `assets/icons/`;
   procedência original em `assets/icons/provenance.json`. O autor pediu a página
   pública do próprio projeto nesta sessão. Nenhum redesenho do logo.
-- Foto: cópia sem alteração de `docs/images/codisseu-javascript-ai.jpg`,
-  fornecida e autorizada pelo autor para a apresentação pública do Codisseu. Mostra uma versão anterior;
-  o texto visível informa isso. Origem em `docs/images/README.md`.
+- Captura: cópia sem alteração de `docs/images/codisseu-workspace.png`, gerada
+  em 17/11/2026 pelo próprio renderer do Codisseu (`--capture`), com o binário
+  da alpha pública v0.1.0-alpha.1 core. Apenas a área cliente, sem painel do
+  sistema, recorte ou recompressão. Projeto de demonstração sintético e perfil
+  isolado. Resolução 1920×1200, escala 1.5. Procedência e hashes completos em
+  `docs/images/README.md`. Substituição autorizada expressamente pelo autor.
 - Inter: subset latino WOFF2 de `reference/public/fonts/InterVariable.ttf`,
   convertido com fontTools (fonttools[woff] em contêiner Python oficial isolado).
   Inclui português, pontuação e setas, preservando o eixo variável.
