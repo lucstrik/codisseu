@@ -47,7 +47,7 @@ jobs:
           python3 tools/build_deb.py --core-binary target/release/codisseu --notices artifacts/ci-notices --output dist --version 0.1.0~alpha.1 --maintainer 'Lucas Torres <18267941+lucstrik@users.noreply.github.com>'
           python3 tools/verify_deb.py --package dist/codisseu_0.1.0~alpha.1_amd64.deb --output artifacts/ci-deb-check
       - name: Guardar instalador e checksum
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: codisseu-linux-amd64
           path: |
