@@ -49,3 +49,7 @@ como histórico documentado; o site não deve continuar referenciando-as.
 Conferir PNG/dimensões, origem e hashes, texto alternativo/legenda, imagem de
 compartilhamento, layout no site e bytes publicados. Captura de sintaxe/editor
 não comprova novos recursos semânticos, providers ou outros motores.
+
+O autor também pediu retirar da página a nota “Captura real da alpha · projeto
+de demonstração”. A imagem fica com a legenda de apresentação simples; os
+detalhes de versão/cenário continuam na documentação de procedência e no alt.
