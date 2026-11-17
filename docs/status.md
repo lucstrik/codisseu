@@ -8,7 +8,8 @@ PNG1920×1200/escala1.5, sem recorte, recompressão ou edição de pixels.
 
 Projeto codisseu-demo e perfil separados, em display Xvfb autenticado. Capturas
 PHP e consulta SQLite com seis linhas reais de dados sintéticos; dois processos
-encerraram0 e o display/perfil temporário de execução foi limpo pelo helper.
+encerraram0; display, cookie e diretório XDG_RUNTIME temporários foram limpos.
+O perfil de demonstração permanece somente nas evidências locais.
 Instalação/perfil normais preservados; não houve rebuild ou alteração de código
 nativo. Verificação de SHA/PNG/dimensões/metadados/resultado SQL aprovada.
 
