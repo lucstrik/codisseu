@@ -15,7 +15,7 @@ tempfile.workspace = true
 tokio = { version = "=1.52.3", features = ["rt", "time", "net", "io-util", "sync", "macros"] }
 sqlx-core = { version = "=0.8.6", default-features = false, features = ["_rt-tokio", "_tls-rustls-ring-webpki"] }
 sqlx-postgres = { version = "=0.8.6", features = ["chrono", "bigdecimal", "uuid", "json"] }
-sqlx-mysql = { version = "=0.8.6", features = ["chrono", "bigdecimal", "uuid", "json"] }
+sqlx-mysql = { version = "=0.9.0", features = ["chrono", "bigdecimal", "uuid", "json"] }
 sqlparser = "=0.59.0"
 futures-util = "0.3"
 mongodb = "=3.7.0"
