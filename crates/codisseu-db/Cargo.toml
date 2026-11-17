@@ -20,7 +20,7 @@ sqlparser = "=0.59.0"
 futures-util = "0.3"
 mongodb = "=3.7.0"
 keyring = { version = "=3.6.3", default-features = false, features = ["async-secret-service", "tokio", "crypto-rust", "apple-native", "windows-native"] }
-sha2 = "=0.10.9"
+sha2 = "=0.11.1"
 zeroize = "=1.9.1"
 rustls-native-certs = "=0.8.5"
 rustls-pki-types = "=1.15.1"

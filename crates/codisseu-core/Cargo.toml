@@ -9,7 +9,7 @@ repository.workspace = true
 [dependencies]
 codisseu-jira.workspace = true
 keyring = { version = "=3.6.3", default-features = false, features = ["async-secret-service", "tokio", "crypto-rust", "apple-native", "windows-native"] }
-sha2 = "=0.10.9"
+sha2 = "=0.11.1"
 zeroize = "=1.9.1"
 url = "=2.5.8"
 codisseu-browser.workspace = true
