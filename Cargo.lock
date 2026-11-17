@@ -857,7 +857,7 @@ name = "codisseu-ai"
 version = "0.1.0"
 dependencies = [
  "image",
- "nix 0.28.0",
+ "nix 0.31.3",
  "serde",
  "serde_json",
  "tempfile",
@@ -869,7 +869,7 @@ version = "0.1.0"
 dependencies = [
  "base64 0.22.1",
  "codisseu-runtime",
- "nix 0.28.0",
+ "nix 0.31.3",
  "reqwest",
  "serde",
  "serde_json",
@@ -974,7 +974,7 @@ dependencies = [
 name = "codisseu-git"
 version = "0.1.0"
 dependencies = [
- "nix 0.28.0",
+ "nix 0.31.3",
  "serde",
  "serde_json",
  "sha2",
@@ -1048,7 +1048,7 @@ dependencies = [
  "egui_kittest",
  "epaint",
  "image",
- "nix 0.28.0",
+ "nix 0.31.3",
  "pkg-config",
  "portable-pty",
  "pulldown-cmark",
@@ -3449,9 +3449,9 @@ dependencies = [
 
 [[package]]
 name = "nix"
-version = "0.31.4"
+version = "0.31.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2bc81ce8148d3b4f3274da811f11cdd824ae661ee4ef732cdb229825cf5be7f7"
+checksum = "cf20d2fde8ff38632c426f1165ed7436270b44f199fc55284c38276f9db47c3d"
 dependencies = [
  "bitflags 2.13.2",
  "cfg-if",
@@ -7760,7 +7760,7 @@ dependencies = [
  "flate2",
  "indexmap",
  "memchr",
- "nix 0.31.4",
+ "nix 0.31.3",
  "typed-path",
 ]
 

@@ -11,6 +11,6 @@ image.workspace = true
 tempfile.workspace = true
 serde_json.workspace = true
 [target.'cfg(unix)'.dependencies]
-nix = { version = "=0.28.0", features = ["signal", "process"] }
+nix = { version = "=0.31.3", features = ["signal", "process"] }
 [dev-dependencies]
 tempfile.workspace = true
