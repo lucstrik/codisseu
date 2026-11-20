@@ -9,6 +9,8 @@ mod browser_login;
 mod database_consoles;
 mod debug_integration;
 pub mod docker;
+mod drawing_integration;
+pub mod drawings;
 mod editorconfig;
 mod encoding;
 mod external_files;
@@ -1017,6 +1019,7 @@ pub struct AppService {
     pub js_tests: js_tests::Service,
     pub local_history: local_history::Service,
     pub api: api::ApiService,
+    pub drawings: drawings::DrawingCatalog,
     pub docker: docker::DockerService,
     external_files: external_files::Service,
     pub ai: ai::ChatService,
@@ -1131,6 +1134,7 @@ impl AppService {
             local_history: local_history::Service::new(session_path.with_extension("history")),
             docker: docker::DockerService::default(),
             api: api::ApiService::new(profile_anchor.with_extension("api")),
+            drawings: drawings::DrawingCatalog::new(profile_anchor.with_extension("drawings")),
             ai: ai::ChatService::new(profile_anchor.with_extension("ai.json")),
             git_commit_messages: Default::default(),
             project_files: ProjectFileState::default(),
@@ -1236,6 +1240,7 @@ impl AppService {
             || self.debug_profiles.pending()
             || self.ai.profile_pending()
             || self.api.is_busy()
+            || self.drawings.is_busy()
     }
 
     /// Global jobs that are not cancelled by the Git tool window's own control.
@@ -2764,6 +2769,7 @@ impl AppService {
         changed |= self.browser_devtools_poll();
         changed |= self.browser_inspector_poll();
         changed |= self.browser_library.poll();
+        changed |= self.poll_drawings();
         changed |= self.poll_browser_login();
         if self.python.poll() {
             if let Some(error) = &self.python.error {

@@ -92,6 +92,12 @@ mod api_client_tests;
 mod diagnostics;
 mod docker;
 mod docker_integration;
+mod drawing_canvas;
+mod drawing_icons;
+mod drawing_theme;
+mod drawings;
+#[cfg(test)]
+mod drawings_tests;
 mod git;
 mod git_actions;
 mod git_commit;
@@ -699,6 +705,7 @@ pub struct CodisseuApp {
     new_window_launcher: Option<Box<dyn FnMut() -> Result<(), String>>>,
     jira_ui: jira::JiraUi,
     api_ui: api_client::ApiUi,
+    drawings_ui: drawings::DrawingsUi,
     ai_chat: ai_chat::AiChatUi,
     pub service: AppService,
     tokens: Tokens,
@@ -808,6 +815,7 @@ impl CodisseuApp {
             new_window_launcher: None,
             jira_ui: jira::JiraUi::default(),
             api_ui: api_client::ApiUi::default(),
+            drawings_ui: drawings::DrawingsUi::default(),
             ai_chat: ai_chat::AiChatUi::default(),
             service,
             tokens: Tokens::load(),
@@ -1108,6 +1116,9 @@ impl CodisseuApp {
         if self.exit_when_saved || self.allow_close {
             return;
         }
+        if self.drawings_defer_exit() {
+            return;
+        }
         self.abandon_native_folder();
         self.workspace_switch = Default::default();
         self.service.jira.timesheet.cancel();
@@ -1331,6 +1342,9 @@ impl CodisseuApp {
         if self.service.formatting.is_pending() && consume_exact(ctx, Modifiers::NONE, Key::Escape)
         {
             self.send(Command::CancelFormatting);
+            return;
+        }
+        if self.drawings_shortcuts(ctx) {
             return;
         }
         if self.markdown_shortcuts(ctx) {
@@ -1627,6 +1641,7 @@ impl CodisseuApp {
         self.python_tick(&ctx);
         self.rust_features_tick(&ctx);
         self.api_tick(&ctx);
+        self.drawings_tick();
         self.ai_tick(&ctx);
         self.poll_git_ui();
         self.git_insights_tick(&ctx);
@@ -1870,6 +1885,10 @@ impl CodisseuApp {
                         .resizable(true)
                         .show(ui, |ui| {
                             bounded_panel(ui, |ui| {
+                                if self.drawings_ui.open {
+                                    self.drawings_panel(ui);
+                                    return;
+                                }
                                 if self.api_ui.open {
                                     self.api_panel(ui);
                                     return;
@@ -1902,6 +1921,7 @@ impl CodisseuApp {
                     });
                 self.finish_shell_panel(ui, panel.response.rect, egui::Margin::ZERO);
             });
+        self.drawings_flush_commands(&ctx);
         // The editor commits this frame's text input through Edit before Save/Undo
         // use the buffer. Commands within this batch retain their event order.
         for (id, action) in std::mem::take(&mut self.document_actions) {

@@ -7,6 +7,7 @@ license.workspace = true
 repository.workspace = true
 
 [dependencies]
+codisseu-draw.workspace = true
 codisseu-jira.workspace = true
 keyring = { version = "=3.6.3", default-features = false, features = ["async-secret-service", "tokio", "crypto-rust", "apple-native", "windows-native"] }
 sha2 = "=0.10.9"

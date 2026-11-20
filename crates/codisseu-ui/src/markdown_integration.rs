@@ -54,6 +54,10 @@ impl CodisseuApp {
             return;
         };
         let path = doc.path.clone();
+        if codisseu_core::drawings::is_drawing(&path) {
+            self.drawing_editor(ui, view);
+            return;
+        }
         if !markdown::is_markdown(&path) {
             self.editor(ui, view);
             return;

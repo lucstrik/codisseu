@@ -62,9 +62,17 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "df71c9593a339a7d91208fb6aa61130159d191fc6d679ced20f822804b267905",
-      "source_sha256": "df71c9593a339a7d91208fb6aa61130159d191fc6d679ced20f822804b267905",
-      "bytes": 2455,
+      "sha256": "4ae137a8b9c60d555f627a20d43bbc26736686145b2b5819c11e7cc63ee80a7e",
+      "source_sha256": "4ae137a8b9c60d555f627a20d43bbc26736686145b2b5819c11e7cc63ee80a7e",
+      "bytes": 3044,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": ".github/workflows/pages.yml",
+      "sha256": "20633dbad9dea1c8a95f406e5b01926db3c4fd69c5fe455d37366ca17f19273e",
+      "source_sha256": "20633dbad9dea1c8a95f406e5b01926db3c4fd69c5fe455d37366ca17f19273e",
+      "bytes": 1664,
       "mode": "0o644",
       "transformations": []
     },
@@ -102,17 +110,17 @@
     },
     {
       "path": "Cargo.lock",
-      "sha256": "82115345551efcf7a8523c68de93d11b459cebfc8c0dc07053ad2098045026e1",
-      "source_sha256": "82115345551efcf7a8523c68de93d11b459cebfc8c0dc07053ad2098045026e1",
-      "bytes": 190018,
+      "sha256": "4089ba1449c5a0a04eccc9bb57f746ac53ba559ee8db63310c839175e698f63a",
+      "source_sha256": "4089ba1449c5a0a04eccc9bb57f746ac53ba559ee8db63310c839175e698f63a",
+      "bytes": 190174,
       "mode": "0o644",
       "transformations": []
     },
     {
       "path": "Cargo.toml",
-      "sha256": "58153456ef729dc6a42aad98d8279bb1837f9c16bfc45b726259940d6b155a92",
-      "source_sha256": "58153456ef729dc6a42aad98d8279bb1837f9c16bfc45b726259940d6b155a92",
-      "bytes": 2096,
+      "sha256": "6b6d567346900c7deb3b244dfc59d610239a8cb23ae0b3d530202f596b219434",
+      "source_sha256": "6b6d567346900c7deb3b244dfc59d610239a8cb23ae0b3d530202f596b219434",
+      "bytes": 2170,
       "mode": "0o644",
       "transformations": []
     },
@@ -126,9 +134,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "e0f1c1172cfd1448ccf946d12595c753bb5572d63e0cf0d3a46098c9ae5179e4",
-      "source_sha256": "e0f1c1172cfd1448ccf946d12595c753bb5572d63e0cf0d3a46098c9ae5179e4",
-      "bytes": 10140,
+      "sha256": "d9dbfeb594f7c43e7cceafa6ffe9956c35c7c595e6abccb4d4e51b7fc2c96ffc",
+      "source_sha256": "d9dbfeb594f7c43e7cceafa6ffe9956c35c7c595e6abccb4d4e51b7fc2c96ffc",
+      "bytes": 10389,
       "mode": "0o644",
       "transformations": []
     },
@@ -150,14 +158,14 @@
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
-      "sha256": "6a1025811f148a1fe5c519572627e345f46e6d1d53f0afca0c653fdcb886bf32",
-      "source_sha256": "e01c2189191fc12de02d68e3e8c653cd8f7cc76451cd07a37e145d4664fe0c2d",
-      "bytes": 1454,
+      "sha256": "1eecc97fdb55b3eeb582c091a81854e515bdd9e94d0cfc6d55353a682ddd2964",
+      "source_sha256": "12034b880f2b3701b21f57a3c32fa0061cafa4c7056f16920ab93e89aa6596f0",
+      "bytes": 2099,
       "mode": "0o644",
       "transformations": [
         {
           "kind": "unlink-private-or-unpublished-local-target",
-          "count": 1
+          "count": 2
         }
       ]
     },
@@ -808,9 +816,9 @@
     },
     {
       "path": "crates/codisseu-core/Cargo.toml",
-      "sha256": "5562395ebbcf3723a0995430ea52c98444f9ce8054c4fae0c06137238b12bf83",
-      "source_sha256": "5562395ebbcf3723a0995430ea52c98444f9ce8054c4fae0c06137238b12bf83",
-      "bytes": 1121,
+      "sha256": "87937b078d442355b35bcd8e56af6d03313a0b7ac1042c499a7fcfce94c7d16f",
+      "source_sha256": "87937b078d442355b35bcd8e56af6d03313a0b7ac1042c499a7fcfce94c7d16f",
+      "bytes": 1152,
       "mode": "0o644",
       "transformations": []
     },
@@ -935,6 +943,22 @@
       "transformations": []
     },
     {
+      "path": "crates/codisseu-core/src/drawing_integration.rs",
+      "sha256": "9d8ed513d2bc8f6588f0e5535caa5877bd312cc4ada76729068684b1f7a4fd7f",
+      "source_sha256": "9d8ed513d2bc8f6588f0e5535caa5877bd312cc4ada76729068684b1f7a4fd7f",
+      "bytes": 1888,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-core/src/drawings.rs",
+      "sha256": "cb89a60905ebdaf8fb3d438118f6c13a093dde01291f71a43a93dd8ac9587d4c",
+      "source_sha256": "cb89a60905ebdaf8fb3d438118f6c13a093dde01291f71a43a93dd8ac9587d4c",
+      "bytes": 30054,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
       "path": "crates/codisseu-core/src/editorconfig.rs",
       "sha256": "d1db64625475dc26a4aafc6a8026598bd6a36b8f8965fd9f49140de3a3c1bdc7",
       "source_sha256": "d1db64625475dc26a4aafc6a8026598bd6a36b8f8965fd9f49140de3a3c1bdc7",
@@ -1032,9 +1056,9 @@
     },
     {
       "path": "crates/codisseu-core/src/lib.rs",
-      "sha256": "f69f7b4fd1ac3e81c837d8861ff92ebb28f455751eb94ef90ff10ff992d26554",
-      "source_sha256": "f69f7b4fd1ac3e81c837d8861ff92ebb28f455751eb94ef90ff10ff992d26554",
-      "bytes": 128556,
+      "sha256": "20af6e7643848815055f28dee65241634af11bc9a106fef79f56aedc8f2c0a33",
+      "source_sha256": "20af6e7643848815055f28dee65241634af11bc9a106fef79f56aedc8f2c0a33",
+      "bytes": 128819,
       "mode": "0o644",
       "transformations": []
     },
@@ -1280,9 +1304,9 @@
     },
     {
       "path": "crates/codisseu-core/src/shutdown.rs",
-      "sha256": "75b79b920776a7f52f406de4e55248484b9594ce0ae0457e3445d6d8667dc0c6",
-      "source_sha256": "75b79b920776a7f52f406de4e55248484b9594ce0ae0457e3445d6d8667dc0c6",
-      "bytes": 6091,
+      "sha256": "fcb53474de0feb896b16a972edac1b9e4f4fe78d0dcbc980523ca386169c1c74",
+      "source_sha256": "fcb53474de0feb896b16a972edac1b9e4f4fe78d0dcbc980523ca386169c1c74",
+      "bytes": 6156,
       "mode": "0o644",
       "transformations": []
     },
@@ -1344,9 +1368,9 @@
     },
     {
       "path": "crates/codisseu-core/src/workspace_change.rs",
-      "sha256": "2cca15f86c6628b05dcb9cc2e1d46a9bb7ade0065e09dadd6e5ee2e80636acee",
-      "source_sha256": "2cca15f86c6628b05dcb9cc2e1d46a9bb7ade0065e09dadd6e5ee2e80636acee",
-      "bytes": 3703,
+      "sha256": "fe6ac8f6a9bdc205b1d80bea81ee9e18501519428fbdadec61d0d527171f8240",
+      "source_sha256": "fe6ac8f6a9bdc205b1d80bea81ee9e18501519428fbdadec61d0d527171f8240",
+      "bytes": 3808,
       "mode": "0o644",
       "transformations": []
     },
@@ -1419,6 +1443,14 @@
       "sha256": "acd1e52375132438f658f01c9eede79b7ccc09a0e79c04f86c8fce0148b5a446",
       "source_sha256": "acd1e52375132438f658f01c9eede79b7ccc09a0e79c04f86c8fce0148b5a446",
       "bytes": 25555,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-core/tests/drawings.rs",
+      "sha256": "5d6f2dc29d8aa5a10a1e176127020a423b7da836ab5f18fc930c0963865ca7ad",
+      "source_sha256": "5d6f2dc29d8aa5a10a1e176127020a423b7da836ab5f18fc930c0963865ca7ad",
+      "bytes": 9950,
       "mode": "0o644",
       "transformations": []
     },
@@ -2475,6 +2507,70 @@
       "sha256": "e298e6ec384d4341f32abfedc8a84fdbc8ec16d458bbe759550e7d5ebe8f42af",
       "source_sha256": "e298e6ec384d4341f32abfedc8a84fdbc8ec16d458bbe759550e7d5ebe8f42af",
       "bytes": 8774,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/Cargo.toml",
+      "sha256": "116aa44a41497548c1e6ffe0a332141e81f71bfdb784d96f5015fd1671620a02",
+      "source_sha256": "116aa44a41497548c1e6ffe0a332141e81f71bfdb784d96f5015fd1671620a02",
+      "bytes": 312,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/README.md",
+      "sha256": "73e36b04856d62d111a047edf76a28356d38d8e5823e6bec5879876049200df3",
+      "source_sha256": "73e36b04856d62d111a047edf76a28356d38d8e5823e6bec5879876049200df3",
+      "bytes": 2555,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/src/document.rs",
+      "sha256": "b5a3c9f8347d74af69df601286246c61395085e77cd5246ef891fa304dc2c77e",
+      "source_sha256": "b5a3c9f8347d74af69df601286246c61395085e77cd5246ef891fa304dc2c77e",
+      "bytes": 4429,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/src/lib.rs",
+      "sha256": "7680e5f8d6181e1c6d978b7de7bc22f152e4d194020de098e1dbecc8074c2851",
+      "source_sha256": "7680e5f8d6181e1c6d978b7de7bc22f152e4d194020de098e1dbecc8074c2851",
+      "bytes": 526,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/src/model.rs",
+      "sha256": "5e857102f9a1cb21d88ff5e6e178a9998d3737885dcf6880cf1a8ec4ee839cd3",
+      "source_sha256": "5e857102f9a1cb21d88ff5e6e178a9998d3737885dcf6880cf1a8ec4ee839cd3",
+      "bytes": 11125,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/src/storage.rs",
+      "sha256": "e56bcae727384298cb54a170fba53141e581b5cd74fe8e147891fd2fb54b4604",
+      "source_sha256": "e56bcae727384298cb54a170fba53141e581b5cd74fe8e147891fd2fb54b4604",
+      "bytes": 6006,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/src/svg.rs",
+      "sha256": "c6856edd14e927039483407a631aff45aa89f4dcfcb88235dfd81b4b48a796ad",
+      "source_sha256": "c6856edd14e927039483407a631aff45aa89f4dcfcb88235dfd81b4b48a796ad",
+      "bytes": 8872,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/tests/drawings.rs",
+      "sha256": "54d9ce257d8f6ebd8784234205c4fdfaf3f31c6587cedfd2bef0d17d3b656666",
+      "source_sha256": "54d9ce257d8f6ebd8784234205c4fdfaf3f31c6587cedfd2bef0d17d3b656666",
+      "bytes": 7820,
       "mode": "0o644",
       "transformations": []
     },
@@ -3904,9 +4000,9 @@
     },
     {
       "path": "crates/codisseu-ui/Cargo.toml",
-      "sha256": "3ca3cd2de0b7ee52521543d76284ce989b18d88bbf6cf6920959e4fda971aaab",
-      "source_sha256": "3ca3cd2de0b7ee52521543d76284ce989b18d88bbf6cf6920959e4fda971aaab",
-      "bytes": 1059,
+      "sha256": "f9d4b9e97ab3b05039104eb645adc72dcef8de814e7582993721917db5ba4a68",
+      "source_sha256": "f9d4b9e97ab3b05039104eb645adc72dcef8de814e7582993721917db5ba4a68",
+      "bytes": 1090,
       "mode": "0o644",
       "transformations": []
     },
@@ -3923,6 +4019,286 @@
       "sha256": "60ae96586a022d08dbf04a05cb1296f0ddf5a0d376364014549f404b2ed6aa3d",
       "source_sha256": "60ae96586a022d08dbf04a05cb1296f0ddf5a0d376364014549f404b2ed6aa3d",
       "bytes": 1392,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/excalidraw-symbol.png",
+      "sha256": "8f300926bce8622576d4724c88b8e00f3d3a431f0ac9790202d0f1d048591962",
+      "source_sha256": "8f300926bce8622576d4724c88b8e00f3d3a431f0ac9790202d0f1d048591962",
+      "bytes": 2201,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-arrow.png",
+      "sha256": "ee43b92dec60f2aeb16ff01e51f7e3a9851543c4b60a6dfe7898d39e5b9994a1",
+      "source_sha256": "ee43b92dec60f2aeb16ff01e51f7e3a9851543c4b60a6dfe7898d39e5b9994a1",
+      "bytes": 299,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-back.png",
+      "sha256": "42ebaf24e2dc5bd7cf4105f989f1bd69b7ec3f2cf40c3e1b9f36ebb06e879cb5",
+      "source_sha256": "42ebaf24e2dc5bd7cf4105f989f1bd69b7ec3f2cf40c3e1b9f36ebb06e879cb5",
+      "bytes": 524,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-delete.png",
+      "sha256": "5800a22b731bec3f3976ab4cf308067abdf0b4f5884ce67defdfcd7720a8a1b3",
+      "source_sha256": "5800a22b731bec3f3976ab4cf308067abdf0b4f5884ce67defdfcd7720a8a1b3",
+      "bytes": 907,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-diamond.png",
+      "sha256": "cdc8cc9ce155fd6890cc48c25e0706cbea0f86c240358dcde7660f277584b67c",
+      "source_sha256": "cdc8cc9ce155fd6890cc48c25e0706cbea0f86c240358dcde7660f277584b67c",
+      "bytes": 683,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-duplicate.png",
+      "sha256": "e2323ada8380eff3542057d95fd8f916260fec18dc0701392eef7231fbbf4ea4",
+      "source_sha256": "e2323ada8380eff3542057d95fd8f916260fec18dc0701392eef7231fbbf4ea4",
+      "bytes": 1012,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-ellipse.png",
+      "sha256": "0e5800562a90dbc827a0da231674dce583ae83f90d6843db514e83239a91ea2c",
+      "source_sha256": "0e5800562a90dbc827a0da231674dce583ae83f90d6843db514e83239a91ea2c",
+      "bytes": 1200,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-eraser.png",
+      "sha256": "54772b3a490d937040be9a264f18edc680a6808daae14dacefb7c15c0eae6da4",
+      "source_sha256": "54772b3a490d937040be9a264f18edc680a6808daae14dacefb7c15c0eae6da4",
+      "bytes": 960,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-export.png",
+      "sha256": "68bcf1526c5873168ea4fb3835e6d3f2274bd7d708696b2e046ce7164c7dead1",
+      "source_sha256": "68bcf1526c5873168ea4fb3835e6d3f2274bd7d708696b2e046ce7164c7dead1",
+      "bytes": 692,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-fit.png",
+      "sha256": "b2d66f672526ff91498d6545b5c564a13a82d40d5427056e80d729a0f38bf88e",
+      "source_sha256": "b2d66f672526ff91498d6545b5c564a13a82d40d5427056e80d729a0f38bf88e",
+      "bytes": 632,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-freedraw.png",
+      "sha256": "a2d3d70b2edd62057c534a1def11bff727c77e8c0eeeaa47254888fff2595785",
+      "source_sha256": "a2d3d70b2edd62057c534a1def11bff727c77e8c0eeeaa47254888fff2595785",
+      "bytes": 862,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-front.png",
+      "sha256": "6fd10e55e6cfb7d34e8b3d918b8d5d58582de588b863f014493b77699658f8d0",
+      "source_sha256": "6fd10e55e6cfb7d34e8b3d918b8d5d58582de588b863f014493b77699658f8d0",
+      "bytes": 521,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-grid.png",
+      "sha256": "b9c3a6d5a2aa68bb67d48fa9ac7530dd0daf210078a49526f8293fa61a595c4e",
+      "source_sha256": "b9c3a6d5a2aa68bb67d48fa9ac7530dd0daf210078a49526f8293fa61a595c4e",
+      "bytes": 327,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-hand.png",
+      "sha256": "e7e6d075c49b3ec2f028fb7268681284b4fba011753576d2922e61e28f6c64b4",
+      "source_sha256": "e7e6d075c49b3ec2f028fb7268681284b4fba011753576d2922e61e28f6c64b4",
+      "bytes": 1272,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-help.png",
+      "sha256": "e8f93ddaafff2472c9c24f54ff557941f57511f8eb4d56acc101c4197d04ec01",
+      "source_sha256": "e8f93ddaafff2472c9c24f54ff557941f57511f8eb4d56acc101c4197d04ec01",
+      "bytes": 1496,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-image.png",
+      "sha256": "8fec1490b40b2124342c15516a90c8cf472ee1b47087e7de6f85dc034d07b0a9",
+      "source_sha256": "8fec1490b40b2124342c15516a90c8cf472ee1b47087e7de6f85dc034d07b0a9",
+      "bytes": 1232,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-library.png",
+      "sha256": "92b524df8c5bfcd0d3cc22414070454d3cc1e9e9adef434418cc05044cf06e7d",
+      "source_sha256": "92b524df8c5bfcd0d3cc22414070454d3cc1e9e9adef434418cc05044cf06e7d",
+      "bytes": 663,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-line.png",
+      "sha256": "f7581d729a1201c074bed5faa3c0932a8c2fa33c4c1fff45861a96a6ba1746bd",
+      "source_sha256": "f7581d729a1201c074bed5faa3c0932a8c2fa33c4c1fff45861a96a6ba1746bd",
+      "bytes": 203,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-lock.png",
+      "sha256": "0b7aa6f65e004e2faa5fc1d77b15d98419d70d8cfdf0f1da4b8808bced3b567f",
+      "source_sha256": "0b7aa6f65e004e2faa5fc1d77b15d98419d70d8cfdf0f1da4b8808bced3b567f",
+      "bytes": 1137,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-logo-text.png",
+      "sha256": "aba89e06193d87bbeff3d9c2900e4a2fcaf082c43a778da1689581c3c44132d7",
+      "source_sha256": "aba89e06193d87bbeff3d9c2900e4a2fcaf082c43a778da1689581c3c44132d7",
+      "bytes": 23437,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-logo.png",
+      "sha256": "62c32a6296454347edb6e14c1746df87d0082ffd7e86bf730168e29aeb02d33e",
+      "source_sha256": "62c32a6296454347edb6e14c1746df87d0082ffd7e86bf730168e29aeb02d33e",
+      "bytes": 22625,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-menu.png",
+      "sha256": "3a006bc40774001d1d0c1b2fb9bf1667ba8dbd6ce7523fdd6dfe7848192d5dc0",
+      "source_sha256": "3a006bc40774001d1d0c1b2fb9bf1667ba8dbd6ce7523fdd6dfe7848192d5dc0",
+      "bytes": 196,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-more.png",
+      "sha256": "3f9ce9a1885e0b88c9b5abfd6726af58a44734ff3be91e84920a5ca9f922de86",
+      "source_sha256": "3f9ce9a1885e0b88c9b5abfd6726af58a44734ff3be91e84920a5ca9f922de86",
+      "bytes": 570,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-note.png",
+      "sha256": "d20a83fc72ac84f6eae3dc4ee934bdc9c37227c736aefa079ab3afd8ebbf22ab",
+      "source_sha256": "d20a83fc72ac84f6eae3dc4ee934bdc9c37227c736aefa079ab3afd8ebbf22ab",
+      "bytes": 890,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-open.png",
+      "sha256": "1488269bf33ce478ee27ef4d3fc5f459c5dc8ed37e4a846f9310f603c2265fc6",
+      "source_sha256": "1488269bf33ce478ee27ef4d3fc5f459c5dc8ed37e4a846f9310f603c2265fc6",
+      "bytes": 716,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-rectangle.png",
+      "sha256": "58b3eea1c42a4fb3ef3c9f90e4b7d40eb8e6784e8e95e60b93ffc45feb4d9ab2",
+      "source_sha256": "58b3eea1c42a4fb3ef3c9f90e4b7d40eb8e6784e8e95e60b93ffc45feb4d9ab2",
+      "bytes": 574,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-redo.png",
+      "sha256": "20fffb43cebc5181820a95d3ac3e28cad5726eee1ea5e7ad0b8ce4b47de3f2bc",
+      "source_sha256": "20fffb43cebc5181820a95d3ac3e28cad5726eee1ea5e7ad0b8ce4b47de3f2bc",
+      "bytes": 627,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-save.png",
+      "sha256": "2887389a71fcd188ee7296eba7a6d41ff652879a0f52c9c11c9a1f1f699c04ed",
+      "source_sha256": "2887389a71fcd188ee7296eba7a6d41ff652879a0f52c9c11c9a1f1f699c04ed",
+      "bytes": 765,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-select.png",
+      "sha256": "51fd31f6da659b6212b97d8e4057579857fe4feb20990fe9c9f2446bf6ed3a87",
+      "source_sha256": "51fd31f6da659b6212b97d8e4057579857fe4feb20990fe9c9f2446bf6ed3a87",
+      "bytes": 999,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-source.png",
+      "sha256": "e981d0eb1d040ddae4840c393177c1679a6df70b2cb982d9b125c594b0f23652",
+      "source_sha256": "e981d0eb1d040ddae4840c393177c1679a6df70b2cb982d9b125c594b0f23652",
+      "bytes": 683,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-text.png",
+      "sha256": "5b712e99a78628bf46bdc75e8d0bb63423733082e86b6c11f09044653a385e26",
+      "source_sha256": "5b712e99a78628bf46bdc75e8d0bb63423733082e86b6c11f09044653a385e26",
+      "bytes": 1097,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-undo.png",
+      "sha256": "d19bb3d3e77fa96e36d27d99baf1713aaf3ee4a618ceae5af1a6b05b43776ec9",
+      "source_sha256": "d19bb3d3e77fa96e36d27d99baf1713aaf3ee4a618ceae5af1a6b05b43776ec9",
+      "bytes": 632,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-unlock.png",
+      "sha256": "ad3710762d6731e06963feb822a0c2a9c1970c7c6b43f35be1a9013087d4c44a",
+      "source_sha256": "ad3710762d6731e06963feb822a0c2a9c1970c7c6b43f35be1a9013087d4c44a",
+      "bytes": 1194,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-zoom-in.png",
+      "sha256": "889dc8dd334fff2ede798d7a301f66bbd549c8e215d5d68a1522956af887ebd4",
+      "source_sha256": "889dc8dd334fff2ede798d7a301f66bbd549c8e215d5d68a1522956af887ebd4",
+      "bytes": 305,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/assets/excalidraw/toolbar-zoom-out.png",
+      "sha256": "29f5a8946e5fc0757abc891de427fbe6dedbd1bd9f4dbda5d4e3a2c9cde43144",
+      "source_sha256": "29f5a8946e5fc0757abc891de427fbe6dedbd1bd9f4dbda5d4e3a2c9cde43144",
+      "bytes": 172,
       "mode": "0o644",
       "transformations": []
     },
@@ -4960,9 +5336,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/components.rs",
-      "sha256": "af07f6f5e8d31d85db34c6ce84714daa0da64e19911317c81e1807efc531ed24",
-      "source_sha256": "af07f6f5e8d31d85db34c6ce84714daa0da64e19911317c81e1807efc531ed24",
-      "bytes": 53602,
+      "sha256": "e3da1685701304ebfaa924ac5d4d572517af8364f43081c334c47d7c91b5249f",
+      "source_sha256": "e3da1685701304ebfaa924ac5d4d572517af8364f43081c334c47d7c91b5249f",
+      "bytes": 54394,
       "mode": "0o644",
       "transformations": []
     },
@@ -5197,9 +5573,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/document_icons.rs",
-      "sha256": "2ec5f0b13a12e0d0293191331854d76ce42759d75e6b080d8d6709a59cc64c41",
-      "source_sha256": "2ec5f0b13a12e0d0293191331854d76ce42759d75e6b080d8d6709a59cc64c41",
-      "bytes": 16430,
+      "sha256": "ccaf91d0511282c3d75f922f17bfcfec7ac90cf8151a5e1c4691a904dff3c57f",
+      "source_sha256": "ccaf91d0511282c3d75f922f17bfcfec7ac90cf8151a5e1c4691a904dff3c57f",
+      "bytes": 16601,
       "mode": "0o644",
       "transformations": []
     },
@@ -5208,6 +5584,54 @@
       "sha256": "8583a52fb699c5e8d84892be4ce71afa1260b4e9d47574e9843c5e0b9d60b6b0",
       "source_sha256": "8583a52fb699c5e8d84892be4ce71afa1260b4e9d47574e9843c5e0b9d60b6b0",
       "bytes": 26346,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/src/drawing_canvas.rs",
+      "sha256": "5816b63def4669b2b52e6038b086024ba60473d3c90cd86749ecf2bc53f0f127",
+      "source_sha256": "5816b63def4669b2b52e6038b086024ba60473d3c90cd86749ecf2bc53f0f127",
+      "bytes": 79030,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/src/drawing_canvas_tests.rs",
+      "sha256": "4b64f2f9f5fbf3b8d142da406ef6bdfd0e6145aed3ca5fb7ba9514ee3d1a0bce",
+      "source_sha256": "4b64f2f9f5fbf3b8d142da406ef6bdfd0e6145aed3ca5fb7ba9514ee3d1a0bce",
+      "bytes": 12503,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/src/drawing_icons.rs",
+      "sha256": "360fe48e5f340a689ba6611fde54564abb346aa048059ffed888045f22f3769c",
+      "source_sha256": "360fe48e5f340a689ba6611fde54564abb346aa048059ffed888045f22f3769c",
+      "bytes": 5160,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/src/drawing_theme.rs",
+      "sha256": "3350fcf15ae5517bf5b26bde22d5873eb7a8556cc9718d0e929180dea46490ad",
+      "source_sha256": "3350fcf15ae5517bf5b26bde22d5873eb7a8556cc9718d0e929180dea46490ad",
+      "bytes": 9770,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/src/drawings.rs",
+      "sha256": "aa7aa6ddfebcf624ddea0dfedfb37f9b844efb964e359a39eebb18d11b6b1678",
+      "source_sha256": "aa7aa6ddfebcf624ddea0dfedfb37f9b844efb964e359a39eebb18d11b6b1678",
+      "bytes": 15488,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/src/drawings_tests.rs",
+      "sha256": "f44cd1d9079f4ce37382411a732814d32dfc08cc1f5510c0aa4a82144bfa5d5a",
+      "source_sha256": "f44cd1d9079f4ce37382411a732814d32dfc08cc1f5510c0aa4a82144bfa5d5a",
+      "bytes": 16960,
       "mode": "0o644",
       "transformations": []
     },
@@ -5469,9 +5893,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/git.rs",
-      "sha256": "940fcd6a868bbd0b7613a486ca72bdab223d78437f5db8eb670183f4b7205c08",
-      "source_sha256": "940fcd6a868bbd0b7613a486ca72bdab223d78437f5db8eb670183f4b7205c08",
-      "bytes": 35702,
+      "sha256": "fb43622a1787aa6023a2451cbbd286309ce9aaab32e3d4fd651585a696623132",
+      "source_sha256": "fb43622a1787aa6023a2451cbbd286309ce9aaab32e3d4fd651585a696623132",
+      "bytes": 35784,
       "mode": "0o644",
       "transformations": []
     },
@@ -5677,9 +6101,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/git_scm.rs",
-      "sha256": "e55ba2f8608b40800b98a7be6b883ef8c950be59604e64c73b9bdf2af51d7b2f",
-      "source_sha256": "e55ba2f8608b40800b98a7be6b883ef8c950be59604e64c73b9bdf2af51d7b2f",
-      "bytes": 90823,
+      "sha256": "eb5b6412975b471f3a2a61f14806515d695591a7b8314624db7203866c1c8849",
+      "source_sha256": "eb5b6412975b471f3a2a61f14806515d695591a7b8314624db7203866c1c8849",
+      "bytes": 90862,
       "mode": "0o644",
       "transformations": []
     },
@@ -5821,9 +6245,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/lib.rs",
-      "sha256": "e78d867273917d0e46b8c5636ad017c7171e664d3586370488cfc8ae23dfb3b0",
-      "source_sha256": "e78d867273917d0e46b8c5636ad017c7171e664d3586370488cfc8ae23dfb3b0",
-      "bytes": 114045,
+      "sha256": "2ac5dd2ad98525573673b1a9893837441f2a873485cc8be92c84241f654b2c91",
+      "source_sha256": "2ac5dd2ad98525573673b1a9893837441f2a873485cc8be92c84241f654b2c91",
+      "bytes": 114661,
       "mode": "0o644",
       "transformations": []
     },
@@ -5837,9 +6261,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/markdown_integration.rs",
-      "sha256": "263786654710956e2d6662c6f446b69806251c1fc75a57ee7fa4bd6af2bc0d4d",
-      "source_sha256": "263786654710956e2d6662c6f446b69806251c1fc75a57ee7fa4bd6af2bc0d4d",
-      "bytes": 8964,
+      "sha256": "2599e78e2de8ac5d9c97f15efa7e036adc2d189d47a08ba85169d5d92f23c1ad",
+      "source_sha256": "2599e78e2de8ac5d9c97f15efa7e036adc2d189d47a08ba85169d5d92f23c1ad",
+      "bytes": 9093,
       "mode": "0o644",
       "transformations": []
     },
@@ -6189,9 +6613,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/shell.rs",
-      "sha256": "241df1016eb6858f8ede82410e3193bcd2f0c5a98919f1e3fc7fc2d705ebdae6",
-      "source_sha256": "241df1016eb6858f8ede82410e3193bcd2f0c5a98919f1e3fc7fc2d705ebdae6",
-      "bytes": 25038,
+      "sha256": "2544b6ddee3f48b3a06aa9ac74442c9d9ee3556ea61b1bd71ed67bc5a44e4525",
+      "source_sha256": "2544b6ddee3f48b3a06aa9ac74442c9d9ee3556ea61b1bd71ed67bc5a44e4525",
+      "bytes": 25994,
       "mode": "0o644",
       "transformations": []
     },
@@ -7055,10 +7479,34 @@
       ]
     },
     {
+      "path": "docs/excalidraw-contract.md",
+      "sha256": "8ac74058c4c8404c3a29ea5b14cd90f6b4594c6e0cc716dc9a05381f638df847",
+      "source_sha256": "8ac74058c4c8404c3a29ea5b14cd90f6b4594c6e0cc716dc9a05381f638df847",
+      "bytes": 5239,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "docs/excalidraw-usage.md",
+      "sha256": "d824b9ab1fc5d7a191516d08914b2fbf1dfa6d6bc7cdd4ff30b93814784e5e66",
+      "source_sha256": "d824b9ab1fc5d7a191516d08914b2fbf1dfa6d6bc7cdd4ff30b93814784e5e66",
+      "bytes": 3239,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
       "path": "docs/images/README.md",
-      "sha256": "fa9438cb390c09b76f35ed7cf70e3a870925a93f8df86d910aba8bacbbc7c5ef",
-      "source_sha256": "fa9438cb390c09b76f35ed7cf70e3a870925a93f8df86d910aba8bacbbc7c5ef",
-      "bytes": 992,
+      "sha256": "4398d325c7cc7869bfb93bb9b4170b7a1c4c6598e0044744fb53e03c43aefbcf",
+      "source_sha256": "4398d325c7cc7869bfb93bb9b4170b7a1c4c6598e0044744fb53e03c43aefbcf",
+      "bytes": 2258,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "docs/images/codisseu-database.png",
+      "sha256": "76d95b5e90f74bd5886e6bd2b6c705526aef354267b09e61edb05ad086ac0040",
+      "source_sha256": "76d95b5e90f74bd5886e6bd2b6c705526aef354267b09e61edb05ad086ac0040",
+      "bytes": 364871,
       "mode": "0o644",
       "transformations": []
     },
@@ -7087,9 +7535,17 @@
       "transformations": []
     },
     {
+      "path": "docs/images/codisseu-workspace.png",
+      "sha256": "feffd9372a386a52e1bfe632914291abc4b8b1c75ee17d34bdcef79f773a88d0",
+      "source_sha256": "feffd9372a386a52e1bfe632914291abc4b8b1c75ee17d34bdcef79f773a88d0",
+      "bytes": 300030,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
       "path": "docs/install-linux.md",
-      "sha256": "d707519de398e285f71de9e0772f26ae03f4d3ec06be977061adae5f05238634",
-      "source_sha256": "0f1834b8674f1211fa9b90944172c6fef40493bd082ec16ba30f0c9ee2dcad5d",
+      "sha256": "59e5115ed4dc7c2b484f240b0501f1be47ed0c84be10b511e2a7e9cd4b926b39",
+      "source_sha256": "3047149deada7c2d2e16f804b879ce9da9a6690aab6f94a01cbb747a6dfcfaa9",
       "bytes": 4215,
       "mode": "0o644",
       "transformations": [
@@ -7280,9 +7736,9 @@
     },
     {
       "path": "docs/public-release-status.md",
-      "sha256": "7f68b1d899c08b0f41127e485c40243b2d7256b61957be75e81b0ba130a8b538",
-      "source_sha256": "7f68b1d899c08b0f41127e485c40243b2d7256b61957be75e81b0ba130a8b538",
-      "bytes": 3910,
+      "sha256": "b1eed605a66490c65f7f61e571e87710c7eebf1e8374a611a1ff1aa46a3d18cf",
+      "source_sha256": "b1eed605a66490c65f7f61e571e87710c7eebf1e8374a611a1ff1aa46a3d18cf",
+      "bytes": 6387,
       "mode": "0o644",
       "transformations": []
     },
@@ -7370,9 +7826,9 @@
     },
     {
       "path": "docs/status.md",
-      "sha256": "7f68b1d899c08b0f41127e485c40243b2d7256b61957be75e81b0ba130a8b538",
+      "sha256": "ebd35150e23e0a6c30022173d9e65d4b413a6fbf397d0902848679cde21addb5",
       "source_sha256": null,
-      "bytes": 3910,
+      "bytes": 9668,
       "mode": "0o644",
       "transformations": [
         {
@@ -18461,6 +18917,342 @@
       "transformations": []
     },
     {
+      "path": "reference/public/excalidraw-icon/LICENSE",
+      "sha256": "1352d204fdb90d5e482c13139d848bc2c9300a9a7de358a0a558a23e72d0d8be",
+      "source_sha256": "1352d204fdb90d5e482c13139d848bc2c9300a9a7de358a0a558a23e72d0d8be",
+      "bytes": 1067,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icon/excalidraw-symbol.svg",
+      "sha256": "a08b25cf5182f19fe6221e3224fb366ae3091d48e9081eddde23c7dac6652ba7",
+      "source_sha256": "a08b25cf5182f19fe6221e3224fb366ae3091d48e9081eddde23c7dac6652ba7",
+      "bytes": 4735,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icon/sources.json",
+      "sha256": "dd8c797feaab7ecc49dd54d6d1bc2c9cb6dae04083a2247a47e4c27efda38244",
+      "source_sha256": "dd8c797feaab7ecc49dd54d6d1bc2c9cb6dae04083a2247a47e4c27efda38244",
+      "bytes": 1613,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/LICENSE",
+      "sha256": "1352d204fdb90d5e482c13139d848bc2c9300a9a7de358a0a558a23e72d0d8be",
+      "source_sha256": "1352d204fdb90d5e482c13139d848bc2c9300a9a7de358a0a558a23e72d0d8be",
+      "bytes": 1067,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/README.md",
+      "sha256": "4f72ec3c047e094f9e52f090b50cc9dc9539defd5f05c0629dc668814f5754d1",
+      "source_sha256": "4f72ec3c047e094f9e52f090b50cc9dc9539defd5f05c0629dc668814f5754d1",
+      "bytes": 1649,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/TABLER-LICENSE",
+      "sha256": "b740a1d46122672da62833e97f7e7c8a13fa85cbc7445b584b297cc00dde93db",
+      "source_sha256": "b740a1d46122672da62833e97f7e7c8a13fa85cbc7445b584b297cc00dde93db",
+      "bytes": 1073,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/arrow.svg",
+      "sha256": "93ecb1229a923d1ff0fc5d2ff7cbb2704f8633f6466e181779832a81e19c493f",
+      "source_sha256": "93ecb1229a923d1ff0fc5d2ff7cbb2704f8633f6466e181779832a81e19c493f",
+      "bytes": 381,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/back.svg",
+      "sha256": "243d3315895cbca084db0e53017dee64794812c1e47ccf7b91499f585063587f",
+      "source_sha256": "243d3315895cbca084db0e53017dee64794812c1e47ccf7b91499f585063587f",
+      "bytes": 396,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/delete.svg",
+      "sha256": "829210df8f3a6889516d0c8c3246848796a882bca93f64d975832af6cd31c9f2",
+      "source_sha256": "829210df8f3a6889516d0c8c3246848796a882bca93f64d975832af6cd31c9f2",
+      "bytes": 419,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/diamond.svg",
+      "sha256": "d007c9da532f6140441aec4ce038a6f4d3078fcb7b0d678bafece0638ea39b6c",
+      "source_sha256": "d007c9da532f6140441aec4ce038a6f4d3078fcb7b0d678bafece0638ea39b6c",
+      "bytes": 423,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/duplicate.svg",
+      "sha256": "af1058a2175650e7f1965029b0a719b1a1f9df7a7a211da4164518b28f548dc9",
+      "source_sha256": "af1058a2175650e7f1965029b0a719b1a1f9df7a7a211da4164518b28f548dc9",
+      "bytes": 645,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/ellipse.svg",
+      "sha256": "8b3547809e0862fa2c06e64e541a427b183eab9fff71787e79517bf3e1e87927",
+      "source_sha256": "8b3547809e0862fa2c06e64e541a427b183eab9fff71787e79517bf3e1e87927",
+      "bytes": 292,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/eraser.svg",
+      "sha256": "bb640cfaa55a86d06db4b4779439f6f2b9e6158a2595d51b3d1bbe31ba6c3b19",
+      "source_sha256": "bb640cfaa55a86d06db4b4779439f6f2b9e6158a2595d51b3d1bbe31ba6c3b19",
+      "bytes": 397,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/export.svg",
+      "sha256": "7823f701b3af32a7e79c174af16a94a83273badfd1c6fde1ff3c13dc1bebd23a",
+      "source_sha256": "7823f701b3af32a7e79c174af16a94a83273badfd1c6fde1ff3c13dc1bebd23a",
+      "bytes": 340,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/fit.svg",
+      "sha256": "10244be4a4dc169b328f6a79b03e20f38259fb03933261bafeff30aca083ffa4",
+      "source_sha256": "10244be4a4dc169b328f6a79b03e20f38259fb03933261bafeff30aca083ffa4",
+      "bytes": 426,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/freedraw.svg",
+      "sha256": "c6bed0dc1e40e6ca2920b696ca5cc6181058459bd55105a58a47e0bd1c4ab1de",
+      "source_sha256": "c6bed0dc1e40e6ca2920b696ca5cc6181058459bd55105a58a47e0bd1c4ab1de",
+      "bytes": 428,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/front.svg",
+      "sha256": "ec362e57df78c348cac612fb07f12ed7260b97a74c74027c5c523e049c7ca94d",
+      "source_sha256": "ec362e57df78c348cac612fb07f12ed7260b97a74c74027c5c523e049c7ca94d",
+      "bytes": 367,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/grid.svg",
+      "sha256": "6500cf13c7ab92e638e8003874b370eb4be839f78bafb5c6ade340a98810d2a8",
+      "source_sha256": "6500cf13c7ab92e638e8003874b370eb4be839f78bafb5c6ade340a98810d2a8",
+      "bytes": 402,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/hand.svg",
+      "sha256": "6095f85467a1028c5307a74199d6517c3c7995a54dacdf513731b77a49422681",
+      "source_sha256": "6095f85467a1028c5307a74199d6517c3c7995a54dacdf513731b77a49422681",
+      "bytes": 644,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/help.svg",
+      "sha256": "34d7d053aba74fa988f3bfe1ce2f8d56afc02eaaf041fe7d79b93ceda093cf0f",
+      "source_sha256": "34d7d053aba74fa988f3bfe1ce2f8d56afc02eaaf041fe7d79b93ceda093cf0f",
+      "bytes": 422,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/image.svg",
+      "sha256": "1384cec7b58c868361f194be2b973bf2d35fb62646b68bbc31df20003f828683",
+      "source_sha256": "1384cec7b58c868361f194be2b973bf2d35fb62646b68bbc31df20003f828683",
+      "bytes": 563,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/library.svg",
+      "sha256": "4325c1aa6ec25347d67118263793f259509ffeee7aebf2770dabf07afff6388c",
+      "source_sha256": "4325c1aa6ec25347d67118263793f259509ffeee7aebf2770dabf07afff6388c",
+      "bytes": 480,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/line.svg",
+      "sha256": "0aad0244cd0dc6bc02bdc655f43eb78860e19a1632740ed2572de6b9a02c883a",
+      "source_sha256": "0aad0244cd0dc6bc02bdc655f43eb78860e19a1632740ed2572de6b9a02c883a",
+      "bytes": 213,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/lock.svg",
+      "sha256": "354d8764080da63f5c51d360a88cc4e11d417ea80b58d9f5f9f9208e631dbec3",
+      "source_sha256": "354d8764080da63f5c51d360a88cc4e11d417ea80b58d9f5f9f9208e631dbec3",
+      "bytes": 522,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/logo-text.svg",
+      "sha256": "ace96098045eb25e5364b999c1eed9068184fc329a5584eff434eced594b4687",
+      "source_sha256": "ace96098045eb25e5364b999c1eed9068184fc329a5584eff434eced594b4687",
+      "bytes": 23949,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/logo.svg",
+      "sha256": "f0991ad6f9f5cf5f4182ee2d1389fdfdf1410b1722d91076a109dbca2b2a6648",
+      "source_sha256": "f0991ad6f9f5cf5f4182ee2d1389fdfdf1410b1722d91076a109dbca2b2a6648",
+      "bytes": 28662,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/menu.svg",
+      "sha256": "85e62daa1998b3431b8dac66f6e707ce3fc0a57e7422afb5e01e28a4b8879853",
+      "source_sha256": "85e62daa1998b3431b8dac66f6e707ce3fc0a57e7422afb5e01e28a4b8879853",
+      "bytes": 398,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/more.svg",
+      "sha256": "53604b83f4bcc2ce0a76b753ede89e1ab56075780c1ed40243fff1296e6a9cea",
+      "source_sha256": "53604b83f4bcc2ce0a76b753ede89e1ab56075780c1ed40243fff1296e6a9cea",
+      "bytes": 384,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/note.svg",
+      "sha256": "14a9c3a18e8b584975a20320a42b568a577c70fc7568f3ca028ee334dea69304",
+      "source_sha256": "14a9c3a18e8b584975a20320a42b568a577c70fc7568f3ca028ee334dea69304",
+      "bytes": 451,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/open.svg",
+      "sha256": "d68ebafc645d35bae5621551cfc9c19797eb620b498e45abee89efaf000d6b98",
+      "source_sha256": "d68ebafc645d35bae5621551cfc9c19797eb620b498e45abee89efaf000d6b98",
+      "bytes": 481,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/rectangle.svg",
+      "sha256": "eb5fa2caf31d536fee240ac892ea4445b30651097081cbf48dc7d8ab6b466dd8",
+      "source_sha256": "eb5fa2caf31d536fee240ac892ea4445b30651097081cbf48dc7d8ab6b466dd8",
+      "bytes": 308,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/redo.svg",
+      "sha256": "5e1022ba51b5a73587fcadef9284914ec73f8233907db7a9e51a6b4d177911cf",
+      "source_sha256": "5e1022ba51b5a73587fcadef9284914ec73f8233907db7a9e51a6b4d177911cf",
+      "bytes": 289,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/save.svg",
+      "sha256": "52ea915a8f3e32a515d1a9a5af52bf5ce143b78a2818fdab37ea0996d01c731f",
+      "source_sha256": "52ea915a8f3e32a515d1a9a5af52bf5ce143b78a2818fdab37ea0996d01c731f",
+      "bytes": 369,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/select.svg",
+      "sha256": "077b7038e93353ad92ea29b6aea3df7e59c758e265d9f440d1f392c252630efe",
+      "source_sha256": "077b7038e93353ad92ea29b6aea3df7e59c758e265d9f440d1f392c252630efe",
+      "bytes": 520,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/source.svg",
+      "sha256": "c26b8b2a20fa92418bd50010ed177ca642e6b5b0e01cdbf9d7c75bae07d0280f",
+      "source_sha256": "c26b8b2a20fa92418bd50010ed177ca642e6b5b0e01cdbf9d7c75bae07d0280f",
+      "bytes": 340,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/sources.json",
+      "sha256": "1810980151a6b10c2fcd45324b464b9d88187a25fd5740e30927a8d7f4074717",
+      "source_sha256": "1810980151a6b10c2fcd45324b464b9d88187a25fd5740e30927a8d7f4074717",
+      "bytes": 30239,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/text.svg",
+      "sha256": "9bd7cfa5b9f2520c5ce87ab07304b41014f67f5b46d230fcf723871b116a04f1",
+      "source_sha256": "9bd7cfa5b9f2520c5ce87ab07304b41014f67f5b46d230fcf723871b116a04f1",
+      "bytes": 488,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/undo.svg",
+      "sha256": "7508354f16d13ddf8e83bb6ce98a3c03db5276e0e7edc76fe195f01ca9deb907",
+      "source_sha256": "7508354f16d13ddf8e83bb6ce98a3c03db5276e0e7edc76fe195f01ca9deb907",
+      "bytes": 286,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/unlock.svg",
+      "sha256": "36b2d97c481cd12fe7f25f1921c7793d523bae6e067ef1fff5744b56f8975f61",
+      "source_sha256": "36b2d97c481cd12fe7f25f1921c7793d523bae6e067ef1fff5744b56f8975f61",
+      "bytes": 1471,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/upstream-jsx.json",
+      "sha256": "4ca235b3e5dfb6b095b1de6768e3fa6bd4f78f412bd1d13187d4929ac43b42fa",
+      "source_sha256": "4ca235b3e5dfb6b095b1de6768e3fa6bd4f78f412bd1d13187d4929ac43b42fa",
+      "bytes": 11965,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/zoom-in.svg",
+      "sha256": "eaaeb81feba65f49b1c76cb8a3a99bf3041957cb6f32424e435553d9ae33b28e",
+      "source_sha256": "eaaeb81feba65f49b1c76cb8a3a99bf3041957cb6f32424e435553d9ae33b28e",
+      "bytes": 230,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icons/zoom-out.svg",
+      "sha256": "1116c90b5d75a0a9764008946236e894371b31a3947dbe5ae67f68e235cd4d23",
+      "source_sha256": "1116c90b5d75a0a9764008946236e894371b31a3947dbe5ae67f68e235cd4d23",
+      "bytes": 206,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
       "path": "reference/public/file-watch-dependencies/inotify-0.11.5/LICENSE",
       "sha256": "7f78b31de4e7a3e2ac8de40e2b409eda313f03637aa62b8416fbde9bdc5ce4c9",
       "source_sha256": "7f78b31de4e7a3e2ac8de40e2b409eda313f03637aa62b8416fbde9bdc5ce4c9",
@@ -21123,8 +21915,8 @@
     },
     {
       "path": "tools/build_deb.py",
-      "sha256": "1f33931a5037c7ce39356e57ac1c346516df5dd6580021249aba946637e6c645",
-      "source_sha256": "1f33931a5037c7ce39356e57ac1c346516df5dd6580021249aba946637e6c645",
+      "sha256": "d1b65f62f1be053884c028b5e9d2171d63b12774f0bfd6a6261ee4d442e76a5b",
+      "source_sha256": "d1b65f62f1be053884c028b5e9d2171d63b12774f0bfd6a6261ee4d442e76a5b",
       "bytes": 14735,
       "mode": "0o644",
       "transformations": []
@@ -21187,9 +21979,9 @@
     },
     {
       "path": "tools/export_public_source.py",
-      "sha256": "2a4a0e0eac1a61dda98f7a40f3e95a75a9d4696f086734f62a6cad20a83a9593",
-      "source_sha256": "2a4a0e0eac1a61dda98f7a40f3e95a75a9d4696f086734f62a6cad20a83a9593",
-      "bytes": 22912,
+      "sha256": "342d934661b889cd7e8cdd9883db9f97a45826308b8b6be294987ff416b80e5c",
+      "source_sha256": "342d934661b889cd7e8cdd9883db9f97a45826308b8b6be294987ff416b80e5c",
+      "bytes": 23055,
       "mode": "0o644",
       "transformations": []
     },
@@ -21310,6 +22102,14 @@
       "sha256": "df192ec29509c90a5972b3e0adeaa2fe5018b36358ff118c6ca1546569961059",
       "source_sha256": "df192ec29509c90a5972b3e0adeaa2fe5018b36358ff118c6ca1546569961059",
       "bytes": 8864,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "tools/native_drawings.py",
+      "sha256": "9570c07c4c5dccf8516c9423b090a6f47e120e1b80e0dfacc4ebea45ae20d2d2",
+      "source_sha256": "9570c07c4c5dccf8516c9423b090a6f47e120e1b80e0dfacc4ebea45ae20d2d2",
+      "bytes": 12691,
       "mode": "0o644",
       "transformations": []
     },
@@ -21455,6 +22255,14 @@
       ]
     },
     {
+      "path": "tools/prepare_excalidraw_icons.py",
+      "sha256": "08577a174844bef50e561edcd588e6c149ea4d69223bab1a71c5014475779381",
+      "source_sha256": "08577a174844bef50e561edcd588e6c149ea4d69223bab1a71c5014475779381",
+      "bytes": 3835,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
       "path": "tools/prepare_ide_icons.py",
       "sha256": "c898c0b12fa01f577d49117e30c5f4511be4d8855d6e224082a8ecd3eed0fe3d",
       "source_sha256": "c898c0b12fa01f577d49117e30c5f4511be4d8855d6e224082a8ecd3eed0fe3d",
@@ -21520,9 +22328,9 @@
     },
     {
       "path": "tools/release_notices.py",
-      "sha256": "cb2d149de48ed97ed7ec8e9e152d1b7ee5574d5930e7796efa24d19ab4ffaae2",
-      "source_sha256": "cb2d149de48ed97ed7ec8e9e152d1b7ee5574d5930e7796efa24d19ab4ffaae2",
-      "bytes": 6642,
+      "sha256": "6ce68670e027c2b23930d518c974657ab049f4b8fa2830010bdab5ec992c530f",
+      "source_sha256": "6ce68670e027c2b23930d518c974657ab049f4b8fa2830010bdab5ec992c530f",
+      "bytes": 6681,
       "mode": "0o644",
       "transformations": []
     },

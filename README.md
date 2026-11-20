@@ -7,7 +7,7 @@
 <p align="center">Código, banco de dados, Git e IA. Tudo no mesmo lugar.</p>
 
 <p align="center">
-  <a href="https://github.com/lucstrik/codisseu/releases/download/v0.1.0-alpha.1/codisseu_0.1.0-alpha.1_amd64.deb">Baixar .deb para Linux</a> ·
+  <a href="https://github.com/lucstrik/codisseu/releases/download/v0.1.0-alpha.2/codisseu_0.1.0-alpha.2_amd64.deb">Baixar .deb para Linux</a> ·
   <a href="https://lucstrik.github.io/codisseu/">Site do projeto</a> ·
   <a href="#instalação">Como instalar</a> ·
   <a href="#o-que-você-vai-encontrar">Recursos</a> ·
@@ -29,14 +29,14 @@ linguagens do projeto. O foco agora é Linux.
 ## Instalação
 
 O pacote `.deb` é para **Linux x86_64 / amd64**. Baixe o arquivo
-`codisseu_0.1.0-alpha.1_amd64.deb` na página de
+`codisseu_0.1.0-alpha.2_amd64.deb` na página de
 [Releases](https://github.com/lucstrik/codisseu/releases), junto com o arquivo
 de checksums da mesma versão.
 
 Na pasta onde você baixou os arquivos, instale com:
 
 ```sh
-sudo apt install './codisseu_0.1.0-alpha.1_amd64.deb'
+sudo apt install './codisseu_0.1.0-alpha.2_amd64.deb'
 ```
 
 Depois, é só procurar **Codisseu** no menu de aplicativos. Pelo terminal:
@@ -102,13 +102,15 @@ Veja o passo a passo de [configuração das ferramentas opcionais](docs/optional
   PHP, JavaScript/TypeScript, Rust e Python, com os runtimes e adaptadores preparados.
 - **AI Chat:** conversas por projeto com os provedores configurados por você.
   O contexto e as permissões ficam visíveis no painel.
+- **Desenhos no projeto:** editor nativo de arquivos `.excalidraw`, com formas,
+  texto, histórico e restauração por projeto. [Como usar](docs/excalidraw-usage.md).
 - **Mais ferramentas no workspace:** cliente HTTP e integração opcional com Jira.
 
 O código também contém a integração de navegador com DevTools. O motor Chromium/CEF
 é separado e **não acompanha este primeiro `.deb`**. Os guias explicam a preparação
 das integrações opcionais.
 
-No `.deb` desta alpha, **edição, terminal, SQLite, cliente HTTP sem scripts, Git
+No `.deb` desta alpha, **edição, desenhos Excalidraw, terminal, SQLite, cliente HTTP sem scripts, Git
 instalado e providers LSP configurados explicitamente** são o ponto de partida.
 Debug, scripts JavaScript do cliente HTTP, formatação PHP e as ferramentas Python
 privadas exigem motores adicionais que ainda não fazem parte desta distribuição

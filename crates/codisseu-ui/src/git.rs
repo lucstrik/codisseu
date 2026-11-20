@@ -441,6 +441,7 @@ impl CodisseuApp {
             self.git_ui.source_control = false;
             self.git_ui.commit_tab = 1;
             self.git_ui.commit_open = true;
+            self.drawings_ui.open = false;
             self.show_project = true;
             self.git_request_stashes();
             return;
@@ -468,6 +469,7 @@ impl CodisseuApp {
         self.git_ui.commit_open = true;
         self.git_ui.focus_commit_tree = true;
         self.git_ui.commit_tab = 0;
+        self.drawings_ui.open = false;
         self.show_project = true;
         self.git_send(GitCommand::Refresh);
     }

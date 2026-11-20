@@ -901,6 +901,7 @@ dependencies = [
  "codisseu-browser",
  "codisseu-db",
  "codisseu-debug",
+ "codisseu-draw",
  "codisseu-editor",
  "codisseu-git",
  "codisseu-jira",
@@ -960,6 +961,16 @@ dependencies = [
  "serde_json",
  "tempfile",
  "tungstenite",
+]
+
+[[package]]
+name = "codisseu-draw"
+version = "0.1.0"
+dependencies = [
+ "libc",
+ "serde",
+ "serde_json",
+ "tempfile",
 ]
 
 [[package]]
@@ -1042,6 +1053,7 @@ dependencies = [
  "base64 0.22.1",
  "cc",
  "codisseu-core",
+ "codisseu-draw",
  "codisseu-editor",
  "eframe",
  "egui",

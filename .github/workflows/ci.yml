@@ -22,6 +22,8 @@ jobs:
     name: Rust e pacote Linux
     runs-on: ubuntu-24.04
     timeout-minutes: 60
+    env:
+      XDG_RUNTIME_DIR: /tmp/codisseu-runtime-${{ github.run_id }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -29,7 +31,9 @@ jobs:
       - name: Preparar bibliotecas de desenvolvimento
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential pkg-config libfreetype-dev libdbus-1-dev libxkbcommon-dev libegl1-mesa-dev libgl1-mesa-dev libx11-dev libwayland-dev python3 dpkg-dev
+          sudo apt-get install -y build-essential pkg-config libfreetype-dev libdbus-1-dev libxkbcommon-dev libegl1-mesa-dev libgl1-mesa-dev mesa-vulkan-drivers libx11-dev libwayland-dev python3 dpkg-dev
+          mkdir -p "$XDG_RUNTIME_DIR"
+          chmod 700 "$XDG_RUNTIME_DIR"
       - name: Preparar Rust fixado no projeto
         run: rustup show active-toolchain
       - name: Conferir formatação
@@ -37,9 +41,15 @@ jobs:
       - name: Compilar o aplicativo
         run: cargo build --release --locked -p codisseu --jobs 2
       - name: Testar editor, sintaxe e recursos da instalação
-        run: cargo test --release --locked -p codisseu-runtime -p codisseu-editor -p codisseu-syntax --lib --jobs 2
+        run: cargo test --release --locked -p codisseu-runtime -p codisseu-editor -p codisseu-syntax -p codisseu-draw --lib --jobs 2
       - name: Testar edição sem runtimes e provider sem resposta
         run: cargo test --release --locked -p codisseu-core --test missing_runtimes --jobs 2 -- --test-threads=1
+      - name: Testar desenhos e isolamento por projeto
+        run: |
+          cargo test --release --locked -p codisseu-draw --test drawings --jobs 2
+          cargo test --release --locked -p codisseu-core --test drawings --jobs 2
+          cargo test --release --locked -p codisseu-core --lib drawings::tests --jobs 2
+          cargo test --release --locked -p codisseu-ui --lib drawing --jobs 2
       - name: Conferir empacotamento e exportação pública
         run: |
           python3 tools/test_deb_package.py
@@ -48,8 +58,8 @@ jobs:
         run: |
           cargo fetch --locked
           python3 tools/release_notices.py --output artifacts/ci-notices
-          python3 tools/build_deb.py --core-binary target/release/codisseu --notices artifacts/ci-notices --output dist --version 0.1.0~alpha.1 --maintainer 'Lucas Torres <18267941+lucstrik@users.noreply.github.com>'
-          python3 tools/verify_deb.py --package dist/codisseu_0.1.0-alpha.1_amd64.deb --output artifacts/ci-deb-check
+          python3 tools/build_deb.py --core-binary target/release/codisseu --notices artifacts/ci-notices --output dist --version 0.1.0~alpha.2 --maintainer 'Lucas Torres <18267941+lucstrik@users.noreply.github.com>'
+          python3 tools/verify_deb.py --package dist/codisseu_0.1.0-alpha.2_amd64.deb --output artifacts/ci-deb-check
       - name: Guardar instalador e checksum
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:

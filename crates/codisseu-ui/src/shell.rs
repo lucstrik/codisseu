@@ -242,7 +242,10 @@ impl CodisseuApp {
                 )
                 .clicked()
                 {
-                    if self.api_ui.open {
+                    if self.drawings_ui.open {
+                        self.drawings_ui.open = false;
+                        self.show_project = true;
+                    } else if self.api_ui.open {
                         self.api_ui.open = false;
                         self.git_ui.commit_open = false;
                         self.docker_ui.open = false;
@@ -304,6 +307,7 @@ impl CodisseuApp {
                         self.show_project = false;
                     } else {
                         self.api_ui.open = false;
+                        self.drawings_ui.open = false;
                         self.docker_ui.open = true;
                         self.git_ui.commit_open = false;
                         self.git_ui.source_control = false;
@@ -330,12 +334,29 @@ impl CodisseuApp {
                     if self.show_project && self.api_ui.open {
                         self.show_project = false;
                     } else {
+                        self.drawings_ui.open = false;
                         self.api_ui.open = true;
                         self.docker_ui.open = false;
                         self.git_ui.commit_open = false;
                         self.git_ui.source_control = false;
                         self.show_project = true;
                     }
+                }
+                if icon_toggle_button(
+                    ui,
+                    Icon::Drawing,
+                    "Desenhos · Excalidraw",
+                    self.show_project && self.drawings_ui.open,
+                    self.tokens.rail_width,
+                )
+                .clicked()
+                {
+                    self.show_project = !(self.show_project && self.drawings_ui.open);
+                    self.drawings_ui.open = self.show_project;
+                    self.api_ui.open = false;
+                    self.docker_ui.open = false;
+                    self.git_ui.commit_open = false;
+                    self.git_ui.source_control = false;
                 }
                 ui.with_layout(egui::Layout::bottom_up(egui::Align::Center), |ui| {
                     ui.add_space(40.);

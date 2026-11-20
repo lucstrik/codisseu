@@ -15,6 +15,17 @@ O fork de `egui-winit` conserva MIT/Apache-2.0 e a descrição da modificação 
 Fontes tipográficas, Codicons e ícones têm avisos próprios, incluindo OFL,
 Ubuntu Font Licence e CC BY 4.0 conforme cada componente.
 
+O símbolo Excalidraw usa a geometria oficial `LogoIcon`, Copyright (c) 2020
+Excalidraw, sob a [licença MIT preservada](reference/public/excalidraw-icon/LICENSE).
+É aplicado em uma única cor, sem fundo, para identificar a ferramenta de desenho.
+A [procedência e os hashes](reference/public/excalidraw-icon/sources.json) registram
+a revisão, a adaptação do SVG e a rasterização usada no aplicativo.
+
+A barra de desenho e o estado vazio também usam geometrias oficiais de
+Excalidraw e Tabler Icons. Os avisos MIT de Excalidraw e de Paweł Kuna,
+os paths de origem e os hashes dos derivados ficam em
+`reference/public/excalidraw-icons`.
+
 Este primeiro `.deb` contém o núcleo do aplicativo. As bibliotecas do sistema
 são dependências instaladas pelo `apt`; não são cópias privadas no pacote.
 O pacote completo de motores usado no desenvolvimento não acompanha esta release.
