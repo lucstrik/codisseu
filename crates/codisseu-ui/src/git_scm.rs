@@ -103,6 +103,7 @@ impl CodisseuApp {
         self.docker_ui.open = false;
         self.git_ui.commit_open = true;
         self.git_ui.source_control = true;
+        self.drawings_ui.open = false;
         self.show_project = true;
         self.git_discover_repositories();
     }

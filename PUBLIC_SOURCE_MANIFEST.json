@@ -62,9 +62,17 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "df71c9593a339a7d91208fb6aa61130159d191fc6d679ced20f822804b267905",
-      "source_sha256": "df71c9593a339a7d91208fb6aa61130159d191fc6d679ced20f822804b267905",
-      "bytes": 2455,
+      "sha256": "1c20e4287fbb843a06067b3643d2db16c23d1a3d99319c83d5ec05681c8efbed",
+      "source_sha256": "1c20e4287fbb843a06067b3643d2db16c23d1a3d99319c83d5ec05681c8efbed",
+      "bytes": 2872,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": ".github/workflows/pages.yml",
+      "sha256": "20633dbad9dea1c8a95f406e5b01926db3c4fd69c5fe455d37366ca17f19273e",
+      "source_sha256": "20633dbad9dea1c8a95f406e5b01926db3c4fd69c5fe455d37366ca17f19273e",
+      "bytes": 1664,
       "mode": "0o644",
       "transformations": []
     },
@@ -102,17 +110,17 @@
     },
     {
       "path": "Cargo.lock",
-      "sha256": "82115345551efcf7a8523c68de93d11b459cebfc8c0dc07053ad2098045026e1",
-      "source_sha256": "82115345551efcf7a8523c68de93d11b459cebfc8c0dc07053ad2098045026e1",
-      "bytes": 190018,
+      "sha256": "4089ba1449c5a0a04eccc9bb57f746ac53ba559ee8db63310c839175e698f63a",
+      "source_sha256": "4089ba1449c5a0a04eccc9bb57f746ac53ba559ee8db63310c839175e698f63a",
+      "bytes": 190174,
       "mode": "0o644",
       "transformations": []
     },
     {
       "path": "Cargo.toml",
-      "sha256": "58153456ef729dc6a42aad98d8279bb1837f9c16bfc45b726259940d6b155a92",
-      "source_sha256": "58153456ef729dc6a42aad98d8279bb1837f9c16bfc45b726259940d6b155a92",
-      "bytes": 2096,
+      "sha256": "6b6d567346900c7deb3b244dfc59d610239a8cb23ae0b3d530202f596b219434",
+      "source_sha256": "6b6d567346900c7deb3b244dfc59d610239a8cb23ae0b3d530202f596b219434",
+      "bytes": 2170,
       "mode": "0o644",
       "transformations": []
     },
@@ -126,9 +134,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "e0f1c1172cfd1448ccf946d12595c753bb5572d63e0cf0d3a46098c9ae5179e4",
-      "source_sha256": "e0f1c1172cfd1448ccf946d12595c753bb5572d63e0cf0d3a46098c9ae5179e4",
-      "bytes": 10140,
+      "sha256": "d9dbfeb594f7c43e7cceafa6ffe9956c35c7c595e6abccb4d4e51b7fc2c96ffc",
+      "source_sha256": "d9dbfeb594f7c43e7cceafa6ffe9956c35c7c595e6abccb4d4e51b7fc2c96ffc",
+      "bytes": 10389,
       "mode": "0o644",
       "transformations": []
     },
@@ -808,9 +816,9 @@
     },
     {
       "path": "crates/codisseu-core/Cargo.toml",
-      "sha256": "5562395ebbcf3723a0995430ea52c98444f9ce8054c4fae0c06137238b12bf83",
-      "source_sha256": "5562395ebbcf3723a0995430ea52c98444f9ce8054c4fae0c06137238b12bf83",
-      "bytes": 1121,
+      "sha256": "87937b078d442355b35bcd8e56af6d03313a0b7ac1042c499a7fcfce94c7d16f",
+      "source_sha256": "87937b078d442355b35bcd8e56af6d03313a0b7ac1042c499a7fcfce94c7d16f",
+      "bytes": 1152,
       "mode": "0o644",
       "transformations": []
     },
@@ -935,6 +943,22 @@
       "transformations": []
     },
     {
+      "path": "crates/codisseu-core/src/drawing_integration.rs",
+      "sha256": "9d8ed513d2bc8f6588f0e5535caa5877bd312cc4ada76729068684b1f7a4fd7f",
+      "source_sha256": "9d8ed513d2bc8f6588f0e5535caa5877bd312cc4ada76729068684b1f7a4fd7f",
+      "bytes": 1888,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-core/src/drawings.rs",
+      "sha256": "cb89a60905ebdaf8fb3d438118f6c13a093dde01291f71a43a93dd8ac9587d4c",
+      "source_sha256": "cb89a60905ebdaf8fb3d438118f6c13a093dde01291f71a43a93dd8ac9587d4c",
+      "bytes": 30054,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
       "path": "crates/codisseu-core/src/editorconfig.rs",
       "sha256": "d1db64625475dc26a4aafc6a8026598bd6a36b8f8965fd9f49140de3a3c1bdc7",
       "source_sha256": "d1db64625475dc26a4aafc6a8026598bd6a36b8f8965fd9f49140de3a3c1bdc7",
@@ -1032,9 +1056,9 @@
     },
     {
       "path": "crates/codisseu-core/src/lib.rs",
-      "sha256": "f69f7b4fd1ac3e81c837d8861ff92ebb28f455751eb94ef90ff10ff992d26554",
-      "source_sha256": "f69f7b4fd1ac3e81c837d8861ff92ebb28f455751eb94ef90ff10ff992d26554",
-      "bytes": 128556,
+      "sha256": "20af6e7643848815055f28dee65241634af11bc9a106fef79f56aedc8f2c0a33",
+      "source_sha256": "20af6e7643848815055f28dee65241634af11bc9a106fef79f56aedc8f2c0a33",
+      "bytes": 128819,
       "mode": "0o644",
       "transformations": []
     },
@@ -1280,9 +1304,9 @@
     },
     {
       "path": "crates/codisseu-core/src/shutdown.rs",
-      "sha256": "75b79b920776a7f52f406de4e55248484b9594ce0ae0457e3445d6d8667dc0c6",
-      "source_sha256": "75b79b920776a7f52f406de4e55248484b9594ce0ae0457e3445d6d8667dc0c6",
-      "bytes": 6091,
+      "sha256": "fcb53474de0feb896b16a972edac1b9e4f4fe78d0dcbc980523ca386169c1c74",
+      "source_sha256": "fcb53474de0feb896b16a972edac1b9e4f4fe78d0dcbc980523ca386169c1c74",
+      "bytes": 6156,
       "mode": "0o644",
       "transformations": []
     },
@@ -1344,9 +1368,9 @@
     },
     {
       "path": "crates/codisseu-core/src/workspace_change.rs",
-      "sha256": "2cca15f86c6628b05dcb9cc2e1d46a9bb7ade0065e09dadd6e5ee2e80636acee",
-      "source_sha256": "2cca15f86c6628b05dcb9cc2e1d46a9bb7ade0065e09dadd6e5ee2e80636acee",
-      "bytes": 3703,
+      "sha256": "fe6ac8f6a9bdc205b1d80bea81ee9e18501519428fbdadec61d0d527171f8240",
+      "source_sha256": "fe6ac8f6a9bdc205b1d80bea81ee9e18501519428fbdadec61d0d527171f8240",
+      "bytes": 3808,
       "mode": "0o644",
       "transformations": []
     },
@@ -1419,6 +1443,14 @@
       "sha256": "acd1e52375132438f658f01c9eede79b7ccc09a0e79c04f86c8fce0148b5a446",
       "source_sha256": "acd1e52375132438f658f01c9eede79b7ccc09a0e79c04f86c8fce0148b5a446",
       "bytes": 25555,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-core/tests/drawings.rs",
+      "sha256": "5d6f2dc29d8aa5a10a1e176127020a423b7da836ab5f18fc930c0963865ca7ad",
+      "source_sha256": "5d6f2dc29d8aa5a10a1e176127020a423b7da836ab5f18fc930c0963865ca7ad",
+      "bytes": 9950,
       "mode": "0o644",
       "transformations": []
     },
@@ -2475,6 +2507,70 @@
       "sha256": "e298e6ec384d4341f32abfedc8a84fdbc8ec16d458bbe759550e7d5ebe8f42af",
       "source_sha256": "e298e6ec384d4341f32abfedc8a84fdbc8ec16d458bbe759550e7d5ebe8f42af",
       "bytes": 8774,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/Cargo.toml",
+      "sha256": "116aa44a41497548c1e6ffe0a332141e81f71bfdb784d96f5015fd1671620a02",
+      "source_sha256": "116aa44a41497548c1e6ffe0a332141e81f71bfdb784d96f5015fd1671620a02",
+      "bytes": 312,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/README.md",
+      "sha256": "6a2b8f388789d49e2d1549c1f9e289b136926b7968849521c07104349fa624d1",
+      "source_sha256": "6a2b8f388789d49e2d1549c1f9e289b136926b7968849521c07104349fa624d1",
+      "bytes": 2404,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/src/document.rs",
+      "sha256": "b5a3c9f8347d74af69df601286246c61395085e77cd5246ef891fa304dc2c77e",
+      "source_sha256": "b5a3c9f8347d74af69df601286246c61395085e77cd5246ef891fa304dc2c77e",
+      "bytes": 4429,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/src/lib.rs",
+      "sha256": "7680e5f8d6181e1c6d978b7de7bc22f152e4d194020de098e1dbecc8074c2851",
+      "source_sha256": "7680e5f8d6181e1c6d978b7de7bc22f152e4d194020de098e1dbecc8074c2851",
+      "bytes": 526,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/src/model.rs",
+      "sha256": "5e857102f9a1cb21d88ff5e6e178a9998d3737885dcf6880cf1a8ec4ee839cd3",
+      "source_sha256": "5e857102f9a1cb21d88ff5e6e178a9998d3737885dcf6880cf1a8ec4ee839cd3",
+      "bytes": 11125,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/src/storage.rs",
+      "sha256": "e56bcae727384298cb54a170fba53141e581b5cd74fe8e147891fd2fb54b4604",
+      "source_sha256": "e56bcae727384298cb54a170fba53141e581b5cd74fe8e147891fd2fb54b4604",
+      "bytes": 6006,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/src/svg.rs",
+      "sha256": "c6856edd14e927039483407a631aff45aa89f4dcfcb88235dfd81b4b48a796ad",
+      "source_sha256": "c6856edd14e927039483407a631aff45aa89f4dcfcb88235dfd81b4b48a796ad",
+      "bytes": 8872,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-draw/tests/drawings.rs",
+      "sha256": "54d9ce257d8f6ebd8784234205c4fdfaf3f31c6587cedfd2bef0d17d3b656666",
+      "source_sha256": "54d9ce257d8f6ebd8784234205c4fdfaf3f31c6587cedfd2bef0d17d3b656666",
+      "bytes": 7820,
       "mode": "0o644",
       "transformations": []
     },
@@ -3904,9 +4000,9 @@
     },
     {
       "path": "crates/codisseu-ui/Cargo.toml",
-      "sha256": "3ca3cd2de0b7ee52521543d76284ce989b18d88bbf6cf6920959e4fda971aaab",
-      "source_sha256": "3ca3cd2de0b7ee52521543d76284ce989b18d88bbf6cf6920959e4fda971aaab",
-      "bytes": 1059,
+      "sha256": "f9d4b9e97ab3b05039104eb645adc72dcef8de814e7582993721917db5ba4a68",
+      "source_sha256": "f9d4b9e97ab3b05039104eb645adc72dcef8de814e7582993721917db5ba4a68",
+      "bytes": 1090,
       "mode": "0o644",
       "transformations": []
     },
@@ -4960,9 +5056,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/components.rs",
-      "sha256": "af07f6f5e8d31d85db34c6ce84714daa0da64e19911317c81e1807efc531ed24",
-      "source_sha256": "af07f6f5e8d31d85db34c6ce84714daa0da64e19911317c81e1807efc531ed24",
-      "bytes": 53602,
+      "sha256": "917fe4bd629d4895e14f5c7f1ba83d752d3098454a301d24a34cfed25152f9bf",
+      "source_sha256": "917fe4bd629d4895e14f5c7f1ba83d752d3098454a301d24a34cfed25152f9bf",
+      "bytes": 54271,
       "mode": "0o644",
       "transformations": []
     },
@@ -5208,6 +5304,38 @@
       "sha256": "8583a52fb699c5e8d84892be4ce71afa1260b4e9d47574e9843c5e0b9d60b6b0",
       "source_sha256": "8583a52fb699c5e8d84892be4ce71afa1260b4e9d47574e9843c5e0b9d60b6b0",
       "bytes": 26346,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/src/drawing_canvas.rs",
+      "sha256": "9ec3eda72d9edeb0705924f1fa42cda4b62cc7b848fd3a4fa42dc40820b3425a",
+      "source_sha256": "9ec3eda72d9edeb0705924f1fa42cda4b62cc7b848fd3a4fa42dc40820b3425a",
+      "bytes": 56035,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/src/drawing_canvas_tests.rs",
+      "sha256": "348fb5ec40266e54e97fe7a90898442d2b101111389817ecc16cb68bc3ae7350",
+      "source_sha256": "348fb5ec40266e54e97fe7a90898442d2b101111389817ecc16cb68bc3ae7350",
+      "bytes": 8186,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/src/drawings.rs",
+      "sha256": "968dacb3e61345ce24606411146f58ce9340c755d0ea9721a71620fa421fd98e",
+      "source_sha256": "968dacb3e61345ce24606411146f58ce9340c755d0ea9721a71620fa421fd98e",
+      "bytes": 10857,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/src/drawings_tests.rs",
+      "sha256": "629f5f09b59d73ab6b56de22bc9d48759cbbc13437d4c0bd0fa305c2f2067827",
+      "source_sha256": "629f5f09b59d73ab6b56de22bc9d48759cbbc13437d4c0bd0fa305c2f2067827",
+      "bytes": 7514,
       "mode": "0o644",
       "transformations": []
     },
@@ -5469,9 +5597,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/git.rs",
-      "sha256": "940fcd6a868bbd0b7613a486ca72bdab223d78437f5db8eb670183f4b7205c08",
-      "source_sha256": "940fcd6a868bbd0b7613a486ca72bdab223d78437f5db8eb670183f4b7205c08",
-      "bytes": 35702,
+      "sha256": "fb43622a1787aa6023a2451cbbd286309ce9aaab32e3d4fd651585a696623132",
+      "source_sha256": "fb43622a1787aa6023a2451cbbd286309ce9aaab32e3d4fd651585a696623132",
+      "bytes": 35784,
       "mode": "0o644",
       "transformations": []
     },
@@ -5677,9 +5805,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/git_scm.rs",
-      "sha256": "e55ba2f8608b40800b98a7be6b883ef8c950be59604e64c73b9bdf2af51d7b2f",
-      "source_sha256": "e55ba2f8608b40800b98a7be6b883ef8c950be59604e64c73b9bdf2af51d7b2f",
-      "bytes": 90823,
+      "sha256": "eb5b6412975b471f3a2a61f14806515d695591a7b8314624db7203866c1c8849",
+      "source_sha256": "eb5b6412975b471f3a2a61f14806515d695591a7b8314624db7203866c1c8849",
+      "bytes": 90862,
       "mode": "0o644",
       "transformations": []
     },
@@ -5821,9 +5949,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/lib.rs",
-      "sha256": "e78d867273917d0e46b8c5636ad017c7171e664d3586370488cfc8ae23dfb3b0",
-      "source_sha256": "e78d867273917d0e46b8c5636ad017c7171e664d3586370488cfc8ae23dfb3b0",
-      "bytes": 114045,
+      "sha256": "6a849f0530b27225a78e850ee67c3ab96d8c25b8c5c1586c28c5e9ff03053c4a",
+      "source_sha256": "6a849f0530b27225a78e850ee67c3ab96d8c25b8c5c1586c28c5e9ff03053c4a",
+      "bytes": 114509,
       "mode": "0o644",
       "transformations": []
     },
@@ -5837,9 +5965,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/markdown_integration.rs",
-      "sha256": "263786654710956e2d6662c6f446b69806251c1fc75a57ee7fa4bd6af2bc0d4d",
-      "source_sha256": "263786654710956e2d6662c6f446b69806251c1fc75a57ee7fa4bd6af2bc0d4d",
-      "bytes": 8964,
+      "sha256": "2599e78e2de8ac5d9c97f15efa7e036adc2d189d47a08ba85169d5d92f23c1ad",
+      "source_sha256": "2599e78e2de8ac5d9c97f15efa7e036adc2d189d47a08ba85169d5d92f23c1ad",
+      "bytes": 9093,
       "mode": "0o644",
       "transformations": []
     },
@@ -6189,9 +6317,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/shell.rs",
-      "sha256": "241df1016eb6858f8ede82410e3193bcd2f0c5a98919f1e3fc7fc2d705ebdae6",
-      "source_sha256": "241df1016eb6858f8ede82410e3193bcd2f0c5a98919f1e3fc7fc2d705ebdae6",
-      "bytes": 25038,
+      "sha256": "2544b6ddee3f48b3a06aa9ac74442c9d9ee3556ea61b1bd71ed67bc5a44e4525",
+      "source_sha256": "2544b6ddee3f48b3a06aa9ac74442c9d9ee3556ea61b1bd71ed67bc5a44e4525",
+      "bytes": 25994,
       "mode": "0o644",
       "transformations": []
     },
@@ -7055,10 +7183,34 @@
       ]
     },
     {
+      "path": "docs/excalidraw-contract.md",
+      "sha256": "6a9fd3d393660185744a56baab14a6728c11e6ee6953b551d6c8118e25edf599",
+      "source_sha256": "6a9fd3d393660185744a56baab14a6728c11e6ee6953b551d6c8118e25edf599",
+      "bytes": 3462,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "docs/excalidraw-usage.md",
+      "sha256": "771f65548b4cf14e61d3e4f7d4e9dd0f734dd5b20ee76e3d12e8572b4d44baf9",
+      "source_sha256": "771f65548b4cf14e61d3e4f7d4e9dd0f734dd5b20ee76e3d12e8572b4d44baf9",
+      "bytes": 2470,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
       "path": "docs/images/README.md",
-      "sha256": "fa9438cb390c09b76f35ed7cf70e3a870925a93f8df86d910aba8bacbbc7c5ef",
-      "source_sha256": "fa9438cb390c09b76f35ed7cf70e3a870925a93f8df86d910aba8bacbbc7c5ef",
-      "bytes": 992,
+      "sha256": "4398d325c7cc7869bfb93bb9b4170b7a1c4c6598e0044744fb53e03c43aefbcf",
+      "source_sha256": "4398d325c7cc7869bfb93bb9b4170b7a1c4c6598e0044744fb53e03c43aefbcf",
+      "bytes": 2258,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "docs/images/codisseu-database.png",
+      "sha256": "76d95b5e90f74bd5886e6bd2b6c705526aef354267b09e61edb05ad086ac0040",
+      "source_sha256": "76d95b5e90f74bd5886e6bd2b6c705526aef354267b09e61edb05ad086ac0040",
+      "bytes": 364871,
       "mode": "0o644",
       "transformations": []
     },
@@ -7087,9 +7239,17 @@
       "transformations": []
     },
     {
+      "path": "docs/images/codisseu-workspace.png",
+      "sha256": "feffd9372a386a52e1bfe632914291abc4b8b1c75ee17d34bdcef79f773a88d0",
+      "source_sha256": "feffd9372a386a52e1bfe632914291abc4b8b1c75ee17d34bdcef79f773a88d0",
+      "bytes": 300030,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
       "path": "docs/install-linux.md",
-      "sha256": "d707519de398e285f71de9e0772f26ae03f4d3ec06be977061adae5f05238634",
-      "source_sha256": "0f1834b8674f1211fa9b90944172c6fef40493bd082ec16ba30f0c9ee2dcad5d",
+      "sha256": "59e5115ed4dc7c2b484f240b0501f1be47ed0c84be10b511e2a7e9cd4b926b39",
+      "source_sha256": "3047149deada7c2d2e16f804b879ce9da9a6690aab6f94a01cbb747a6dfcfaa9",
       "bytes": 4215,
       "mode": "0o644",
       "transformations": [
@@ -7280,9 +7440,9 @@
     },
     {
       "path": "docs/public-release-status.md",
-      "sha256": "7f68b1d899c08b0f41127e485c40243b2d7256b61957be75e81b0ba130a8b538",
-      "source_sha256": "7f68b1d899c08b0f41127e485c40243b2d7256b61957be75e81b0ba130a8b538",
-      "bytes": 3910,
+      "sha256": "3803fa1e4a6102dbf6d372c8afc1b10cb565d1ef3a5dc986251e43677eeb7bf4",
+      "source_sha256": "3803fa1e4a6102dbf6d372c8afc1b10cb565d1ef3a5dc986251e43677eeb7bf4",
+      "bytes": 5873,
       "mode": "0o644",
       "transformations": []
     },
@@ -7370,9 +7530,9 @@
     },
     {
       "path": "docs/status.md",
-      "sha256": "7f68b1d899c08b0f41127e485c40243b2d7256b61957be75e81b0ba130a8b538",
+      "sha256": "4da82b6b9741ab6cd3b8bcb4be68c113ce8ef8d8fe17fc390e58fc12ef188d25",
       "source_sha256": null,
-      "bytes": 3910,
+      "bytes": 9154,
       "mode": "0o644",
       "transformations": [
         {
@@ -21123,8 +21283,8 @@
     },
     {
       "path": "tools/build_deb.py",
-      "sha256": "1f33931a5037c7ce39356e57ac1c346516df5dd6580021249aba946637e6c645",
-      "source_sha256": "1f33931a5037c7ce39356e57ac1c346516df5dd6580021249aba946637e6c645",
+      "sha256": "d1b65f62f1be053884c028b5e9d2171d63b12774f0bfd6a6261ee4d442e76a5b",
+      "source_sha256": "d1b65f62f1be053884c028b5e9d2171d63b12774f0bfd6a6261ee4d442e76a5b",
       "bytes": 14735,
       "mode": "0o644",
       "transformations": []
@@ -21187,9 +21347,9 @@
     },
     {
       "path": "tools/export_public_source.py",
-      "sha256": "2a4a0e0eac1a61dda98f7a40f3e95a75a9d4696f086734f62a6cad20a83a9593",
-      "source_sha256": "2a4a0e0eac1a61dda98f7a40f3e95a75a9d4696f086734f62a6cad20a83a9593",
-      "bytes": 22912,
+      "sha256": "8fba84d5f4d435e2df1a825a72c67b7861bee61ba71e4be5e3f2367f80fcfb6b",
+      "source_sha256": "8fba84d5f4d435e2df1a825a72c67b7861bee61ba71e4be5e3f2367f80fcfb6b",
+      "bytes": 23027,
       "mode": "0o644",
       "transformations": []
     },
@@ -21310,6 +21470,14 @@
       "sha256": "df192ec29509c90a5972b3e0adeaa2fe5018b36358ff118c6ca1546569961059",
       "source_sha256": "df192ec29509c90a5972b3e0adeaa2fe5018b36358ff118c6ca1546569961059",
       "bytes": 8864,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "tools/native_drawings.py",
+      "sha256": "9d24b9d288b4c4dc3063c0ed9b7e827ddc95521f5c4d0123fe13169fd20a82b5",
+      "source_sha256": "9d24b9d288b4c4dc3063c0ed9b7e827ddc95521f5c4d0123fe13169fd20a82b5",
+      "bytes": 12691,
       "mode": "0o644",
       "transformations": []
     },

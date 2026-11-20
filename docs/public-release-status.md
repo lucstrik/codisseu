@@ -1,3 +1,39 @@
+# Codisseu 0.1.0-alpha.2 — desenhos no projeto
+
+Editor nativo Rust/egui de arquivos `.excalidraw` e `.excalidraw.json`, integrado
+às abas e ao histórico do editor. Abra **Desenhos · Excalidraw** no rail esquerdo
+para criar arquivos; arquivos abertos pela árvore também entram no catálogo.
+Reabrir a pasta ou o `.code-workspace` restaura os desenhos registrados
+existentes, mesmo após fechar suas abas. Projetos têm catálogos separados.
+
+Formas, setas, linhas, desenho livre e texto Unicode; seleção/movimento/resize,
+estilos, duplicar/excluir, camadas, pan/zoom, enquadramento, Undo/Redo, salvar,
+fonte JSON e copiar SVG. Não há runtime web nem download para desenhar.
+[Guia](excalidraw-usage.md) e [contrato](excalidraw-contract.md).
+
+O renderer é próprio e compatível com JSON v2; não incorpora a extensão VS Code
+nem o React Excalidraw. Imagens e tipos desconhecidos são preservados com
+indicação na interface; roughness, hachuras, fontes/bindings avançados,
+colaboração e importação de fonte embutida PNG/SVG não têm paridade integral.
+SVG recusa objetos visíveis não suportados.
+
+Validação local desta implementação: 32 testes Rust de desenho/catálogo/core/UI,
+13 regressões de workspace/HTTP/runtimes e 14 testes Python de empacotamento e
+exportação aprovados. Clippy e formatação aprovados. O corpus XTest de debug
+passou 24 verificações em oito janelas X11, escalas 100/125%, com Save/Undo/Redo
+e reabertura A/B/A por perfil comum e sessões distintas. Isso não comprova
+Wayland, outros sistemas ou equivalência integral ao Excalidraw. A release
+publica o instalador com checksum e metadados; o CI obrigatório também reconstrói
+e verifica o pacote.
+
+Requisitos da distribuição core e ferramentas opcionais permanecem descritos
+no [guia Linux](install-linux.md). A edição de desenhos funciona offline e sem
+Node.js, PHP, servidor de linguagem ou conta Excalidraw.
+
+---
+
+## Histórico da primeira alpha
+
 # Codisseu 0.1.0-alpha.1 — Linux
 
 Primeira distribuição pública do núcleo da IDE, sob licença MIT.

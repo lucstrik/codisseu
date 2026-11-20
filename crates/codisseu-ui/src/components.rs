@@ -4,6 +4,7 @@ use eframe::egui::{self, Color32, Pos2, Rect, Response, Stroke, Ui, Vec2};
 #[derive(Clone, Copy)]
 pub(super) enum Icon {
     Clock,
+    Drawing,
     MergeAcceptLeft,
     MergeAcceptRight,
     MergeIgnore,
@@ -95,9 +96,18 @@ pub(super) fn paint_document_icon_with_opacity(
     ui: &Ui,
     rect: Rect,
     name: &str,
-    _tint: Color32,
+    tint: Color32,
     opacity: f32,
 ) {
+    if codisseu_core::drawings::is_drawing(std::path::Path::new(name)) {
+        paint_icon(
+            ui,
+            Rect::from_center_size(rect.center(), Vec2::splat(16.)),
+            Icon::Drawing,
+            tint.gamma_multiply(opacity),
+        );
+        return;
+    }
     document_icons::paint(ui, rect, document_icons::file_asset(name), 16., opacity);
 }
 
@@ -188,6 +198,7 @@ fn public_icon(icon: Icon) -> Option<&'static str> {
         Icon::Next => "next",
         // Original request/response artwork and database-specific fallbacks.
         Icon::Clock
+        | Icon::Drawing
         | Icon::Jira
         | Icon::Api
         | Icon::Browser
@@ -257,6 +268,18 @@ pub(super) fn paint_icon(ui: &Ui, rect: Rect, icon: Icon, tint: Color32) {
         ));
     };
     match icon {
+        Icon::Drawing => {
+            line(&[(2., 4.), (14., 4.), (14., 16.), (2., 16.), (2., 4.)]);
+            line(&[
+                (6., 13.),
+                (8., 9.),
+                (15., 2.),
+                (18., 5.),
+                (11., 12.),
+                (6., 13.),
+            ]);
+            line(&[(13., 4.), (16., 7.)]);
+        }
         Icon::Clock => {
             // Original monochrome clock, following the shared icon box/stroke.
             ui.painter().circle_stroke(p(10., 10.), side * 0.36, stroke);

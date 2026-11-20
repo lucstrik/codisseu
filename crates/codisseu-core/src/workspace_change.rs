@@ -21,6 +21,8 @@ impl AppService {
         let changing = self.workspace_path() != Some(path);
         if self.encoding_pending() || self.rename_stage.is_some() || self.project_files.pending {
             Some(Busy("Aguardando a operação de arquivos terminar"))
+        } else if self.drawings.is_busy() {
+            Some(Busy("Aguardando o catálogo de desenhos"))
         } else if self.remote_db.console_delete_pending() || self.remote_db.console_rename_pending()
         {
             Some(Busy("Aguardando a gravação das consultas"))

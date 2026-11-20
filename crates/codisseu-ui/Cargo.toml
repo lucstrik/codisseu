@@ -12,6 +12,7 @@ tab-lcd = []
 cc = "=1.9.0"
 pkg-config = "=0.3.34"
 [dependencies]
+codisseu-draw.workspace = true
 arboard = { version = "=3.7.0", features = ["wayland-data-control"] }
 base64 = "=0.22.1"
 eframe.workspace = true

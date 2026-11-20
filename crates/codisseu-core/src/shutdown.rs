@@ -59,6 +59,7 @@ impl AppService {
         busy!(self.debug_profiles.pending(), "configurações de debug");
         busy!(self.ai.profile_pending(), "histórico e configurações AI");
         busy!(self.api.is_busy(), "coleções de API");
+        busy!(self.drawings.is_busy(), "catálogo de desenhos");
         pending
     }
 

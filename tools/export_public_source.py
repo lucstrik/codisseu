@@ -50,7 +50,7 @@ db_metadata_fixtures.py db_sql_fixtures.py docker_fixture.py
 grid_inspection_fixtures.py mongo_aggregate_fixture.py mongo_options_fixture.py
 multi_project_mysql_fixture.py query_execution_fixtures.py
 create_git_merge_demo.py verify_transfer_exports.py
-native_smoke.py native_m2.py native_controls.py private_native_run.py
+native_smoke.py native_m2.py native_controls.py private_native_run.py native_drawings.py
 prepare_app_icons.py prepare_ide_icons.py
 """.split())
 TOOL_TREES = (
@@ -71,7 +71,7 @@ m4-database-usage.md m4-data-transfer-contract.md m4-sql-workflow-contract.md
 debugging.md m5-debug-contract.md m5-debug-backend.md
 ai-chat-usage.md ai-chat-concurrency-contract.md ai-chat-access-contract.md
 ai-chat-vscode-contract.md ai-chat-workspace-scope-contract.md
-api-client-usage.md api-client-contract.md browser-usage.md browser-contract.md
+api-client-usage.md api-client-contract.md excalidraw-usage.md excalidraw-contract.md browser-usage.md browser-contract.md
 browser-inspector-contract.md browser-frontend-inspector-contract.md
 jira-usage.md jira-contract.md jira-timesheet-contract.md
 quick-fixes-usage.md quick-fixes-contract.md local-history-usage.md
@@ -85,6 +85,7 @@ DOC_SEEDS = frozenset({
     "architecture.md", "development.md", "optional-tools.md", "install-linux.md",
     "runtime-release-contract.md", "public-release-contract.md", "public-release-status.md", "debian-release-contract.md",
     "contracts/database.md", "contracts/documents.md", "contracts/language.md", "contracts/ui.md",
+    "excalidraw-usage.md", "excalidraw-contract.md",
 })
 EXCLUDED_PARTS = {
     ".git", ".tools", "target", "artifacts", "dist", "node_modules", "__pycache__",

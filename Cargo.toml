@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/codisseu-jira", "crates/codisseu-browser", "crates/codisseu-runtime", "crates/codisseu-api", "apps/codisseu", "crates/codisseu-core", "crates/codisseu-editor", "crates/codisseu-ui", "crates/codisseu-db", "crates/codisseu-language", "crates/codisseu-syntax", "crates/codisseu-git", "crates/codisseu-debug", "crates/codisseu-ai"]
+members = ["crates/codisseu-draw", "crates/codisseu-jira", "crates/codisseu-browser", "crates/codisseu-runtime", "crates/codisseu-api", "apps/codisseu", "crates/codisseu-core", "crates/codisseu-editor", "crates/codisseu-ui", "crates/codisseu-db", "crates/codisseu-language", "crates/codisseu-syntax", "crates/codisseu-git", "crates/codisseu-debug", "crates/codisseu-ai"]
 default-members = ["apps/codisseu"]
 
 [workspace.package]
@@ -11,6 +11,7 @@ license = "MIT"
 repository = "https://github.com/lucstrik/codisseu"
 
 [workspace.dependencies]
+codisseu-draw = { path = "crates/codisseu-draw" }
 codisseu-jira = { path = "crates/codisseu-jira" }
 codisseu-browser = { path = "crates/codisseu-browser" }
 codisseu-runtime = { path = "crates/codisseu-runtime" }
