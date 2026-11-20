@@ -9,6 +9,9 @@ struct State {
     undo: usize,
     redo: usize,
     theme_applied: bool,
+    saves: usize,
+    sources: usize,
+    exports: usize,
 }
 fn harness() -> Harness<'static, State> {
     Harness::builder().with_size([1000., 720.]).build_ui_state(
@@ -21,6 +24,9 @@ fn harness() -> Harness<'static, State> {
             state.commits += usize::from(response.changed);
             state.undo += usize::from(response.undo);
             state.redo += usize::from(response.redo);
+            state.saves += usize::from(response.save);
+            state.sources += usize::from(response.source);
+            state.exports += usize::from(response.copy_svg);
         },
         State::default(),
     )
@@ -41,7 +47,7 @@ fn draw_drag_commits_once_and_native_selection_moves_resizes_duplicates_deletes(
     h.run();
     h.get_by_label(Tool::Rectangle.label()).click();
     h.run();
-    let start = h.state().canvas.canvas_rect.min + egui::vec2(150., 120.);
+    let start = h.state().canvas.canvas_rect.min + egui::vec2(300., 180.);
     drag(&mut h, start, start + egui::vec2(180., 100.));
     assert_eq!(h.state().scene.elements.len(), 1);
     assert_eq!(
@@ -66,6 +72,24 @@ fn draw_drag_commits_once_and_native_selection_moves_resizes_duplicates_deletes(
     drag(&mut h, corner, corner + egui::vec2(40., 30.));
     assert_eq!(h.state().scene.elements[0].width, 220.);
     assert_eq!(h.state().scene.elements[0].height, 130.);
+    if let Some(path) = std::env::var_os("CODISSEU_DRAWING_BEFORE_DUPLICATE_RENDER") {
+        h.render().unwrap().save(path).unwrap();
+    }
+    let duplicate = h.get_by_label("Duplicar").rect();
+    assert_eq!(
+        h.state().canvas.selected.len(),
+        1,
+        "selection before duplicate"
+    );
+    assert!(
+        h.state()
+            .canvas
+            .overlay_rects
+            .iter()
+            .any(|r| r.contains_rect(duplicate)),
+        "button {duplicate:?} outside island {:?}",
+        h.state().canvas.overlay_rects
+    );
     h.get_by_label("Duplicar").click();
     h.run();
     assert_eq!(h.state().scene.elements.len(), 2);
@@ -158,7 +182,7 @@ fn text_editor_applies_unicode_text_and_cancel_does_not_modify_scene() {
         h.state().scene.elements[0].text,
         "Arquitetura café 🦀\nAPI e banco"
     );
-    assert_eq!(h.state().commits, 1);
+    assert_eq!(h.state().commits, 3);
 }
 #[test]
 fn undo_and_redo_request_common_document_history_without_private_stack() {
@@ -211,6 +235,7 @@ fn escape_discards_uncommitted_preview_and_revision_change_closes_text_editor() 
         position: Pos2::ZERO,
         text: "obsolete draft".into(),
         focus: true,
+        original: None,
     });
     h.state_mut().canvas.cancel_interaction();
     assert!(h.state().canvas.text_editor.is_none());
@@ -223,7 +248,7 @@ fn coalesced_final_motion_and_release_use_full_drag_and_canvas_geometry_stays_fi
     h.get_by_label(Tool::Rectangle.label()).click();
     h.run();
     let canvas = h.state().canvas.canvas_rect;
-    let start = canvas.min + egui::vec2(120., 100.);
+    let start = canvas.min + egui::vec2(300., 180.);
     h.hover_at(start);
     h.run();
     h.drag_at(start);
@@ -244,4 +269,115 @@ fn coalesced_final_motion_and_release_use_full_drag_and_canvas_geometry_stays_fi
     assert_eq!(element.width, 200.);
     assert_eq!(element.height, 120.);
     assert_eq!(h.state().commits, 1);
+}
+
+#[test]
+fn locked_tool_repeats_and_eraser_groups_real_deletions_into_one_edit() {
+    let mut h = harness();
+    h.run();
+    h.get_by_label("Manter ferramenta ativa").click();
+    h.run();
+    h.get_by_label(Tool::Rectangle.label()).click();
+    h.run();
+    let origin = h.state().canvas.canvas_rect.min;
+    drag(
+        &mut h,
+        origin + egui::vec2(300., 180.),
+        origin + egui::vec2(400., 260.),
+    );
+    drag(
+        &mut h,
+        origin + egui::vec2(600., 180.),
+        origin + egui::vec2(700., 260.),
+    );
+    assert_eq!(h.state().scene.elements.len(), 2);
+    assert_eq!(h.state().canvas.tool, Tool::Rectangle);
+    assert_eq!(h.state().commits, 2);
+    h.get_by_label(Tool::Eraser.label()).click();
+    h.run();
+    let first = origin + egui::vec2(350., 220.);
+    h.hover_at(first);
+    h.run();
+    h.drag_at(first);
+    h.step();
+    h.hover_at(first + egui::vec2(10., 0.));
+    h.step();
+    let second = origin + egui::vec2(650., 220.);
+    h.hover_at(second);
+    h.step();
+    h.drop_at(second);
+    h.run();
+    assert!(h.state().scene.elements.iter().all(|e| e.is_deleted));
+    assert_eq!(h.state().commits, 3);
+}
+
+#[test]
+fn menu_switches_theme_grid_and_dispatches_file_actions_without_rewriting_authored_colors() {
+    let mut h = harness();
+    h.run();
+    let mut shape = Element::new(ElementKind::Rectangle, 320., 180., 100., 80.);
+    shape.stroke_color = "#1e1e1e".into();
+    h.state_mut().scene.elements.push(shape);
+    h.get_by_label("Menu do desenho").click();
+    h.run();
+    h.get_by_label("Claro").click();
+    h.run();
+    assert_eq!(
+        CanvasTheme::from_scene(&h.state().scene),
+        CanvasTheme::Light
+    );
+    assert_eq!(h.state().scene.elements[0].stroke_color, "#1e1e1e");
+    h.get_by_label("Mostrar grade").click();
+    h.run();
+    assert_eq!(h.state().scene.app_state["codisseuGrid"], true);
+    h.get_by_label("Salvar desenho").click();
+    h.run();
+    assert_eq!(h.state().saves, 1);
+    h.get_by_label("Menu do desenho").click();
+    h.run();
+    h.get_by_label("Código JSON").click();
+    h.run();
+    assert_eq!(h.state().sources, 1);
+    h.get_by_label("Menu do desenho").click();
+    h.run();
+    h.get_by_label("Copiar SVG").click();
+    h.run();
+    assert_eq!(h.state().exports, 1);
+}
+
+#[test]
+fn floating_controls_keep_canvas_bounds_and_inline_save_commits_visible_text() {
+    let mut h = harness();
+    h.run();
+    let canvas = h.state().canvas.canvas_rect;
+    for label in [
+        "Menu do desenho",
+        Tool::Rectangle.label(),
+        "Desfazer",
+        "Enquadrar",
+    ] {
+        let button = h.get_by_label(label).rect();
+        assert!(canvas.contains_rect(button));
+        assert_eq!(button.size(), Vec2::splat(32.));
+    }
+    h.get_by_label(Tool::Text.label()).click();
+    h.run();
+    assert_eq!(h.state().canvas.canvas_rect, canvas);
+    let point = canvas.center();
+    h.hover_at(point);
+    h.drag_at(point);
+    h.drop_at(point);
+    h.run();
+    h.event(egui::Event::Text("Salvo antes de fechar".into()));
+    h.run();
+    assert_eq!(h.state().scene.elements[0].text, "Salvo antes de fechar");
+    assert!(h.state().canvas.text_editor.is_some());
+    h.state_mut().canvas.request_save();
+    h.run();
+    assert_eq!(h.state().saves, 1);
+    assert!(h.state().canvas.text_editor.is_none());
+    assert_eq!(h.state().canvas.canvas_rect, canvas);
+    if let Some(path) = std::env::var_os("CODISSEU_DRAWING_CANVAS_RENDER") {
+        h.render().unwrap().save(path).unwrap();
+    }
 }

@@ -51,7 +51,7 @@ grid_inspection_fixtures.py mongo_aggregate_fixture.py mongo_options_fixture.py
 multi_project_mysql_fixture.py query_execution_fixtures.py
 create_git_merge_demo.py verify_transfer_exports.py
 native_smoke.py native_m2.py native_controls.py private_native_run.py native_drawings.py
-prepare_app_icons.py prepare_ide_icons.py
+prepare_app_icons.py prepare_ide_icons.py prepare_excalidraw_icons.py
 """.split())
 TOOL_TREES = (
     "tools/providers", "tools/browser_notices", "tools/portable_python_notices",

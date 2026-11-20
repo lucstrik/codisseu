@@ -22,6 +22,8 @@ jobs:
     name: Rust e pacote Linux
     runs-on: ubuntu-24.04
     timeout-minutes: 60
+    env:
+      XDG_RUNTIME_DIR: ${{ runner.temp }}/codisseu-runtime
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -29,7 +31,9 @@ jobs:
       - name: Preparar bibliotecas de desenvolvimento
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential pkg-config libfreetype-dev libdbus-1-dev libxkbcommon-dev libegl1-mesa-dev libgl1-mesa-dev libx11-dev libwayland-dev python3 dpkg-dev
+          sudo apt-get install -y build-essential pkg-config libfreetype-dev libdbus-1-dev libxkbcommon-dev libegl1-mesa-dev libgl1-mesa-dev mesa-vulkan-drivers libx11-dev libwayland-dev python3 dpkg-dev
+          mkdir -p "$XDG_RUNTIME_DIR"
+          chmod 700 "$XDG_RUNTIME_DIR"
       - name: Preparar Rust fixado no projeto
         run: rustup show active-toolchain
       - name: Conferir formatação

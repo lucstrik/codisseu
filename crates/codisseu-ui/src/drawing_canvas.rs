@@ -1,6 +1,8 @@
 //! Native drawing surface for the interoperable Excalidraw scene format.
 //! Gestures update the preview; only completed edits are returned to the common
 //! document service, which owns undo, persistence and external-file conflicts.
+use crate::drawing_theme::{CanvasTheme, ThemePalette};
+use crate::scrollbars::ScrollAreaExt as _;
 use codisseu_draw::{Element, ElementKind, Scene};
 use egui::{
     Align2, Color32, FontId, Key, Modifiers, PointerButton, Pos2, Rect, Sense, Stroke, Ui, Vec2,
@@ -19,6 +21,7 @@ pub(super) enum Tool {
     Line,
     Freedraw,
     Text,
+    Eraser,
 }
 impl Tool {
     fn label(self) -> &'static str {
@@ -32,7 +35,36 @@ impl Tool {
             Self::Line => "Linha · L ou 7",
             Self::Freedraw => "Desenho livre · P ou 8",
             Self::Text => "Texto · T ou 9",
+            Self::Eraser => "Apagar · E",
         }
+    }
+    fn icon(self) -> &'static str {
+        match self {
+            Self::Select => "select",
+            Self::Hand => "hand",
+            Self::Rectangle => "rectangle",
+            Self::Ellipse => "ellipse",
+            Self::Diamond => "diamond",
+            Self::Arrow => "arrow",
+            Self::Line => "line",
+            Self::Freedraw => "freedraw",
+            Self::Text => "text",
+            Self::Eraser => "eraser",
+        }
+    }
+    fn shortcut(self) -> Option<&'static str> {
+        Some(match self {
+            Self::Select => "V",
+            Self::Hand => "H",
+            Self::Rectangle => "R",
+            Self::Ellipse => "O",
+            Self::Diamond => "D",
+            Self::Arrow => "A",
+            Self::Line => "L",
+            Self::Freedraw => "P",
+            Self::Text => "T",
+            Self::Eraser => "E",
+        })
     }
     fn kind(self) -> Option<ElementKind> {
         Some(match self {
@@ -43,7 +75,7 @@ impl Tool {
             Self::Line => ElementKind::Line,
             Self::Freedraw => ElementKind::Freedraw,
             Self::Text => ElementKind::Text,
-            Self::Select | Self::Hand => return None,
+            Self::Select | Self::Hand | Self::Eraser => return None,
         })
     }
 }
@@ -54,9 +86,15 @@ pub(super) struct CanvasResponse {
     pub changed: bool,
     pub undo: bool,
     pub redo: bool,
+    pub save: bool,
+    pub source: bool,
+    pub copy_svg: bool,
 }
 
 enum Gesture {
+    Erase {
+        originals: Vec<Element>,
+    },
     Pan {
         origin: Vec2,
         start: Pos2,
@@ -86,6 +124,7 @@ struct TextEditor {
     position: Pos2,
     text: String,
     focus: bool,
+    original: Option<Element>,
 }
 
 pub(super) struct DrawingCanvasUi {
@@ -103,6 +142,12 @@ pub(super) struct DrawingCanvasUi {
     /// Kept for deterministic interaction tests and native test adapters.
     pub canvas_rect: Rect,
     last_pointer: Option<Pos2>,
+    locked: bool,
+    menu_open: bool,
+    opacity: f64,
+    theme: CanvasTheme,
+    overlay_rects: Vec<Rect>,
+    save_requested: bool,
 }
 impl Default for DrawingCanvasUi {
     fn default() -> Self {
@@ -120,6 +165,12 @@ impl Default for DrawingCanvasUi {
             fit_pending: true,
             canvas_rect: Rect::NOTHING,
             last_pointer: None,
+            locked: false,
+            menu_open: false,
+            opacity: 100.,
+            theme: CanvasTheme::default(),
+            overlay_rects: Vec::new(),
+            save_requested: false,
         }
     }
 }
@@ -131,14 +182,18 @@ impl DrawingCanvasUi {
         self.gesture = None;
         self.text_editor = None;
         self.last_pointer = None;
+        self.menu_open = false;
+    }
+
+    pub(super) fn request_save(&mut self) {
+        self.save_requested = true;
     }
 
     pub(super) fn show(&mut self, ui: &mut Ui, scene: &mut Scene) -> CanvasResponse {
         let mut result = CanvasResponse::default();
+        self.theme = CanvasTheme::from_scene(scene);
         self.selected
             .retain(|id| scene.elements.iter().any(|e| &e.id == id && !e.is_deleted));
-        self.toolbar(ui, &mut result);
-        self.properties(ui, scene, &mut result);
         let (rect, response) = ui.allocate_exact_size(
             ui.available_size().max(egui::vec2(1., 80.)),
             Sense::click_and_drag(),
@@ -155,223 +210,477 @@ impl DrawingCanvasUi {
             self.fit(scene, rect);
             self.fit_pending = false;
         }
+        self.overlay_rects.clear();
+        let mut chrome = ui.new_child(
+            egui::UiBuilder::new()
+                .id_salt("drawing.chrome")
+                .max_rect(rect),
+        );
+        chrome.set_clip_rect(rect.intersect(ui.clip_rect()));
+        let palette = self.theme.palette(ui);
+        self.toolbar(&chrome, rect, &palette);
+        self.menu(&chrome, scene, rect, &palette, &mut result);
+        self.footer(&chrome, rect, &palette, &mut result);
+        if !self.menu_open && (self.tool.kind().is_some() || !self.selected.is_empty()) {
+            self.properties(&chrome, scene, rect, &palette, &mut result);
+        }
         if !ui.is_enabled() {
             self.cancel_gesture(scene);
             self.text_editor = None;
-            self.paint(ui, scene, rect);
-            return result;
-        }
-        let editor_open = self.text_editor.is_some();
-        if !editor_open {
+        } else if self.text_editor.is_none() {
+            let pointer = ui.input(|i| i.pointer.interact_pos());
+            let blocked = pointer.is_some_and(|p| self.overlay_rects.iter().any(|r| r.contains(p)));
             if self.gesture.is_some()
                 && ui.input_mut(|i| i.consume_key(Modifiers::NONE, Key::Escape))
             {
                 self.cancel_gesture(scene);
             }
-            if response.clicked() || response.drag_started() {
+            if !blocked && (response.clicked() || response.drag_started()) {
                 response.request_focus();
+                self.menu_open = false;
             }
-            if response.has_focus() {
+            if response.has_focus() && !self.menu_open {
                 self.keyboard(ui, scene, &mut result);
             }
-            if response.hovered() {
-                let (scroll, zoom, pointer) =
-                    ui.input(|i| (i.smooth_scroll_delta, i.zoom_delta(), i.pointer.hover_pos()));
+            if response.hovered() && !blocked {
+                let (scroll, zoom) = ui.input(|i| (i.smooth_scroll_delta, i.zoom_delta()));
                 if (zoom - 1.).abs() > 0.001 {
                     self.zoom_at(zoom, pointer.unwrap_or(rect.center()), rect);
                 } else if scroll != Vec2::ZERO {
                     self.pan += scroll;
                 }
             }
-            self.pointer(ui, scene, rect, &response, &mut result);
+            if !blocked || self.gesture.is_some() {
+                self.pointer(ui, scene, rect, &response, &mut result);
+            }
+            if response.hovered() && !blocked {
+                let hand = self.tool == Tool::Hand || ui.input(|i| i.key_down(Key::Space));
+                ui.ctx().set_cursor_icon(if hand {
+                    egui::CursorIcon::Grab
+                } else if self.tool == Tool::Select {
+                    egui::CursorIcon::Default
+                } else {
+                    egui::CursorIcon::Crosshair
+                });
+            }
         }
         self.paint(ui, scene, rect);
-        if response.hovered() {
-            let hand = self.tool == Tool::Hand || ui.input(|i| i.key_down(Key::Space));
-            ui.ctx().set_cursor_icon(if hand {
-                egui::CursorIcon::Grab
-            } else if self.tool == Tool::Select {
-                egui::CursorIcon::Default
-            } else {
-                egui::CursorIcon::Crosshair
-            });
-        }
-        self.text_window(ui, scene, &mut result);
+        self.text_window(&chrome, scene, &mut result);
         result
     }
 
-    fn toolbar(&mut self, ui: &mut Ui, result: &mut CanvasResponse) {
-        egui::Frame::NONE
-            .inner_margin(egui::Margin::symmetric(8, 6))
-            .show(ui, |ui| {
-                egui::ScrollArea::horizontal()
-                    .id_salt("drawing.tools")
-                    .show(ui, |ui| {
-                        ui.horizontal(|ui| {
-                            ui.spacing_mut().button_padding = egui::vec2(10., 6.);
-                            for tool in [
-                                Tool::Select,
-                                Tool::Hand,
-                                Tool::Rectangle,
-                                Tool::Ellipse,
-                                Tool::Diamond,
-                                Tool::Arrow,
-                                Tool::Line,
-                                Tool::Freedraw,
-                                Tool::Text,
-                            ] {
-                                let response = ui
-                                    .push_id(tool.label(), |ui| {
-                                        ui.add(
-                                            egui::Button::new(" ")
-                                                .selected(self.tool == tool)
-                                                .min_size(egui::vec2(34., 30.)),
-                                        )
-                                    })
-                                    .inner;
-                                response.widget_info(|| {
-                                    egui::WidgetInfo::selected(
-                                        egui::accesskit::Role::Button,
-                                        ui.is_enabled(),
-                                        self.tool == tool,
-                                        tool.label(),
-                                    )
-                                });
-                                paint_tool(
-                                    ui.painter(),
-                                    response.rect.shrink(8.),
-                                    tool,
-                                    ui.visuals().text_color(),
-                                );
-                                if response.clicked() {
-                                    self.tool = tool;
-                                }
-                                response.on_hover_text(tool.label());
-                            }
-                            ui.separator();
-                            if ui.button("Desfazer").clicked() {
-                                result.undo = true;
-                            }
-                            if ui.button("Refazer").clicked() {
-                                result.redo = true;
-                            }
-                            ui.separator();
-                            if ui.button("−").on_hover_text("Diminuir zoom").clicked() {
-                                self.zoom_at(0.8, self.canvas_rect.center(), self.canvas_rect);
-                            }
-                            ui.label(format!("{:.0}%", self.zoom * 100.));
-                            if ui.button("+").on_hover_text("Aumentar zoom").clicked() {
-                                self.zoom_at(1.25, self.canvas_rect.center(), self.canvas_rect);
-                            }
-                            if ui
-                                .button("Enquadrar")
-                                .on_hover_text("Mostrar todo o desenho · Shift+1")
-                                .clicked()
+    fn toolbar(&mut self, ui: &Ui, rect: Rect, palette: &ThemePalette) {
+        let width = (11.0_f32 * 32. + 10. * 3. + 25.).min((rect.width() - 124.).max(160.));
+        let position = egui::pos2(rect.center().x - width * 0.5, rect.top() + 12.);
+        let area = island(ui, "drawing.toolbar", position, palette, 6., |ui| {
+            ui.set_max_width(width - 12.);
+            egui::ScrollArea::horizontal()
+                .id_salt("drawing.tools")
+                .codisseu()
+                .wheel_to_horizontal()
+                .show(ui, |ui| {
+                    ui.spacing_mut().item_spacing.x = 3.;
+                    ui.horizontal(|ui| {
+                        let lock_name = if self.locked { "lock" } else { "unlock" };
+                        if glyph_button(
+                            ui,
+                            lock_name,
+                            "Manter ferramenta ativa",
+                            self.locked,
+                            None,
+                            palette,
+                        )
+                        .on_hover_text("Manter a ferramenta após desenhar")
+                        .clicked()
+                        {
+                            self.locked = !self.locked;
+                        }
+                        ui.separator();
+                        for tool in [
+                            Tool::Hand,
+                            Tool::Select,
+                            Tool::Rectangle,
+                            Tool::Diamond,
+                            Tool::Ellipse,
+                            Tool::Arrow,
+                            Tool::Line,
+                            Tool::Freedraw,
+                            Tool::Text,
+                            Tool::Eraser,
+                        ] {
+                            if glyph_button(
+                                ui,
+                                tool.icon(),
+                                tool.label(),
+                                self.tool == tool,
+                                tool.shortcut(),
+                                palette,
+                            )
+                            .clicked()
                             {
-                                self.fit_pending = true;
+                                if self.tool != tool && tool != Tool::Select {
+                                    self.selected.clear();
+                                }
+                                self.tool = tool;
                             }
-                        });
+                        }
                     });
-            });
+                });
+        });
+        self.overlay_rects.push(area);
     }
 
-    fn properties(&mut self, ui: &mut Ui, scene: &mut Scene, result: &mut CanvasResponse) {
-        egui::Frame::NONE
-            .inner_margin(egui::Margin::symmetric(12, 6))
-            .show(ui, |ui| {
-                egui::ScrollArea::horizontal()
-                    .id_salt("drawing.properties")
-                    .scroll_bar_visibility(egui::scroll_area::ScrollBarVisibility::AlwaysVisible)
+    fn menu(
+        &mut self,
+        ui: &Ui,
+        scene: &mut Scene,
+        rect: Rect,
+        palette: &ThemePalette,
+        result: &mut CanvasResponse,
+    ) {
+        let area = island(
+            ui,
+            "drawing.menu-button",
+            rect.min + egui::vec2(12., 12.),
+            palette,
+            2.,
+            |ui| {
+                if glyph_button(ui, "menu", "Menu do desenho", self.menu_open, None, palette)
+                    .clicked()
+                {
+                    self.menu_open = !self.menu_open;
+                }
+            },
+        );
+        self.overlay_rects.push(area);
+        if !self.menu_open {
+            return;
+        }
+        let area = island(
+            ui,
+            "drawing.menu",
+            rect.min + egui::vec2(12., 56.),
+            palette,
+            8.,
+            |ui| {
+                ui.set_width(218.);
+                for (icon, label, shortcut, flag) in [
+                    ("save", "Salvar desenho", "Ctrl+S", &mut result.save),
+                    ("source", "Código JSON", "", &mut result.source),
+                    ("export", "Copiar SVG", "", &mut result.copy_svg),
+                ] {
+                    if menu_item(ui, icon, label, shortcut, palette) {
+                        *flag = true;
+                        self.menu_open = false;
+                    }
+                }
+                ui.add_space(4.);
+                ui.separator();
+                ui.add_space(4.);
+                ui.label(
+                    egui::RichText::new("Aparência")
+                        .size(11.)
+                        .color(palette.muted),
+                );
+                ui.horizontal(|ui| {
+                    for mode in CanvasTheme::ALL {
+                        if ui
+                            .add(
+                                egui::Button::new(mode.label())
+                                    .selected(mode == self.theme)
+                                    .min_size(egui::vec2(62., 28.)),
+                            )
+                            .clicked()
+                        {
+                            result.changed |= CanvasTheme::set_scene_mode(scene, mode);
+                            self.theme = mode;
+                        }
+                    }
+                });
+                ui.add_space(6.);
+                let mut grid = scene
+                    .app_state
+                    .get("codisseuGrid")
+                    .and_then(|v| v.as_bool())
+                    .unwrap_or(false);
+                if ui.checkbox(&mut grid, "Mostrar grade").changed() {
+                    scene.app_state.insert("codisseuGrid".into(), grid.into());
+                    result.changed = true;
+                }
+            },
+        );
+        self.overlay_rects.push(area);
+    }
+
+    fn footer(&mut self, ui: &Ui, rect: Rect, palette: &ThemePalette, result: &mut CanvasResponse) {
+        let position = egui::pos2(rect.left() + 12., rect.bottom() - 48.);
+        let zoom = island(ui, "drawing.zoom", position, palette, 2., |ui| {
+            ui.spacing_mut().item_spacing.x = 1.;
+            ui.horizontal(|ui| {
+                if glyph_button(ui, "zoom-out", "Diminuir zoom", false, None, palette).clicked() {
+                    self.zoom_at(0.8, rect.center(), rect);
+                }
+                if ui
+                    .add(
+                        egui::Button::new(format!("{:.0}%", self.zoom * 100.))
+                            .frame(false)
+                            .min_size(egui::vec2(48., 32.)),
+                    )
+                    .on_hover_text("Restaurar zoom de 100%")
+                    .clicked()
+                {
+                    self.zoom_at(1. / self.zoom, rect.center(), rect);
+                }
+                if glyph_button(ui, "zoom-in", "Aumentar zoom", false, None, palette).clicked() {
+                    self.zoom_at(1.25, rect.center(), rect);
+                }
+                ui.separator();
+                if glyph_button(ui, "fit", "Enquadrar", false, None, palette).clicked() {
+                    self.fit_pending = true;
+                }
+            });
+        });
+        self.overlay_rects.push(zoom);
+        let history = island(
+            ui,
+            "drawing.history",
+            egui::pos2(zoom.right() + 8., position.y),
+            palette,
+            2.,
+            |ui| {
+                ui.spacing_mut().item_spacing.x = 1.;
+                ui.horizontal(|ui| {
+                    if glyph_button(ui, "undo", "Desfazer", false, None, palette)
+                        .on_hover_text("Desfazer · Ctrl+Z")
+                        .clicked()
+                    {
+                        result.undo = true;
+                    }
+                    if glyph_button(ui, "redo", "Refazer", false, None, palette)
+                        .on_hover_text("Refazer · Ctrl+Shift+Z")
+                        .clicked()
+                    {
+                        result.redo = true;
+                    }
+                });
+            },
+        );
+        self.overlay_rects.push(history);
+    }
+
+    fn properties(
+        &mut self,
+        ui: &Ui,
+        scene: &mut Scene,
+        rect: Rect,
+        palette: &ThemePalette,
+        result: &mut CanvasResponse,
+    ) {
+        if rect.width() < 360. {
+            return;
+        }
+        let mut changed = false;
+        let has_text = self.tool == Tool::Text
+            || scene
+                .elements
+                .iter()
+                .any(|e| self.selected.contains(&e.id) && e.kind == ElementKind::Text);
+        let has_shape = self.tool != Tool::Text
+            && (self.selected.is_empty()
+                || scene
+                    .elements
+                    .iter()
+                    .any(|e| self.selected.contains(&e.id) && e.kind != ElementKind::Text));
+        let desired_height = 120.0_f32
+            + if has_shape { 140. } else { 0. }
+            + if has_text { 70. } else { 0. }
+            + if self.selected.is_empty() { 0. } else { 148. };
+        let panel_height = desired_height.min((rect.height() - 176.).max(80.));
+        let area = island(
+            ui,
+            "drawing.properties",
+            rect.min + egui::vec2(12., 84.),
+            palette,
+            12.,
+            |ui| {
+                ui.set_width(170.);
+                egui::ScrollArea::vertical()
+                    .id_salt("drawing.properties-scroll")
+                    .max_height(panel_height)
+                    .min_scrolled_height(panel_height)
+                    .codisseu()
                     .show(ui, |ui| {
-                        ui.horizontal(|ui| {
-                            ui.spacing_mut().button_padding = egui::vec2(10., 5.);
-                            ui.label("Traço");
-                            let stroke_changed = ui
-                                .color_edit_button_srgba(&mut self.stroke)
-                                .on_hover_text("Cor do traço e do texto")
-                                .changed();
-                            ui.label("Fundo");
-                            let fill_changed = ui
-                                .color_edit_button_srgba(&mut self.fill)
-                                .on_hover_text("Cor do preenchimento · transparência disponível")
-                                .changed();
-                            let width_changed = ui
-                                .add(
-                                    egui::DragValue::new(&mut self.stroke_width)
-                                        .range(0.5..=16.)
-                                        .speed(0.25)
-                                        .prefix("Espessura "),
-                                )
-                                .changed();
-                            let font_changed = ui
-                                .add(
-                                    egui::DragValue::new(&mut self.font_size)
-                                        .range(8.0..=144.)
-                                        .speed(1.)
-                                        .prefix("Texto "),
-                                )
-                                .changed();
-                            if stroke_changed || fill_changed || width_changed || font_changed {
-                                for element in scene
-                                    .elements
-                                    .iter_mut()
-                                    .filter(|e| self.selected.contains(&e.id) && !e.is_deleted)
-                                {
-                                    if stroke_changed {
-                                        element.stroke_color = color_string(self.stroke);
+                        ui.spacing_mut().item_spacing.y = 8.;
+                        ui.spacing_mut().slider_width = 170.;
+                        ui.label(egui::RichText::new("Traço").size(12.));
+                        changed |= color_palette(ui, &mut self.stroke, false, self.theme, palette);
+                        if self.tool != Tool::Text
+                            && (self.selected.is_empty()
+                                || scene.elements.iter().any(|e| {
+                                    self.selected.contains(&e.id) && e.kind != ElementKind::Text
+                                }))
+                        {
+                            ui.label(egui::RichText::new("Fundo").size(12.));
+                            changed |= color_palette(ui, &mut self.fill, true, self.theme, palette);
+                            ui.label(egui::RichText::new("Espessura do traço").size(12.));
+                            ui.horizontal(|ui| {
+                                for width in [1., 2., 4.] {
+                                    let response = ui.add(
+                                        egui::Button::new("")
+                                            .min_size(egui::vec2(38., 28.))
+                                            .selected((self.stroke_width - width).abs() < 0.1),
+                                    );
+                                    response.widget_info(|| {
+                                        egui::WidgetInfo::selected(
+                                            egui::accesskit::Role::Button,
+                                            ui.is_enabled(),
+                                            (self.stroke_width - width).abs() < 0.1,
+                                            format!("Espessura {width}"),
+                                        )
+                                    });
+                                    let r = response.rect;
+                                    ui.painter().line_segment(
+                                        [
+                                            r.center() - egui::vec2(9., 0.),
+                                            r.center() + egui::vec2(9., 0.),
+                                        ],
+                                        Stroke::new(width as f32, palette.text),
+                                    );
+                                    if response.clicked() {
+                                        self.stroke_width = width;
+                                        changed = true;
                                     }
-                                    if fill_changed {
-                                        element.background_color = color_string(self.fill);
-                                    }
-                                    if width_changed {
-                                        element.stroke_width = self.stroke_width;
-                                    }
-                                    if font_changed && element.kind == ElementKind::Text {
-                                        element.font_size = self.font_size;
-                                        text_dimensions(ui, element);
-                                    }
-                                    element.touch();
-                                    result.changed = true;
                                 }
-                            }
-                            if !self.selected.is_empty() {
-                                ui.separator();
-                                ui.label(format!("{} selecionado(s)", self.selected.len()));
+                            });
+                        }
+                        if self.tool == Tool::Text
+                            || scene.elements.iter().any(|e| {
+                                self.selected.contains(&e.id) && e.kind == ElementKind::Text
+                            })
+                        {
+                            ui.label(egui::RichText::new("Tamanho da fonte").size(12.));
+                            ui.horizontal(|ui| {
+                                for (label, size) in
+                                    [("P", 16.), ("M", 24.), ("G", 36.), ("GG", 48.)]
+                                {
+                                    if ui
+                                        .add(
+                                            egui::Button::new(label)
+                                                .selected((self.font_size - size).abs() < 0.1)
+                                                .min_size(egui::vec2(32., 28.)),
+                                        )
+                                        .clicked()
+                                    {
+                                        self.font_size = size;
+                                        changed = true;
+                                    }
+                                }
+                            });
+                        }
+                        ui.label(egui::RichText::new("Opacidade").size(12.));
+                        let opacity = ui.add(
+                            egui::Slider::new(&mut self.opacity, 0.0..=100.)
+                                .show_value(false)
+                                .trailing_fill(true),
+                        );
+                        opacity.widget_info(|| {
+                            egui::WidgetInfo::labeled(
+                                egui::accesskit::Role::Slider,
+                                ui.is_enabled(),
+                                "Opacidade do elemento",
+                            )
+                        });
+                        changed |= opacity.changed();
+                        if !self.selected.is_empty() {
+                            ui.label(egui::RichText::new("Camadas").size(12.));
+                            ui.horizontal(|ui| {
+                                if glyph_button(ui, "back", "Enviar atrás", false, None, palette)
+                                    .clicked()
+                                {
+                                    result.changed |= self.reorder(scene, false);
+                                }
+                                if glyph_button(
+                                    ui,
+                                    "front",
+                                    "Trazer à frente",
+                                    false,
+                                    None,
+                                    palette,
+                                )
+                                .clicked()
+                                {
+                                    result.changed |= self.reorder(scene, true);
+                                }
+                            });
+                            ui.label(egui::RichText::new("Ações").size(12.));
+                            ui.horizontal(|ui| {
+                                if glyph_button(ui, "duplicate", "Duplicar", false, None, palette)
+                                    .clicked()
+                                {
+                                    result.changed |= self.duplicate(scene);
+                                }
+                                if glyph_button(ui, "delete", "Excluir", false, None, palette)
+                                    .clicked()
+                                {
+                                    result.changed |= self.delete(scene);
+                                }
                                 if self.selected.len() == 1
                                     && let Some(element) = scene.elements.iter().find(|e| {
                                         self.selected.contains(&e.id) && e.kind == ElementKind::Text
                                     })
-                                    && ui.button("Editar texto").clicked()
+                                    && glyph_button(
+                                        ui,
+                                        "text",
+                                        "Editar texto",
+                                        false,
+                                        None,
+                                        palette,
+                                    )
+                                    .clicked()
                                 {
                                     self.text_editor = Some(TextEditor {
                                         id: Some(element.id.clone()),
                                         position: egui::pos2(element.x as f32, element.y as f32),
                                         text: element.text.clone(),
                                         focus: true,
+                                        original: Some(element.clone()),
                                     });
                                 }
-                                if ui.button("Duplicar").clicked() {
-                                    result.changed |= self.duplicate(scene);
-                                }
-                                if ui.button("Excluir").clicked() {
-                                    result.changed |= self.delete(scene);
-                                }
-                                if ui.button("Trazer à frente").clicked() {
-                                    result.changed |= self.reorder(scene, true);
-                                }
-                                if ui.button("Enviar atrás").clicked() {
-                                    result.changed |= self.reorder(scene, false);
-                                }
-                            } else {
-                                ui.weak("Arraste para desenhar · Espaço para mover · Ctrl+roda para zoom");
-                            }
-                        });
+                            });
+                        }
                     });
-            });
+            },
+        );
+        self.overlay_rects.push(area);
+        if changed {
+            for element in scene
+                .elements
+                .iter_mut()
+                .filter(|e| self.selected.contains(&e.id) && !e.is_deleted)
+            {
+                element.stroke_color = color_string(self.stroke);
+                element.background_color = color_string(self.fill);
+                element.stroke_width = self.stroke_width;
+                element.opacity = self.opacity;
+                if element.kind == ElementKind::Text {
+                    element.font_size = self.font_size;
+                    text_dimensions(ui, element);
+                }
+                element.touch();
+                result.changed = true;
+            }
+        }
     }
 
     fn cancel_gesture(&mut self, scene: &mut Scene) {
         match self.gesture.take() {
+            Some(Gesture::Erase { originals }) => {
+                for original in originals {
+                    if let Some(e) = scene.elements.iter_mut().find(|e| e.id == original.id) {
+                        *e = original;
+                    }
+                }
+            }
             Some(Gesture::Draw { id, .. }) => {
                 scene.elements.retain(|e| e.id != id);
                 self.selected.clear();
@@ -417,6 +726,13 @@ impl DrawingCanvasUi {
                     .map(|e| e.id.clone())
                     .collect();
                 self.tool = Tool::Select;
+            }
+            if i.consume_key(Modifiers::NONE, Key::E) {
+                self.tool = Tool::Eraser;
+                self.selected.clear();
+            }
+            if i.consume_key(Modifiers::NONE, Key::Q) {
+                self.locked = !self.locked;
             }
             if i.consume_key(command, Key::D) {
                 result.changed |= self.duplicate(scene);
@@ -506,6 +822,11 @@ impl DrawingCanvasUi {
                     origin: self.pan,
                     start,
                 });
+            } else if self.tool == Tool::Eraser {
+                self.selected.clear();
+                self.gesture = Some(Gesture::Erase {
+                    originals: Vec::new(),
+                });
             } else if self.tool == Tool::Select {
                 if let Some((id, corner)) = self.resize_hit(scene, start, rect) {
                     let original = scene.elements.iter().find(|e| e.id == id).unwrap().clone();
@@ -561,7 +882,20 @@ impl DrawingCanvasUi {
             || response.dragged_by(PointerButton::Middle)
             || response.drag_stopped()
         {
+            let erase_id = if self.tool == Tool::Eraser {
+                hit(scene, world, 10. / self.zoom)
+            } else {
+                None
+            };
             match &mut self.gesture {
+                Some(Gesture::Erase { originals }) => {
+                    if let Some(id) = erase_id
+                        && let Some(element) = scene.elements.iter_mut().find(|e| e.id == id)
+                    {
+                        originals.push(element.clone());
+                        element.is_deleted = true;
+                    }
+                }
                 Some(Gesture::Pan { origin, start }) => self.pan = *origin + (pointer - *start),
                 Some(Gesture::Move { start, originals }) => {
                     let delta = world - *start;
@@ -597,6 +931,16 @@ impl DrawingCanvasUi {
             || response.drag_stopped_by(PointerButton::Middle)
         {
             match self.gesture.take() {
+                Some(Gesture::Erase { originals }) => {
+                    for original in originals {
+                        if let Some(element) =
+                            scene.elements.iter_mut().find(|e| e.id == original.id)
+                        {
+                            element.touch();
+                            result.changed = true;
+                        }
+                    }
+                }
                 Some(Gesture::Draw { id, .. }) => {
                     if let Some(element) = scene.elements.iter_mut().find(|e| e.id == id) {
                         if element.width < 1. && element.height < 1. {
@@ -650,13 +994,25 @@ impl DrawingCanvasUi {
                 Some(Gesture::Pan { .. }) | None => {}
             }
         }
+        if result.changed && !self.locked && self.tool.kind().is_some() {
+            self.tool = Tool::Select;
+        }
         if response.clicked_by(PointerButton::Primary) {
-            if self.tool == Tool::Text {
+            if self.tool == Tool::Eraser {
+                if let Some(id) = hit(scene, world, 10. / self.zoom)
+                    && let Some(element) = scene.elements.iter_mut().find(|e| e.id == id)
+                {
+                    element.is_deleted = true;
+                    element.touch();
+                    result.changed = true;
+                }
+            } else if self.tool == Tool::Text {
                 self.text_editor = Some(TextEditor {
                     id: None,
                     position: world,
                     text: String::new(),
                     focus: true,
+                    original: None,
                 });
             } else if self.tool == Tool::Select {
                 if let Some(id) = hit(scene, world, 7. / self.zoom) {
@@ -677,9 +1033,10 @@ impl DrawingCanvasUi {
                     {
                         self.text_editor = Some(TextEditor {
                             id: Some(id),
-                            position: world,
+                            position: egui::pos2(element.x as f32, element.y as f32),
                             text: element.text.clone(),
                             focus: true,
+                            original: Some(element.clone()),
                         });
                     }
                 } else {
@@ -690,57 +1047,102 @@ impl DrawingCanvasUi {
     }
 
     fn text_window(&mut self, ui: &Ui, scene: &mut Scene, result: &mut CanvasResponse) {
-        let Some(editor) = &mut self.text_editor else {
+        let Some(mut editor) = self.text_editor.take() else {
+            if self.save_requested {
+                result.save = true;
+                self.save_requested = false;
+            }
             return;
         };
-        let mut apply = false;
+        let just_opened = editor.focus;
+        let palette = self.theme.palette(ui);
+        let screen = self.screen(editor.position, self.canvas_rect);
+        let width = (self.canvas_rect.width() - 32.).clamp(120., 320.);
+        let position = egui::pos2(
+            screen.x.clamp(
+                self.canvas_rect.left() + 8.,
+                (self.canvas_rect.right() - width - 8.).max(self.canvas_rect.left() + 8.),
+            ),
+            screen.y.clamp(
+                self.canvas_rect.top() + 8.,
+                (self.canvas_rect.bottom() - 110.).max(self.canvas_rect.top() + 8.),
+            ),
+        );
+        let color = self.theme.scene_color(ui, self.stroke);
+        let size = (self.font_size as f32 * self.zoom).clamp(10., 64.);
+        let mut apply = self.save_requested || result.save;
         let mut cancel = false;
-        egui::Window::new("Texto do desenho")
-            .id(ui.scope_id().with("drawing.text"))
-            .collapsible(false)
-            .resizable(true)
-            .default_width(380.)
-            .show(ui.ctx(), |ui| {
-                ui.spacing_mut().button_padding = egui::vec2(12., 6.);
-                let field = ui.add(
-                    egui::TextEdit::multiline(&mut editor.text)
-                        .desired_rows(4)
-                        .desired_width(f32::INFINITY)
-                        .hint_text("Digite o texto…")
-                        .margin(egui::vec2(10., 8.)),
-                );
-                field.widget_info(|| {
-                    egui::WidgetInfo::labeled(
-                        egui::accesskit::Role::TextInput,
-                        true,
-                        "Conteúdo do texto do desenho",
-                    )
-                });
-                if editor.focus {
-                    field.request_focus();
-                    editor.focus = false;
-                }
-                ui.horizontal(|ui| {
-                    apply = ui.button("Aplicar texto").clicked();
-                    cancel = ui.button("Cancelar texto").clicked();
-                });
-                ui.input_mut(|i| {
-                    cancel |= i.consume_key(Modifiers::NONE, Key::Escape);
-                    apply |= i.consume_key(Modifiers::CTRL, Key::Enter);
-                });
+        let mut edited = false;
+        let area = island(ui, "drawing.inline-text", position, &palette, 4., |ui| {
+            ui.set_width(width);
+            let field = ui.add(
+                egui::TextEdit::multiline(&mut editor.text)
+                    .font(FontId::proportional(size))
+                    .text_color(color)
+                    .frame(egui::Frame::NONE)
+                    .margin(egui::vec2(4., 4.))
+                    .desired_rows(2)
+                    .desired_width(width)
+                    .hint_text("Digite o texto…"),
+            );
+            field.widget_info(|| {
+                egui::WidgetInfo::labeled(
+                    egui::accesskit::Role::TextInput,
+                    true,
+                    "Conteúdo do texto do desenho",
+                )
             });
-        if apply {
-            let editor = self.text_editor.take().unwrap();
-            if let Some(id) = editor.id {
-                if let Some(element) = scene.elements.iter_mut().find(|e| e.id == id)
-                    && element.text != editor.text
-                {
-                    element.text = editor.text;
+            if editor.focus {
+                field.request_focus();
+                editor.focus = false;
+            }
+            edited = field.changed();
+            ui.horizontal(|ui| {
+                let a = ui.add(
+                    egui::Button::new(egui::RichText::new("Aplicar").size(11.))
+                        .min_size(egui::vec2(0., 24.)),
+                );
+                a.widget_info(|| {
+                    egui::WidgetInfo::labeled(egui::accesskit::Role::Button, true, "Aplicar texto")
+                });
+                apply |= a.clicked();
+                let c = ui.add(
+                    egui::Button::new(egui::RichText::new("Cancelar").size(11.))
+                        .frame(false)
+                        .min_size(egui::vec2(0., 24.)),
+                );
+                c.widget_info(|| {
+                    egui::WidgetInfo::labeled(egui::accesskit::Role::Button, true, "Cancelar texto")
+                });
+                cancel = c.clicked();
+                ui.weak(egui::RichText::new("Ctrl+Enter").size(10.));
+            });
+            ui.input_mut(|i| {
+                cancel |= i.consume_key(Modifiers::NONE, Key::Escape);
+                apply |= i.consume_key(Modifiers::CTRL, Key::Enter);
+                if i.consume_key(Modifiers::CTRL, Key::S) {
+                    apply = true;
+                    self.save_requested = true;
+                }
+            });
+        });
+        if !just_opened
+            && ui.input(|i| {
+                i.pointer.any_pressed()
+                    && i.pointer.interact_pos().is_some_and(|p| !area.contains(p))
+            })
+        {
+            apply = true;
+        }
+        if edited && !cancel {
+            if let Some(id) = &editor.id {
+                if let Some(element) = scene.elements.iter_mut().find(|e| &e.id == id) {
+                    element.text = editor.text.clone();
                     text_dimensions(ui, element);
                     element.touch();
                     result.changed = true;
                 }
-            } else if !editor.text.trim().is_empty() {
+            } else if !editor.text.is_empty() {
                 let mut element = Element::new(
                     ElementKind::Text,
                     editor.position.x as f64,
@@ -749,17 +1151,40 @@ impl DrawingCanvasUi {
                     0.,
                 );
                 self.apply_style(&mut element);
-                element.text = editor.text;
+                element.text = editor.text.clone();
                 text_dimensions(ui, &mut element);
                 element.touch();
+                editor.id = Some(element.id.clone());
                 self.selected.clear();
                 self.selected.insert(element.id.clone());
                 scene.elements.push(element);
                 result.changed = true;
             }
+        }
+        if cancel {
+            if let Some(id) = &editor.id {
+                if let Some(original) = editor.original {
+                    if let Some(element) = scene.elements.iter_mut().find(|e| &e.id == id)
+                        && *element != original
+                    {
+                        *element = original;
+                        result.changed = true;
+                    }
+                } else {
+                    scene.elements.retain(|e| &e.id != id);
+                    self.selected.remove(id);
+                    result.changed = true;
+                }
+            }
+        } else if !apply {
+            self.text_editor = Some(editor);
+        }
+        if (apply || cancel) && !self.locked {
             self.tool = Tool::Select;
-        } else if cancel {
-            self.text_editor = None;
+        }
+        if self.save_requested {
+            result.save = true;
+            self.save_requested = false;
         }
     }
 
@@ -800,6 +1225,7 @@ impl DrawingCanvasUi {
         element.background_color = color_string(self.fill);
         element.stroke_width = self.stroke_width;
         element.font_size = self.font_size;
+        element.opacity = self.opacity;
     }
     fn read_style(&mut self, scene: &Scene, id: &str) {
         if let Some(element) = scene.elements.iter().find(|e| e.id == id) {
@@ -807,6 +1233,7 @@ impl DrawingCanvasUi {
             self.fill = parse_color(&element.background_color);
             self.stroke_width = element.stroke_width;
             self.font_size = element.font_size;
+            self.opacity = element.opacity;
         }
     }
     fn delete(&mut self, scene: &mut Scene) -> bool {
@@ -905,16 +1332,17 @@ impl DrawingCanvasUi {
 
     fn paint(&self, ui: &Ui, scene: &Scene, rect: Rect) {
         let painter = ui.painter().with_clip_rect(rect);
-        let background = scene
-            .app_state
-            .get("viewBackgroundColor")
-            .and_then(|v| v.as_str())
-            .map(parse_color)
-            .filter(|c| *c != Color32::TRANSPARENT)
-            .unwrap_or(Color32::from_rgb(250, 250, 250));
+        let background = self.theme.canvas_background(ui, scene);
+        let palette = self.theme.palette(ui);
         painter.rect_filled(rect, 0., background);
         let grid = 24. * self.zoom;
-        if grid >= 10. {
+        if scene
+            .app_state
+            .get("codisseuGrid")
+            .and_then(|v| v.as_bool())
+            .unwrap_or(false)
+            && grid >= 10.
+        {
             let grid_color =
                 if background.r() as u16 + background.g() as u16 + background.b() as u16 > 384 {
                     Color32::from_black_alpha(25)
@@ -938,9 +1366,15 @@ impl DrawingCanvasUi {
             if !rect.intersects(screen_bounds.expand(16.)) {
                 continue;
             }
-            self.paint_element(&painter, element, rect);
+            if !self
+                .text_editor
+                .as_ref()
+                .is_some_and(|editor| editor.id.as_ref() == Some(&element.id))
+            {
+                self.paint_element(ui, &painter, element, rect);
+            }
         }
-        let selection_color = ui.visuals().selection.bg_fill;
+        let selection_color = palette.accent;
         for element in scene
             .elements
             .iter()
@@ -970,9 +1404,9 @@ impl DrawingCanvasUi {
                     raw.left_bottom(),
                 ] {
                     painter.rect(
-                        Rect::from_center_size(p, Vec2::splat(7.)),
+                        Rect::from_center_size(p, Vec2::splat(6.)),
                         1.,
-                        Color32::WHITE,
+                        palette.canvas,
                         Stroke::new(1., selection_color),
                         egui::StrokeKind::Middle,
                     );
@@ -988,30 +1422,69 @@ impl DrawingCanvasUi {
                 egui::StrokeKind::Middle,
             );
         }
-        if scene.elements.iter().all(|e| e.is_deleted) {
-            let fg = if background.r() as u16 + background.g() as u16 + background.b() as u16 > 384
-            {
-                Color32::from_gray(100)
-            } else {
-                Color32::from_gray(170)
-            };
-            painter.text(
-                rect.center(),
-                Align2::CENTER_CENTER,
-                "Escolha uma ferramenta e arraste para começar",
-                FontId::proportional(15.),
-                fg,
+        let hint = if self.tool == Tool::Select {
+            "Para mover a tela, segure Espaço ou arraste com o botão do meio"
+        } else if self.tool == Tool::Text {
+            "Clique para adicionar texto · Ctrl+Enter para aplicar"
+        } else if self.tool == Tool::Eraser {
+            "Clique ou arraste para apagar · Esc cancela"
+        } else {
+            "Arraste para desenhar · Shift mantém a proporção"
+        };
+        let galley = painter.layout(
+            hint.into(),
+            FontId::proportional(10.),
+            palette.muted,
+            (rect.width() - 32.).max(80.),
+        );
+        painter.galley(
+            egui::pos2(rect.center().x - galley.size().x * 0.5, rect.top() + 66.),
+            galley,
+            palette.muted,
+        );
+        if scene.elements.iter().all(|e| e.is_deleted)
+            && self.text_editor.is_none()
+            && self.gesture.is_none()
+            && matches!(self.tool, Tool::Select | Tool::Hand)
+        {
+            let y = rect.top() + rect.height() * 0.4;
+            let logo = Rect::from_center_size(
+                egui::pos2(rect.center().x, y - 34.),
+                egui::vec2(260_f32.min(rect.width() - 32.), 40.),
             );
+            crate::drawing_icons::paint(ui, logo, "logo", palette.accent);
+            for (offset, text, size) in [
+                (10., "Seus desenhos ficam nos arquivos deste projeto.", 14.),
+                (38., "Salve para continuar ao reabrir o Codisseu.", 13.),
+                (88., "Escolha uma ferramenta e comece a desenhar", 12.),
+            ] {
+                let galley = painter.layout(
+                    text.into(),
+                    FontId::proportional(size),
+                    palette.muted,
+                    (rect.width() - 40.).max(80.),
+                );
+                painter.galley(
+                    egui::pos2(rect.center().x - galley.size().x * 0.5, y + offset),
+                    galley,
+                    palette.muted,
+                );
+            }
         }
     }
 
-    fn paint_element(&self, painter: &egui::Painter, element: &Element, rect: Rect) {
+    fn paint_element(&self, ui: &Ui, painter: &egui::Painter, element: &Element, rect: Rect) {
         let opacity = (element.opacity / 100.).clamp(0., 1.) as f32;
         let stroke = Stroke::new(
             (element.stroke_width as f32 * self.zoom).max(0.25),
-            parse_color(&element.stroke_color).linear_multiply(opacity),
+            self.theme
+                .scene_color(ui, parse_color(&element.stroke_color))
+                .linear_multiply(opacity),
         );
-        let fill = parse_color(&element.background_color).linear_multiply(opacity);
+        let fill = self
+            .theme
+            .scene_color(ui, parse_color(&element.background_color))
+            .linear_multiply(opacity);
         let local = Rect::from_two_pos(
             egui::pos2(element.x as f32, element.y as f32),
             egui::pos2(
@@ -1138,77 +1611,232 @@ impl DrawingCanvasUi {
     }
 }
 
-fn paint_tool(painter: &egui::Painter, rect: Rect, tool: Tool, color: Color32) {
-    let stroke = Stroke::new(1.5, color);
-    let c = rect.center();
-    match tool {
-        Tool::Select => {
-            painter.add(egui::Shape::closed_line(
-                vec![
-                    rect.left_top(),
-                    rect.left_bottom(),
-                    c,
-                    rect.right_center(),
-                    rect.left_top(),
-                ],
-                stroke,
-            ));
-        }
-        Tool::Hand => {
-            painter.circle_stroke(c, rect.width() * 0.3, stroke);
-            for x in [-0.25, 0., 0.25] {
-                let p = egui::pos2(c.x + x * rect.width(), c.y);
-                painter.line_segment([p, p - egui::vec2(0., 6.)], stroke);
+fn island<R>(
+    parent: &Ui,
+    name: &str,
+    position: Pos2,
+    palette: &ThemePalette,
+    padding: f32,
+    contents: impl FnOnce(&mut Ui) -> R,
+) -> Rect {
+    egui::Area::new(parent.scope_id().with(name))
+        .order(egui::Order::Foreground)
+        .fixed_pos(position)
+        .movable(false)
+        .constrain_to(parent.clip_rect().intersect(parent.max_rect()).shrink(4.))
+        .constrain(true)
+        .show(parent.ctx(), |ui| {
+            ui.set_clip_rect(parent.clip_rect().intersect(parent.max_rect()));
+            if !parent.is_enabled() {
+                ui.disable();
             }
-        }
-        Tool::Rectangle => {
-            painter.rect_stroke(rect, 1., stroke, egui::StrokeKind::Middle);
-        }
-        Tool::Ellipse => {
-            painter.add(egui::epaint::EllipseShape::stroke(
-                c,
-                rect.size() * 0.5,
-                stroke,
-            ));
-        }
-        Tool::Diamond => {
-            painter.add(egui::Shape::closed_line(
-                vec![
-                    rect.center_top(),
-                    rect.right_center(),
-                    rect.center_bottom(),
-                    rect.left_center(),
-                ],
-                stroke,
-            ));
-        }
-        Tool::Arrow | Tool::Line => {
-            painter.line_segment([rect.left_bottom(), rect.right_top()], stroke);
-            if tool == Tool::Arrow {
-                paint_arrowhead(painter, rect.left_bottom(), rect.right_top(), stroke, 0.7);
-            }
-        }
-        Tool::Freedraw => {
-            painter.add(egui::Shape::line(
-                vec![
-                    rect.left_bottom(),
-                    egui::pos2(rect.left() + 3., rect.top() + 3.),
-                    egui::pos2(rect.right() - 3., rect.bottom() - 3.),
-                    rect.right_top(),
-                ],
-                stroke,
-            ));
-        }
-        Tool::Text => {
-            painter.text(
-                c,
-                Align2::CENTER_CENTER,
-                "T",
-                FontId::proportional(20.),
-                color,
-            );
-        }
+            let visuals = ui.visuals_mut();
+            visuals.dark_mode = palette.canvas.r() < 128;
+            visuals.override_text_color = Some(palette.text);
+            visuals.panel_fill = palette.panel;
+            visuals.window_fill = palette.panel;
+            visuals.extreme_bg_color = palette.canvas;
+            visuals.faint_bg_color = palette.hover;
+            visuals.selection.bg_fill = palette.active;
+            visuals.selection.stroke = Stroke::new(1., palette.accent);
+            visuals.widgets.inactive.bg_fill = palette.hover;
+            visuals.widgets.hovered.bg_fill = palette.hover;
+            visuals.widgets.active.bg_fill = palette.active;
+            ui.spacing_mut().item_spacing = egui::vec2(4., 6.);
+            ui.spacing_mut().button_padding = egui::vec2(8., 4.);
+            ui.spacing_mut().interact_size.y = 28.;
+            egui::Frame::NONE
+                .fill(palette.panel)
+                .stroke(Stroke::new(1., palette.border))
+                .corner_radius(8.)
+                .inner_margin(padding)
+                .shadow(egui::epaint::Shadow {
+                    offset: [0, 2],
+                    blur: 10,
+                    spread: 0,
+                    color: Color32::from_black_alpha(22),
+                })
+                .show(ui, contents);
+        })
+        .response
+        .rect
+}
+fn glyph_button(
+    ui: &mut Ui,
+    name: &str,
+    label: &str,
+    selected: bool,
+    shortcut: Option<&str>,
+    palette: &ThemePalette,
+) -> egui::Response {
+    let response = ui
+        .push_id(label, |ui| {
+            ui.add(
+                egui::Button::new("")
+                    .frame(false)
+                    .min_size(egui::vec2(32., 32.)),
+            )
+        })
+        .inner;
+    response.widget_info(|| {
+        egui::WidgetInfo::selected(
+            egui::accesskit::Role::Button,
+            ui.is_enabled(),
+            selected,
+            label,
+        )
+    });
+    if selected || response.hovered() || response.has_focus() {
+        ui.painter().rect_filled(
+            response.rect,
+            5.,
+            if selected {
+                palette.active
+            } else {
+                palette.hover
+            },
+        );
     }
+    let color = if selected {
+        palette.accent
+    } else {
+        palette.text
+    };
+    crate::drawing_icons::paint(
+        ui,
+        Rect::from_center_size(
+            response.rect.center() - egui::vec2(0., if shortcut.is_some() { 1. } else { 0. }),
+            Vec2::splat(16.),
+        ),
+        name,
+        color,
+    );
+    if let Some(shortcut) = shortcut {
+        ui.painter().text(
+            response.rect.right_bottom() - egui::vec2(3., 2.),
+            Align2::RIGHT_BOTTOM,
+            shortcut,
+            FontId::proportional(8.),
+            palette.muted,
+        );
+    }
+    response.on_hover_text(label)
+}
+fn menu_item(ui: &mut Ui, name: &str, label: &str, shortcut: &str, palette: &ThemePalette) -> bool {
+    let response = ui.add(
+        egui::Button::new("")
+            .frame(false)
+            .min_size(egui::vec2(218., 34.)),
+    );
+    response.widget_info(|| {
+        egui::WidgetInfo::labeled(egui::accesskit::Role::Button, ui.is_enabled(), label)
+    });
+    if response.hovered() {
+        ui.painter().rect_filled(response.rect, 5., palette.hover);
+    }
+    crate::drawing_icons::paint(
+        ui,
+        Rect::from_center_size(
+            egui::pos2(response.rect.left() + 18., response.rect.center().y),
+            Vec2::splat(16.),
+        ),
+        name,
+        palette.text,
+    );
+    ui.painter().text(
+        egui::pos2(response.rect.left() + 38., response.rect.center().y),
+        Align2::LEFT_CENTER,
+        label,
+        FontId::proportional(12.),
+        palette.text,
+    );
+    ui.painter().text(
+        egui::pos2(response.rect.right() - 8., response.rect.center().y),
+        Align2::RIGHT_CENTER,
+        shortcut,
+        FontId::proportional(10.),
+        palette.muted,
+    );
+    response.clicked()
+}
+fn color_palette(
+    ui: &mut Ui,
+    color: &mut Color32,
+    fill: bool,
+    theme: CanvasTheme,
+    palette: &ThemePalette,
+) -> bool {
+    let mut changed = false;
+    ui.horizontal(|ui| {
+        let values = if fill {
+            [
+                Color32::TRANSPARENT,
+                Color32::from_rgb(255, 201, 201),
+                Color32::from_rgb(178, 242, 187),
+                Color32::from_rgb(165, 216, 255),
+                Color32::from_rgb(255, 236, 153),
+            ]
+        } else {
+            [
+                Color32::from_rgb(30, 30, 30),
+                Color32::from_rgb(224, 49, 49),
+                Color32::from_rgb(47, 158, 68),
+                Color32::from_rgb(25, 113, 194),
+                Color32::from_rgb(240, 140, 0),
+            ]
+        };
+        for value in values {
+            let r = ui.add(
+                egui::Button::new("")
+                    .min_size(egui::vec2(21., 21.))
+                    .fill(theme.scene_color(ui, value))
+                    .stroke(Stroke::new(
+                        if *color == value { 2. } else { 1. },
+                        if *color == value {
+                            palette.accent
+                        } else {
+                            palette.border
+                        },
+                    ))
+                    .corner_radius(4.),
+            );
+            r.widget_info(|| {
+                egui::WidgetInfo::selected(
+                    egui::accesskit::Role::Button,
+                    ui.is_enabled(),
+                    *color == value,
+                    format!(
+                        "{} {}",
+                        if fill {
+                            "Cor do fundo"
+                        } else {
+                            "Cor do traço"
+                        },
+                        color_string(value)
+                    ),
+                )
+            });
+            if value == Color32::TRANSPARENT {
+                ui.painter().line_segment(
+                    [
+                        r.rect.left_bottom() + egui::vec2(3., -3.),
+                        r.rect.right_top() + egui::vec2(-3., 3.),
+                    ],
+                    Stroke::new(1., palette.muted),
+                );
+            }
+            if r.clicked() {
+                *color = value;
+                changed = true;
+            }
+        }
+        ui.separator();
+        changed |= ui
+            .color_edit_button_srgba(color)
+            .on_hover_text("Escolher cor personalizada")
+            .changed();
+    });
+    changed
 }
 fn paint_arrowhead(painter: &egui::Painter, from: Pos2, end: Pos2, stroke: Stroke, zoom: f32) {
     let direction = (from - end).normalized();

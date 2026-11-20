@@ -21,6 +21,11 @@ Excalidraw, sob a [licença MIT preservada](reference/public/excalidraw-icon/LIC
 A [procedência e os hashes](reference/public/excalidraw-icon/sources.json) registram
 a revisão, a adaptação do SVG e a rasterização usada no aplicativo.
 
+A barra de desenho e o estado vazio também usam geometrias oficiais de
+Excalidraw e Tabler Icons. Os avisos MIT de Excalidraw e de Paweł Kuna,
+os paths de origem e os hashes dos derivados ficam em
+`reference/public/excalidraw-icons`.
+
 Este primeiro `.deb` contém o núcleo do aplicativo. As bibliotecas do sistema
 são dependências instaladas pelo `apt`; não são cópias privadas no pacote.
 O pacote completo de motores usado no desenvolvimento não acompanha esta release.

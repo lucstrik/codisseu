@@ -93,6 +93,8 @@ mod diagnostics;
 mod docker;
 mod docker_integration;
 mod drawing_canvas;
+mod drawing_icons;
+mod drawing_theme;
 mod drawings;
 #[cfg(test)]
 mod drawings_tests;
@@ -1114,6 +1116,9 @@ impl CodisseuApp {
         if self.exit_when_saved || self.allow_close {
             return;
         }
+        if self.drawings_defer_exit() {
+            return;
+        }
         self.abandon_native_folder();
         self.workspace_switch = Default::default();
         self.service.jira.timesheet.cancel();
@@ -1916,6 +1921,7 @@ impl CodisseuApp {
                     });
                 self.finish_shell_panel(ui, panel.response.rect, egui::Margin::ZERO);
             });
+        self.drawings_flush_commands(&ctx);
         // The editor commits this frame's text input through Edit before Save/Undo
         // use the buffer. Commands within this batch retain their event order.
         for (id, action) in std::mem::take(&mut self.document_actions) {

@@ -154,12 +154,12 @@ def main():
 
         session, paths = launch('draw-and-save', a, drawing)
         assert paths == [str(drawing)], paths
-        robot.click(scaled(550), scaled(450))
+        robot.click(scaled(850), scaled(550))
         robot.key('r')
         time.sleep(.12)
         x, y, width, height = robot.geometry()
         assert robot.pid(robot.window) == app.pid and robot.focused()
-        start, end = (450, 330), (650, 450)
+        start, end = (650, 330), (850, 450)
         for point in [start, end]:
             assert 0 <= scaled(point[0]) < width and 0 <= scaled(point[1]) < height
         robot.t.XTestFakeMotionEvent(robot.display, -1, x + scaled(start[0]), y + scaled(start[1]), 0)

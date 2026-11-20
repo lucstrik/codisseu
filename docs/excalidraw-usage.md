@@ -11,16 +11,27 @@ outras ferramentas. **Código JSON** permite inspecionar ou editar sua fonte;
 **Desenho** volta ao canvas. Arquivos vazios são cenas novas; JSON inválido
 exibe o erro e continua disponível para correção.
 
-Use a barra do canvas para selecionar, mover a tela, desenhar retângulos,
-elipses, losangos, setas, linhas, traços livres e textos. Selecione um objeto
+Use a barra flutuante central para selecionar, mover a tela, desenhar retângulos,
+elipses, losangos, setas, linhas, traços livres e textos, ou usar a borracha.
+O cadeado mantém a ferramenta ativa para desenhar várias formas; desativado,
+a seleção volta após concluir a forma. Selecione um objeto
 para editar estilo, mover, redimensionar, duplicar, excluir ou alterar a ordem.
-Texto pode ser editado novamente pela seleção. Espaço e arraste movem a tela;
+As propriedades aparecem no painel contextual. Texto é editado no próprio
+canvas e pode ser aberto novamente pela seleção. Espaço e arraste movem a tela;
 Ctrl+roda ajusta o zoom; **Enquadrar** mostra o desenho inteiro.
 
-**Salvar desenho** ou Ctrl+S grava o arquivo. Ctrl+Z desfaz e Ctrl+Shift+Z ou
+O menu do canto superior esquerdo reúne **Salvar desenho**, **Código JSON**,
+**Copiar SVG**, aparência e grade. **Salvar desenho** ou Ctrl+S grava o arquivo. Ctrl+Z desfaz e Ctrl+Shift+Z ou
 Ctrl+Y refaz usando o histórico comum do documento. Fechar com alterações segue
 a confirmação normal dos arquivos. Conflitos com mudanças externas também usam
 o fluxo comum do editor. **Copiar SVG** exporta a cena para a área de transferência.
+Zoom, enquadramento e desfazer/refazer ficam no rodapé do canvas.
+
+A aparência **Sistema** acompanha o Codisseu, escuro por padrão. No menu,
+**Claro** e **Escuro** permitem escolher a exibição desse desenho. A preferência
+é lembrada ao salvar. A troca de aparência preserva as cores originais dos
+objetos e do arquivo; SVG usa essas cores originais. A grade fica desligada
+por padrão e pode ser ativada no mesmo menu.
 
 O catálogo pertence ao projeto aberto. Ao voltar à pasta ou ao workspace, seus
 desenhos registrados existentes são reabertos automaticamente, inclusive os

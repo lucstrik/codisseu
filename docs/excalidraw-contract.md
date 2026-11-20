@@ -49,5 +49,32 @@ de todas as funções.
 4. Testar cliques/atalhos/drag/pan/zoom e inspecionar capturas reais em 1×/1,25×.
 5. Build local instalado e pacote/CI/release conferidos antes de relatar deploy.
 
+## Revisão visual solicitada pelo usuário
+
+Em 20/11/2026, o usuário rejeitou a primeira barra de botões e forneceu duas
+capturas do Excalidraw. Fontes reais e hashes em
+`reference/user/excalidraw-20261120`; build e escala desconhecidos, aparência
+clara observada somente nas imagens. Elas são referência de organização e não
+ativos usados como interface. O produto continua sendo Rust/egui.
+
+Requisitos da revisão: canvas ocupa a área de documento, barra compacta de
+ícones centralizada e flutuante, seleção discreta, propriedades contextuais,
+menu local, controles de zoom/histórico no rodapé e pequenos espaçamentos em
+todos os lados. Evitar faixas largas de botões textuais. Geometrias de ícones
+devem vir das fontes oficiais licenciadas, com procedência. Não expor ações
+de colaboração/conta/voz sem um serviço implementado.
+
+A aparência oferece Sistema, Claro e Escuro. Sistema segue a interface do
+Codisseu, atualmente escura; a preferência explícita do desenho é preservada
+sem reescrever cores originais de elementos/arquivo. A transformação visual
+precisa manter traços/textos legíveis sobre o canvas. Grade é opcional e não
+aparece por padrão. O modo escolhido e o tema não podem mover o canvas durante
+um gesto nem produzir alterações de geometria.
+
+Texto editado no canvas deve ser salvo antes de concluir Save/fechamento;
+Undo/Redo, Código JSON e os conflitos externos mantêm o contrato de documento.
+Repetir os fluxos de mouse/teclado e inspecionar os três temas, escalas100/125%
+e largura reduzida antes de substituir o pacote publicado.
+
 Resultados, limitações e limpeza constam de `docs/status.md` e do relatório da
 entrega. Compilação isolada não comprova os cenários acima.

@@ -1,0 +1,542 @@
+{
+  "schema_version": 1,
+  "source_status": "documented",
+  "collection_date": "2026-11-20",
+  "repository": "https://github.com/excalidraw/excalidraw",
+  "revision": "2c3dcc06ec807e81ab9437eceb1a8f7a3c590743",
+  "upstream_icons_source_sha256": "e03a33debc1d2af1e9085fb8e600b1e19b99d79c44b3690f18a74490d2f1e2c9",
+  "upstream_logo_source_sha256": "5a659c3f3bd718a4035ea239c57cd417d891afe618cd6a7d17ff6425fe826b49",
+  "license": "MIT",
+  "copyright": [
+    "Copyright (c) 2020 Excalidraw",
+    "Copyright (c) 2020-2026 Paweł Kuna (Tabler Icons)"
+  ],
+  "licenses": [
+    {
+      "file": "LICENSE",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/LICENSE",
+      "sha256": "1352d204fdb90d5e482c13139d848bc2c9300a9a7de358a0a558a23e72d0d8be"
+    },
+    {
+      "file": "TABLER-LICENSE",
+      "source_url": "https://raw.githubusercontent.com/tabler/tabler-icons/85e870dbe8680c2d6deefd062122d30ef1544a41/LICENSE",
+      "sha256": "b740a1d46122672da62833e97f7e7c8a13fa85cbc7445b584b297cc00dde93db"
+    }
+  ],
+  "upstream_jsx": "upstream-jsx.json",
+  "upstream_jsx_sha256": "4ca235b3e5dfb6b095b1de6768e3fa6bd4f78f412bd1d13187d4929ac43b42fa",
+  "rasterizer": "System librsvg/Cairo; build-time only; see tools/prepare_excalidraw_icons.py",
+  "brand_use": "Excalidraw names/wordmark identify the requested format tool, without implying endorsement or incorporation of React editor.",
+  "icons": [
+    {
+      "name": "lock",
+      "component": "LockedIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "c213cb6faa2c4af88bd8f67678e5682cdfa41e723dec2e581e961db69ad19284",
+      "svg": "lock.svg",
+      "svg_sha256": "354d8764080da63f5c51d360a88cc4e11d417ea80b58d9f5f9f9208e631dbec3",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-lock.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "0b7aa6f65e004e2faa5fc1d77b15d98419d70d8cfdf0f1da4b8808bced3b567f"
+    },
+    {
+      "name": "unlock",
+      "component": "UnlockedIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "4dc1564a228c7a5f5608964b5f979c8308a4034285ca5464b0624035023b72c7",
+      "svg": "unlock.svg",
+      "svg_sha256": "36b2d97c481cd12fe7f25f1921c7793d523bae6e067ef1fff5744b56f8975f61",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-unlock.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "ad3710762d6731e06963feb822a0c2a9c1970c7c6b43f35be1a9013087d4c44a"
+    },
+    {
+      "name": "hand",
+      "component": "handIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "84bae6d66c5be4e79f8a7985de435e17f4d27fa6fb968163e152c0b87b685871",
+      "svg": "hand.svg",
+      "svg_sha256": "6095f85467a1028c5307a74199d6517c3c7995a54dacdf513731b77a49422681",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-hand.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "e7e6d075c49b3ec2f028fb7268681284b4fba011753576d2922e61e28f6c64b4"
+    },
+    {
+      "name": "select",
+      "component": "SelectionIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "c55ab452b28509d0d6a5925a258eafae6e5a8ea74cc0c31b4909b92c10e4bc08",
+      "svg": "select.svg",
+      "svg_sha256": "077b7038e93353ad92ea29b6aea3df7e59c758e265d9f440d1f392c252630efe",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-select.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "51fd31f6da659b6212b97d8e4057579857fe4feb20990fe9c9f2446bf6ed3a87"
+    },
+    {
+      "name": "rectangle",
+      "component": "RectangleIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "09f792cf599324776168ad1e4796f585193e8d9b0ef1aca54564697ebb5aa4de",
+      "svg": "rectangle.svg",
+      "svg_sha256": "eb5fa2caf31d536fee240ac892ea4445b30651097081cbf48dc7d8ab6b466dd8",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-rectangle.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "58b3eea1c42a4fb3ef3c9f90e4b7d40eb8e6784e8e95e60b93ffc45feb4d9ab2"
+    },
+    {
+      "name": "diamond",
+      "component": "DiamondIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "ff90676b350f4b0a99526c7bbba3f0ab44a098fd995668e9b92693a733b62329",
+      "svg": "diamond.svg",
+      "svg_sha256": "d007c9da532f6140441aec4ce038a6f4d3078fcb7b0d678bafece0638ea39b6c",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-diamond.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "cdc8cc9ce155fd6890cc48c25e0706cbea0f86c240358dcde7660f277584b67c"
+    },
+    {
+      "name": "ellipse",
+      "component": "EllipseIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "c6ad3c5afd3a9bae018ab4ce33dc0ea93d67ed7448f8922b792b0d69a61f58dd",
+      "svg": "ellipse.svg",
+      "svg_sha256": "8b3547809e0862fa2c06e64e541a427b183eab9fff71787e79517bf3e1e87927",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-ellipse.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "0e5800562a90dbc827a0da231674dce583ae83f90d6843db514e83239a91ea2c"
+    },
+    {
+      "name": "arrow",
+      "component": "ArrowIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "a299d45f4de618ec5e7eb7ae6ef5a54dee00417676359887bf55149b96ebb21b",
+      "svg": "arrow.svg",
+      "svg_sha256": "93ecb1229a923d1ff0fc5d2ff7cbb2704f8633f6466e181779832a81e19c493f",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-arrow.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "ee43b92dec60f2aeb16ff01e51f7e3a9851543c4b60a6dfe7898d39e5b9994a1"
+    },
+    {
+      "name": "line",
+      "component": "LineIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "28352cb052ba5770895f1c58c21c38eea9ac56ae3ac60c14c3a00441c0551623",
+      "svg": "line.svg",
+      "svg_sha256": "0aad0244cd0dc6bc02bdc655f43eb78860e19a1632740ed2572de6b9a02c883a",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-line.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "f7581d729a1201c074bed5faa3c0932a8c2fa33c4c1fff45861a96a6ba1746bd"
+    },
+    {
+      "name": "freedraw",
+      "component": "FreedrawIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "90876903257e1e3fc42a7b1a1cab8c5d8052e16820c3155e1df75a6327e1e91e",
+      "svg": "freedraw.svg",
+      "svg_sha256": "c6bed0dc1e40e6ca2920b696ca5cc6181058459bd55105a58a47e0bd1c4ab1de",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-freedraw.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "a2d3d70b2edd62057c534a1def11bff727c77e8c0eeeaa47254888fff2595785"
+    },
+    {
+      "name": "text",
+      "component": "TextIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "66ff58626cd624c1925cf1b9c57a1fb3be9d31ee8f8ebf891b3aae828241b258",
+      "svg": "text.svg",
+      "svg_sha256": "9bd7cfa5b9f2520c5ce87ab07304b41014f67f5b46d230fcf723871b116a04f1",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-text.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "5b712e99a78628bf46bdc75e8d0bb63423733082e86b6c11f09044653a385e26"
+    },
+    {
+      "name": "eraser",
+      "component": "EraserIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "d5919c3b01cc713931acc33613f0c6d56572cbbf0d70fec240cece54b0ac757a",
+      "svg": "eraser.svg",
+      "svg_sha256": "bb640cfaa55a86d06db4b4779439f6f2b9e6158a2595d51b3d1bbe31ba6c3b19",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-eraser.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "54772b3a490d937040be9a264f18edc680a6808daae14dacefb7c15c0eae6da4"
+    },
+    {
+      "name": "more",
+      "component": "DotsIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "bd87f6e19c0c4b1df62715e85dc3ac6635a85cae4666c9e24787b80f8f1cc102",
+      "svg": "more.svg",
+      "svg_sha256": "53604b83f4bcc2ce0a76b753ede89e1ab56075780c1ed40243fff1296e6a9cea",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-more.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "3f9ce9a1885e0b88c9b5abfd6726af58a44734ff3be91e84920a5ca9f922de86"
+    },
+    {
+      "name": "menu",
+      "component": "HamburgerMenuIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "d408603e486c5dddb1583e540143015f58974586f25d394332d2ee85a7a910f0",
+      "svg": "menu.svg",
+      "svg_sha256": "85e62daa1998b3431b8dac66f6e707ce3fc0a57e7422afb5e01e28a4b8879853",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-menu.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "3a006bc40774001d1d0c1b2fb9bf1667ba8dbd6ce7523fdd6dfe7848192d5dc0"
+    },
+    {
+      "name": "zoom-in",
+      "component": "ZoomInIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "0ba77b1416d4921ddd7eef8773d41ab7dc666ef1f41607fb452128e19b3a3b00",
+      "svg": "zoom-in.svg",
+      "svg_sha256": "eaaeb81feba65f49b1c76cb8a3a99bf3041957cb6f32424e435553d9ae33b28e",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-zoom-in.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "889dc8dd334fff2ede798d7a301f66bbd549c8e215d5d68a1522956af887ebd4"
+    },
+    {
+      "name": "zoom-out",
+      "component": "ZoomOutIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "3e639e6608d0aff668ab0fe3bf8855f789c6e3baad77c6e63847a0beb2bc9d23",
+      "svg": "zoom-out.svg",
+      "svg_sha256": "1116c90b5d75a0a9764008946236e894371b31a3947dbe5ae67f68e235cd4d23",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-zoom-out.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "29f5a8946e5fc0757abc891de427fbe6dedbd1bd9f4dbda5d4e3a2c9cde43144"
+    },
+    {
+      "name": "undo",
+      "component": "UndoIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "ca1ddb520508784779c0b27078494b5a05a22e2c329840c6a1bb249af9f1fb08",
+      "svg": "undo.svg",
+      "svg_sha256": "7508354f16d13ddf8e83bb6ce98a3c03db5276e0e7edc76fe195f01ca9deb907",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-undo.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "d19bb3d3e77fa96e36d27d99baf1713aaf3ee4a618ceae5af1a6b05b43776ec9"
+    },
+    {
+      "name": "redo",
+      "component": "RedoIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "702e90193a9f83f05382e691d7b76d971ecf9f3ddb94105cde525f02096f1cb3",
+      "svg": "redo.svg",
+      "svg_sha256": "5e1022ba51b5a73587fcadef9284914ec73f8233907db7a9e51a6b4d177911cf",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-redo.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "20fffb43cebc5181820a95d3ac3e28cad5726eee1ea5e7ad0b8ce4b47de3f2bc"
+    },
+    {
+      "name": "fit",
+      "component": "fullscreenIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "da4352a71de45b68c1e10a8d345dcb53683b4c118474f496ae18433159cc1719",
+      "svg": "fit.svg",
+      "svg_sha256": "10244be4a4dc169b328f6a79b03e20f38259fb03933261bafeff30aca083ffa4",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-fit.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "b2d66f672526ff91498d6545b5c564a13a82d40d5427056e80d729a0f38bf88e"
+    },
+    {
+      "name": "duplicate",
+      "component": "DuplicateIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "5af5f3d368e5d6ac672d6d752a1d9543f72a3fb744fbe23b7e002334605bab3a",
+      "svg": "duplicate.svg",
+      "svg_sha256": "af1058a2175650e7f1965029b0a719b1a1f9df7a7a211da4164518b28f548dc9",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-duplicate.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "e2323ada8380eff3542057d95fd8f916260fec18dc0701392eef7231fbbf4ea4"
+    },
+    {
+      "name": "delete",
+      "component": "TrashIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "6c661259496aedd7cf49371b55c50c005c4bc93ce3468117fa16738f6f020e58",
+      "svg": "delete.svg",
+      "svg_sha256": "829210df8f3a6889516d0c8c3246848796a882bca93f64d975832af6cd31c9f2",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-delete.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "5800a22b731bec3f3976ab4cf308067abdf0b4f5884ce67defdfcd7720a8a1b3"
+    },
+    {
+      "name": "grid",
+      "component": "gridIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "eaf0586bdd13328b335b2ca1e7f7827c4080b1b23af66c07eb925488efa75be3",
+      "svg": "grid.svg",
+      "svg_sha256": "6500cf13c7ab92e638e8003874b370eb4be839f78bafb5c6ade340a98810d2a8",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-grid.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "b9c3a6d5a2aa68bb67d48fa9ac7530dd0daf210078a49526f8293fa61a595c4e"
+    },
+    {
+      "name": "source",
+      "component": "codeIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "6fa1812246455a98959ccbdedd19042ed80a83633399830b8240cf9c88f403ee",
+      "svg": "source.svg",
+      "svg_sha256": "c26b8b2a20fa92418bd50010ed177ca642e6b5b0e01cdbf9d7c75bae07d0280f",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-source.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "e981d0eb1d040ddae4840c393177c1679a6df70b2cb982d9b125c594b0f23652"
+    },
+    {
+      "name": "save",
+      "component": "downloadIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "11b991a8c6d3ce0398ed9ce2df9a6ecf464db6d035cb24bb5080c9963a2aed1f",
+      "svg": "save.svg",
+      "svg_sha256": "52ea915a8f3e32a515d1a9a5af52bf5ce143b78a2818fdab37ea0996d01c731f",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-save.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "2887389a71fcd188ee7296eba7a6d41ff652879a0f52c9c11c9a1f1f699c04ed"
+    },
+    {
+      "name": "export",
+      "component": "ExportIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "3f9e3d217c9e7138b304928a6b9b4fa62fbeaca08902f88e3dd487c1ec10a292",
+      "svg": "export.svg",
+      "svg_sha256": "7823f701b3af32a7e79c174af16a94a83273badfd1c6fde1ff3c13dc1bebd23a",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-export.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "68bcf1526c5873168ea4fb3835e6d3f2274bd7d708696b2e046ce7164c7dead1"
+    },
+    {
+      "name": "note",
+      "component": "stickyNoteToolIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "fc1a9327065a6a5435c2c0b9e798d0922a943f3a31a68f280e683d216906d32d",
+      "svg": "note.svg",
+      "svg_sha256": "14a9c3a18e8b584975a20320a42b568a577c70fc7568f3ca028ee334dea69304",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-note.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "d20a83fc72ac84f6eae3dc4ee934bdc9c37227c736aefa079ab3afd8ebbf22ab"
+    },
+    {
+      "name": "image",
+      "component": "ImageIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "8aa517b226281226fc3335743053760bcb89b8b198a1677ed932758b20ad5742",
+      "svg": "image.svg",
+      "svg_sha256": "1384cec7b58c868361f194be2b973bf2d35fb62646b68bbc31df20003f828683",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-image.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "8fec1490b40b2124342c15516a90c8cf472ee1b47087e7de6f85dc034d07b0a9"
+    },
+    {
+      "name": "library",
+      "component": "LibraryIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "6880136678b3218db7c7e95d6674bd639804e9206452ffe72e324092b3fca322",
+      "svg": "library.svg",
+      "svg_sha256": "4325c1aa6ec25347d67118263793f259509ffeee7aebf2770dabf07afff6388c",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-library.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "92b524df8c5bfcd0d3cc22414070454d3cc1e9e9adef434418cc05044cf06e7d"
+    },
+    {
+      "name": "help",
+      "component": "HelpIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "fdbc12fa0c6caffa670988d8b5977b98f0f0e5e023cda9cf801d01e849b9db29",
+      "svg": "help.svg",
+      "svg_sha256": "34d7d053aba74fa988f3bfe1ce2f8d56afc02eaaf041fe7d79b93ceda093cf0f",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-help.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "e8f93ddaafff2472c9c24f54ff557941f57511f8eb4d56acc101c4197d04ec01"
+    },
+    {
+      "name": "open",
+      "component": "LoadIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "d7b0ad5ffb467ca3abec56178f639e910e3b7ba39f49d9d7e653b4c2e71c71e3",
+      "svg": "open.svg",
+      "svg_sha256": "d68ebafc645d35bae5621551cfc9c19797eb620b498e45abee89efaf000d6b98",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-open.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "JSX attributes converted to SVG; currentColor replaced by white for alpha-only tint. Original geometry, viewBox and per-path stroke weights retained.",
+      "png_sha256": "1488269bf33ce478ee27ef4d3fc5f459c5dc8ed37e4a846f9310f603c2265fc6"
+    },
+    {
+      "name": "front",
+      "component": "BringToFrontIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "35b6cae868ed2178a153e613c2d8625e717a4da2faef7bdae04cfcb710b62e0f",
+      "svg": "front.svg",
+      "svg_sha256": "ec362e57df78c348cac612fb07f12ed7260b97a74c74027c5c523e049c7ca94d",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-front.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "Original arrowBarToTopJSX geometry and stroke retained; back uses original CSS 180 degree rotation, converted to SVG transform; currentColor replaced by white for alpha-only tint.",
+      "png_sha256": "6fd10e55e6cfb7d34e8b3d918b8d5d58582de588b863f014493b77699658f8d0"
+    },
+    {
+      "name": "back",
+      "component": "SendToBackIcon",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/icons.tsx",
+      "upstream_jsx_sha256": "35b6cae868ed2178a153e613c2d8625e717a4da2faef7bdae04cfcb710b62e0f",
+      "svg": "back.svg",
+      "svg_sha256": "243d3315895cbca084db0e53017dee64794812c1e47ccf7b91499f585063587f",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-back.png",
+      "runtime_size": [
+        64,
+        64
+      ],
+      "modification": "Original arrowBarToTopJSX geometry and stroke retained; back uses original CSS 180 degree rotation, converted to SVG transform; currentColor replaced by white for alpha-only tint.",
+      "png_sha256": "42ebaf24e2dc5bd7cf4105f989f1bd69b7ec3f2cf40c3e1b9f36ebb06e879cb5"
+    },
+    {
+      "name": "logo-text",
+      "component": "LogoText",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/ExcalidrawLogo.tsx",
+      "upstream_source_sha256": "5a659c3f3bd718a4035ea239c57cd417d891afe618cd6a7d17ff6425fe826b49",
+      "svg": "logo-text.svg",
+      "svg_sha256": "ace96098045eb25e5364b999c1eed9068184fc329a5584eff434eced594b4687",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-logo-text.png",
+      "runtime_size": [
+        900,
+        110
+      ],
+      "modification": "Official paths copied unchanged; React wrapper/classes omitted; currentColor replaced by white for tint. Combined logo reproduces small layout proportions (40px symbol, 12px gap, 28px wordmark); no background.",
+      "png_sha256": "aba89e06193d87bbeff3d9c2900e4a2fcaf082c43a778da1689581c3c44132d7"
+    },
+    {
+      "name": "logo",
+      "component": "LogoIcon + LogoText",
+      "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/ExcalidrawLogo.tsx",
+      "upstream_source_sha256": "5a659c3f3bd718a4035ea239c57cd417d891afe618cd6a7d17ff6425fe826b49",
+      "svg": "logo.svg",
+      "svg_sha256": "f0991ad6f9f5cf5f4182ee2d1389fdfdf1410b1722d91076a109dbca2b2a6648",
+      "runtime_png": "crates/codisseu-ui/assets/excalidraw/toolbar-logo.png",
+      "runtime_size": [
+        844,
+        120
+      ],
+      "modification": "Official paths copied unchanged; React wrapper/classes omitted; currentColor replaced by white for tint. Combined logo reproduces small layout proportions (40px symbol, 12px gap, 28px wordmark); no background.",
+      "png_sha256": "62c32a6296454347edb6e14c1746df87d0082ffd7e86bf730168e29aeb02d33e"
+    }
+  ]
+}

@@ -7,7 +7,10 @@ use codisseu_draw::Scene;
 pub(super) struct DrawingsUi {
     pub open: bool,
     name: String,
+    exit_requested: bool,
+    exit_dispatching: bool,
     project: Option<PathBuf>,
+    commands: std::collections::BTreeMap<(ViewId, DocumentId), Vec<&'static str>>,
     entries: std::collections::BTreeMap<(ViewId, DocumentId), DrawingView>,
 }
 struct DrawingView {
@@ -18,11 +21,88 @@ struct DrawingView {
 }
 
 impl CodisseuApp {
+    pub(super) fn drawings_queue(
+        &mut self,
+        view: ViewId,
+        id: DocumentId,
+        commands: Vec<&'static str>,
+    ) {
+        if self
+            .service
+            .documents
+            .iter()
+            .any(|doc| doc.id == id && is_drawing(&doc.path))
+        {
+            self.drawings_ui
+                .commands
+                .entry((view, id))
+                .or_default()
+                .extend(commands);
+        }
+    }
+    pub(super) fn drawings_defer_exit(&mut self) -> bool {
+        if self.drawings_ui.exit_dispatching {
+            return false;
+        }
+        let Some(view) = self.service.active_view() else {
+            return false;
+        };
+        if self.api_ui.active_in_view(view)
+            || self.browser_ui.active_in_view(view)
+            || self.jira_active_in_view(view)
+        {
+            return false;
+        }
+        if self
+            .service
+            .view_document(view)
+            .is_some_and(|doc| is_drawing(&doc.path))
+        {
+            self.drawings_ui.exit_requested = true;
+            true
+        } else {
+            false
+        }
+    }
+    /// Finish accepted intents even if a tab switch keeps their canvas out of this frame.
+    pub(super) fn drawings_flush_commands(&mut self, ctx: &egui::Context) {
+        for ((view, id), commands) in std::mem::take(&mut self.drawings_ui.commands) {
+            if !self.service.documents.iter().any(|doc| doc.id == id) {
+                continue;
+            }
+            for command in commands {
+                match command {
+                    "save" => self.send(Command::Save { id }),
+                    "undo" => self.send(Command::Undo { id }),
+                    "redo" => self.send(Command::Redo { id }),
+                    "close" => {
+                        if self
+                            .service
+                            .view(view)
+                            .is_some_and(|v| v.tabs().contains(&id))
+                        {
+                            self.request_close_tab(view, id);
+                        }
+                        break;
+                    }
+                    _ => {}
+                }
+            }
+            ctx.request_repaint();
+        }
+        if std::mem::take(&mut self.drawings_ui.exit_requested) {
+            self.drawings_ui.exit_dispatching = true;
+            self.request_exit();
+            self.drawings_ui.exit_dispatching = false;
+            ctx.request_repaint();
+        }
+    }
     pub(super) fn drawings_tick(&mut self) {
         if self.drawings_ui.project != self.service.workspace_path().map(PathBuf::from) {
             self.drawings_ui.project = self.service.workspace_path().map(PathBuf::from);
             self.drawings_ui.name.clear();
             self.drawings_ui.entries.clear();
+            self.drawings_ui.commands.clear();
         }
     }
     pub(super) fn drawings_panel(&mut self, ui: &mut egui::Ui) {
@@ -119,34 +199,28 @@ impl CodisseuApp {
             entry.scene = parse_scene(doc.text());
             entry.version = version;
         }
+        let mut commands = self.drawings_ui.commands.remove(&key).unwrap_or_default();
+        if commands.contains(&"save") {
+            entry.canvas.request_save();
+        }
         let old_source = entry.source;
         let mut save = false;
-        egui::Frame::new()
-            .inner_margin(egui::Margin::symmetric(12, 6))
-            .show(ui, |ui| {
-                ui.horizontal_wrapped(|ui| {
-                    ui.strong("Excalidraw");
-                    ui.selectable_value(&mut entry.source, false, "Desenho");
-                    ui.selectable_value(&mut entry.source, true, "Código JSON");
-                    save = ui
-                        .add_enabled(!read_only, egui::Button::new("Salvar desenho"))
-                        .clicked();
-                    if ui.button("Copiar SVG").clicked() {
-                        match entry
-                            .scene
-                            .as_ref()
-                            .map_err(Clone::clone)
-                            .and_then(Scene::export_svg)
-                        {
-                            Ok(svg) => {
-                                ui.ctx().copy_text(svg);
-                                self.service.status = "SVG copiado".into();
-                            }
-                            Err(error) => self.service.last_error = Some(error),
-                        }
-                    }
+        let mut copy_svg = false;
+        if entry.source || entry.scene.is_err() {
+            egui::Frame::new()
+                .inner_margin(egui::Margin::symmetric(12, 6))
+                .show(ui, |ui| {
+                    ui.horizontal_wrapped(|ui| {
+                        ui.strong("Excalidraw");
+                        ui.selectable_value(&mut entry.source, false, "Desenho");
+                        ui.selectable_value(&mut entry.source, true, "Código JSON");
+                        save = ui
+                            .add_enabled(!read_only, egui::Button::new("Salvar desenho"))
+                            .clicked();
+                        copy_svg = ui.button("Copiar SVG").clicked();
+                    });
                 });
-            });
+        }
         if old_source != entry.source {
             entry.canvas.cancel_interaction();
             if let Some(doc) = self.service.view_document(view) {
@@ -162,7 +236,10 @@ impl CodisseuApp {
             match &mut entry.scene {
                 Ok(scene) => {
                     let result = ui
-                        .add_enabled_ui(!read_only, |ui| entry.canvas.show(ui, scene))
+                        .push_id(("codisseu.drawing", view, id), |ui| {
+                            ui.add_enabled_ui(!read_only, |ui| entry.canvas.show(ui, scene))
+                                .inner
+                        })
                         .inner;
                     if result.changed {
                         match scene.to_json() {
@@ -183,15 +260,22 @@ impl CodisseuApp {
                             }
                             Err(error) => {
                                 self.service.last_error = Some(error);
-                                entry.version = 0;
+                                entry.version = u64::MAX;
                             }
                         }
                     }
                     if result.undo {
-                        self.send(Command::Undo { id });
+                        commands.push("undo");
                     }
                     if result.redo {
-                        self.send(Command::Redo { id });
+                        commands.push("redo");
+                    }
+                    save |= result.save;
+                    copy_svg |= result.copy_svg;
+                    if result.source {
+                        entry.canvas.cancel_interaction();
+                        entry.source = true;
+                        self.focus_editor = true;
                     }
                 }
                 Err(error) => {
@@ -202,10 +286,36 @@ impl CodisseuApp {
                 }
             }
         }
-        if save {
-            self.send(Command::Save { id });
+        if copy_svg {
+            match entry
+                .scene
+                .as_ref()
+                .map_err(Clone::clone)
+                .and_then(Scene::export_svg)
+            {
+                Ok(svg) => {
+                    ui.ctx().copy_text(svg);
+                    self.service.status = "SVG copiado".into();
+                }
+                Err(error) => self.service.last_error = Some(error),
+            }
+        }
+        if save && !commands.contains(&"save") {
+            commands.push("save");
         }
         self.drawings_ui.entries.insert(key, entry);
+        for command in commands {
+            match command {
+                "undo" => self.send(Command::Undo { id }),
+                "redo" => self.send(Command::Redo { id }),
+                "save" => self.send(Command::Save { id }),
+                "close" => {
+                    self.request_close_tab(view, id);
+                    break;
+                }
+                _ => {}
+            }
+        }
     }
 
     pub(super) fn drawings_shortcuts(&mut self, ctx: &egui::Context) -> bool {
@@ -225,35 +335,58 @@ impl CodisseuApp {
         else {
             return false;
         };
+        let id = doc.id;
         if self
             .drawings_ui
             .entries
-            .get(&(view, doc.id))
+            .get(&(view, id))
             .is_some_and(|entry| entry.source)
-            || text_field_focused(ctx)
         {
             return false;
         }
-        let id = doc.id;
-        if consume_exact(ctx, Modifiers::COMMAND, Key::S) {
-            self.send(Command::Save { id });
-            return true;
+        let text = text_field_focused(ctx);
+        let commands = ctx.input_mut(|input| {
+            let mut commands = Vec::new();
+            input.events.retain(|event| {
+                let egui::Event::Key {
+                    key,
+                    pressed: true,
+                    modifiers,
+                    ..
+                } = event
+                else {
+                    return true;
+                };
+                let action = if *key == Key::S && modifiers.matches_exact(Modifiers::COMMAND) {
+                    Some("save")
+                } else if *key == Key::W && modifiers.matches_exact(Modifiers::COMMAND) {
+                    Some("close")
+                } else if !text
+                    && ((*key == Key::Z
+                        && modifiers.matches_exact(Modifiers::COMMAND.plus(Modifiers::SHIFT)))
+                        || (*key == Key::Y && modifiers.matches_exact(Modifiers::COMMAND)))
+                {
+                    Some("redo")
+                } else if !text && *key == Key::Z && modifiers.matches_exact(Modifiers::COMMAND) {
+                    Some("undo")
+                } else {
+                    None
+                };
+                if let Some(action) = action {
+                    commands.push(action);
+                    false
+                } else {
+                    true
+                }
+            });
+            commands
+        });
+        if commands.is_empty() {
+            false
+        } else {
+            self.drawings_queue(view, id, commands);
+            true
         }
-        if consume_exact(ctx, Modifiers::COMMAND.plus(Modifiers::SHIFT), Key::Z)
-            || consume_exact(ctx, Modifiers::COMMAND, Key::Y)
-        {
-            self.send(Command::Redo { id });
-            return true;
-        }
-        if consume_exact(ctx, Modifiers::COMMAND, Key::Z) {
-            self.send(Command::Undo { id });
-            return true;
-        }
-        if consume_exact(ctx, Modifiers::COMMAND, Key::W) {
-            self.request_close_tab(view, id);
-            return true;
-        }
-        false
     }
 }
 fn parse_scene(text: &str) -> Result<Scene, String> {
