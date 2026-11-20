@@ -1,8 +1,10 @@
 # codisseu-draw
 
 Modelo Rust de cenas `.excalidraw` versão 2, independente da GUI. O Codisseu
-implementa seu próprio renderer egui; não incorpora React, JavaScript, CSS,
-logotipos ou código-fonte do Excalidraw.
+implementa seu próprio renderer egui; este modelo não incorpora React,
+JavaScript, CSS ou o motor Excalidraw. A interface usa o símbolo oficial MIT
+como ícone da ferramenta, com procedência e licença registradas separadamente
+em `reference/public/excalidraw-icon`.
 
 Formato consultado em 20/11/2026 (`documented`):
 [JSON Schema oficial](https://plus.excalidraw.com/docs/sdk/codebase/json-schema).

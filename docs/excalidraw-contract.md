@@ -9,8 +9,11 @@ Referências documentais: [formato oficial](https://github.com/excalidraw/excali
 [serialização](https://github.com/excalidraw/excalidraw/blob/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/data/json.ts)
 e [extensão](https://github.com/excalidraw/excalidraw-vscode/blob/06bb63cea9b52d4759fc16606e95f48c0accf14c/README.md),
 consultadas em 20/11/2026 (`documented`, revisões upstream fixadas nos links; nenhuma medição
-local da extensão). Código e símbolos novos são próprios; nenhum ativo de marca
-é incorporado. Compatibilidade não significa paridade de todas as funções.
+local da extensão). O editor é próprio; por pedido do usuário, o ícone usa o
+LogoIcon oficial Excalidraw (MIT, Copyright (c) 2020 Excalidraw), sem fundo,
+monocromático e nos mesmos tamanhos de rail/arquivo. Licença, revisão e hashes
+em `reference/public/excalidraw-icon`. Compatibilidade não significa paridade
+de todas as funções.
 
 ## Contrato
 

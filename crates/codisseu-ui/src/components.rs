@@ -125,6 +125,7 @@ pub(super) fn paint_markdown_icon(ui: &Ui, rect: Rect, icon: u8) {
 
 fn public_icon(icon: Icon) -> Option<&'static str> {
     Some(match icon {
+        Icon::Drawing => "excalidraw-symbol",
         Icon::MergeAcceptLeft => "merge-accept-left",
         Icon::MergeAcceptRight => "merge-accept-right",
         Icon::MergeIgnore => "merge-ignore",
@@ -198,7 +199,6 @@ fn public_icon(icon: Icon) -> Option<&'static str> {
         Icon::Next => "next",
         // Original request/response artwork and database-specific fallbacks.
         Icon::Clock
-        | Icon::Drawing
         | Icon::Jira
         | Icon::Api
         | Icon::Browser
@@ -226,6 +226,17 @@ pub(super) fn paint_icon_monochrome(ui: &Ui, rect: Rect, icon: Icon, tint: Color
 }
 
 pub(super) fn paint_icon(ui: &Ui, rect: Rect, icon: Icon, tint: Color32) {
+    if matches!(icon, Icon::Drawing) {
+        // Exact MIT-licensed Excalidraw LogoIcon silhouette; use the same
+        // monochrome foreground, disabled opacity and size cache as other tools.
+        let side = if rect.width().min(rect.height()) >= 34. {
+            20.
+        } else {
+            16.
+        };
+        document_icons::paint_monochrome(ui, rect, "excalidraw-symbol", side, tint);
+        return;
+    }
     if let Some(asset) = public_icon(icon) {
         let side = if matches!(icon, Icon::Brain | Icon::Shield | Icon::AiSend)
             || rect.width().min(rect.height()) >= 34.
@@ -268,18 +279,7 @@ pub(super) fn paint_icon(ui: &Ui, rect: Rect, icon: Icon, tint: Color32) {
         ));
     };
     match icon {
-        Icon::Drawing => {
-            line(&[(2., 4.), (14., 4.), (14., 16.), (2., 16.), (2., 4.)]);
-            line(&[
-                (6., 13.),
-                (8., 9.),
-                (15., 2.),
-                (18., 5.),
-                (11., 12.),
-                (6., 13.),
-            ]);
-            line(&[(13., 4.), (16., 7.)]);
-        }
+        Icon::Drawing => {}
         Icon::Clock => {
             // Original monochrome clock, following the shared icon box/stroke.
             ui.painter().circle_stroke(p(10., 10.), side * 0.36, stroke);

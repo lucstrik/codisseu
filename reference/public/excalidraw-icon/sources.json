@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "source_status": "documented",
+  "collection_date": "2026-11-20",
+  "name": "Excalidraw LogoIcon",
+  "repository": "https://github.com/excalidraw/excalidraw",
+  "revision": "2c3dcc06ec807e81ab9437eceb1a8f7a3c590743",
+  "source_path": "packages/excalidraw/components/ExcalidrawLogo.tsx",
+  "source_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/packages/excalidraw/components/ExcalidrawLogo.tsx",
+  "source_sha256": "5a659c3f3bd718a4035ea239c57cd417d891afe618cd6a7d17ff6425fe826b49",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2020 Excalidraw",
+  "license_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/2c3dcc06ec807e81ab9437eceb1a8f7a3c590743/LICENSE",
+  "license_sha256": "1352d204fdb90d5e482c13139d848bc2c9300a9a7de358a0a558a23e72d0d8be",
+  "derived_svg": "excalidraw-symbol.svg",
+  "svg_sha256": "a08b25cf5182f19fe6221e3224fb366ae3091d48e9081eddde23c7dac6652ba7",
+  "runtime_png": "crates/codisseu-ui/assets/excalidraw/excalidraw-symbol.png",
+  "png_sha256": "8f300926bce8622576d4724c88b8e00f3d3a431f0ac9790202d0f1d048591962",
+  "modification": "LogoIcon path and 0 0 40 40 viewBox copied unchanged; React wrapper omitted; currentColor replaced by #ffffff for alpha-only shared monochrome tint; rendered to transparent 64x64 PNG with system librsvg/Cairo. No wordmark or background. Runtime uses compiled-in bytes and common 20px rail/16px file icon sizes.",
+  "brand_use": "Identifies the requested Excalidraw format tool; does not imply endorsement or incorporation of the Excalidraw React editor."
+}

@@ -158,9 +158,9 @@
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
-      "sha256": "6a1025811f148a1fe5c519572627e345f46e6d1d53f0afca0c653fdcb886bf32",
-      "source_sha256": "e01c2189191fc12de02d68e3e8c653cd8f7cc76451cd07a37e145d4664fe0c2d",
-      "bytes": 1454,
+      "sha256": "43440aefe3e17b6b2c56266bbac603ae647cb34df0ccaee8132d15312bf48dbc",
+      "source_sha256": "49d05509d9edbaf1babcec78be07aa95e278fc50705f419e9de3a47d08277ee6",
+      "bytes": 1862,
       "mode": "0o644",
       "transformations": [
         {
@@ -2520,9 +2520,9 @@
     },
     {
       "path": "crates/codisseu-draw/README.md",
-      "sha256": "6a2b8f388789d49e2d1549c1f9e289b136926b7968849521c07104349fa624d1",
-      "source_sha256": "6a2b8f388789d49e2d1549c1f9e289b136926b7968849521c07104349fa624d1",
-      "bytes": 2404,
+      "sha256": "73e36b04856d62d111a047edf76a28356d38d8e5823e6bec5879876049200df3",
+      "source_sha256": "73e36b04856d62d111a047edf76a28356d38d8e5823e6bec5879876049200df3",
+      "bytes": 2555,
       "mode": "0o644",
       "transformations": []
     },
@@ -4023,6 +4023,14 @@
       "transformations": []
     },
     {
+      "path": "crates/codisseu-ui/assets/excalidraw/excalidraw-symbol.png",
+      "sha256": "8f300926bce8622576d4724c88b8e00f3d3a431f0ac9790202d0f1d048591962",
+      "source_sha256": "8f300926bce8622576d4724c88b8e00f3d3a431f0ac9790202d0f1d048591962",
+      "bytes": 2201,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
       "path": "crates/codisseu-ui/assets/ide-icons/add.png",
       "sha256": "fca172416052ab599d3937f10b0bb556f6f17cbad20216da2f1e7791df47be1f",
       "source_sha256": "fca172416052ab599d3937f10b0bb556f6f17cbad20216da2f1e7791df47be1f",
@@ -5056,9 +5064,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/components.rs",
-      "sha256": "917fe4bd629d4895e14f5c7f1ba83d752d3098454a301d24a34cfed25152f9bf",
-      "source_sha256": "917fe4bd629d4895e14f5c7f1ba83d752d3098454a301d24a34cfed25152f9bf",
-      "bytes": 54271,
+      "sha256": "e3da1685701304ebfaa924ac5d4d572517af8364f43081c334c47d7c91b5249f",
+      "source_sha256": "e3da1685701304ebfaa924ac5d4d572517af8364f43081c334c47d7c91b5249f",
+      "bytes": 54394,
       "mode": "0o644",
       "transformations": []
     },
@@ -5293,9 +5301,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/document_icons.rs",
-      "sha256": "2ec5f0b13a12e0d0293191331854d76ce42759d75e6b080d8d6709a59cc64c41",
-      "source_sha256": "2ec5f0b13a12e0d0293191331854d76ce42759d75e6b080d8d6709a59cc64c41",
-      "bytes": 16430,
+      "sha256": "ccaf91d0511282c3d75f922f17bfcfec7ac90cf8151a5e1c4691a904dff3c57f",
+      "source_sha256": "ccaf91d0511282c3d75f922f17bfcfec7ac90cf8151a5e1c4691a904dff3c57f",
+      "bytes": 16601,
       "mode": "0o644",
       "transformations": []
     },
@@ -7184,9 +7192,9 @@
     },
     {
       "path": "docs/excalidraw-contract.md",
-      "sha256": "6a9fd3d393660185744a56baab14a6728c11e6ee6953b551d6c8118e25edf599",
-      "source_sha256": "6a9fd3d393660185744a56baab14a6728c11e6ee6953b551d6c8118e25edf599",
-      "bytes": 3462,
+      "sha256": "f400c1f345b71855ffda9121e46ec0ebccdb9390da266b597aa870894d90edc1",
+      "source_sha256": "f400c1f345b71855ffda9121e46ec0ebccdb9390da266b597aa870894d90edc1",
+      "bytes": 3641,
       "mode": "0o644",
       "transformations": []
     },
@@ -7440,9 +7448,9 @@
     },
     {
       "path": "docs/public-release-status.md",
-      "sha256": "3803fa1e4a6102dbf6d372c8afc1b10cb565d1ef3a5dc986251e43677eeb7bf4",
-      "source_sha256": "3803fa1e4a6102dbf6d372c8afc1b10cb565d1ef3a5dc986251e43677eeb7bf4",
-      "bytes": 5873,
+      "sha256": "45bb99e9edc50c7d9b6ed7ca085fb02bae956967801dd067e2ba3f0467e6a3f8",
+      "source_sha256": "45bb99e9edc50c7d9b6ed7ca085fb02bae956967801dd067e2ba3f0467e6a3f8",
+      "bytes": 5985,
       "mode": "0o644",
       "transformations": []
     },
@@ -7530,9 +7538,9 @@
     },
     {
       "path": "docs/status.md",
-      "sha256": "4da82b6b9741ab6cd3b8bcb4be68c113ce8ef8d8fe17fc390e58fc12ef188d25",
+      "sha256": "7e6fc73d034f651c4f32d900298c313f973f173eb0705e4772c22bb9558d2b05",
       "source_sha256": null,
-      "bytes": 9154,
+      "bytes": 9266,
       "mode": "0o644",
       "transformations": [
         {
@@ -18621,6 +18629,30 @@
       "transformations": []
     },
     {
+      "path": "reference/public/excalidraw-icon/LICENSE",
+      "sha256": "1352d204fdb90d5e482c13139d848bc2c9300a9a7de358a0a558a23e72d0d8be",
+      "source_sha256": "1352d204fdb90d5e482c13139d848bc2c9300a9a7de358a0a558a23e72d0d8be",
+      "bytes": 1067,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icon/excalidraw-symbol.svg",
+      "sha256": "a08b25cf5182f19fe6221e3224fb366ae3091d48e9081eddde23c7dac6652ba7",
+      "source_sha256": "a08b25cf5182f19fe6221e3224fb366ae3091d48e9081eddde23c7dac6652ba7",
+      "bytes": 4735,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "reference/public/excalidraw-icon/sources.json",
+      "sha256": "dd8c797feaab7ecc49dd54d6d1bc2c9cb6dae04083a2247a47e4c27efda38244",
+      "source_sha256": "dd8c797feaab7ecc49dd54d6d1bc2c9cb6dae04083a2247a47e4c27efda38244",
+      "bytes": 1613,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
       "path": "reference/public/file-watch-dependencies/inotify-0.11.5/LICENSE",
       "sha256": "7f78b31de4e7a3e2ac8de40e2b409eda313f03637aa62b8416fbde9bdc5ce4c9",
       "source_sha256": "7f78b31de4e7a3e2ac8de40e2b409eda313f03637aa62b8416fbde9bdc5ce4c9",
@@ -21688,9 +21720,9 @@
     },
     {
       "path": "tools/release_notices.py",
-      "sha256": "cb2d149de48ed97ed7ec8e9e152d1b7ee5574d5930e7796efa24d19ab4ffaae2",
-      "source_sha256": "cb2d149de48ed97ed7ec8e9e152d1b7ee5574d5930e7796efa24d19ab4ffaae2",
-      "bytes": 6642,
+      "sha256": "87ccff1d69fa7f37dd47c0e1ff7444dd32a39af2d8b97e0bcb1997cda4c099ce",
+      "source_sha256": "87ccff1d69fa7f37dd47c0e1ff7444dd32a39af2d8b97e0bcb1997cda4c099ce",
+      "bytes": 6661,
       "mode": "0o644",
       "transformations": []
     },

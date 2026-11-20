@@ -15,7 +15,8 @@ O renderer é próprio e compatível com JSON v2; não incorpora a extensão VS 
 nem o React Excalidraw. Imagens e tipos desconhecidos são preservados com
 indicação na interface; roughness, hachuras, fontes/bindings avançados,
 colaboração e importação de fonte embutida PNG/SVG não têm paridade integral.
-SVG recusa objetos visíveis não suportados.
+SVG recusa objetos visíveis não suportados. O rail usa o símbolo oficial
+Excalidraw, MIT, monocromático e sem fundo, nas proporções comuns do Codisseu.
 
 Validação local desta implementação: 32 testes Rust de desenho/catálogo/core/UI,
 13 regressões de workspace/HTTP/runtimes e 14 testes Python de empacotamento e

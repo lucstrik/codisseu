@@ -12,6 +12,10 @@ macro_rules! asset {
 }
 fn asset(name: &str) -> (&'static str, &'static [u8]) {
     match name {
+        "excalidraw-symbol" => (
+            "codisseu.excalidraw-symbol",
+            include_bytes!("../assets/excalidraw/excalidraw-symbol.png").as_slice(),
+        ),
         "merge-accept-left" => asset!("merge-accept-left"),
         "merge-accept-right" => asset!("merge-accept-right"),
         "merge-ignore" => asset!("merge-ignore"),

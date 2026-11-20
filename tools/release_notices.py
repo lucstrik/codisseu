@@ -84,7 +84,7 @@ def collect(destination):
     # These directories contain public upstream notices/provenance. Font binary
     # files are already embedded in the executable, so do not duplicate them.
     for name in ("fonts", "ide-icons", "vscode-codicons", "visual-v3", "visual-v4",
-                 "intellij-oss", "icons", "tree-sitter", "unicode-segmentation"):
+                 "intellij-oss", "icons", "tree-sitter", "unicode-segmentation", "excalidraw-icon"):
         source = ROOT / "reference/public" / name
         if source.is_dir():
             shutil.copytree(source, destination / "assets" / name,
