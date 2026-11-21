@@ -7592,8 +7592,8 @@
     },
     {
       "path": "docs/install-linux.md",
-      "sha256": "59e5115ed4dc7c2b484f240b0501f1be47ed0c84be10b511e2a7e9cd4b926b39",
-      "source_sha256": "3047149deada7c2d2e16f804b879ce9da9a6690aab6f94a01cbb747a6dfcfaa9",
+      "sha256": "c44b1c7ceffeb0b6bc1bedad76a69c374e3826038955f37bd3e080ace5c5c4f4",
+      "source_sha256": "a416981ed007ff4e005802f7f5d7308b1a01ca131c832a405371576ebe321210",
       "bytes": 4215,
       "mode": "0o644",
       "transformations": [
