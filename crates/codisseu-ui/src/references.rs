@@ -612,10 +612,11 @@ impl CodisseuApp {
                     .unwrap_or("");
                 for (line, text) in item.preview_text.split('\n').enumerate() {
                     let number = item.preview_first_line + line as u32;
-                    let mut job = highlight::layout(
+                    let mut job = highlight::layout_themed(
                         text,
                         extension,
                         FontId::monospace(self.tokens.editor_font_size),
+                        self.tokens.theme,
                     );
                     job.wrap.max_width = f32::INFINITY;
                     let galley = ui.fonts_mut(|fonts| fonts.layout_job(job));

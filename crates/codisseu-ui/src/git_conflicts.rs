@@ -69,7 +69,7 @@ impl CodisseuApp {
                 .into();
             edited = true;
         }
-        let theme = MergeStyle::get();
+        let theme = MergeStyle::get_for_theme(self.tokens.theme);
         let size = ctx.content_rect().size();
         let width = (size.x - 2.).clamp(240., 2000.);
         let height = (size.y - 2.).clamp(220., 1200.);
@@ -140,7 +140,7 @@ impl CodisseuApp {
                         egui::vec2(28., 28.),
                     )),
                     |ui| {
-                        if tool(ui, Some(Icon::Close), "", "Close Merge", true).clicked() {
+                        if tool(ui, theme, Some(Icon::Close), "", "Close Merge", true).clicked() {
                             close = true;
                         }
                     },
@@ -152,9 +152,11 @@ impl CodisseuApp {
                         |ui| {
                             ui.add_space(8.);
                             if model.is_some() {
-                                self.git_ui
-                                    .merge_ui
-                                    .toolbar(ui, &mut self.git_ui.conflict_stage);
+                                self.git_ui.merge_ui.toolbar(
+                                    ui,
+                                    &self.tokens,
+                                    &mut self.git_ui.conflict_stage,
+                                );
                             } else {
                                 ui.label("Text merge unavailable for this file");
                                 ui.menu_button("Merge Settings", |ui| {
@@ -211,6 +213,7 @@ impl CodisseuApp {
                         .unwrap_or("Ours");
                     source_header(
                         ui,
+                        theme,
                         egui::Rect::from_min_size(header.min, egui::vec2(pane, header.height())),
                         &format!("Changes from {branch}"),
                         file.ours.as_ref(),
@@ -231,6 +234,7 @@ impl CodisseuApp {
                         .unwrap_or_else(|| "deleted".into());
                     source_header(
                         ui,
+                        theme,
                         egui::Rect::from_min_size(
                             header.min + egui::vec2(2. * (pane + gap), 0.),
                             egui::vec2(pane, header.height()),
@@ -256,7 +260,14 @@ impl CodisseuApp {
                         }
                         close |= std::mem::take(&mut self.git_ui.merge_ui.close_requested);
                     } else {
-                        legacy_content(ui, file, &mut result, &extension, body_height);
+                        legacy_content(
+                            ui,
+                            file,
+                            &mut result,
+                            &extension,
+                            body_height,
+                            &self.tokens,
+                        );
                     }
                     let markers = if model.is_some() {
                         self.git_ui.merge_markers
@@ -361,7 +372,9 @@ impl CodisseuApp {
                 }
             });
         if model.is_some() {
-            self.git_ui.merge_ui.comparison_window(ctx, &extension);
+            self.git_ui
+                .merge_ui
+                .comparison_window(ctx, &extension, &self.tokens);
         }
         if ctx.input_mut(|i| i.consume_key(Modifiers::NONE, Key::Escape)) {
             close = true;
@@ -394,16 +407,17 @@ impl CodisseuApp {
 }
 fn source_header(
     ui: &mut egui::Ui,
+    theme: &MergeStyle,
     rect: egui::Rect,
     label: &str,
     side: Option<&ConflictSide>,
     name: &str,
     path: &std::path::Path,
 ) {
-    let theme = MergeStyle::get();
     lock(
         ui,
         egui::Rect::from_min_size(rect.min + egui::vec2(5., 3.), egui::vec2(14., 14.)),
+        theme,
     );
     let painter = ui.painter().with_clip_rect(egui::Rect::from_min_max(
         rect.min,
@@ -456,6 +470,7 @@ fn legacy_content(
     result: &mut String,
     ext: &str,
     height: f32,
+    tokens: &Tokens,
 ) {
     ui.columns(3, |columns| {
         for (n, column) in columns.iter_mut().enumerate() {
@@ -480,7 +495,12 @@ fn legacy_content(
                             file.theirs.as_ref()
                         };
                         let text = side_text(side);
-                        let mut job = highlight::layout(&text, ext, FontId::monospace(13.));
+                        let mut job = highlight::layout_themed(
+                            &text,
+                            ext,
+                            FontId::monospace(13.),
+                            tokens.theme,
+                        );
                         job.wrap.max_width = ui.available_width();
                         ui.label(job);
                     }

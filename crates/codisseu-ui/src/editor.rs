@@ -39,8 +39,23 @@ impl PreviewSyntax {
     pub fn advance(&mut self, text: &str, extension: &str) {
         self.0 = lexical::preview_advance(text, extension, self.0);
     }
+    #[cfg(test)]
     pub fn layout(self, text: &str, extension: &str, font: FontId) -> egui::text::LayoutJob {
-        lexical::layout(text, extension, font, Some(self.0))
+        self.layout_themed(
+            text,
+            extension,
+            font,
+            codisseu_core::ThemePreference::Classic,
+        )
+    }
+    pub fn layout_themed(
+        self,
+        text: &str,
+        extension: &str,
+        font: FontId,
+        theme: codisseu_core::ThemePreference,
+    ) -> egui::text::LayoutJob {
+        lexical::layout_themed(text, extension, font, Some(self.0), theme)
     }
 }
 
@@ -89,9 +104,9 @@ fn preview_fragment_layout(
     }
     let font = FontId::monospace(tokens.editor_font_size);
     let mut job = if let Some(syntax) = syntax {
-        syntax.layout(&rendered, extension, font)
+        syntax.layout_themed(&rendered, extension, font, tokens.theme)
     } else {
-        highlight::layout(&rendered, extension, font)
+        highlight::layout_themed(&rendered, extension, font, tokens.theme)
     };
     layout::prepare_job(&mut job, tokens, ligatures);
     (ui.fonts_mut(|f| f.layout_job(job)), positions)
@@ -355,6 +370,13 @@ impl CodisseuApp {
     }
     pub(super) fn editor(&mut self, ui: &mut egui::Ui, view_id: ViewId) {
         let started = Instant::now();
+        // The shell panel can have its own shade. Paint the complete editor
+        // viewport (including empty space and gutter) with the editor role.
+        ui.painter().rect_filled(
+            ui.available_rect_before_wrap(),
+            0.,
+            color(self.tokens.editor),
+        );
         let Some(doc) = self.service.view_document(view_id) else {
             ui.vertical_centered(|ui| {
                 ui.add_space(100.);
@@ -1078,11 +1100,10 @@ impl CodisseuApp {
                 if let Some(suggestion) = &ghost_suggestion {
                     let line = snapshot.char_to_line(selection.head);
                     let state = cache.lexical_state(line, &extension);
-                    if !view
-                        .ghost
-                        .as_ref()
-                        .is_some_and(|g| g.matches(suggestion, selection.head, ligatures, state))
-                    {
+                    if !view.ghost.as_ref().is_some_and(|g| {
+                        g.theme == self.tokens.theme
+                            && g.matches(suggestion, selection.head, ligatures, state)
+                    }) {
                         let source = cache.get(ui, &snapshot, line, &extension, &self.tokens);
                         let column = selection.head - snapshot.line_to_char(line);
                         view.ghost = source
@@ -2666,10 +2687,11 @@ impl CodisseuApp {
 
 /// Uses the same bounded shaping policy as editor lines, without changing a document.
 pub(super) fn font_preview(ui: &mut egui::Ui, t: &Tokens, ligatures: bool) {
-    let mut job = highlight::layout(
+    let mut job = highlight::layout_themed(
         "office ffi  ->  =>  !=  ===  <=",
         "",
         FontId::monospace(t.editor_font_size),
+        t.theme,
     );
     layout::prepare_job(&mut job, t, ligatures);
     ui.label(job);

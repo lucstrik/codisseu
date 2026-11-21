@@ -173,7 +173,7 @@ impl DiffContent {
 #[derive(Default)]
 pub(super) struct DiffView {
     source: Option<Arc<super::git_diff::DiffData>>,
-    shape_key: Option<(u32, u32, u32, bool, bool)>,
+    shape_key: Option<(u32, u32, u32, bool, bool, codisseu_core::ThemePreference)>,
     heights: Vec<f32>,
     offsets: Vec<f32>,
     layouts: BTreeMap<usize, [Option<Arc<egui::Galley>>; 2]>,
@@ -203,6 +203,7 @@ impl DiffView {
             ui.ctx().pixels_per_point().to_bits(),
             unified,
             wrap,
+            tokens.theme,
         );
         let line_height = tokens.editor_line_height.max(tokens.editor_font_size + 2.);
         if self
@@ -268,10 +269,11 @@ impl DiffView {
                                     );
                                     job
                                 } else {
-                                    cell.syntax.layout(
+                                    cell.syntax.layout_themed(
                                         &text,
                                         &cell.extension,
                                         FontId::monospace(tokens.editor_font_size),
+                                        tokens.theme,
                                     )
                                 };
                                 for section in &mut job.sections {

@@ -84,7 +84,8 @@ impl DatabaseUi {
 }
 fn engine_icon(ui: &mut egui::Ui, engine: Engine) {
     static TOKENS: std::sync::OnceLock<Tokens> = std::sync::OnceLock::new();
-    let tokens = TOKENS.get_or_init(Tokens::load);
+    // Engine brand colors are intentionally shared by both app themes.
+    let tokens = TOKENS.get_or_init(|| Tokens::for_theme(codisseu_core::ThemePreference::Classic));
     let (rect, _) = ui.allocate_exact_size(egui::vec2(18., 20.), egui::Sense::hover());
     let tint = match engine {
         Engine::Mysql | Engine::AuroraMysql => color(tokens.database_engine_mysql),
@@ -1886,10 +1887,11 @@ impl CodisseuApp {
                     self.tokens.form_style(ui);
                     let mut content = text.clone();
                     let mut layouter = |ui: &egui::Ui, buffer: &dyn egui::TextBuffer, wrap: f32| {
-                        let mut job = highlight::layout(
+                        let mut job = highlight::layout_themed(
                             buffer.as_str(),
                             "sql",
                             egui::FontId::monospace(self.tokens.database_grid_font_size),
+                            self.tokens.theme,
                         );
                         job.wrap.max_width = wrap;
                         ui.fonts_mut(|fonts| fonts.layout_job(job))

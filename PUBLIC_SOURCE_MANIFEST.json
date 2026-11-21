@@ -62,9 +62,9 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "4ae137a8b9c60d555f627a20d43bbc26736686145b2b5819c11e7cc63ee80a7e",
-      "source_sha256": "4ae137a8b9c60d555f627a20d43bbc26736686145b2b5819c11e7cc63ee80a7e",
-      "bytes": 3044,
+      "sha256": "a5cc2eec2802675d4d081a2edcf8d3776a142d43de6ebf60a2b60b9c579d8226",
+      "source_sha256": "a5cc2eec2802675d4d081a2edcf8d3776a142d43de6ebf60a2b60b9c579d8226",
+      "bytes": 3483,
       "mode": "0o644",
       "transformations": []
     },
@@ -134,8 +134,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "d9dbfeb594f7c43e7cceafa6ffe9956c35c7c595e6abccb4d4e51b7fc2c96ffc",
-      "source_sha256": "d9dbfeb594f7c43e7cceafa6ffe9956c35c7c595e6abccb4d4e51b7fc2c96ffc",
+      "sha256": "36335f36b19fc00a645b4e4281d6c255948244a22799492a3af15edb41bd50b0",
+      "source_sha256": "36335f36b19fc00a645b4e4281d6c255948244a22799492a3af15edb41bd50b0",
       "bytes": 10389,
       "mode": "0o644",
       "transformations": []
@@ -1000,9 +1000,9 @@
     },
     {
       "path": "crates/codisseu-core/src/git_integration.rs",
-      "sha256": "bce8ddbf1300db32f3b95a92b53864e514d243c04f177aca8b69a1981649d072",
-      "source_sha256": "bce8ddbf1300db32f3b95a92b53864e514d243c04f177aca8b69a1981649d072",
-      "bytes": 54954,
+      "sha256": "e777a5b8d739a4ea27426e4b96e521937106c8a5a6e5867cd6f9d9f0818b1343",
+      "source_sha256": "e777a5b8d739a4ea27426e4b96e521937106c8a5a6e5867cd6f9d9f0818b1343",
+      "bytes": 54993,
       "mode": "0o644",
       "transformations": []
     },
@@ -1056,9 +1056,9 @@
     },
     {
       "path": "crates/codisseu-core/src/lib.rs",
-      "sha256": "20af6e7643848815055f28dee65241634af11bc9a106fef79f56aedc8f2c0a33",
-      "source_sha256": "20af6e7643848815055f28dee65241634af11bc9a106fef79f56aedc8f2c0a33",
-      "bytes": 128819,
+      "sha256": "c1949bcac83e58978cef2f23c450775c45c6cb791e278bd9c0a4028ef73f57d1",
+      "source_sha256": "c1949bcac83e58978cef2f23c450775c45c6cb791e278bd9c0a4028ef73f57d1",
+      "bytes": 129422,
       "mode": "0o644",
       "transformations": []
     },
@@ -1885,6 +1885,14 @@
       "sha256": "b92456cd165f80c3d76041d9988106d1dc8f6d641ae2dc3ceaeab98b746382db",
       "source_sha256": "b92456cd165f80c3d76041d9988106d1dc8f6d641ae2dc3ceaeab98b746382db",
       "bytes": 5087,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-core/tests/theme_preferences.rs",
+      "sha256": "183387a4631b792f36173046450a1f5f9306ec9c56e22b6cf1aefe25b73e0b40",
+      "source_sha256": "183387a4631b792f36173046450a1f5f9306ec9c56e22b6cf1aefe25b73e0b40",
+      "bytes": 5822,
       "mode": "0o644",
       "transformations": []
     },
@@ -5272,9 +5280,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/browser_inspector.rs",
-      "sha256": "9a837885b1c74c1aadde03537a78cfa7a513fcc3f26005d1a2827b2659aa4cf9",
-      "source_sha256": "9a837885b1c74c1aadde03537a78cfa7a513fcc3f26005d1a2827b2659aa4cf9",
-      "bytes": 43740,
+      "sha256": "4bc445cf4bce03dd8ed2af7f5a0bce221454b85654527deb25556a5ef623822d",
+      "source_sha256": "4bc445cf4bce03dd8ed2af7f5a0bce221454b85654527deb25556a5ef623822d",
+      "bytes": 43927,
       "mode": "0o644",
       "transformations": []
     },
@@ -5312,9 +5320,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/code_actions.rs",
-      "sha256": "570959b6f422852773b17dd4a11536ce98c08e5b2d5c402f36bbd3baf2186f40",
-      "source_sha256": "570959b6f422852773b17dd4a11536ce98c08e5b2d5c402f36bbd3baf2186f40",
-      "bytes": 19725,
+      "sha256": "b1e87cd5bbdf8f3164a938d68f2eb7e52b9514555cd188f67e2b35627a91658d",
+      "source_sha256": "b1e87cd5bbdf8f3164a938d68f2eb7e52b9514555cd188f67e2b35627a91658d",
+      "bytes": 19785,
       "mode": "0o644",
       "transformations": []
     },
@@ -5336,9 +5344,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/components.rs",
-      "sha256": "e3da1685701304ebfaa924ac5d4d572517af8364f43081c334c47d7c91b5249f",
-      "source_sha256": "e3da1685701304ebfaa924ac5d4d572517af8364f43081c334c47d7c91b5249f",
-      "bytes": 54394,
+      "sha256": "f8778e15c9a270e3ada57b4321d5f347b5dd4904d3ca54061e82e503e7ee9d65",
+      "source_sha256": "f8778e15c9a270e3ada57b4321d5f347b5dd4904d3ca54061e82e503e7ee9d65",
+      "bytes": 53889,
       "mode": "0o644",
       "transformations": []
     },
@@ -5408,9 +5416,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/database.rs",
-      "sha256": "e1aba92b921522348af27b9bf149542e5817075a3d9ffe52580645f3079f5c27",
-      "source_sha256": "e1aba92b921522348af27b9bf149542e5817075a3d9ffe52580645f3079f5c27",
-      "bytes": 116140,
+      "sha256": "a8766d1ca5f0eafa740d3c468b1ffcf759d85217f0252e5e23f604b4fa49fe53",
+      "source_sha256": "a8766d1ca5f0eafa740d3c468b1ffcf759d85217f0252e5e23f604b4fa49fe53",
+      "bytes": 116315,
       "mode": "0o644",
       "transformations": []
     },
@@ -5581,9 +5589,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/documentation.rs",
-      "sha256": "8583a52fb699c5e8d84892be4ce71afa1260b4e9d47574e9843c5e0b9d60b6b0",
-      "source_sha256": "8583a52fb699c5e8d84892be4ce71afa1260b4e9d47574e9843c5e0b9d60b6b0",
-      "bytes": 26346,
+      "sha256": "ef6e332bebd033a62ef66debc6f934de767e36b458d900d02b3bad72e9af7c7b",
+      "source_sha256": "ef6e332bebd033a62ef66debc6f934de767e36b458d900d02b3bad72e9af7c7b",
+      "bytes": 26900,
       "mode": "0o644",
       "transformations": []
     },
@@ -5613,9 +5621,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/drawing_theme.rs",
-      "sha256": "3350fcf15ae5517bf5b26bde22d5873eb7a8556cc9718d0e929180dea46490ad",
-      "source_sha256": "3350fcf15ae5517bf5b26bde22d5873eb7a8556cc9718d0e929180dea46490ad",
-      "bytes": 9770,
+      "sha256": "6f7946b0763c6d979864f395aa6c8af5a6a144b707ebc06a49ee53ed04773df3",
+      "source_sha256": "6f7946b0763c6d979864f395aa6c8af5a6a144b707ebc06a49ee53ed04773df3",
+      "bytes": 10743,
       "mode": "0o644",
       "transformations": []
     },
@@ -5637,9 +5645,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/editor.rs",
-      "sha256": "74d3bc8fbeaf07d4140e0fb1721ae514f4ea1b56fa86ba2f91c2eb78ad074c4b",
-      "source_sha256": "74d3bc8fbeaf07d4140e0fb1721ae514f4ea1b56fa86ba2f91c2eb78ad074c4b",
-      "bytes": 117310,
+      "sha256": "5498c050883a98fa61ebcdcee69dc6ad259ffadcdb9c909d8b1c7afe9cff5f29",
+      "source_sha256": "5498c050883a98fa61ebcdcee69dc6ad259ffadcdb9c909d8b1c7afe9cff5f29",
+      "bytes": 118062,
       "mode": "0o644",
       "transformations": []
     },
@@ -5701,9 +5709,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/editor/ghost.rs",
-      "sha256": "40e79ee2071ad6d7f406b6e476a0bb0efb767b2cd790c8e1d139e13b786e284c",
-      "source_sha256": "40e79ee2071ad6d7f406b6e476a0bb0efb767b2cd790c8e1d139e13b786e284c",
-      "bytes": 25642,
+      "sha256": "eb573eb6ec2a88550d280f04df387d5b89ffb5a72918d57f264e71989fbe5d49",
+      "source_sha256": "eb573eb6ec2a88550d280f04df387d5b89ffb5a72918d57f264e71989fbe5d49",
+      "bytes": 25883,
       "mode": "0o644",
       "transformations": []
     },
@@ -5741,17 +5749,17 @@
     },
     {
       "path": "crates/codisseu-ui/src/editor/layout.rs",
-      "sha256": "89ea59eea4981b073dda96706e253a793a4d243e795192e5eb1a0b2673592dbe",
-      "source_sha256": "89ea59eea4981b073dda96706e253a793a4d243e795192e5eb1a0b2673592dbe",
-      "bytes": 38611,
+      "sha256": "21e54f5f51dd2afda0eb19f455663194b693dc9b8be4bf8e5b6762f7e32043c3",
+      "source_sha256": "21e54f5f51dd2afda0eb19f455663194b693dc9b8be4bf8e5b6762f7e32043c3",
+      "bytes": 40106,
       "mode": "0o644",
       "transformations": []
     },
     {
       "path": "crates/codisseu-ui/src/editor/lexical.rs",
-      "sha256": "4682b5503a31b4f84306dcbc7d4ea188655ac7056c370d3e407449c52abba492",
-      "source_sha256": "4682b5503a31b4f84306dcbc7d4ea188655ac7056c370d3e407449c52abba492",
-      "bytes": 28679,
+      "sha256": "29ba68a88ad415976c0d9598f4cd1fa728eb0cc5085ad57e7cf8deb4d385b983",
+      "source_sha256": "29ba68a88ad415976c0d9598f4cd1fa728eb0cc5085ad57e7cf8deb4d385b983",
+      "bytes": 29094,
       "mode": "0o644",
       "transformations": []
     },
@@ -5821,9 +5829,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/editor/tiles.rs",
-      "sha256": "cecaf894724f3ac594469179cee35b94ffeae0619bf57e0b3bcaa5af98d97b8b",
-      "source_sha256": "cecaf894724f3ac594469179cee35b94ffeae0619bf57e0b3bcaa5af98d97b8b",
-      "bytes": 20823,
+      "sha256": "39de5c7f69d5e2323a4c013d478aadc020617d8846d33313107c5ce99ab74d10",
+      "source_sha256": "39de5c7f69d5e2323a4c013d478aadc020617d8846d33313107c5ce99ab74d10",
+      "bytes": 20898,
       "mode": "0o644",
       "transformations": []
     },
@@ -5933,9 +5941,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/git_conflicts.rs",
-      "sha256": "ecc8c2e87783ffe8a399212ca06b70ce9d4e577ba98f1c23f919bd17edf54f93",
-      "source_sha256": "ecc8c2e87783ffe8a399212ca06b70ce9d4e577ba98f1c23f919bd17edf54f93",
-      "bytes": 22257,
+      "sha256": "f299400a2cce60f65abdf2ad3023f4a765bec4a1e54960b4090b6f7770501ed6",
+      "source_sha256": "f299400a2cce60f65abdf2ad3023f4a765bec4a1e54960b4090b6f7770501ed6",
+      "bytes": 22878,
       "mode": "0o644",
       "transformations": []
     },
@@ -5957,9 +5965,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/git_diff_view.rs",
-      "sha256": "ef5c92085d7679d3e6840cb4f7bc43d469455ec219d0f864f7b00d130429526b",
-      "source_sha256": "ef5c92085d7679d3e6840cb4f7bc43d469455ec219d0f864f7b00d130429526b",
-      "bytes": 23448,
+      "sha256": "6a70a1da2022a70773660844c59f3fcc1227e08fea09364c04b73b5d9c9c735f",
+      "source_sha256": "6a70a1da2022a70773660844c59f3fcc1227e08fea09364c04b73b5d9c9c735f",
+      "bytes": 23567,
       "mode": "0o644",
       "transformations": []
     },
@@ -6029,9 +6037,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/git_merge_style.rs",
-      "sha256": "32f9ad3817647c3047c626697b75091b4772ceae3a8c4a220a114ed972d859fc",
-      "source_sha256": "32f9ad3817647c3047c626697b75091b4772ceae3a8c4a220a114ed972d859fc",
-      "bytes": 4928,
+      "sha256": "39a037f5382d2fb6945a63de3c9b280e7909a02c0d4f9858cf7183826d9c9c71",
+      "source_sha256": "39a037f5382d2fb6945a63de3c9b280e7909a02c0d4f9858cf7183826d9c9c71",
+      "bytes": 7143,
       "mode": "0o644",
       "transformations": []
     },
@@ -6045,9 +6053,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/git_merge_view.rs",
-      "sha256": "da0b0c3efc8f67425a44ad297d0d7163a4cb750743007e9a5911bf1964808d50",
-      "source_sha256": "da0b0c3efc8f67425a44ad297d0d7163a4cb750743007e9a5911bf1964808d50",
-      "bytes": 53119,
+      "sha256": "0a39a24f936da7353b1ccc6e61d3b8b7f19fe085d5400f7c448b556ee0a55edb",
+      "source_sha256": "0a39a24f936da7353b1ccc6e61d3b8b7f19fe085d5400f7c448b556ee0a55edb",
+      "bytes": 53650,
       "mode": "0o644",
       "transformations": []
     },
@@ -6165,17 +6173,17 @@
     },
     {
       "path": "crates/codisseu-ui/src/highlight.rs",
-      "sha256": "c3e47f4569dca06b3aea61cbc69e4db5b547ac9acf1e47176fe8582b42b73727",
-      "source_sha256": "c3e47f4569dca06b3aea61cbc69e4db5b547ac9acf1e47176fe8582b42b73727",
-      "bytes": 22627,
+      "sha256": "7115a64d41fb87a24f2cf3257360816226c807990c0ac5c50cd19ab0001de645",
+      "source_sha256": "7115a64d41fb87a24f2cf3257360816226c807990c0ac5c50cd19ab0001de645",
+      "bytes": 26494,
       "mode": "0o644",
       "transformations": []
     },
     {
       "path": "crates/codisseu-ui/src/highlight/extended.rs",
-      "sha256": "733d26408adb2276cbf061d8b34243f95bd8cd29d6f533b4b76e12e0f972beba",
-      "source_sha256": "733d26408adb2276cbf061d8b34243f95bd8cd29d6f533b4b76e12e0f972beba",
-      "bytes": 39874,
+      "sha256": "95414526798bff563293065dd2d22157722ec7b27ba26ea29762af5ff2b36677",
+      "source_sha256": "95414526798bff563293065dd2d22157722ec7b27ba26ea29762af5ff2b36677",
+      "bytes": 40280,
       "mode": "0o644",
       "transformations": []
     },
@@ -6245,9 +6253,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/lib.rs",
-      "sha256": "2ac5dd2ad98525573673b1a9893837441f2a873485cc8be92c84241f654b2c91",
-      "source_sha256": "2ac5dd2ad98525573673b1a9893837441f2a873485cc8be92c84241f654b2c91",
-      "bytes": 114661,
+      "sha256": "84a75d879e30a76f61514d99037744280302f95cd7b77c9cded9493c0c41b2f5",
+      "source_sha256": "84a75d879e30a76f61514d99037744280302f95cd7b77c9cded9493c0c41b2f5",
+      "bytes": 115964,
       "mode": "0o644",
       "transformations": []
     },
@@ -6285,17 +6293,17 @@
     },
     {
       "path": "crates/codisseu-ui/src/markdown_render.rs",
-      "sha256": "968f27d65323d75ffdeabdbac9842124b0edf8b27787b1bc91c9076cb54c3ed8",
-      "source_sha256": "968f27d65323d75ffdeabdbac9842124b0edf8b27787b1bc91c9076cb54c3ed8",
-      "bytes": 45540,
+      "sha256": "6c0a63a57b054b510d5d134a700f3fd93817736d8920c13541da3177ebb7e2ce",
+      "source_sha256": "6c0a63a57b054b510d5d134a700f3fd93817736d8920c13541da3177ebb7e2ce",
+      "bytes": 48053,
       "mode": "0o644",
       "transformations": []
     },
     {
       "path": "crates/codisseu-ui/src/markdown_source.rs",
-      "sha256": "56a191a85b3af8cf92190f7284b46229128999e6ea3edc5255e0b47174c370e6",
-      "source_sha256": "56a191a85b3af8cf92190f7284b46229128999e6ea3edc5255e0b47174c370e6",
-      "bytes": 3150,
+      "sha256": "8939280f909b6e2804b362d5f49af34a7a53aeabbd82066e062c3d6329eca6b7",
+      "source_sha256": "8939280f909b6e2804b362d5f49af34a7a53aeabbd82066e062c3d6329eca6b7",
+      "bytes": 3318,
       "mode": "0o644",
       "transformations": []
     },
@@ -6365,9 +6373,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/preferences.rs",
-      "sha256": "df4e6abc67abf7f63c5e605aaf7b576e94372410e160b252d4558c25892cc913",
-      "source_sha256": "df4e6abc67abf7f63c5e605aaf7b576e94372410e160b252d4558c25892cc913",
-      "bytes": 7751,
+      "sha256": "239cf173c30d8cfbe29df72f5627f76e51081f43493cf4a96457ef3f2ea256af",
+      "source_sha256": "239cf173c30d8cfbe29df72f5627f76e51081f43493cf4a96457ef3f2ea256af",
+      "bytes": 9048,
       "mode": "0o644",
       "transformations": []
     },
@@ -6405,9 +6413,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/project_search_preview.rs",
-      "sha256": "eb471aa063ed78fb66bdb80a6713c5c8c0442e4c9385bd6f2a65bcd1e4c0ceb5",
-      "source_sha256": "eb471aa063ed78fb66bdb80a6713c5c8c0442e4c9385bd6f2a65bcd1e4c0ceb5",
-      "bytes": 13284,
+      "sha256": "8be4624a164298efd1fd9ea1bc7c47dd865bafc959ddb759e9934fc60ae3fd80",
+      "source_sha256": "8be4624a164298efd1fd9ea1bc7c47dd865bafc959ddb759e9934fc60ae3fd80",
+      "bytes": 13337,
       "mode": "0o644",
       "transformations": []
     },
@@ -6493,9 +6501,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/references.rs",
-      "sha256": "cd4b79f9a77fc17775318dcf8377e757cdcfd6ad2f670ef90ed6bbcefd1ecd02",
-      "source_sha256": "cd4b79f9a77fc17775318dcf8377e757cdcfd6ad2f670ef90ed6bbcefd1ecd02",
-      "bytes": 27949,
+      "sha256": "8c6c46fb0e0ac3e00fb0e0c00629ea7c91c18dcc1a071a3953acd10dc29669d1",
+      "source_sha256": "8c6c46fb0e0ac3e00fb0e0c00629ea7c91c18dcc1a071a3953acd10dc29669d1",
+      "bytes": 27999,
       "mode": "0o644",
       "transformations": []
     },
@@ -6565,9 +6573,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/rust_features.rs",
-      "sha256": "46c41659b138eaf5db98e0d8e57ab1bf8d2ae9e592bace78860187d27fc9d295",
-      "source_sha256": "46c41659b138eaf5db98e0d8e57ab1bf8d2ae9e592bace78860187d27fc9d295",
-      "bytes": 14860,
+      "sha256": "e00d7ef3a5ba8b7eb188debccf609542620014f89682a0a2e471cc8af8aae71d",
+      "source_sha256": "e00d7ef3a5ba8b7eb188debccf609542620014f89682a0a2e471cc8af8aae71d",
+      "bytes": 15000,
       "mode": "0o644",
       "transformations": []
     },
@@ -6792,6 +6800,14 @@
       "sha256": "a4ebfc31c492c816fd6d847ed29c7b58f3f5526bc4d6610664095e68f1073f7a",
       "source_sha256": "a4ebfc31c492c816fd6d847ed29c7b58f3f5526bc4d6610664095e68f1073f7a",
       "bytes": 16264,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "crates/codisseu-ui/src/themes.rs",
+      "sha256": "7aad9e24aa606157023e8152d01024f7244e79e08efd7c23380d1b421a4df44b",
+      "source_sha256": "7aad9e24aa606157023e8152d01024f7244e79e08efd7c23380d1b421a4df44b",
+      "bytes": 4669,
       "mode": "0o644",
       "transformations": []
     },
@@ -7036,6 +7052,14 @@
       "transformations": []
     },
     {
+      "path": "crates/codisseu-ui/tests/global_themes.rs",
+      "sha256": "edf873ec3c705ddbd059eb9c5d7700979be534e6ce541d9685de66d3df3a2e6d",
+      "source_sha256": "edf873ec3c705ddbd059eb9c5d7700979be534e6ce541d9685de66d3df3a2e6d",
+      "bytes": 3650,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
       "path": "crates/codisseu-ui/tests/javascript_formatting.rs",
       "sha256": "f3bac42533d74eda690f5e0686bd380ef9cd516b0bb19f84fa0a9289192592b7",
       "source_sha256": "f3bac42533d74eda690f5e0686bd380ef9cd516b0bb19f84fa0a9289192592b7",
@@ -7268,6 +7292,30 @@
       "transformations": []
     },
     {
+      "path": "design/themes/evidence-20261121.json",
+      "sha256": "120560c6ff2e46f6d3af13b765e45d004188630c185143d643490e021162b953",
+      "source_sha256": "120560c6ff2e46f6d3af13b765e45d004188630c185143d643490e021162b953",
+      "bytes": 1412,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "design/themes/midnight-syntax.json",
+      "sha256": "4caed1013a5983796c9b61e336bad355c65e83cdd568d3356571c358854a2a9d",
+      "source_sha256": "4caed1013a5983796c9b61e336bad355c65e83cdd568d3356571c358854a2a9d",
+      "bytes": 370,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "design/themes/midnight.json",
+      "sha256": "8fc516cb41c3b82852458f6223cf42c7236e371f6cf8a694e50d61c42a10df38",
+      "source_sha256": "8fc516cb41c3b82852458f6223cf42c7236e371f6cf8a694e50d61c42a10df38",
+      "bytes": 5804,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
       "path": "design/token-evidence.json",
       "sha256": "7b643aa649d995e7151912fc49bd9f38a365bdc2e325c48123375425833fb42f",
       "source_sha256": "bc86d412c72196c034357d0d27fb6faa5579459aadb87a68bf4c1a9a1f897ee7",
@@ -7282,9 +7330,9 @@
     },
     {
       "path": "design/tokens.json",
-      "sha256": "fe1aac53df9492f35c4b7b257481cea8312b2b798bac96bc622fe6d6f9746960",
-      "source_sha256": "fe1aac53df9492f35c4b7b257481cea8312b2b798bac96bc622fe6d6f9746960",
-      "bytes": 11420,
+      "sha256": "c2fec1a1aa7dd875693853cf6a9ae4e5de414ee1f1221c458c6b40c92021b558",
+      "source_sha256": "c2fec1a1aa7dd875693853cf6a9ae4e5de414ee1f1221c458c6b40c92021b558",
+      "bytes": 11557,
       "mode": "0o644",
       "transformations": []
     },
@@ -7430,9 +7478,9 @@
     },
     {
       "path": "docs/contracts/ui.md",
-      "sha256": "7a022c3cd8daad482c69d80c24987e97a0d7b97211948619f7a47180254aa2d8",
-      "source_sha256": "3a2d7c365e7a702e8b5c76730a512ae59cdd22e907daa4d2c027fdeecff9819e",
-      "bytes": 47898,
+      "sha256": "bad2484893d318965ec9523dafdae5b377f004d9454669cbd5042170738651c0",
+      "source_sha256": "b35a71bf29c21003aa4e3bb4beb9a2836310745f9d1f8203de48d420055c36bc",
+      "bytes": 48153,
       "mode": "0o644",
       "transformations": [
         {
@@ -7736,9 +7784,9 @@
     },
     {
       "path": "docs/public-release-status.md",
-      "sha256": "b1eed605a66490c65f7f61e571e87710c7eebf1e8374a611a1ff1aa46a3d18cf",
-      "source_sha256": "b1eed605a66490c65f7f61e571e87710c7eebf1e8374a611a1ff1aa46a3d18cf",
-      "bytes": 6387,
+      "sha256": "e67da9f84cc35a3f24e55ec6d6074a91909624732d8024faa1db768da9928d2e",
+      "source_sha256": "e67da9f84cc35a3f24e55ec6d6074a91909624732d8024faa1db768da9928d2e",
+      "bytes": 7656,
       "mode": "0o644",
       "transformations": []
     },
@@ -7826,9 +7874,9 @@
     },
     {
       "path": "docs/status.md",
-      "sha256": "ebd35150e23e0a6c30022173d9e65d4b413a6fbf397d0902848679cde21addb5",
+      "sha256": "e67da9f84cc35a3f24e55ec6d6074a91909624732d8024faa1db768da9928d2e",
       "source_sha256": null,
-      "bytes": 9668,
+      "bytes": 7656,
       "mode": "0o644",
       "transformations": [
         {
@@ -7836,6 +7884,14 @@
           "count": 1
         }
       ]
+    },
+    {
+      "path": "docs/themes.md",
+      "sha256": "78a41a1729d6a0a159ca4ee39f73f84aab3f5d7ea0ec24b7a6e66435887c5204",
+      "source_sha256": "78a41a1729d6a0a159ca4ee39f73f84aab3f5d7ea0ec24b7a6e66435887c5204",
+      "bytes": 1134,
+      "mode": "0o644",
+      "transformations": []
     },
     {
       "path": "docs/third-party-inventory.md",
@@ -21915,8 +21971,8 @@
     },
     {
       "path": "tools/build_deb.py",
-      "sha256": "d1b65f62f1be053884c028b5e9d2171d63b12774f0bfd6a6261ee4d442e76a5b",
-      "source_sha256": "d1b65f62f1be053884c028b5e9d2171d63b12774f0bfd6a6261ee4d442e76a5b",
+      "sha256": "af458e99c16d86ad5cff14ac807d929123718883485a25293bccc7f6a5330bb5",
+      "source_sha256": "af458e99c16d86ad5cff14ac807d929123718883485a25293bccc7f6a5330bb5",
       "bytes": 14735,
       "mode": "0o644",
       "transformations": []
@@ -21979,9 +22035,9 @@
     },
     {
       "path": "tools/export_public_source.py",
-      "sha256": "342d934661b889cd7e8cdd9883db9f97a45826308b8b6be294987ff416b80e5c",
-      "source_sha256": "342d934661b889cd7e8cdd9883db9f97a45826308b8b6be294987ff416b80e5c",
-      "bytes": 23055,
+      "sha256": "76bd1b3213ed0d5f10049948444a58056745b7385f6c2f38fab2a67b0656fc89",
+      "source_sha256": "76bd1b3213ed0d5f10049948444a58056745b7385f6c2f38fab2a67b0656fc89",
+      "bytes": 23082,
       "mode": "0o644",
       "transformations": []
     },
@@ -22126,6 +22182,14 @@
       "sha256": "2129ecce156fd4b02f087e260a4375f442e7c5c71fc91c0a2ad34b756fcc4b5e",
       "source_sha256": "2129ecce156fd4b02f087e260a4375f442e7c5c71fc91c0a2ad34b756fcc4b5e",
       "bytes": 3194,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "tools/native_themes.py",
+      "sha256": "11f5d07385578dcfa0bc07a84a07403d090d78b2a7e21e38bde22578242b11ac",
+      "source_sha256": "11f5d07385578dcfa0bc07a84a07403d090d78b2a7e21e38bde22578242b11ac",
+      "bytes": 20792,
       "mode": "0o644",
       "transformations": []
     },
@@ -22567,7 +22631,7 @@
     {
       "path": "crates/codisseu-ui/src/browser_inspector.rs",
       "kind": "url-userinfo-review",
-      "line": 1170,
+      "line": 1173,
       "severity": "review"
     },
     {

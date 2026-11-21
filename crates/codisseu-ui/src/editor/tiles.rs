@@ -391,7 +391,12 @@ impl TiledLine {
             - map.first().copied().unwrap_or(0);
         // Long-line highlighting is deliberately plain, matching the existing
         // lexical highlighter's large-input fallback instead of false tokens.
-        let mut job = highlight::layout(&rendered, "", FontId::monospace(t.editor_font_size));
+        let mut job = highlight::layout_themed(
+            &rendered,
+            "",
+            FontId::monospace(t.editor_font_size),
+            t.theme,
+        );
         super::layout::prepare_job(&mut job, t, self.ligatures);
         let galley = ui.fonts_mut(|f| f.layout_job(job));
         let context_x = galley

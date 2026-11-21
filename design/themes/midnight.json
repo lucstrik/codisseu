@@ -1,0 +1,527 @@
+{
+  "editor": [
+    12,
+    17,
+    23
+  ],
+  "panel": [
+    16,
+    22,
+    29
+  ],
+  "bar": [
+    22,
+    29,
+    38
+  ],
+  "border": [
+    39,
+    48,
+    59
+  ],
+  "text": [
+    201,
+    209,
+    217
+  ],
+  "muted": [
+    132,
+    145,
+    158
+  ],
+  "accent": [
+    76,
+    139,
+    212
+  ],
+  "selection": [
+    46,
+    75,
+    115
+  ],
+  "error": [
+    239,
+    104,
+    104
+  ],
+  "control_border": [
+    54,
+    65,
+    78
+  ],
+  "popup_border": [
+    54,
+    65,
+    78
+  ],
+  "caret_row": [
+    37,
+    33,
+    24
+  ],
+  "caret_line_number": [
+    201,
+    209,
+    217
+  ],
+  "completion_icon_color": [
+    229,
+    161,
+    91
+  ],
+  "completion_match_color": [
+    121,
+    177,
+    232
+  ],
+  "completion_footer_text": [
+    132,
+    145,
+    158
+  ],
+  "references_inactive_selection": [
+    37,
+    48,
+    61
+  ],
+  "rename_primary": [
+    57,
+    114,
+    180
+  ],
+  "rename_button_fill": [
+    22,
+    29,
+    38
+  ],
+  "rename_button_border": [
+    54,
+    65,
+    78
+  ],
+  "rename_conflict_hint_background": [
+    37,
+    33,
+    24
+  ],
+  "rename_conflict_hint_text": [
+    229,
+    190,
+    137
+  ],
+  "rename_conflict_name_background": [
+    27,
+    46,
+    35
+  ],
+  "editor_selection": [
+    46,
+    75,
+    115
+  ],
+  "editor_selection_highlight": [
+    72,
+    110,
+    157,
+    100
+  ],
+  "editor_selection_highlight_border": [
+    121,
+    177,
+    232,
+    100
+  ],
+  "editor_caret": [
+    220,
+    227,
+    235
+  ],
+  "editor_gutter_separator": [
+    39,
+    48,
+    59
+  ],
+  "editor_matching_bracket": [
+    47,
+    63,
+    80
+  ],
+  "inactive_tab_underline": [
+    68,
+    81,
+    96
+  ],
+  "editor_scrollbar": [
+    68,
+    81,
+    96
+  ],
+  "editor_phpdoc": [
+    126,
+    184,
+    132
+  ],
+  "editor_php_variable": [
+    121,
+    177,
+    232
+  ],
+  "file_type_blue": [
+    121,
+    177,
+    232
+  ],
+  "rail_selection": [
+    37,
+    48,
+    61
+  ],
+  "tab_close_foreground": [
+    132,
+    145,
+    158
+  ],
+  "tab_close_hover_foreground": [
+    201,
+    209,
+    217
+  ],
+  "tab_close_hover_background": [
+    37,
+    48,
+    61
+  ],
+  "editor_unnecessary_text": [
+    132,
+    145,
+    158
+  ],
+  "tab_more_foreground": [
+    166,
+    179,
+    191
+  ],
+  "tab_more_hover_foreground": [
+    201,
+    209,
+    217
+  ],
+  "tab_more_hover_background": [
+    37,
+    48,
+    61
+  ],
+  "signature_background": [
+    16,
+    22,
+    29
+  ],
+  "signature_foreground": [
+    201,
+    209,
+    217
+  ],
+  "signature_border": [
+    39,
+    48,
+    59
+  ],
+  "signature_active": [
+    229,
+    161,
+    91
+  ],
+  "signature_type": [
+    121,
+    177,
+    232
+  ],
+  "signature_inactive_name": [
+    132,
+    145,
+    158
+  ],
+  "signature_inactive_type": [
+    132,
+    145,
+    158
+  ],
+  "signature_overload_background": [
+    27,
+    46,
+    35
+  ],
+  "rename_tree_selection": [
+    46,
+    75,
+    115
+  ],
+  "rename_text": [
+    220,
+    227,
+    235
+  ],
+  "rename_name_selection": [
+    46,
+    75,
+    115
+  ],
+  "rename_input_text": [
+    201,
+    209,
+    217
+  ],
+  "rename_scope_fill": [
+    22,
+    29,
+    38
+  ],
+  "rename_checkbox_border": [
+    68,
+    81,
+    96
+  ],
+  "rename_file_highlight": [
+    27,
+    46,
+    35
+  ],
+  "shell_border": [
+    39,
+    48,
+    59
+  ],
+  "database_dirty": [
+    42,
+    61,
+    80
+  ],
+  "database_grid_header": [
+    22,
+    29,
+    38
+  ],
+  "database_grid_separator": [
+    39,
+    48,
+    59
+  ],
+  "database_grid_selection": [
+    46,
+    75,
+    115
+  ],
+  "database_grid_foreground": [
+    201,
+    209,
+    217
+  ],
+  "database_grid_null": [
+    132,
+    145,
+    158
+  ],
+  "database_grid_dirty_selection": [
+    42,
+    61,
+    80
+  ],
+  "database_completion_foreground": [
+    201,
+    209,
+    217
+  ],
+  "database_completion_key": [
+    229,
+    161,
+    91
+  ],
+  "shell_panel_background": [
+    16,
+    22,
+    29
+  ],
+  "shell_background": [
+    22,
+    29,
+    38
+  ],
+  "database_tab_selection": [
+    36,
+    58,
+    86
+  ],
+  "database_tab_border": [
+    76,
+    139,
+    212
+  ],
+  "database_grid_active_row": [
+    23,
+    31,
+    41
+  ],
+  "database_grid_header_foreground": [
+    201,
+    209,
+    217
+  ],
+  "database_services_selection": [
+    37,
+    48,
+    61
+  ],
+  "git_focus_selection": [
+    46,
+    75,
+    115
+  ],
+  "git_popup_background": [
+    22,
+    29,
+    38
+  ],
+  "git_modified": [
+    213,
+    157,
+    73
+  ],
+  "git_added": [
+    80,
+    161,
+    104
+  ],
+  "git_deleted": [
+    132,
+    145,
+    158
+  ],
+  "git_untracked": [
+    126,
+    184,
+    132
+  ],
+  "git_conflict": [
+    239,
+    104,
+    104
+  ],
+  "git_reference": [
+    27,
+    46,
+    35
+  ],
+  "git_diff_added": [
+    22,
+    43,
+    32
+  ],
+  "git_diff_deleted": [
+    56,
+    30,
+    33
+  ],
+  "git_graph": [
+    [
+      121,
+      177,
+      232
+    ],
+    [
+      126,
+      184,
+      132
+    ],
+    [
+      229,
+      161,
+      91
+    ],
+    [
+      183,
+      148,
+      218
+    ]
+  ],
+  "git_log_selection": [
+    46,
+    75,
+    115
+  ],
+  "git_log_head": [
+    23,
+    37,
+    55
+  ],
+  "ai_composer_background": [
+    22,
+    29,
+    38
+  ],
+  "ai_composer_border": [
+    39,
+    48,
+    59
+  ],
+  "git_authorship_color": [
+    132,
+    145,
+    158,
+    100
+  ],
+  "navigation_popup_background": [
+    22,
+    29,
+    38
+  ],
+  "navigation_popup_text": [
+    201,
+    209,
+    217
+  ],
+  "navigation_popup_selection": [
+    46,
+    75,
+    115
+  ],
+  "navigation_popup_public_color": [
+    126,
+    184,
+    132
+  ],
+  "php_test_failed": [
+    229,
+    161,
+    91
+  ],
+  "php_test_passed": [
+    126,
+    184,
+    132
+  ],
+  "editor_git_added": [
+    80,
+    161,
+    104
+  ],
+  "editor_git_modified": [
+    213,
+    157,
+    73
+  ],
+  "editor_git_deleted": [
+    239,
+    104,
+    104
+  ],
+  "widget_hover": [
+    37,
+    48,
+    61
+  ],
+  "widget_active": [
+    46,
+    75,
+    115
+  ]
+}

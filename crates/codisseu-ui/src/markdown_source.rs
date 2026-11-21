@@ -1,9 +1,13 @@
 //! Bounded line-level source styling; rendered Markdown uses the document parser worker.
 use egui::{FontId, TextFormat, text::LayoutJob};
 use pulldown_cmark::{Event, Options, Parser, Tag};
-pub(super) fn layout(text: &str, font: FontId) -> LayoutJob {
+pub(super) fn layout_themed(
+    text: &str,
+    font: FontId,
+    theme: codisseu_core::ThemePreference,
+) -> LayoutJob {
     let mut job = LayoutJob::default();
-    let palette = super::highlight::source_colors();
+    let palette = super::highlight::source_colors_themed(theme);
     if text.len() > 64 * 1024 {
         job.append(
             text,
@@ -91,7 +95,11 @@ mod tests {
     #[test]
     fn source_styles_keep_unicode_crlf_and_markup_bytes() {
         let text = "# ação 😀 **strong** and `code` [local](./file.md)\r\n";
-        let job = super::layout(text, egui::FontId::monospace(13.));
+        let job = super::layout_themed(
+            text,
+            egui::FontId::monospace(13.),
+            codisseu_core::ThemePreference::Classic,
+        );
         assert_eq!(job.text.as_str(), text);
         assert!(job.sections.len() > 3);
     }

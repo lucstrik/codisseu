@@ -43,7 +43,7 @@ pub(super) struct MergeUi {
     offsets: Vec<f32>,
     heights: Vec<f32>,
     layouts: BTreeMap<usize, [Option<Arc<egui::Galley>>; 3]>,
-    layout_key: Option<(u32, u32, u32, bool)>,
+    layout_key: Option<(u32, u32, u32, bool, codisseu_core::ThemePreference)>,
     focus: Option<usize>,
     scroll_to: Option<usize>,
     pub no_wrap: bool,
@@ -421,11 +421,11 @@ impl MergeUi {
         let labels = ["Base", "Left", "Right", "Result"];
         self.comparison = Some((labels[a].into(), source(a), labels[b].into(), source(b)));
     }
-    pub fn comparison_window(&mut self, ctx: &egui::Context, extension: &str) {
+    pub fn comparison_window(&mut self, ctx: &egui::Context, extension: &str, t: &Tokens) {
         let Some((left, ltext, right, rtext)) = &self.comparison else {
             return;
         };
-        let theme = MergeStyle::get();
+        let theme = MergeStyle::get_for_theme(t.theme);
         let mut close = false;
         egui::Modal::new(egui::Id::unique("git.merge.compare"))
             .frame(egui::Frame::window(&ctx.style_of(egui::Theme::Dark)).fill(color(theme.chrome)))
@@ -445,10 +445,11 @@ impl MergeUi {
                             .max_height(400.)
                             .codisseu()
                             .show(&mut columns[n], |ui| {
-                                let mut job = highlight::layout(
+                                let mut job = highlight::layout_themed(
                                     text,
                                     extension,
                                     FontId::monospace(theme.font_size),
+                                    t.theme,
                                 );
                                 job.wrap.max_width = ui.available_width();
                                 ui.label(job);
@@ -463,7 +464,8 @@ impl MergeUi {
             self.comparison = None;
         }
     }
-    pub fn toolbar(&mut self, ui: &mut egui::Ui, stage: &mut bool) {
+    pub fn toolbar(&mut self, ui: &mut egui::Ui, t: &Tokens, stage: &mut bool) {
+        let theme = MergeStyle::get_for_theme(t.theme);
         let mut back = ui
             .ctx()
             .input_mut(|i| i.consume_key(Modifiers::SHIFT, Key::F7));
@@ -474,6 +476,7 @@ impl MergeUi {
             ui.spacing_mut().item_spacing.x = 2.;
             back |= tool(
                 ui,
+                theme,
                 Some(Icon::Up),
                 "",
                 "Previous Conflict · Shift+F7",
@@ -482,6 +485,7 @@ impl MergeUi {
             .clicked();
             next |= tool(
                 ui,
+                theme,
                 Some(Icon::Down),
                 "",
                 "Next Conflict · F7",
@@ -489,7 +493,7 @@ impl MergeUi {
             )
             .clicked();
             ui.separator();
-            let compare = tool(ui, Some(Icon::Compare), "", "Compare Contents", true);
+            let compare = tool(ui, theme, Some(Icon::Compare), "", "Compare Contents", true);
             egui::Popup::menu(&compare).show(|ui| {
                 for (label, a, b) in [
                     ("Base ↔ Left", 0, 1),
@@ -524,6 +528,7 @@ impl MergeUi {
                         });
                 let response = tool(
                     ui,
+                    theme,
                     Some(if side == Some(0) {
                         Icon::MergeNonconflictingLeft
                     } else if side == Some(1) {
@@ -548,6 +553,7 @@ impl MergeUi {
                     .any(|(n, s)| s.is_some() && !self.resolved(n));
             let simple = tool(
                 ui,
+                theme,
                 Some(Icon::MergeSimple),
                 "",
                 "Resolve Simple Conflicts",
@@ -567,6 +573,7 @@ impl MergeUi {
             }
             let collapse = tool(
                 ui,
+                theme,
                 Some(if self.collapse_unchanged {
                     Icon::ExpandAll
                 } else {
@@ -580,7 +587,7 @@ impl MergeUi {
                 self.collapse_unchanged = !self.collapse_unchanged;
                 self.rebuild();
             }
-            let settings = tool(ui, Some(Icon::Settings), "", "Merge Settings", true);
+            let settings = tool(ui, theme, Some(Icon::Settings), "", "Merge Settings", true);
             egui::Popup::menu(&settings).show(|ui| {
                 if ui
                     .add_enabled(!self.undo.is_empty(), egui::Button::new("Undo Merge"))
@@ -700,7 +707,7 @@ impl MergeUi {
             return;
         }
         let width = ui.available_width();
-        let theme = MergeStyle::get();
+        let theme = MergeStyle::get_for_theme(t.theme);
         let gap = theme.connector_width;
         let pane = ((width - 2. * gap) / 3.).max(40.);
         let gutter = theme.number_width;
@@ -717,6 +724,7 @@ impl MergeUi {
             t.editor_font_size.to_bits(),
             ui.ctx().pixels_per_point().to_bits(),
             self.no_wrap,
+            t.theme,
         );
         if self.layout_key != Some(key) {
             self.language_states(extension);
@@ -770,11 +778,10 @@ impl MergeUi {
                     std::array::from_fn(|side| {
                         line.text[side].as_ref().map(|text| {
                             let text = expand_tabs(text);
-                            let mut job = line.syntax[side].layout(
+                            let mut job = line.syntax[side].layout_themed(
                                 text.as_str(),
                                 extension,
-                                FontId::monospace(t.editor_font_size),
-                            );
+                                FontId::monospace(t.editor_font_size), t.theme);
                             if conflicting {
                                 let other=if side==1{line.text[0].as_deref()}else{line.base.as_deref()}.unwrap_or("");
                                 emphasize(&mut job,&expand_tabs(other),color(theme.conflict_word));
@@ -892,11 +899,10 @@ impl MergeUi {
                         let mut body = self.draft.values[chunk][range.clone()].to_string();
                         let mut edit_layouter =
                             |ui: &egui::Ui, buffer: &dyn egui::TextBuffer, wrap: f32| {
-                                let mut job = line.syntax[1].layout(
+                                let mut job = line.syntax[1].layout_themed(
                                     buffer.as_str(),
                                     extension,
-                                    FontId::monospace(t.editor_font_size),
-                                );
+                                    FontId::monospace(t.editor_font_size), t.theme);
                                 if kind==MergeKind::Conflict&&!resolved{emphasize(&mut job,line.text[0].as_deref().unwrap_or(""),color(theme.conflict_word));}
                                 for s in &mut job.sections {
                                     s.format.line_height = Some(line_height);
@@ -1099,16 +1105,17 @@ impl MergeUi {
                     .show(column, |ui| {
                         egui::Frame::NONE
                             .inner_margin(egui::Margin::symmetric(
-                                MergeStyle::get().code_padding_x as i8,
-                                MergeStyle::get().code_padding_y as i8,
+                                MergeStyle::get_for_theme(t.theme).code_padding_x as i8,
+                                MergeStyle::get_for_theme(t.theme).code_padding_y as i8,
                             ))
                             .show(ui, |ui| {
                                 let mut layouter =
                                     |ui: &egui::Ui, buffer: &dyn egui::TextBuffer, wrap: f32| {
-                                        let mut job = highlight::layout(
+                                        let mut job = highlight::layout_themed(
                                             buffer.as_str(),
                                             extension,
                                             FontId::monospace(t.editor_font_size),
+                                            t.theme,
                                         );
                                         job.wrap.max_width = wrap;
                                         ui.fonts_mut(|f| f.layout_job(job))
@@ -1138,10 +1145,11 @@ impl MergeUi {
                                 } else {
                                     let text = &self.full_sources.as_ref().unwrap()
                                         [if side == 0 { 0 } else { 1 }];
-                                    let mut job = highlight::layout(
+                                    let mut job = highlight::layout_themed(
                                         text.as_str(),
                                         extension,
                                         FontId::monospace(t.editor_font_size),
+                                        t.theme,
                                     );
                                     job.wrap.max_width = ui.available_width();
                                     ui.label(job);
@@ -1268,7 +1276,8 @@ mod tests {
     fn word_emphasis_preserves_utf8_bytes_and_only_marks_the_changed_range() {
         let text = "return 'ação 😀 old';";
         let mut job = highlight::layout(text, "php", FontId::monospace(13.));
-        let fill = color(MergeStyle::get().conflict_word);
+        let fill =
+            color(MergeStyle::get_for_theme(codisseu_core::ThemePreference::Classic).conflict_word);
         emphasize(&mut job, "return 'ação 😀 new';", fill);
         assert_eq!(job.text, text);
         let marked = job

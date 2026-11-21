@@ -14,6 +14,29 @@ impl CodisseuApp {
             ui.heading("Configurações");
             ui.separator();
             egui::ScrollArea::vertical().id_salt("preferences.body").auto_shrink([false,false]).max_height((ctx.content_rect().height()-150.).clamp(150.,460.)).codisseu().show(ui,|ui| {
+            ui.label(RichText::new("Aparência").color(color(self.tokens.accent)).strong());
+            let mut theme = self.service.editor_preferences().theme;
+            let current_theme = theme;
+            ui.horizontal(|ui| {
+                let label = ui.label("Tema do aplicativo");
+                egui::ComboBox::from_id_salt("preferences.theme")
+                    .selected_text(match theme {
+                        codisseu_core::ThemePreference::Midnight => "Codisseu Noturno",
+                        codisseu_core::ThemePreference::Classic => "Codisseu Clássico",
+                    })
+                    .width(220.)
+                    .show_ui(ui, |ui| {
+                        ui.selectable_value(&mut theme, codisseu_core::ThemePreference::Midnight, "Codisseu Noturno");
+                        ui.selectable_value(&mut theme, codisseu_core::ThemePreference::Classic, "Codisseu Clássico");
+                    }).response.labelled_by(label.id);
+            });
+            if theme != current_theme {
+                self.send(Command::SetTheme(theme));
+                ctx.request_repaint();
+            }
+            ui.label("Muda as cores do editor, dos painéis, menus e janelas em todo o Codisseu.");
+            ui.add_space(12.);
+            ui.separator();
             ui.horizontal(|ui| {
                 ui.label(RichText::new("Editor").color(color(self.tokens.accent)));
                 ui.label("› Geral");

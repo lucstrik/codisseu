@@ -10,6 +10,7 @@ struct SourceGlyph {
     row: usize,
 }
 pub(super) struct Ghost {
+    pub theme: codisseu_core::ThemePreference,
     pub ticket: u64,
     pub geometry_id: u64,
     pub version: u64,
@@ -55,7 +56,12 @@ impl Ghost {
         let source = snapshot
             .slice(caret..caret + projection.consumed_source)
             .to_string();
-        let source_job = syntax.layout(&source, ext, FontId::monospace(tokens.editor_font_size));
+        let source_job = syntax.layout_themed(
+            &source,
+            ext,
+            FontId::monospace(tokens.editor_font_size),
+            tokens.theme,
+        );
         let source_formats = source
             .char_indices()
             .map(|(b, _)| {
@@ -119,7 +125,7 @@ impl Ghost {
                     source_scalar += 1;
                 }
             }
-            let mut job = syntax.layout(&expanded, ext, font.clone());
+            let mut job = syntax.layout_themed(&expanded, ext, font.clone(), tokens.theme);
             let mut sections = Vec::new();
             for section in std::mem::take(&mut job.sections) {
                 let a = section.byte_range.start.0;
@@ -173,6 +179,7 @@ impl Ghost {
         }
         static NEXT_GEOMETRY: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(1);
         Self {
+            theme: tokens.theme,
             ticket: suggestion.ticket,
             geometry_id: NEXT_GEOMETRY.fetch_add(1, std::sync::atomic::Ordering::Relaxed),
             version: suggestion.document.version,
@@ -492,6 +499,7 @@ mod tests {
         });
         output.textures_delta.clear();
         Ghost {
+            theme: codisseu_core::ThemePreference::Classic,
             ticket: 1,
             geometry_id: 0,
             version: 1,

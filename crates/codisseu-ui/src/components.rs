@@ -726,8 +726,7 @@ pub(super) fn icon_button(
     } else if response.hovered() {
         Color32::from_white_alpha(22)
     } else if selected && size >= 40. {
-        static RAIL_SELECTION: std::sync::OnceLock<Color32> = std::sync::OnceLock::new();
-        *RAIL_SELECTION.get_or_init(|| super::color(super::Tokens::load().rail_selection))
+        ui.visuals().widgets.open.weak_bg_fill
     } else if selected {
         ui.visuals().selection.stroke.color
     } else {
@@ -738,9 +737,9 @@ pub(super) fn icon_button(
             response.rect.center(),
             size / 2.,
             if ui.is_enabled() {
-                Color32::from_gray(55)
+                ui.visuals().widgets.hovered.bg_fill
             } else {
-                Color32::from_gray(39)
+                ui.visuals().widgets.inactive.bg_fill
             },
         );
     } else {
@@ -987,10 +986,7 @@ fn tree_row_impl(
                 .shrink2(egui::vec2(if stable_id.is_none() { 12. } else { 4. }, 0.)),
             4.,
             if row.selected && stable_id.is_none() && !selection_active && !response.has_focus() {
-                static INACTIVE: std::sync::OnceLock<Color32> = std::sync::OnceLock::new();
-                *INACTIVE.get_or_init(|| {
-                    super::color(super::Tokens::load().references_inactive_selection)
-                })
+                ui.visuals().widgets.hovered.bg_fill
             } else if row.selected {
                 ui.visuals().selection.bg_fill
             } else {
@@ -1048,22 +1044,16 @@ fn tree_row_impl(
             paint_database_icon(ui, icon_rect, row.icon, tint);
         }
     } else if stable_id.is_none() && matches!(row.icon, Icon::File) {
-        static FILE_BLUE: std::sync::OnceLock<Color32> = std::sync::OnceLock::new();
-        paint_document_icon(
-            ui,
-            icon_rect,
-            row.name,
-            *FILE_BLUE.get_or_init(|| super::color(super::Tokens::load().file_type_blue)),
-        );
+        paint_document_icon(ui, icon_rect, row.name, ui.visuals().hyperlink_color);
     } else {
         paint_icon(
             ui,
             icon_rect,
             row.icon,
             if matches!(row.icon, Icon::Folder | Icon::Schema | Icon::Column) {
-                Color32::from_rgb(157, 160, 168)
+                ui.visuals().weak_text_color()
             } else {
-                Color32::from_rgb(108, 149, 235)
+                ui.visuals().hyperlink_color
             },
         );
     }
@@ -1333,7 +1323,7 @@ pub(super) fn database_icon_button(
         } else if matches!(icon, Icon::Play | Icon::Submit | Icon::Commit) {
             Color32::from_rgb(95, 173, 101)
         } else if matches!(icon, Icon::Stop | Icon::Rollback) {
-            super::color(super::Tokens::load().error)
+            ui.visuals().error_fg_color
         } else {
             ui.visuals().text_color()
         };

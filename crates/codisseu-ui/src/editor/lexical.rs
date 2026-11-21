@@ -401,24 +401,42 @@ pub(super) fn preview_advance(text: &str, ext: &str, state: State) -> State {
 }
 /// Continue the existing highlighter using virtual context, then remove all
 /// virtual bytes and sections before shaping. It never draws that prefix.
+#[cfg(test)]
 pub fn layout(text: &str, ext: &str, font: FontId, state: Option<State>) -> egui::text::LayoutJob {
+    layout_themed(
+        text,
+        ext,
+        font,
+        state,
+        codisseu_core::ThemePreference::Classic,
+    )
+}
+
+pub fn layout_themed(
+    text: &str,
+    ext: &str,
+    font: FontId,
+    state: Option<State>,
+    theme: codisseu_core::ThemePreference,
+) -> egui::text::LayoutJob {
     if matches!(ext, "md" | "markdown" | "mdown" | "mkd") {
-        return crate::markdown_source::layout(text, font);
+        return crate::markdown_source::layout_themed(text, font, theme);
     }
     let Some(state) = state else {
-        return highlight::layout(text, "", font);
+        return highlight::layout_themed(text, "", font, theme);
     };
     let prefix = match state {
         State::Extended(state) => {
-            return highlight::extended::layout(
+            return highlight::extended::layout_themed(
                 text,
                 highlight::extended::Language::for_key(ext).expect("extended language state"),
                 font,
                 state,
+                theme,
             );
         }
-        State::Unsupported => return highlight::layout(text, "", font),
-        State::Normal => return highlight::layout(text, ext, font),
+        State::Unsupported => return highlight::layout_themed(text, "", font, theme),
+        State::Normal => return highlight::layout_themed(text, ext, font, theme),
         // A separating space prevents a line beginning with '*' from turning
         // a plain block continuation into a synthetic PHPDoc opener.
         State::BlockComment => "/* ".into(),
@@ -444,7 +462,7 @@ pub fn layout(text: &str, ext: &str, font: FontId, state: Option<State>) -> egui
     };
     let prefix: String = prefix;
     let length = prefix.len();
-    let mut job = highlight::layout(&format!("{prefix}{text}"), ext, font);
+    let mut job = highlight::layout_themed(&format!("{prefix}{text}"), ext, font, theme);
     job.text = text.into();
     job.sections = job
         .sections

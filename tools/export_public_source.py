@@ -50,7 +50,7 @@ db_metadata_fixtures.py db_sql_fixtures.py docker_fixture.py
 grid_inspection_fixtures.py mongo_aggregate_fixture.py mongo_options_fixture.py
 multi_project_mysql_fixture.py query_execution_fixtures.py
 create_git_merge_demo.py verify_transfer_exports.py
-native_smoke.py native_m2.py native_controls.py private_native_run.py native_drawings.py
+native_smoke.py native_m2.py native_controls.py private_native_run.py native_drawings.py native_themes.py
 prepare_app_icons.py prepare_ide_icons.py prepare_excalidraw_icons.py
 """.split())
 TOOL_TREES = (
@@ -62,7 +62,7 @@ TOOL_TREES = (
 # authorize copying arbitrary docs, reports, receipts or reference evidence.
 DOC_FILES = frozenset("""
 architecture.md dependencies.md development.md optional-tools.md install-linux.md
-cli-usage.md cli-launch-contract-20261111.md editor-shortcuts.md
+cli-usage.md cli-launch-contract-20261111.md editor-shortcuts.md themes.md
 laravel.md php-composer.md php-tests-usage.md php-tests-contract.md
 js-tests-usage.md js-tests-contract.md rust-usage.md rust-support-contract.md
 python-usage.md python-support-contract.md python-language-contract.md

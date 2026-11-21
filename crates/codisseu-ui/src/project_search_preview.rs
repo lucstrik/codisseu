@@ -90,7 +90,7 @@ pub(super) struct PreviewPane {
     source: Option<Arc<Source>>,
     error: Option<String>,
     layouts: BTreeMap<usize, Arc<egui::Galley>>,
-    shape: Option<(u32, u32, bool)>,
+    shape: Option<(u32, u32, bool, codisseu_core::ThemePreference)>,
     widest: f32,
     target: Option<u32>,
     reveal: bool,
@@ -256,6 +256,7 @@ impl PreviewPane {
             t.editor_font_size.to_bits(),
             ui.ctx().pixels_per_point().to_bits(),
             service.editor_preferences().ligatures,
+            t.theme,
         );
         if self.shape != Some(shape) {
             self.layouts.clear();
