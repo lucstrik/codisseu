@@ -143,6 +143,7 @@ mod shell;
 #[cfg(test)]
 mod shell_polish_tests;
 mod shutdown;
+mod themes;
 pub use diagnostics::set_diagnostic_sink;
 mod signature;
 mod signature_content;
@@ -171,6 +172,10 @@ use std::{
 
 #[derive(Clone, Deserialize)]
 struct Tokens {
+    #[serde(skip)]
+    theme: codisseu_core::ThemePreference,
+    widget_hover: [u8; 3],
+    widget_active: [u8; 3],
     copilot_ghost_opacity: f32,
     php_test_failed: [u8; 3],
     php_test_passed: [u8; 3],
@@ -450,11 +455,14 @@ impl Tokens {
     fn content_margin(&self) -> egui::Margin {
         egui::Margin::symmetric(self.panel_content_inset_x, self.panel_content_inset_y)
     }
+    #[cfg(test)]
     fn load() -> Self {
-        serde_json::from_str(include_str!("../../../design/tokens.json"))
-            .expect("versioned theme tokens")
+        Self::for_theme(codisseu_core::ThemePreference::Classic)
     }
     fn apply(&self, ctx: &egui::Context) {
+        // Both app choices are dark themes, independent of the desktop's
+        // preference. Keep modals and later system-theme changes consistent.
+        ctx.set_theme(egui::Theme::Dark);
         let mut fonts = egui::FontDefinitions::default();
         // Original Codicons glyphs; CC BY 4.0 attribution and source accompany the asset.
         fonts.font_data.insert(
@@ -646,6 +654,11 @@ impl Tokens {
         style.visuals.extreme_bg_color = color(self.editor);
         style.visuals.faint_bg_color = color(self.bar);
         style.visuals.override_text_color = Some(color(self.text));
+        style.visuals.weak_text_color = Some(color(self.muted));
+        style.visuals.hyperlink_color = color(self.accent);
+        style.visuals.warn_fg_color = color(self.signature_type);
+        style.visuals.error_fg_color = color(self.error);
+        style.visuals.code_bg_color = color(self.bar);
         style.visuals.selection.bg_fill = color(self.selection);
         style.visuals.selection.stroke = egui::Stroke::new(1.0, color(self.accent));
         style.visuals.widgets.noninteractive.bg_stroke = egui::Stroke::new(1.0, color(self.border));
@@ -653,8 +666,22 @@ impl Tokens {
         style.visuals.widgets.hovered.bg_fill = color(self.selection);
         style.spacing.item_spacing = egui::vec2(8.0, 0.0);
         style.spacing.window_margin = egui::Margin::same(self.dialog_content_inset);
-        style.visuals.widgets.hovered.bg_fill = Color32::from_rgb(61, 63, 65);
-        style.visuals.widgets.active.bg_fill = Color32::from_rgb(75, 76, 79);
+        style.visuals.widgets.hovered.bg_fill = color(self.widget_hover);
+        style.visuals.widgets.active.bg_fill = color(self.widget_active);
+        for state in [
+            &mut style.visuals.widgets.noninteractive,
+            &mut style.visuals.widgets.inactive,
+            &mut style.visuals.widgets.hovered,
+            &mut style.visuals.widgets.active,
+            &mut style.visuals.widgets.open,
+        ] {
+            state.fg_stroke = egui::Stroke::new(1., color(self.text));
+        }
+        style.visuals.widgets.inactive.weak_bg_fill = color(self.bar);
+        style.visuals.widgets.hovered.weak_bg_fill = color(self.widget_hover);
+        style.visuals.widgets.active.weak_bg_fill = color(self.widget_active);
+        style.visuals.widgets.open.bg_fill = color(self.widget_active);
+        style.visuals.widgets.open.weak_bg_fill = color(self.rail_selection);
         style.visuals.widgets.inactive.bg_stroke = egui::Stroke::NONE;
         style.spacing.interact_size.y = self.row_height;
         style.text_styles.insert(
@@ -811,6 +838,7 @@ pub struct CodisseuApp {
 }
 impl CodisseuApp {
     pub fn new(service: AppService) -> Self {
+        let tokens = Tokens::for_theme(service.editor_preferences().theme);
         Self {
             new_window_launcher: None,
             jira_ui: jira::JiraUi::default(),
@@ -818,7 +846,7 @@ impl CodisseuApp {
             drawings_ui: drawings::DrawingsUi::default(),
             ai_chat: ai_chat::AiChatUi::default(),
             service,
-            tokens: Tokens::load(),
+            tokens,
             styled: false,
             main_menu_open: false,
             editor_shortcuts: Default::default(),
@@ -1584,10 +1612,6 @@ impl CodisseuApp {
 
     pub fn show(&mut self, ui: &mut egui::Ui) {
         let ctx = ui.ctx().clone();
-        if !self.styled {
-            self.tokens.apply(&ctx);
-            self.styled = true;
-        }
         self.terminal.tick(&ctx);
         self.docker_terminal.tick(&ctx);
         let workspace_before_poll = self.service.workspace_path().map(PathBuf::from);
@@ -1601,6 +1625,7 @@ impl CodisseuApp {
         if self.service.poll() {
             self.capture_stable_frames = 0;
         }
+        self.sync_theme(ui);
         self.external_changes_tick(&ctx);
         self.poll_close_saves();
         // A ready ACK must be consumed before attempting a selected workspace.

@@ -276,7 +276,12 @@ impl CodisseuApp {
 /// The exact lexical highlighter/palette used by the shared editor, bounded by
 /// the excerpt before this function. Source is readonly; color is presentation.
 fn rust_preview_job(source: &str, tokens: &Tokens) -> egui::text::LayoutJob {
-    let mut job = highlight::layout(source, "rs", FontId::monospace(tokens.editor_font_size));
+    let mut job = highlight::layout_themed(
+        source,
+        "rs",
+        FontId::monospace(tokens.editor_font_size),
+        tokens.theme,
+    );
     job.wrap.max_width = f32::INFINITY;
     for section in &mut job.sections {
         section.format.line_height = Some(tokens.editor_line_height);
@@ -305,7 +310,12 @@ mod preview_tests {
         let source = "// ação 😀\nfn combine(first: i32) -> i32 { let result = first + 42; println!(\"{result}\"); result }\n";
         let tokens = Tokens::load();
         let actual = rust_preview_job(source, &tokens);
-        let editor = highlight::layout(source, "rs", FontId::monospace(tokens.editor_font_size));
+        let editor = highlight::layout_themed(
+            source,
+            "rs",
+            FontId::monospace(tokens.editor_font_size),
+            tokens.theme,
+        );
         assert_eq!(actual.text, source);
         assert_eq!(actual.sections.len(), editor.sections.len());
         for (preview, source) in actual.sections.iter().zip(&editor.sections) {

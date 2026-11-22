@@ -141,8 +141,12 @@ pub(crate) enum Kind {
     Variable,
 }
 impl Kind {
-    fn color(self) -> Color32 {
-        let p = palette();
+    fn color(self, language: Language, theme: ThemePreference) -> Color32 {
+        let p = palette_for(theme);
+        if theme == ThemePreference::Midnight && language == Language::Xml && self == Self::Keyword
+        {
+            return p.string;
+        }
         match self {
             Self::Text => p.text,
             Self::Keyword => p.keyword,
@@ -673,10 +677,16 @@ pub(crate) fn scan(
     Some(state)
 }
 
-pub(crate) fn layout(text: &str, language: Language, font: FontId, state: State) -> LayoutJob {
+pub(crate) fn layout_themed(
+    text: &str,
+    language: Language,
+    font: FontId,
+    state: State,
+    theme: ThemePreference,
+) -> LayoutJob {
     let mut job = LayoutJob::default();
     if text.len() > MAX_HIGHLIGHT_BYTES {
-        append(&mut job, text, &font, palette().text);
+        append(&mut job, text, &font, palette_for(theme).text);
         return job;
     }
     let mut last: Option<(std::ops::Range<usize>, Kind)> = None;
@@ -701,7 +711,7 @@ pub(crate) fn layout(text: &str, language: Language, font: FontId, state: State)
                     &mut job,
                     &text[previous.clone()],
                     &font,
-                    previous_kind.color(),
+                    previous_kind.color(language, theme),
                 );
             }
             last = Some((range, kind));
@@ -709,7 +719,7 @@ pub(crate) fn layout(text: &str, language: Language, font: FontId, state: State)
         || false,
     );
     if let Some((range, kind)) = last {
-        append(&mut job, &text[range], &font, kind.color());
+        append(&mut job, &text[range], &font, kind.color(language, theme));
     }
     job
 }
@@ -859,7 +869,10 @@ mod tests {
                 Language::Rust,
                 state,
                 |range, kind| {
-                    spans.push((offset + range.start..offset + range.end, kind.color()));
+                    spans.push((
+                        offset + range.start..offset + range.end,
+                        kind.color(Language::Rust, ThemePreference::Classic),
+                    ));
                 },
                 || false,
             )

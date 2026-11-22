@@ -230,6 +230,7 @@ impl AppService {
                 | Command::SetViewScroll { .. }
                 | Command::SetViewScrollAnchor { .. }
                 | Command::SetEditorSoftWrap(_)
+                | Command::SetTheme(_)
                 | Command::ActivateTab { .. }
                 | Command::ShowDocumentInView { .. }
                 | Command::Activate { .. }

@@ -1,5 +1,6 @@
-//! Merge-only tokens sampled from the user reference; geometry's 2x mapping is inferred.
-//! Evidence: docs/git-merge-reference-20261104.md. Not a claim about local defaults.
+//! Classic merge tokens retain their recorded reference; Midnight follows the
+//! application palette. Geometry's 2x reference mapping remains inferred.
+//! Evidence: docs/git-merge-reference-20261104.md.
 use super::*;
 #[derive(serde::Deserialize)]
 pub(super) struct MergeStyle {
@@ -31,12 +32,35 @@ pub(super) struct MergeStyle {
     pub tooltip_padding: i8,
 }
 impl MergeStyle {
-    pub fn get() -> &'static Self {
-        static STYLE: std::sync::OnceLock<MergeStyle> = std::sync::OnceLock::new();
-        STYLE.get_or_init(|| {
+    pub fn get_for_theme(theme: codisseu_core::ThemePreference) -> &'static Self {
+        static CLASSIC: std::sync::OnceLock<MergeStyle> = std::sync::OnceLock::new();
+        static MIDNIGHT: std::sync::OnceLock<MergeStyle> = std::sync::OnceLock::new();
+        let load = || {
             serde_json::from_str(include_str!("../../../design/git-merge-tokens.json"))
                 .expect("audited merge tokens")
-        })
+        };
+        match theme {
+            codisseu_core::ThemePreference::Classic => CLASSIC.get_or_init(load),
+            codisseu_core::ThemePreference::Midnight => MIDNIGHT.get_or_init(|| {
+                let mut style: Self = load();
+                let tokens = Tokens::for_theme(theme);
+                style.chrome = tokens.bar;
+                style.editor = tokens.editor;
+                style.border = tokens.border;
+                style.button_border = tokens.control_border;
+                style.foreground = tokens.text;
+                style.muted = tokens.muted;
+                style.line_number = tokens.muted;
+                style.conflict = tokens.git_diff_deleted;
+                style.conflict_word = tokens.rename_conflict_hint_background;
+                style.added = tokens.git_diff_added;
+                style.modified = tokens.caret_row;
+                style.accent = tokens.accent;
+                style.link = tokens.file_type_blue;
+                style.tooltip = tokens.bar;
+                style
+            }),
+        }
     }
     pub fn apply(&self, ui: &mut egui::Ui) {
         ui.style_mut().visuals.override_text_color = Some(color(self.foreground));
@@ -60,12 +84,12 @@ impl MergeStyle {
 /// Flat toolbar action with public/original glyph and a semantic label.
 pub(super) fn tool(
     ui: &mut egui::Ui,
+    style: &MergeStyle,
     icon: Option<Icon>,
     label: &str,
     accessible: &str,
     enabled: bool,
 ) -> egui::Response {
-    let style = MergeStyle::get();
     let label_width = if label.is_empty() {
         0.
     } else {
@@ -123,9 +147,9 @@ pub(super) fn tool(
     }
     response.on_hover_text(accessible)
 }
-pub(super) fn lock(ui: &egui::Ui, rect: egui::Rect) {
+pub(super) fn lock(ui: &egui::Ui, rect: egui::Rect, style: &MergeStyle) {
     let c = rect.center();
-    let tint = color(MergeStyle::get().foreground);
+    let tint = color(style.foreground);
     let s = egui::Stroke::new(1., tint);
     ui.painter().rect_stroke(
         egui::Rect::from_center_size(c + egui::vec2(0., 2.), egui::vec2(9., 7.)),
@@ -143,4 +167,29 @@ pub(super) fn lock(ui: &egui::Ui, rect: egui::Rect) {
         ],
         s,
     ));
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn merge_midnight_uses_application_colors_and_classic_keeps_its_palette() {
+        use codisseu_core::ThemePreference::{Classic, Midnight};
+        let old = MergeStyle::get_for_theme(Classic);
+        let new = MergeStyle::get_for_theme(Midnight);
+        let tokens = Tokens::for_theme(Midnight);
+        assert_eq!(new.editor, tokens.editor);
+        assert_eq!(new.chrome, tokens.bar);
+        assert_eq!(new.foreground, tokens.text);
+        assert_eq!(new.modified, tokens.caret_row);
+        assert_eq!(new.added, tokens.git_diff_added);
+        assert_ne!(old.editor, new.editor);
+        assert_ne!(old.chrome, new.chrome);
+        assert_eq!(old.editor, [30, 31, 34]);
+        assert_eq!(old.font_size, new.font_size);
+        assert_eq!(old.code_padding_x, new.code_padding_x);
+        assert!(std::ptr::eq(old, MergeStyle::get_for_theme(Classic)));
+        assert!(std::ptr::eq(new, MergeStyle::get_for_theme(Midnight)));
+    }
 }

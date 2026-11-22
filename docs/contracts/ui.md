@@ -1,5 +1,7 @@
 # Contrato da interface M1/M2 e revisão visual V3
 
+Tema global e configurações de aparência: [aparência e temas](../themes.md). A paleta por instância acompanha EditorPreferences.theme em toda a interface e nos caches de sintaxe. Noturno é o novo padrão; Clássico preserva a alternativa anterior.
+
 Atualização de abertura/saída11/11/2026:
 workspace-close-contract-20261111.md.
 Topo/welcome/menu compartilham intenção de projeto persistente, com destino,

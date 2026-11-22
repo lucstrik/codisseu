@@ -283,6 +283,7 @@ pub enum Command {
     },
     SetEditorLigatures(bool),
     SetEditorSoftWrap(bool),
+    SetTheme(ThemePreference),
     SetCopilotEnabled(bool),
     SetCopilotProgram(String),
     SetAutoSave {
@@ -619,10 +620,20 @@ pub enum Command {
     },
 }
 
+/// A coordinated application palette, independent of document text and history.
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum ThemePreference {
+    #[default]
+    Midnight,
+    Classic,
+}
+
 /// Profile-wide editor preferences, independent of document text and history.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(default)]
 pub struct EditorPreferences {
+    pub theme: ThemePreference,
     pub copilot_enabled: bool,
     pub copilot_program: String,
     pub auto_save: bool,
@@ -638,6 +649,7 @@ pub struct EditorPreferences {
 impl Default for EditorPreferences {
     fn default() -> Self {
         Self {
+            theme: ThemePreference::default(),
             copilot_enabled: false,
             copilot_program: String::new(),
             auto_save: true,
@@ -1579,6 +1591,7 @@ impl AppService {
                 | Command::SetViewScrollAnchor { .. }
                 | Command::ShowDocumentInView { .. }
                 | Command::SetEditorSoftWrap(_)
+                | Command::SetTheme(_)
                 | Command::SignatureHelp { .. }
                 | Command::CancelSignatureHelp
                 | Command::PreviewDefinition { .. }
@@ -1714,6 +1727,10 @@ impl AppService {
                     "Quebra automática de linha desativada"
                 }
                 .into();
+            }
+            Command::SetTheme(theme) => {
+                self.editor_preferences.theme = theme;
+                self.status = "Tema do aplicativo atualizado".into();
             }
             Command::SetEditorSplit(split) => {
                 split.validate()?;

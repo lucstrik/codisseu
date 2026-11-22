@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-21",
+  "source": "User-provided Foto 1.jpg, current conversation",
+  "source_sha256": "80e3fff0f362879f936bb48ac30e4ecea7ec0dc1debac472b5a31dddbac0f59b",
+  "source_dimensions_px": [
+    591,
+    1280
+  ],
+  "reference_product": "unknown",
+  "reference_build": "unknown",
+  "reference_theme": "unknown",
+  "observed": {
+    "editor_background": {
+      "status": "observed",
+      "method": "most frequent RGB in JPEG crop (14,286)-(570,515), PIL RGB",
+      "rgb": [
+        12,
+        17,
+        23
+      ],
+      "pixel_count": 63267
+    },
+    "visual_roles": [
+      "light text",
+      "green XML tags",
+      "orange emphasis",
+      "blue selection",
+      "green and amber left-hand change bars"
+    ]
+  },
+  "implementation": {
+    "status": "inferred",
+    "description": "Own desktop adaptation from compressed image; foreground/control/status colors chosen for legibility, not exact measurements of upstream theme. Existing geometry and padding retained.",
+    "theme": "Codisseu Noturno",
+    "global_tokens": "design/themes/midnight.json",
+    "syntax_tokens": "design/themes/midnight-syntax.json",
+    "classic_base": "design/tokens.json",
+    "git_added": [
+      80,
+      161,
+      104
+    ],
+    "git_modified": [
+      213,
+      157,
+      73
+    ],
+    "git_deleted": [
+      239,
+      104,
+      104
+    ]
+  },
+  "assets_incorporated": []
+}

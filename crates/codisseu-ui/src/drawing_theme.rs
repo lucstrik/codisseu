@@ -94,6 +94,19 @@ impl CanvasTheme {
     }
 
     pub fn palette(self, ui: &Ui) -> ThemePalette {
+        if self == Self::System {
+            let visuals = ui.visuals();
+            return ThemePalette {
+                canvas: visuals.extreme_bg_color,
+                panel: visuals.panel_fill,
+                border: visuals.window_stroke.color,
+                text: visuals.text_color(),
+                muted: visuals.weak_text_color(),
+                hover: visuals.widgets.hovered.bg_fill,
+                active: visuals.selection.bg_fill,
+                accent: visuals.hyperlink_color,
+            };
+        }
         if self.is_dark(ui) {
             ThemePalette {
                 canvas: Color32::from_rgb(18, 18, 18),
@@ -239,7 +252,13 @@ mod tests {
                     Color32::WHITE
                 };
                 assert_eq!(CanvasTheme::System.canvas_background(ui, &scene), expected);
-                assert_eq!(CanvasTheme::System.palette(ui).canvas, expected);
+                let system = CanvasTheme::System.palette(ui);
+                assert_eq!(system.canvas, ui.visuals().extreme_bg_color);
+                assert_eq!(system.panel, ui.visuals().panel_fill);
+                assert_eq!(system.text, ui.visuals().text_color());
+                // Explicit drawing modes retain their own published palette.
+                assert_eq!(CanvasTheme::Dark.palette(ui).canvas, Color32::from_gray(18));
+                assert_eq!(CanvasTheme::Light.palette(ui).canvas, Color32::WHITE);
             });
             // This test inspects styles and colors without a GPU renderer.
             output.textures_delta.clear();

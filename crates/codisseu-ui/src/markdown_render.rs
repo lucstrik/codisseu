@@ -10,6 +10,7 @@ pub(super) struct RenderState {
     stamp: Option<(DocumentId, u64)>,
     width: u32,
     scale: u32,
+    theme: Option<codisseu_core::ThemePreference>,
     heights: Vec<f32>,
     layouts: HashMap<(usize, usize), Arc<egui::Galley>>,
     textures: HashMap<String, egui::TextureHandle>,
@@ -53,7 +54,8 @@ pub(super) fn show(
     }
     let width = (ui.available_width() - 64.).clamp(80., 980.);
     let scale = ui.ctx().pixels_per_point().to_bits();
-    if state.width != width.to_bits() || state.scale != scale {
+    if state.width != width.to_bits() || state.scale != scale || state.theme != Some(tokens.theme) {
+        state.theme = Some(tokens.theme);
         state.width = width.to_bits();
         state.scale = scale;
         state.layouts.clear();
@@ -224,7 +226,19 @@ pub(super) fn show(
                                                 }
                                             });
                                             let galley = cached(ui, state, (index, 0), || {
-                                                let mut job = job.clone();
+                                                let mut job = if tokens.theme
+                                                    == codisseu_core::ThemePreference::Classic
+                                                {
+                                                    job.clone()
+                                                } else {
+                                                    documentation_code_job(
+                                                        text,
+                                                        language,
+                                                        "",
+                                                        f32::INFINITY,
+                                                        tokens,
+                                                    )
+                                                };
                                                 for section in &mut job.sections {
                                                     section.format.font_id.size = 13. * zoom;
                                                 }
@@ -670,11 +684,13 @@ pub(super) fn show_documentation(
     if state.stamp != Some((u64::MAX, version))
         || state.width != width.to_bits()
         || state.scale != style_key
+        || state.theme != Some(tokens.theme)
     {
         state.stamp = Some((u64::MAX, version));
         state.clear_layout();
         state.width = width.to_bits();
         state.scale = style_key;
+        state.theme = Some(tokens.theme);
         state.heights = parsed
             .blocks
             .iter()
@@ -777,8 +793,12 @@ fn documentation_code_job(
         "" => fallback,
         other => other,
     };
-    let mut job =
-        crate::highlight::layout(text, extension, FontId::monospace(tokens.editor_font_size));
+    let mut job = crate::highlight::layout_themed(
+        text,
+        extension,
+        FontId::monospace(tokens.editor_font_size),
+        tokens.theme,
+    );
     job.wrap.max_width = width;
     job.wrap.break_anywhere = false;
     for section in &mut job.sections {
@@ -850,6 +870,39 @@ mod documentation_tests {
     use super::*;
     use egui_kittest::{Harness, kittest::Queryable};
     use std::sync::atomic::AtomicBool;
+
+    #[test]
+    fn theme_changes_recolor_cached_documentation_without_reparsing_source() {
+        let source = "```ts\nconst answer = 42;\n```";
+        let parsed = parse::parse_remote(source, &AtomicBool::new(false)).unwrap();
+        let ctx = egui::Context::default();
+        let classic = Tokens::for_theme(codisseu_core::ThemePreference::Classic);
+        let midnight = Tokens::for_theme(codisseu_core::ThemePreference::Midnight);
+        classic.apply(&ctx);
+        let mut state = RenderState::default();
+        let mut output = ctx.run_ui(egui::RawInput::default(), |ui| {
+            show_documentation(ui, &classic, 1, &parsed, &mut state, "ts");
+            let old = state
+                .layouts
+                .values()
+                .find(|g| g.job.text.starts_with("const"))
+                .unwrap()
+                .clone();
+            show_documentation(ui, &midnight, 1, &parsed, &mut state, "ts");
+            let new = state
+                .layouts
+                .values()
+                .find(|g| g.job.text.starts_with("const"))
+                .unwrap();
+            assert!(!Arc::ptr_eq(&old, new));
+            assert_ne!(
+                old.job.sections[0].format.color,
+                new.job.sections[0].format.color
+            );
+            assert_eq!(old.job.text, new.job.text);
+        });
+        output.textures_delta.clear();
+    }
     #[test]
     fn documentation_renders_markdown_and_exact_editor_code_colors_at_both_scales() {
         let code = "<?php public function aplicar(string $name, int $repeat = 2): void;\n";
@@ -888,10 +941,11 @@ mod documentation_tests {
                 .find(|g| g.job.text == code)
                 .expect("real code widget")
                 .job;
-            let expected = crate::highlight::layout(
+            let expected = crate::highlight::layout_themed(
                 code,
                 "php",
                 FontId::monospace(Tokens::load().editor_font_size),
+                Tokens::load().theme,
             );
             let colors = |job: &egui::text::LayoutJob| {
                 job.sections
@@ -943,10 +997,11 @@ mod documentation_tests {
             ("mysql", "sql", "SELECT * FROM users WHERE id = 2;"),
         ] {
             let actual = documentation_code_job(code, language, "php", 260., &tokens);
-            let expected = crate::highlight::layout(
+            let expected = crate::highlight::layout_themed(
                 code,
                 extension,
                 FontId::monospace(tokens.editor_font_size),
+                tokens.theme,
             );
             assert_eq!(actual.text, code);
             assert_eq!(

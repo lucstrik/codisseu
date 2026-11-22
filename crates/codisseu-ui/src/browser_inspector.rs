@@ -21,6 +21,7 @@ enum Storage {
 }
 #[derive(Default)]
 pub(super) struct InspectorUi {
+    theme: codisseu_core::ThemePreference,
     session: Option<(u64, u64, u64, String)>,
     target: Option<BrowserId>,
     section: Section,
@@ -140,6 +141,7 @@ impl InspectorUi {
                 ..Default::default()
             };
         }
+        self.theme = tokens.theme;
         let mut actions = Vec::new();
         let mut close = false;
         let mut restart = false;
@@ -368,7 +370,7 @@ impl InspectorUi {
             }
             1 => {
                 if let Some(body) = &r.post_data {
-                    payload(ui, body, self.reveal);
+                    payload(ui, body, self.reveal, self.theme);
                 } else {
                     ui.label("Sem corpo enviado capturado.");
                 }
@@ -395,7 +397,7 @@ impl InspectorUi {
                     if body.truncated {
                         ui.label("Conteúdo limitado pelo limite de captura.");
                     }
-                    payload(ui, &body.text, self.reveal);
+                    payload(ui, &body.text, self.reveal, self.theme);
                 } else {
                     ui.label("O corpo é obtido apenas por solicitação e após a conclusão do carregamento.");
                 }
@@ -818,9 +820,9 @@ impl InspectorUi {
             match result {
                 Ok((header, body)) => {
                     ui.strong("Header");
-                    payload(ui, header, self.reveal);
+                    payload(ui, header, self.reveal, self.theme);
                     ui.strong("Payload");
-                    payload(ui, body, self.reveal);
+                    payload(ui, body, self.reveal, self.theme);
                 }
                 Err(error) => {
                     ui.label(error);
@@ -974,7 +976,7 @@ fn evaluation(ui: &mut egui::Ui, e: &Evaluation, reveal: bool, a: &mut Vec<Actio
         });
     }
 }
-fn payload(ui: &mut egui::Ui, text: &str, reveal: bool) {
+fn payload(ui: &mut egui::Ui, text: &str, reveal: bool, theme: codisseu_core::ThemePreference) {
     if !reveal {
         ui.label("Conteúdo oculto. Use Revelar valores para visualizar.");
         return;
@@ -996,10 +998,11 @@ fn payload(ui: &mut egui::Ui, text: &str, reveal: bool) {
         .get(&egui::TextStyle::Monospace)
         .cloned()
         .unwrap_or_else(|| FontId::monospace(13.));
-    let job = highlight::layout(
+    let job = highlight::layout_themed(
         &rendered,
         if parsed.is_some() { "json" } else { "txt" },
         font,
+        theme,
     );
     ui.add(egui::Label::new(job).wrap());
     if text.len() > 32768 {

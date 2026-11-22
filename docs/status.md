@@ -1,3 +1,28 @@
+# Codisseu 0.1.0-alpha.3 — tema global Noturno
+
+Novo tema padrão escuro inspirado na referência visual do autor. Em
+**Configurações › Aparência › Tema do aplicativo**, escolha Noturno ou Clássico.
+A troca acompanha toda a IDE, incluindo o editor, abas, painéis, menus,
+configurações e prévias; a preferência é restaurada nas próximas aberturas.
+
+Sintaxe verde/laranja/azul, seleção azul e gutter Git com verde para adições,
+laranja para modificações e vermelho para remoções. O cálculo usa mudanças
+reais; Save e troca de tema preservam os arquivos e o estado Git. Cores autorais
+dos desenhos e conteúdos ANSI explícitos são preservadas.
+[Guia de aparência e temas](themes.md).
+
+Validação local:794 testes Rust distintos aprovados,41 testes opt-in não
+executados;24checks em6janelas X11/llvmpipe, escalas100/125%, com troca por
+clique, reabertura, gravação exata e marcas Git reais. Formatação e Clippy dos
+módulos afetados aprovados. Isso não comprova Wayland, outros SO ou todas as
+combinações de integrações. O CI reconstrói e verifica o instalador core, com
+checksum, metadados e avisos de terceiros. Requisitos e limites da distribuição
+permanecem no [guia Linux](install-linux.md).
+
+---
+
+## Histórico da alpha.2
+
 # Codisseu 0.1.0-alpha.2 — desenhos no projeto
 
 Editor nativo Rust/egui de arquivos `.excalidraw` e `.excalidraw.json`, integrado
@@ -38,60 +63,9 @@ Requisitos da distribuição core e ferramentas opcionais permanecem descritos
 no [guia Linux](install-linux.md). A edição de desenhos funciona offline e sem
 Node.js, PHP, servidor de linguagem ou conta Excalidraw.
 
-
 ---
 
-# Capturas de produto sem desktop — 17/11/2026
-
-Nova apresentação solicitada pelo autor: imagens somente do Codisseu, sem o
-painel do sistema operacional. Geradas duas capturas reais pelo próprio
-renderer da alpha pública v0.1.0-alpha.1 core (`--capture`), ELF SHA
-cc28c8f87daf7654a3c8844a3cb75a3286dbe4d431c5819c0506a7ed84e0e9fd.
-PNG1920×1200/escala1.5, sem recorte, recompressão ou edição de pixels.
-
-Projeto codisseu-demo e perfil separados, em display Xvfb autenticado. Capturas
-PHP e consulta SQLite com seis linhas reais de dados sintéticos; dois processos
-encerraram0; display, cookie e diretório XDG_RUNTIME temporários foram limpos.
-O perfil de demonstração permanece somente nas evidências locais.
-Instalação/perfil normais preservados; não houve rebuild ou alteração de código
-nativo. Verificação de SHA/PNG/dimensões/metadados/resultado SQL aprovada.
-
-Arquivos: docs/images/{codisseu-workspace,codisseu-database}.png, procedência
-em docs/images/README.md, README principal, website/assets/codisseu-workspace.png,
-website/index.html (alt, legenda, dimensões e metadados sociais/JSON-LD),
-website/README.md e docs/website-contract.md/status.md. JPGs antigos permanecem
-como histórico; deixaram de ser exibidos no README/site. Fonte e pixels das
-novas capturas são rastreáveis. Publicação segue PR, CI e Pages.
-
-# Página pública no GitHub Pages — 17/11/2026
-
-M7, apresentação do projeto. Página única em `website/`, com HTML/CSS/JavaScript
-sem build ou backend, no endereço configurado https://lucstrik.github.io/codisseu/.
-Identidade escura azul/violeta do logo, fundo quadriculado com deformação no
-cursor, hover, imagem real do editor, recursos, contribuição, download e FAQ.
-Texto informa alpha core, Linux amd64/glibc2.39+, ferramentas opcionais e limites;
-foto anterior identificada, sem promessas de compatibilidade/performance novas.
-
-Canvas decorativo com fallback CSS; navegação/conteúdo sem JS, movimento reduzido
-e ponteiro coarse estáticos, pausa em repouso/aba oculta, DPR1.5 e teto30fps.
-Fonte Inter convertida para subset WOFF2 latino174.308bytes (TTF879.708bytes),
-licença OFL preservada; logo/foto sem alterações e ícone Lucide com licença ISC.
-SEO: title/description, canonical, OpenGraph/Twitter, JSON-LD SoftwareApplication,
-sitemap e robots auxiliar do subdiretório. Nenhuma garantia de indexação/posição.
-
-Arquivos: website/**, .github/workflows/pages.yml, README.md e
- docs/website-contract.md/status.md. Workflow estático com Actions oficiais
-fixadas por SHA, permissões por job, artifact somente website/, environment
-restrito à main. Pages habilitado via API com build_type=workflow e HTTPS.
-Proteções de main/tag, CI Rust e instalador da alpha preservados.
-
-Validação local: node --check, git diff --check, Actionlint1.7.12 em contêiner,
-HTML/JSON-LD/XML/links e recursos HTTP200 sob /codisseu/,12checks isolados do
-canvas aprovados. Navegador real: grade reage ao ponteiro, foco/skiplink visível,
-FAQ expande, layout desktop e telas320/390/768px inspecionados. Overflow de
-órbitas decorativas corrigido. Publicação usa o fluxo normal PR→CI→merge→Pages;
-a verificação do endereço público ocorre no deploy. Esses checks são do site,
-sem testar novamente a interface nativa ou fechar M7 global.
+## Histórico da primeira alpha
 
 # Codisseu 0.1.0-alpha.1 — Linux
 

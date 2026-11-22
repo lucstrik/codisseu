@@ -443,7 +443,7 @@ pub(super) struct LineCache {
     inlays: BTreeMap<usize, Vec<inlays::Hint>>,
     lines: BTreeMap<usize, Rc<LineLayout>>,
     revision: Option<u64>,
-    style: Option<[u32; 4]>,
+    style: Option<([u32; 4], codisseu_core::ThemePreference)>,
     font_epoch: Option<Arc<egui::Galley>>,
     lexical: lexical::Lexer,
     remaining_tiles: usize,
@@ -553,12 +553,15 @@ impl LineCache {
             self.lines.clear();
         }
         self.font_epoch = Some(epoch);
-        let style = [
-            t.editor_font_size.to_bits(),
-            t.editor_line_height.to_bits(),
-            t.editor_letter_spacing.to_bits(),
-            ui.ctx().pixels_per_point().to_bits(),
-        ];
+        let style = (
+            [
+                t.editor_font_size.to_bits(),
+                t.editor_line_height.to_bits(),
+                t.editor_letter_spacing.to_bits(),
+                ui.ctx().pixels_per_point().to_bits(),
+            ],
+            t.theme,
+        );
         if self.style != Some(style) {
             self.lines.clear();
             self.style = Some(style);
@@ -626,11 +629,12 @@ impl LineCache {
                     }
                     map.push(column);
                 }
-                let mut job = lexical::layout(
+                let mut job = lexical::layout_themed(
                     &rendered,
                     ext,
                     FontId::monospace(t.editor_font_size),
                     self.lexical.state(line),
+                    t.theme,
                 );
                 let visual_map = map.clone();
                 let (decorated, positions, hints) = inlays::decorate(
@@ -693,6 +697,35 @@ impl LineCache {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn changing_theme_rebuilds_cached_lines_without_a_document_edit_or_font_reset() {
+        let ctx = egui::Context::default();
+        let classic = Tokens::for_theme(codisseu_core::ThemePreference::Classic);
+        let midnight = Tokens::for_theme(codisseu_core::ThemePreference::Midnight);
+        classic.apply(&ctx);
+        let source = "const answer = 42;";
+        let snapshot = TextSnapshot::from_str(source);
+        let mut cache = LineCache::default();
+        let mut output = ctx.run_ui(egui::RawInput::default(), |ui| {
+            cache.begin_document(snapshot.clone(), 0, None, "ts");
+            cache.sync(0, None, ui, &classic);
+            let old = cache.get(ui, &snapshot, 0, "ts", &classic);
+            cache.sync(0, None, ui, &midnight);
+            let new = cache.get(ui, &snapshot, 0, "ts", &midnight);
+            assert!(!Rc::ptr_eq(&old, &new));
+            let (Content::Flat(old), Content::Flat(new)) = (&old.content, &new.content) else {
+                panic!("flat lines");
+            };
+            assert_ne!(
+                old.galley.job.sections[0].format.color,
+                new.galley.job.sections[0].format.color
+            );
+            assert_eq!(new.galley.job.text, source);
+            assert_eq!(snapshot.to_string(), source);
+        });
+        output.textures_delta.clear();
+    }
     #[test]
     fn decoration_paint_partitions_existing_flat_and_tiled_galleys_without_relayout() {
         for tiled in [false, true] {

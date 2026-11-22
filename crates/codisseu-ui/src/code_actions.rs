@@ -35,7 +35,12 @@ fn excerpt(text: &str, line: usize) -> String {
     value
 }
 fn source_preview(ui: &mut egui::Ui, text: &str, ext: &str, tokens: &Tokens) {
-    let mut job = highlight::layout(text, ext, FontId::monospace(tokens.editor_font_size));
+    let mut job = highlight::layout_themed(
+        text,
+        ext,
+        FontId::monospace(tokens.editor_font_size),
+        tokens.theme,
+    );
     job.wrap.max_width = f32::INFINITY;
     for section in &mut job.sections {
         section.format.line_height = Some(tokens.editor_line_height);

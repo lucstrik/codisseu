@@ -1,3 +1,28 @@
+# Codisseu 0.1.0-alpha.3 — tema global Noturno
+
+Novo tema padrão escuro inspirado na referência visual do autor. Em
+**Configurações › Aparência › Tema do aplicativo**, escolha Noturno ou Clássico.
+A troca acompanha toda a IDE, incluindo o editor, abas, painéis, menus,
+configurações e prévias; a preferência é restaurada nas próximas aberturas.
+
+Sintaxe verde/laranja/azul, seleção azul e gutter Git com verde para adições,
+laranja para modificações e vermelho para remoções. O cálculo usa mudanças
+reais; Save e troca de tema preservam os arquivos e o estado Git. Cores autorais
+dos desenhos e conteúdos ANSI explícitos são preservadas.
+[Guia de aparência e temas](themes.md).
+
+Validação local:794 testes Rust distintos aprovados,41 testes opt-in não
+executados;24checks em6janelas X11/llvmpipe, escalas100/125%, com troca por
+clique, reabertura, gravação exata e marcas Git reais. Formatação e Clippy dos
+módulos afetados aprovados. Isso não comprova Wayland, outros SO ou todas as
+combinações de integrações. O CI reconstrói e verifica o instalador core, com
+checksum, metadados e avisos de terceiros. Requisitos e limites da distribuição
+permanecem no [guia Linux](install-linux.md).
+
+---
+
+## Histórico da alpha.2
+
 # Codisseu 0.1.0-alpha.2 — desenhos no projeto
 
 Editor nativo Rust/egui de arquivos `.excalidraw` e `.excalidraw.json`, integrado

@@ -493,6 +493,20 @@ mod tests {
             h.step();
         }
         settle(&mut h, |app| app.documentation_hover.rect.is_some());
+        // The window is ready before its Markdown worker has delivered the
+        // contents. Wait for the actual documentation, not just its frame.
+        let deadline = Instant::now() + Duration::from_secs(20);
+        while h
+            .query_by_label_contains("Fixture method documentation")
+            .is_none()
+        {
+            assert!(
+                Instant::now() < deadline,
+                "documentation content did not appear"
+            );
+            h.step();
+            thread::sleep(Duration::from_millis(3));
+        }
         assert!(
             h.query_by_label_contains("Fixture method documentation")
                 .is_some()

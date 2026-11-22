@@ -1,9 +1,10 @@
 //! Lexical highlighting for the shared native editor; not a parser or LSP.
 //! No semantic diagnostics, interpolation analysis, heredocs, JS regex literals
 //! or embedded-language routing. Every UTF-8 byte is retained in the LayoutJob.
-//! Colors are read from the centralized public OSS scheme excerpt, with source,
-//! revision and attribution recorded alongside that JSON. They are not local
-//! measurements of a proprietary IDE installation.
+//! Classic colors come from the centralized public OSS scheme excerpt. Midnight
+//! is an independent adaptation of the user photograph; its syntax tokens are
+//! inferred design choices, not measured settings from an identified editor.
+use codisseu_core::ThemePreference;
 use egui::{Color32, FontId, TextFormat, text::LayoutJob};
 use std::sync::OnceLock;
 pub(super) mod extended;
@@ -51,7 +52,36 @@ struct Palette {
     function: Color32,
 }
 
-fn palette() -> &'static Palette {
+fn palette_for(theme: ThemePreference) -> &'static Palette {
+    if theme == ThemePreference::Midnight {
+        static MIDNIGHT: OnceLock<Palette> = OnceLock::new();
+        return MIDNIGHT.get_or_init(|| {
+            #[derive(serde::Deserialize)]
+            struct SyntaxTokens {
+                text: [u8; 3],
+                keyword: [u8; 3],
+                string: [u8; 3],
+                number: [u8; 3],
+                comment: [u8; 3],
+                doc_comment: [u8; 3],
+                variable: [u8; 3],
+                function: [u8; 3],
+            }
+            let tokens: SyntaxTokens =
+                serde_json::from_str(include_str!("../../../design/themes/midnight-syntax.json"))
+                    .expect("versioned Midnight syntax tokens");
+            Palette {
+                text: super::color(tokens.text),
+                keyword: super::color(tokens.keyword),
+                string: super::color(tokens.string),
+                number: super::color(tokens.number),
+                comment: super::color(tokens.comment),
+                doc_comment: super::color(tokens.doc_comment),
+                variable: super::color(tokens.variable),
+                function: super::color(tokens.function),
+            }
+        });
+    }
     static PALETTE: OnceLock<Palette> = OnceLock::new();
     PALETTE.get_or_init(|| {
         let source: serde_json::Value = serde_json::from_str(include_str!(
@@ -71,11 +101,20 @@ fn palette() -> &'static Palette {
             string: foreground("DEFAULT_STRING"),
             number: foreground("DEFAULT_NUMBER"),
             comment: foreground("DEFAULT_LINE_COMMENT"),
-            doc_comment: super::color(super::Tokens::load().editor_phpdoc),
-            variable: super::color(super::Tokens::load().editor_php_variable),
+            doc_comment: super::color(
+                super::Tokens::for_theme(ThemePreference::Classic).editor_phpdoc,
+            ),
+            variable: super::color(
+                super::Tokens::for_theme(ThemePreference::Classic).editor_php_variable,
+            ),
             function: foreground("DEFAULT_FUNCTION_DECLARATION"),
         }
     })
+}
+
+#[cfg(test)]
+fn palette() -> &'static Palette {
+    palette_for(ThemePreference::Classic)
 }
 
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -362,11 +401,20 @@ impl Language {
 
 /// Root's layouter caches this by text, extension and font; no I/O is performed.
 pub(super) fn layout(text: &str, extension: &str, font: FontId) -> LayoutJob {
+    layout_themed(text, extension, font, ThemePreference::Classic)
+}
+
+pub(super) fn layout_themed(
+    text: &str,
+    extension: &str,
+    font: FontId,
+    theme: ThemePreference,
+) -> LayoutJob {
     if let Some(language) = extended::Language::for_key(extension) {
-        return extended::layout(text, language, font, extended::State::default());
+        return extended::layout_themed(text, language, font, extended::State::default(), theme);
     }
     let language = Language::from_extension(extension);
-    let palette = palette();
+    let palette = palette_for(theme);
     let mut job = LayoutJob::default();
     if language == Language::Plain || text.len() > MAX_HIGHLIGHT_BYTES {
         append(&mut job, text, &font, palette.text);
@@ -558,8 +606,8 @@ fn number_end(text: &str, start: usize, language: Language) -> usize {
 }
 
 /// Shared public-scheme colors for the native Markdown source renderer.
-pub(super) fn source_colors() -> [Color32; 5] {
-    let p = palette();
+pub(super) fn source_colors_themed(theme: ThemePreference) -> [Color32; 5] {
+    let p = palette_for(theme);
     [p.text, p.keyword, p.string, p.comment, p.function]
 }
 
@@ -676,5 +724,67 @@ mod tests {
         let job = assert_preserved(&alternating, "ts");
         assert_eq!(job.sections.len(), MAX_SPANS);
         assert_eq!(job.sections.last().unwrap().format.color, palette().text);
+    }
+    #[test]
+    fn switching_syntax_themes_preserves_source_and_isolates_each_call() {
+        let source = "<?php // ação 😀\nfunction greet($name) { return 'Olá'; }";
+        let classic = layout_themed(
+            source,
+            "php",
+            FontId::monospace(13.),
+            ThemePreference::Classic,
+        );
+        let midnight = layout_themed(
+            source,
+            "php",
+            FontId::monospace(13.),
+            ThemePreference::Midnight,
+        );
+        assert_eq!(classic.text, source);
+        assert_eq!(midnight.text, source);
+        assert_ne!(
+            color_of(&classic, "function"),
+            color_of(&midnight, "function")
+        );
+        assert_eq!(
+            color_of(&midnight, "function"),
+            Color32::from_rgb(229, 161, 91)
+        );
+        assert_eq!(
+            color_of(&midnight, "$name"),
+            Color32::from_rgb(121, 177, 232)
+        );
+        let restored = layout_themed(
+            source,
+            "php",
+            FontId::monospace(13.),
+            ThemePreference::Classic,
+        );
+        assert_eq!(
+            classic.sections, restored.sections,
+            "another view's theme cannot leak into this call"
+        );
+    }
+
+    #[test]
+    fn midnight_xml_tags_use_green_while_plain_text_and_attributes_stay_distinct() {
+        let source = "<prompt role=\"assistant\">ação 😀</prompt>";
+        let job = layout_themed(
+            source,
+            "xml",
+            FontId::monospace(13.),
+            ThemePreference::Midnight,
+        );
+        assert_eq!(job.text, source);
+        assert_eq!(color_of(&job, "prompt"), Color32::from_rgb(126, 184, 132));
+        assert_eq!(color_of(&job, "role"), Color32::from_rgb(121, 177, 232));
+        assert_eq!(color_of(&job, "ação"), Color32::from_rgb(201, 209, 217));
+        let classic = layout_themed(
+            source,
+            "xml",
+            FontId::monospace(13.),
+            ThemePreference::Classic,
+        );
+        assert_ne!(color_of(&classic, "prompt"), color_of(&job, "prompt"));
     }
 }
