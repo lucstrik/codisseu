@@ -34,9 +34,13 @@ impl CodisseuApp {
 
     pub(super) fn query_page_busy(&self) -> bool {
         if self.database_ui.remote_results {
-            self.service.remote_db.is_busy() || !self.database_ui.staged.is_empty()
+            self.service.remote_db.is_busy()
+                || !self.database_ui.staged.is_empty()
+                || self.database_ui.edit.is_some()
         } else {
             self.service.db.is_busy()
+                || !self.database_ui.staged.is_empty()
+                || self.database_ui.edit.is_some()
         }
     }
 

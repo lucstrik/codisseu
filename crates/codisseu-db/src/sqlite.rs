@@ -20,7 +20,8 @@ use std::{
 
 pub(crate) struct Session {
     pub path: PathBuf,
-    database: Connection,
+    pub(crate) database: Connection,
+    pub(crate) writable: bool,
 }
 
 pub(crate) fn explain(error: rusqlite::Error) -> String {
@@ -33,19 +34,36 @@ pub(crate) fn explain(error: rusqlite::Error) -> String {
 
 impl Session {
     pub fn open(path: &Path, epoch: Arc<AtomicU64>, expected: u64) -> Result<Self, String> {
+        Self::open_mode(path, epoch, expected, false)
+    }
+
+    pub(crate) fn open_mode(
+        path: &Path,
+        epoch: Arc<AtomicU64>,
+        expected: u64,
+        writable: bool,
+    ) -> Result<Self, String> {
         let canonical =
             std::fs::canonicalize(path).map_err(|e| format!("{}: {e}", path.display()))?;
         let metadata = std::fs::metadata(&canonical).map_err(|e| e.to_string())?;
         if !metadata.is_file() {
             return Err("Escolha um arquivo SQLite existente e regular".into());
         }
-        let database = Connection::open_with_flags(&canonical, OpenFlags::SQLITE_OPEN_READ_ONLY)
-            .map_err(explain)?;
+        let database = Connection::open_with_flags(
+            &canonical,
+            if writable {
+                OpenFlags::SQLITE_OPEN_READ_WRITE
+            } else {
+                OpenFlags::SQLITE_OPEN_READ_ONLY
+            },
+        )
+        .map_err(explain)?;
         database
             .busy_timeout(Duration::from_millis(500))
             .map_err(explain)?;
         for (setting, value) in [
-            ("query_only", 1),
+            ("query_only", i32::from(!writable)),
+            ("foreign_keys", 1),
             ("trusted_schema", 0),
             ("cache_size", -2048),
         ] {
@@ -67,6 +85,7 @@ impl Session {
         let result = Self {
             path: canonical,
             database,
+            writable,
         };
         result.begin_request(epoch, expected)?;
         Ok(result)
@@ -321,14 +340,14 @@ impl Budget {
     }
 }
 
-fn permit_read(context: AuthContext<'_>) -> Authorization {
+pub(crate) fn permit_read(context: AuthContext<'_>) -> Authorization {
     let allowed = match context.action {
         AuthAction::Select | AuthAction::Recursive | AuthAction::Read { .. } => true,
         AuthAction::Pragma {
             pragma_name,
             pragma_value,
         } => {
-            ["table_xinfo", "table_info", "index_list"]
+            ["table_xinfo", "table_info", "index_list", "table_list"]
                 .iter()
                 .any(|name| pragma_name.eq_ignore_ascii_case(name))
                 || (pragma_name.eq_ignore_ascii_case("data_version") && pragma_value.is_none())
@@ -556,7 +575,7 @@ pub(crate) fn import_file(
     }
 }
 
-fn sqlite_import_value(
+pub(crate) fn sqlite_import_value(
     cell: &crate::remote::Cell,
     column: &ColumnInfo,
 ) -> Result<rusqlite::types::Value, String> {

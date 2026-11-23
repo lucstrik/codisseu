@@ -1,3 +1,48 @@
+# Codisseu 0.1.0-alpha.4 — edição de células no resultado
+
+Duplo clique abre a edição na própria célula de uma consulta simples em SQLite,
+PostgreSQL, MySQL ou MariaDB. Enter aceita a proposta local e Escape cancela a
+edição atual. O tipo da coluna determina os valores aceitos, incluindo números,
+booleanos, datas, texto e NULL; tipos sem tratamento seguro ficam protegidos.
+A edição exige uma tabela de origem comprovada, chave primária completa e
+escrita habilitada. Consultas com joins ou identidade ambígua continuam somente
+leitura. A identificação da linha usa as colunas originais mesmo com filtros ou
+ordenação na apresentação.
+
+As propostas ficam pendentes até envio explícito. **Commit** envia e confirma o
+lote; **Submit** envia mantendo a transação aberta, e **Rollback** desfaz mudanças
+enviadas ainda não confirmadas. **Revert** descarta propostas locais. O worker
+valida tipos, usa comandos parametrizados, verifica conflitos e a quantidade de
+linhas afetadas antes de confirmar. SQLite inicia somente leitura e oferece
+**Habilitar edição**; as conexões remotas preservam sua opção **Read-only**.
+
+O [contrato de edição](grid-edit-contract-20261123.md) descreve os limites e o
+corpus de validação. A distribuição permanece alpha core para Linux amd64;
+integrações opcionais e requisitos do sistema estão no [guia Linux](install-linux.md).
+Aurora precisa de teste próprio na AWS. MongoDB, Redis e Memcached não recebem
+este fluxo de UPDATE/transação SQL; não se anuncia cobertura de todos os drivers
+JDBC ou paridade integral com DataGrip.
+
+Validação local do recurso: 77 testes Rust de banco aprovados (42 de unidade,
+17 de tipos, 11 de SQLite e 7 cenários remotos). PostgreSQL18.6, MySQL8.0.46 e
+MariaDB11.4.10 foram exercitados em contêineres descartáveis. Duas variantes
+Aurora usam apenas os protocolos em servidores locais; não validam AWS.
+Oito testes da interface passaram, incluindo os três bancos remotos. Clippy dos
+módulos DB/core/UI e 14 testes Python de pacote/exportação passaram.
+
+O corpus nativo do aplicativo passou 18 verificações em duas janelas X11,
+nas escalas 100% e 125%:
+editar por duplo clique, manter proposta local, Commit da linha correta,
+Submit/Rollback com leitura independente, rejeição de letras em BIGINT e NULL
+numérico. São dados sintéticos em perfil/display próprios; isso não comprova
+Wayland ou todos os tipos de todos os bancos. O CI obrigatório reconstrói o
+instalador e roda os cenários declarados; o pacote público exige sua validação
+própria antes da publicação.
+
+---
+
+## Histórico da alpha.3
+
 # Codisseu 0.1.0-alpha.3 — tema global Noturno
 
 Novo tema padrão escuro inspirado na referência visual do autor. Em

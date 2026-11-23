@@ -466,14 +466,13 @@ fn grid_remote_real_visibility_filter_preserves_edit_identity_and_rollback() {
                 "Double click at {pos:?} selected but did not open edit; profiles {:?}",
                 h.state().service.remote_db.profiles
             );
-            h.get_by_role_and_label(egui::accesskit::Role::MultilineTextInput, "Cell value")
-                .focus();
+            h.get_by_label("Editar name").focus();
             h.step();
             h.key_press_modifiers(Modifiers::COMMAND, Key::A);
             h.step();
             h.event(egui::Event::Text("Jane updated".into()));
             settle(&mut h);
-            h.get_by_label("Stage Change").click();
+            h.get_by_label("Aplicar célula").click();
             settle(&mut h);
             assert_eq!(
                 h.state().database_ui.staged.get(&(1, 1)),

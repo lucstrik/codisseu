@@ -4,6 +4,9 @@ mod ai_chat;
 mod capabilities;
 mod components;
 mod database;
+mod database_cell_edit;
+#[cfg(test)]
+mod database_cell_edit_tests;
 mod database_grid;
 mod database_grid_filters;
 #[cfg(test)]
@@ -1020,6 +1023,22 @@ impl CodisseuApp {
         self.close_after_capture = close_after;
     }
     fn send(&mut self, command: Command) {
+        if (!self.database_ui.staged.is_empty() || self.database_ui.edit.is_some())
+            && matches!(
+                &command,
+                Command::Database(
+                    codisseu_core::DbCommand::Connect(_)
+                        | codisseu_core::DbCommand::ConnectWritable(_)
+                        | codisseu_core::DbCommand::Disconnect
+                        | codisseu_core::DbCommand::Execute { .. }
+                        | codisseu_core::DbCommand::ExecutePage(_)
+                ) | Command::ExecuteSql { .. }
+            )
+        {
+            self.database_ui.edit_error =
+                Some("Envie ou descarte as alterações locais antes desta ação".into());
+            return;
+        }
         if let Command::Save { id } = &command {
             self.external_changes.dismissed.remove(id);
         }
@@ -1275,6 +1294,9 @@ impl CodisseuApp {
             return;
         }
         if self.php_tests_shortcuts(ctx) {
+            return;
+        }
+        if self.grid_edit_shortcuts(ctx) {
             return;
         }
         if self.grid_inspection_shortcuts(ctx) {

@@ -39,17 +39,29 @@ pub(super) struct DatabaseUi {
     pub preview: Option<String>,
     preview_anchor: Option<egui::Pos2>,
     pub edit: Option<(usize, usize, String, bool)>,
+    pub(super) edit_focus: bool,
+    pub(super) edit_error: Option<String>,
+    pub(super) refresh_after_edit: bool,
+    pub(super) sqlite_enable_query: Option<String>,
+    pub(super) sqlite_enable_source: Option<PathBuf>,
+    pub(super) edit_notice: Option<String>,
+    pub(super) editing_remote: Option<bool>,
+    pub(super) edit_reload_sql: Option<String>,
+    pub(super) edit_reload_source: Option<PathBuf>,
+    pub(super) edit_reload_remote: bool,
+    pub(super) edit_reload_page: Option<codisseu_core::query_page::QueryPageRequest>,
+    pub(super) edit_binding: Option<String>,
     pub(super) staged: BTreeMap<(usize, usize), Cell>,
     revision: u64,
-    selected: Option<(usize, usize)>,
+    pub(super) selected: Option<(usize, usize)>,
     selected_source: Option<String>,
     expanded_namespaces: BTreeSet<String>,
     catalog_filters: BTreeMap<String, String>,
     requested_namespaces: BTreeSet<String>,
     expanded_tables: BTreeSet<(String, String)>,
     requested_tables: BTreeSet<(String, String)>,
-    table: Option<TableRef>,
-    page_offset: u64,
+    pub(super) table: Option<TableRef>,
+    pub(super) page_offset: u64,
     session_identity: Option<String>,
     namespaces_requested: bool,
     #[cfg(test)]
@@ -106,17 +118,34 @@ impl CodisseuApp {
             return true;
         }
         if self.service.remote_db.is_busy() {
-            self.remote_send(RemoteCommand::Cancel);
+            if !self.database_ui.refresh_after_edit {
+                self.remote_send(RemoteCommand::Cancel);
+            }
             self.database_ui.exit_wait = true;
             return true;
         }
-        if self.service.remote_db.transaction || !self.database_ui.staged.is_empty() {
+        if self.service.db.is_busy() {
+            self.database_ui.exit_wait = true;
+            return true;
+        }
+        if self.service.remote_db.transaction
+            || self.service.db.transaction
+            || !self.database_ui.staged.is_empty()
+            || self.database_ui.edit.is_some()
+        {
             self.database_ui.exit_confirm = true;
             return true;
         }
         false
     }
     pub(super) fn sync_database_ui(&mut self) {
+        if self.database_ui.edit.is_none() && self.database_ui.staged.is_empty() {
+            self.database_ui.editing_remote = None;
+            self.database_ui.edit_binding = None;
+        } else if let Some(remote) = self.database_ui.editing_remote {
+            // Proposed row indices belong to exactly one result/session.
+            self.database_ui.remote_results = remote;
+        }
         let project_scope = self.service.workspace_path().map(PathBuf::from);
         if !self.database_ui.project_scope_initialized {
             // A caller may have prepared current-project startup state before
@@ -182,7 +211,9 @@ impl CodisseuApp {
             self.database_ui.widths.clear();
             self.database_ui.selected = None;
             self.database_ui.preview = None;
-            self.database_ui.edit = None;
+            if self.database_ui.editing_remote != Some(false) {
+                self.database_ui.edit = None;
+            }
         }
         // Catalog lifetime belongs to the session, independently of panel visibility.
         // A loaded snapshot can also have come from SQL completion while hidden.
@@ -227,10 +258,18 @@ impl CodisseuApp {
                     .map(|sql| codisseu_core::query_page::QueryPageRequest::first(sql.clone()));
                 self.database_ui.remote_page_starts.clear();
             }
-            self.database_ui.staged.clear();
+            if self.database_ui.editing_remote != Some(false)
+                && (self.database_ui.edit_binding.is_none() || self.database_ui.refresh_after_edit)
+            {
+                self.database_ui.staged.clear();
+            }
             self.database_ui.selected = None;
             self.database_ui.widths.clear();
-            self.database_ui.edit = None;
+            if self.database_ui.editing_remote != Some(false)
+                && (self.database_ui.edit_binding.is_none() || self.database_ui.refresh_after_edit)
+            {
+                self.database_ui.edit = None;
+            }
             self.database_ui.preview = None;
         }
         if !self.service.remote_db.is_busy() && self.service.remote_db.error.is_some() {
@@ -271,9 +310,13 @@ impl CodisseuApp {
             self.database_ui.sqlite_pending_sql = None;
             self.database_ui.sqlite_pending_page = None;
         }
-        if self.database_ui.exit_wait && !self.service.remote_db.is_busy() {
+        self.grid_edit_tick();
+        if self.database_ui.exit_wait
+            && !self.service.remote_db.is_busy()
+            && !self.service.db.is_busy()
+        {
             self.database_ui.exit_wait = false;
-            if self.service.remote_db.error.is_none() {
+            if self.service.remote_db.error.is_none() && self.service.db.last_error.is_none() {
                 self.request_exit();
             } else {
                 self.database_ui.exit_confirm = true;
@@ -290,12 +333,13 @@ impl CodisseuApp {
         ) {
             self.database_ui.catalog_commands += 1;
         }
-        if !self.database_ui.staged.is_empty()
+        if (!self.database_ui.staged.is_empty() || self.database_ui.edit.is_some())
             && matches!(
                 command,
                 RemoteCommand::Connect { .. }
                     | RemoteCommand::ConnectRemembered { .. }
                     | RemoteCommand::Execute(_)
+                    | RemoteCommand::Explain(_)
                     | RemoteCommand::ExecutePage(_)
                     | RemoteCommand::ExecuteConsole { .. }
                     | RemoteCommand::ExecuteBound { .. }
@@ -1231,7 +1275,7 @@ impl CodisseuApp {
     }
     pub(super) fn execute_remote(&mut self) {
         self.database_ui.output = false;
-        if !self.database_ui.staged.is_empty() {
+        if !self.database_ui.staged.is_empty() || self.database_ui.edit.is_some() {
             self.service.remote_db.error =
                 Some("Envie ou descarte as alterações antes de executar outra consulta".into());
             return;
@@ -1280,7 +1324,13 @@ impl CodisseuApp {
             self.tool_tab = ToolTab::Results;
         }
     }
-    fn edit_batch(&self) -> Option<EditBatch> {
+    pub(super) fn edit_batch(&self) -> Option<EditBatch> {
+        if !self.grid_edit_binding_valid() || !self.grid_edit_budget_valid() {
+            return None;
+        }
+        if !self.database_ui.remote_results {
+            return self.sqlite_edit_batch();
+        }
         let (table, columns) = self.service.remote_db.origin.as_ref()?;
         let r = self.service.remote_db.result.as_ref()?;
         Some(EditBatch {
@@ -1300,7 +1350,7 @@ impl CodisseuApp {
                 .collect(),
         })
     }
-    fn can_edit_remote(&self) -> bool {
+    pub(super) fn can_edit_remote(&self) -> bool {
         self.service
             .remote_db
             .active
@@ -1360,13 +1410,13 @@ impl CodisseuApp {
                 ui,
                 Icon::Submit,
                 "Submit",
-                edit && !self.database_ui.staged.is_empty() && !busy,
+                edit && (!self.database_ui.staged.is_empty() || self.database_ui.edit.is_some())
+                    && !busy,
             )
             .on_hover_text("Enviar alterações; Commit separado")
             .clicked()
-                && let Some(batch) = self.edit_batch()
             {
-                self.remote_send(RemoteCommand::Apply(batch));
+                self.submit_grid_edits(false);
             }
             let preview_button = db_icon(
                 ui,
@@ -1394,18 +1444,21 @@ impl CodisseuApp {
             )
             .clicked()
             {
-                self.database_ui.staged.clear();
+                self.discard_grid_edits();
             }
             ui.separator();
             if db_icon(
                 ui,
                 Icon::Commit,
                 "Commit",
-                self.service.remote_db.transaction && !busy,
+                (self.service.remote_db.transaction
+                    || !self.database_ui.staged.is_empty()
+                    || self.database_ui.edit.is_some())
+                    && !busy,
             )
             .clicked()
             {
-                self.remote_send(RemoteCommand::Commit);
+                self.submit_grid_edits(true);
             }
             if db_icon(
                 ui,
@@ -1415,10 +1468,11 @@ impl CodisseuApp {
             )
             .clicked()
             {
-                self.remote_send(RemoteCommand::Rollback);
+                self.rollback_grid_edits();
             }
             self.result_transfer_toolbar(ui);
         });
+        self.grid_edit_toolbar(ui);
         if let Some(table) = self.database_ui.table.clone() {
             ui.horizontal(|ui| {
                 let limit = self
@@ -1498,6 +1552,8 @@ impl CodisseuApp {
         let rows = self.transfer_views.grid.visible_rows();
         let sort_state = self.query_sort_state();
         let sort_available = !self.query_page_busy();
+        let edit_columns = self.grid_edit_columns();
+        let binding_valid = self.grid_edit_binding_valid();
         let Some(result) = self.service.remote_db.result.as_ref() else {
             ui.label(
                 RichText::new("Abra um console ou selecione uma tabela.")
@@ -1675,15 +1731,15 @@ impl CodisseuApp {
                                 }
                                 for &col in &columns {
                                     let name = &cols[col];
-                                    let staged = if r > 0 {
-                                        self.database_ui.staged.get(&(r - 1, col))
+                                    let staged = if r > 0 && binding_valid {
+                                        self.database_ui.staged.get(&(r - 1, col)).cloned()
                                     } else {
                                         None
                                     };
                                     let value = if r == 0 {
                                         None
                                     } else {
-                                        staged.or_else(|| {
+                                        staged.as_ref().or_else(|| {
                                             result.rows.get(r - 1).and_then(|row| row.get(col))
                                         })
                                     };
@@ -1745,29 +1801,23 @@ impl CodisseuApp {
                                         response.request_focus();
                                         self.grid_focus = Some(response.id);
                                     }
-                                    if r > 0 && response.double_clicked() && edit {
-                                        let pk =
-                                            self.service.remote_db.origin.as_ref().is_some_and(
-                                                |(_, cs)| {
-                                                    cs.iter()
-                                                        .any(|c| c.name == *name && c.primary_key)
-                                                },
-                                            );
-                                        if !pk
-                                            && let Some(v) = value
-                                            && !matches!(v, Cell::Binary(_))
+                                    if r > 0 {
+                                        database_cell_edit::inline_cell_editor(
+                                            ui,
+                                            &response,
+                                            r - 1,
+                                            col,
+                                            edit_columns.get(col),
+                                            &mut self.database_ui,
+                                            &self.tokens,
+                                        );
+                                        if response.double_clicked()
+                                            && edit
+                                            && edit_columns
+                                                .get(col)
+                                                .is_some_and(database_cell_edit::editable_column)
                                         {
-                                            pending_edit = Some((
-                                                r - 1,
-                                                col,
-                                                match v {
-                                                    Cell::Text(s)
-                                                    | Cell::Number(s)
-                                                    | Cell::Json(s) => s.clone(),
-                                                    _ => v.display(),
-                                                },
-                                                matches!(v, Cell::Null),
-                                            ));
+                                            pending_edit = Some((r - 1, col));
                                         }
                                     }
                                     if response.has_focus()
@@ -1794,8 +1844,8 @@ impl CodisseuApp {
                     });
             });
         });
-        if pending_edit.is_some() {
-            self.database_ui.edit = pending_edit;
+        if let Some((row, col)) = pending_edit {
+            self.start_grid_edit(row, col);
         }
         if let Some(column) = sort_column {
             self.sort_query_column(column);
@@ -1811,12 +1861,12 @@ impl CodisseuApp {
             egui::Modal::new(egui::Id::unique("database.exit.pending")).show(ctx,|ui|{
                 ui.set_width(460.);ui.heading("Alterações de banco pendentes");
                 if !self.database_ui.staged.is_empty(){ui.label(format!("{} célula(s) editada(s) ainda não foram enviadas.",self.database_ui.staged.len()));}
-                if self.service.remote_db.transaction{ui.label("Há uma transação aberta. Escolha Commit ou descarte com Rollback antes de sair.");}
+                if self.service.remote_db.transaction || self.service.db.transaction{ui.label("Há uma transação aberta. Escolha Commit ou descarte com Rollback antes de sair.");}
                 if let Some(e)=&self.service.remote_db.error{crate::status_messages::status_message(ui, e);}
                 ui.horizontal(|ui|{
                     if ui.button("Voltar ao banco").clicked(){action=1;}
                     if ui.button("Descartar e sair").clicked(){action=2;}
-                    if ui.add_enabled(self.database_ui.staged.is_empty()&&self.service.remote_db.transaction,egui::Button::new("Commit e sair")).clicked(){action=3;}
+                    if ui.add_enabled(self.database_ui.staged.is_empty()&&self.database_ui.edit.is_none()&&(self.service.remote_db.transaction || self.service.db.transaction),egui::Button::new("Commit e sair")).clicked(){action=3;}
                 });
             });
             match action {
@@ -1828,9 +1878,16 @@ impl CodisseuApp {
                 2 | 3 => {
                     self.database_ui.exit_confirm = false;
                     if action == 2 {
-                        self.database_ui.staged.clear();
+                        self.discard_grid_edits();
                     }
-                    if self.service.remote_db.transaction {
+                    if self.service.db.transaction {
+                        self.send(Command::Database(if action == 3 {
+                            codisseu_core::DbCommand::Commit
+                        } else {
+                            codisseu_core::DbCommand::Rollback
+                        }));
+                        self.database_ui.exit_wait = true;
+                    } else if self.service.remote_db.transaction {
                         self.remote_send(if action == 3 {
                             RemoteCommand::Commit
                         } else {
@@ -1928,96 +1985,13 @@ impl CodisseuApp {
                         });
                     });
                 });
-            if submit && let Some(batch) = self.edit_batch() {
-                self.remote_send(RemoteCommand::Apply(batch));
+            if submit {
+                self.submit_grid_edits(false);
                 open = false;
             }
             if !open {
                 self.database_ui.preview = None;
             }
-        }
-        if let Some((row, col, mut text, mut null)) = self.database_ui.edit.clone() {
-            let mut accept = false;
-            let mut open = true;
-            egui::Window::new("Edit Cell")
-                .id(egui::Id::unique("db.cell.edit"))
-                .anchor(egui::Align2::CENTER_CENTER, egui::Vec2::ZERO)
-                .open(&mut open)
-                .collapsible(false)
-                .default_width(460.)
-                .show(ctx, |ui| {
-                    self.tokens.form_style(ui);
-                    if let Some(r) = &self.service.remote_db.result {
-                        ui.label(format!(
-                            "{} · linha {}",
-                            r.columns.get(col).cloned().unwrap_or_default(),
-                            row + 1
-                        ));
-                    }
-                    let value_label = ui.label("Cell value");
-                    ui.add_enabled(
-                        !null,
-                        egui::TextEdit::multiline(&mut text)
-                            .id_salt("db.cell.value")
-                            .desired_width(f32::INFINITY)
-                            .desired_rows(3),
-                    )
-                    .labelled_by(value_label.id);
-                    ui.checkbox(&mut null, "NULL");
-                    ui.label("Alteração local; revise o SQL antes de enviar.");
-                    if ui
-                        .add(self.tokens.dialog_button("Stage Change", true))
-                        .clicked()
-                    {
-                        accept = true;
-                    }
-                });
-            if accept && self.can_edit_remote() {
-                let original = self
-                    .service
-                    .remote_db
-                    .result
-                    .as_ref()
-                    .and_then(|r| r.rows.get(row))
-                    .and_then(|r| r.get(col));
-                let v = if null {
-                    Ok(Cell::Null)
-                } else {
-                    match original {
-                        Some(Cell::Number(_)) => {
-                            if text.parse::<f64>().is_ok() {
-                                Ok(Cell::Number(text.clone()))
-                            } else {
-                                Err("Valor numérico inválido")
-                            }
-                        }
-                        Some(Cell::Bool(_)) => text
-                            .parse::<bool>()
-                            .map(Cell::Bool)
-                            .map_err(|_| "Use true ou false"),
-                        Some(Cell::Json(_)) => serde_json::from_str::<serde_json::Value>(&text)
-                            .map(|_| Cell::Json(text.clone()))
-                            .map_err(|_| "JSON inválido"),
-                        _ => Ok(Cell::Text(text.clone())),
-                    }
-                };
-                match v {
-                    Ok(value) => {
-                        if original == Some(&value) {
-                            self.database_ui.staged.remove(&(row, col));
-                        } else {
-                            self.database_ui.staged.insert((row, col), value);
-                        }
-                        open = false;
-                    }
-                    Err(e) => self.service.remote_db.error = Some(e.into()),
-                }
-            }
-            self.database_ui.edit = if open {
-                Some((row, col, text, null))
-            } else {
-                None
-            };
         }
     }
 }

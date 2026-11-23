@@ -22,6 +22,40 @@ jobs:
     name: Rust e pacote Linux
     runs-on: ubuntu-24.04
     timeout-minutes: 60
+    services:
+      postgres:
+        image: postgres@sha256:979bccfde35445db618c65107d27d08c6c21339d8dc3ad4c830c6633947be0e4
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: codisseu_fixture
+          POSTGRES_DB: codisseu
+        ports:
+          - 5432/tcp
+        options: >-
+          --health-cmd="pg_isready -U postgres -d codisseu"
+          --health-interval=5s --health-timeout=3s --health-retries=12
+      mysql:
+        image: mysql@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b
+        env:
+          MYSQL_ROOT_PASSWORD: codisseu_fixture
+          MYSQL_ROOT_HOST: '%'
+          MYSQL_DATABASE: codisseu
+        ports:
+          - 3306/tcp
+        options: >-
+          --health-cmd="mysqladmin ping -h127.0.0.1 -uroot -pcodisseu_fixture --silent"
+          --health-interval=5s --health-timeout=3s --health-retries=12
+      mariadb:
+        image: mariadb@sha256:3b4dfcc32247eb07adbebec0793afae2a8eafa6860ec523ee56af4d3dec42f7f
+        env:
+          MARIADB_ROOT_PASSWORD: codisseu_fixture
+          MARIADB_ROOT_HOST: '%'
+          MARIADB_DATABASE: codisseu
+        ports:
+          - 3306/tcp
+        options: >-
+          --health-cmd="mariadb-admin ping -h127.0.0.1 -uroot -pcodisseu_fixture --silent"
+          --health-interval=5s --health-timeout=3s --health-retries=12
     env:
       XDG_RUNTIME_DIR: /tmp/codisseu-runtime-${{ github.run_id }}
     steps:
@@ -55,6 +89,17 @@ jobs:
           cargo test --release --locked -p codisseu-core -p codisseu-ui --test theme_preferences --test global_themes --jobs 2 -- --test-threads=2
           cargo test --release --locked -p codisseu-ui --lib theme --jobs 2 -- --test-threads=2
           cargo test --release --locked -p codisseu-ui --lib highlight:: --jobs 2 -- --test-threads=2
+      - name: Testar edição tipada de células e transações SQLite
+        run: |
+          cargo test --release --locked -p codisseu-db --test cell_edit --test sqlite_grid_edit --jobs 2
+          cargo test --release --locked -p codisseu-db --lib remote_sql::tests --jobs 2
+          cargo test --release --locked -p codisseu-ui --lib database_cell_edit_tests --jobs 2 -- --skip grid_remote_real
+      - name: Testar edição transacional em PostgreSQL, MySQL e MariaDB
+        env:
+          CODISSEU_SQL_PG_PORT: ${{ job.services.postgres.ports['5432'] }}
+          CODISSEU_SQL_MY_PORT: ${{ job.services.mysql.ports['3306'] }}
+          CODISSEU_SQL_MARIA_PORT: ${{ job.services.mariadb.ports['3306'] }}
+        run: cargo test --release --locked -p codisseu-db --test grid_edit_remote --jobs 2 -- --include-ignored --test-threads=1
       - name: Conferir empacotamento e exportação pública
         run: |
           python3 tools/test_deb_package.py
@@ -63,8 +108,8 @@ jobs:
         run: |
           cargo fetch --locked
           python3 tools/release_notices.py --output artifacts/ci-notices
-          python3 tools/build_deb.py --core-binary target/release/codisseu --notices artifacts/ci-notices --output dist --version 0.1.0~alpha.3 --maintainer 'Lucas Torres <18267941+lucstrik@users.noreply.github.com>'
-          python3 tools/verify_deb.py --package dist/codisseu_0.1.0-alpha.3_amd64.deb --output artifacts/ci-deb-check
+          python3 tools/build_deb.py --core-binary target/release/codisseu --notices artifacts/ci-notices --output dist --version 0.1.0~alpha.4 --maintainer 'Lucas Torres <18267941+lucstrik@users.noreply.github.com>'
+          python3 tools/verify_deb.py --package dist/codisseu_0.1.0-alpha.4_amd64.deb --output artifacts/ci-deb-check
       - name: Guardar instalador e checksum
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:

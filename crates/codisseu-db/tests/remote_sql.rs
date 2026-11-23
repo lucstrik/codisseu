@@ -295,6 +295,8 @@ async fn exercise(engine: Engine, port: u16) {
         "SELECT * FROM codisseu_fixture WHERE id=1",
         "SELECT t.* FROM codisseu_fixture AS t WHERE t.id=1",
         "SELECT t.id AS id,t.name,t.amount,t.enabled FROM codisseu_fixture t ORDER BY id LIMIT 2",
+        "SELECT name,id,amount,enabled FROM codisseu_fixture",
+        "SELECT name,id FROM codisseu_fixture",
     ] {
         let result = writer.execute(sql).await.unwrap();
         assert!(
@@ -311,7 +313,6 @@ async fn exercise(engine: Engine, port: u16) {
         "SELECT id,name,amount+0 AS amount,enabled FROM codisseu_fixture",
         "SELECT COUNT(*) FROM codisseu_fixture",
         "SELECT name,amount,enabled FROM codisseu_fixture",
-        "SELECT name,id,amount,enabled FROM codisseu_fixture",
         "SELECT name AS id,id AS name,amount,enabled FROM codisseu_fixture",
         "SELECT DISTINCT * FROM codisseu_fixture",
         "SELECT id,name,amount,enabled FROM codisseu_fixture GROUP BY id,name,amount,enabled",

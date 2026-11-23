@@ -7,12 +7,12 @@ O ambiente validado nesta entrega fica registrado no relatório da release.
 ## Baixar e instalar
 
 1. Abra as [releases](https://github.com/lucstrik/codisseu/releases).
-2. Baixe `codisseu_0.1.0-alpha.3_amd64.deb` e o arquivo `.deb.sha256` ao lado.
+2. Baixe `codisseu_0.1.0-alpha.4_amd64.deb` e o arquivo `.deb.sha256` ao lado.
 3. Na pasta do download, confira e instale:
 
 ```sh
-sha256sum -c codisseu_0.1.0-alpha.3_amd64.deb.sha256
-sudo apt install ./codisseu_0.1.0-alpha.3_amd64.deb
+sha256sum -c codisseu_0.1.0-alpha.4_amd64.deb.sha256
+sudo apt install ./codisseu_0.1.0-alpha.4_amd64.deb
 ```
 
 Abra pelo menu de aplicativos ou pelo terminal:
@@ -66,6 +66,21 @@ nesta distribuição.
 Na primeira abertura de um projeto, confirme a confiança antes de permitir
 execução de ferramentas. O aplicativo não prepara nem executa sua aplicação
 só porque você abriu uma pasta.
+
+## Editar resultados de consultas
+
+A alpha.4 permite editar células de consultas simples sobre uma tabela em
+SQLite, PostgreSQL, MySQL e MariaDB. Para SQLite, use **Habilitar edição** na
+barra do resultado. Nas conexões remotas, desmarque **Read-only · somente leitura**
+e reconecte quando solicitado. A consulta precisa retornar a chave primária
+completa para identificar a linha com segurança.
+
+Dê dois cliques na célula, altere o valor e pressione **Enter**; **Escape** cancela
+a edição da célula. O editor valida o tipo e distingue **NULL** de texto vazio.
+As mudanças ficam pendentes no grid. **Commit** envia e confirma as alterações;
+**Submit** permite enviá-las mantendo a transação aberta, e **Rollback** desfaz
+as alterações ainda não confirmadas. Consultas com joins, resultados sem
+identidade segura e conexões somente leitura permanecem protegidos.
 
 ## Atualizar ou remover
 

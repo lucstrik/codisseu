@@ -455,13 +455,7 @@ impl CodisseuApp {
             return;
         };
         let revision = self.result_transfer_revision();
-        let proposals = if self.database_ui.remote_results {
-            &self.database_ui.staged
-        } else {
-            static EMPTY: std::sync::OnceLock<BTreeMap<(usize, usize), Cell>> =
-                std::sync::OnceLock::new();
-            EMPTY.get_or_init(BTreeMap::new)
-        };
+        let proposals = &self.database_ui.staged;
         let grid = &mut self.transfer_views.grid;
         if grid.revision != Some(revision) {
             grid.local.close();

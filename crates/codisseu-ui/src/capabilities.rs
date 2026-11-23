@@ -147,6 +147,12 @@ impl CodisseuApp {
     }
 
     pub(super) fn execute_sql(&mut self) {
+        if !self.database_ui.staged.is_empty() || self.database_ui.edit.is_some() {
+            self.database_ui.edit_error = Some(
+                "Envie ou descarte as alterações locais antes de executar outra consulta".into(),
+            );
+            return;
+        }
         if self.service.remote_db.active.is_some()
             || self
                 .service
@@ -766,7 +772,7 @@ impl CodisseuApp {
             }
             if let Some(result) = &self.service.db.result {
                 ui.label(RichText::new(format!(
-                    "{} linhas · {} ms · somente leitura{}",
+                    "{} linhas · {} ms{}",
                     result.rows.len(),
                     result.elapsed_ms,
                     result
@@ -782,6 +788,11 @@ impl CodisseuApp {
             self.query_navigation_toolbar(ui);
             self.result_transfer_toolbar(ui);
         });
+        self.grid_edit_toolbar(ui);
+        let edit_columns = self.grid_edit_columns();
+        let binding_valid = self.grid_edit_binding_valid();
+        let editable = self.can_edit_grid();
+        let mut pending_edit = None;
         let mut sort_column = None;
         if let Some(error) = &self.service.db.last_error {
             crate::status_messages::status_message(ui, error);
@@ -889,7 +900,14 @@ impl CodisseuApp {
                                     for &col in &columns {
                                         let value = &result.rows[index - 1][col];
                                         let width = widths[col];
-                                        let text = codisseu_core::display_value(value);
+                                        let proposed = if binding_valid {
+                                            self.database_ui.staged.get(&(index - 1, col))
+                                        } else {
+                                            None
+                                        };
+                                        let text = proposed
+                                            .map(codisseu_core::remote::Cell::display)
+                                            .unwrap_or_else(|| codisseu_core::display_value(value));
                                         let response = sql_cell(
                                             ui,
                                             &text,
@@ -910,6 +928,34 @@ impl CodisseuApp {
                                             "{}: {value:?}",
                                             codisseu_core::value_type_name(value)
                                         ));
+                                        if proposed.is_some() {
+                                            ui.painter().rect_stroke(
+                                                response.rect.shrink(1.),
+                                                0.,
+                                                egui::Stroke::new(
+                                                    1.,
+                                                    color(self.tokens.database_dirty),
+                                                ),
+                                                egui::StrokeKind::Inside,
+                                            );
+                                        }
+                                        database_cell_edit::inline_cell_editor(
+                                            ui,
+                                            &response,
+                                            index - 1,
+                                            col,
+                                            edit_columns.get(col),
+                                            &mut self.database_ui,
+                                            &self.tokens,
+                                        );
+                                        if response.double_clicked()
+                                            && editable
+                                            && edit_columns
+                                                .get(col)
+                                                .is_some_and(database_cell_edit::editable_column)
+                                        {
+                                            pending_edit = Some((index - 1, col));
+                                        }
                                         if self.transfer_views.grid.matches(index - 1, col) {
                                             ui.painter().rect_stroke(
                                                 response.rect.shrink(1.),
@@ -919,6 +965,7 @@ impl CodisseuApp {
                                             );
                                         }
                                         if response.clicked() {
+                                            self.database_ui.selected = Some((index - 1, col));
                                             self.grid_selection.clicked(
                                                 index - 1,
                                                 col,
@@ -994,6 +1041,9 @@ impl CodisseuApp {
             });
         } else {
             ui.label(RichText::new("Conecte uma base e execute uma instrução em um arquivo SQL. Ctrl+Enter executa a seleção ou a instrução sob o cursor.").color(color(self.tokens.muted)));
+        }
+        if let Some((row, col)) = pending_edit {
+            self.start_grid_edit(row, col);
         }
         if let Some(column) = sort_column {
             self.sort_query_column(column);
