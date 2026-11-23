@@ -88,12 +88,13 @@ mod worker;
 mod worker_compiler;
 pub use provider_startup::ProviderStartupStatus;
 
+pub use codisseu_db::cell_edit;
 pub use codisseu_db::mongo_text;
 pub use codisseu_db::query_export;
 pub use codisseu_db::query_page;
 pub use codisseu_db::sql_completion;
 pub use codisseu_db::sql_text;
-pub use codisseu_db::{DbCommand, DbService, display_value, value_type_name};
+pub use codisseu_db::{DbCommand, DbService, display_value, sqlite_cell, value_type_name};
 pub use codisseu_db::{remote, transfer, transfer_formats_extra, transfer_nosql};
 pub use codisseu_syntax::breadcrumbs;
 pub use codisseu_syntax::navigation_symbols;

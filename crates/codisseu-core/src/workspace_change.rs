@@ -37,7 +37,7 @@ impl AppService {
             Some(Busy("Encerre as sessões de debug para abrir outro projeto"))
         } else if self.db.is_busy() {
             Some(Busy("Aguardando a operação de banco de dados terminar"))
-        } else if changing && self.remote_db.transaction {
+        } else if changing && (self.remote_db.transaction || self.db.transaction) {
             Some(Busy(
                 "Faça Commit ou Rollback no banco antes de abrir outro projeto",
             ))

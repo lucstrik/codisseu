@@ -1,4 +1,5 @@
 //! Independent native SQL adapters. One connection, explicit transactions, bounded previews.
+use crate::cell_edit::{base_type, validate_cell_edit};
 use crate::remote::{
     CatalogPage, CatalogRequest, Cell, ConnectionConfig, DbObject, EditBatch, Engine, RemoteColumn,
     RemoteResult, TableRef,
@@ -61,8 +62,11 @@ enum ImportValue {
     Binary(Option<Vec<u8>>),
 }
 fn is_binary_type(kind: &str) -> bool {
+    let kind = kind.trim().to_ascii_lowercase();
+    let kind = kind.strip_prefix("generated ").unwrap_or(&kind);
+    let kind = kind.split('(').next().unwrap_or(kind).trim();
     matches!(
-        kind.to_ascii_lowercase().as_str(),
+        kind,
         "bytea" | "blob" | "tinyblob" | "mediumblob" | "longblob" | "binary" | "varbinary"
     )
 }
@@ -88,7 +92,7 @@ fn import_value(cell: &Cell, column: &RemoteColumn, pg: bool) -> Result<ImportVa
             _ => Err("Coluna binária exige bytes ou texto0xhex".into()),
         };
     }
-    let kind = column.data_type.to_ascii_lowercase();
+    let kind = base_type(column);
     let value = bound_cell(cell, pg)?;
     if let Some(v) = &value {
         if matches!(
@@ -133,6 +137,7 @@ pub struct SqlSession {
     transaction: bool,
     interrupted: bool,
     backend_id: u64,
+    mariadb: bool,
     password: zeroize::Zeroizing<String>,
 }
 
@@ -199,21 +204,26 @@ impl SqlSession {
 
     pub async fn connect(config: &ConnectionConfig, password: &str) -> Result<Self, String> {
         let mut connection = Self::open_connection(config, password).await?;
+        let mut mariadb = false;
         let backend_id = match &mut connection {
             ConnectionKind::Pg(c) => sqlx::query("SELECT pg_backend_pid()::bigint")
                 .fetch_one(c)
                 .await
                 .map_err(db_error)?
                 .get::<i64, _>(0) as u64,
-            ConnectionKind::My(c) => sqlx::query("SELECT CONNECTION_ID()")
-                .fetch_one(c)
-                .await
-                .map_err(db_error)?
-                .get::<u64, _>(0),
+            ConnectionKind::My(c) => {
+                let row = sqlx::query("SELECT CONNECTION_ID(),VERSION()")
+                    .fetch_one(c)
+                    .await
+                    .map_err(db_error)?;
+                mariadb = row.get::<String, _>(1).contains("MariaDB");
+                row.get::<u64, _>(0)
+            }
         };
         let mut session = Self {
             interrupted: false,
             backend_id,
+            mariadb,
             password: zeroize::Zeroizing::new(password.to_owned()),
             connection: Some(connection),
             config: config.clone(),
@@ -221,6 +231,7 @@ impl SqlSession {
             transaction: false,
         };
         let millis = session.config.timeout_secs.clamp(1, 120) * 1000;
+        let mysql_timeout = session.mysql_timeout(millis);
         match session.connection.as_mut().unwrap() {
             ConnectionKind::Pg(connection) => {
                 for sql in [
@@ -240,7 +251,7 @@ impl SqlSession {
             }
             ConnectionKind::My(connection) => {
                 for sql in [
-                    format!("SET SESSION max_execution_time = {millis}"),
+                    mysql_timeout,
                     "SET SESSION sql_mode = CONCAT_WS(',',@@SESSION.sql_mode,'STRICT_ALL_TABLES')"
                         .into(),
                     "SET SESSION innodb_lock_wait_timeout = 1".into(),
@@ -281,6 +292,17 @@ impl SqlSession {
     }
     fn limit(&self) -> usize {
         self.config.row_limit.clamp(1, 500)
+    }
+    fn mysql_timeout(&self, millis: u64) -> String {
+        if self.mariadb {
+            format!(
+                "SET SESSION max_statement_time = {}.{:03}",
+                millis / 1000,
+                millis % 1000
+            )
+        } else {
+            format!("SET SESSION max_execution_time = {millis}")
+        }
     }
 
     async fn control(&mut self, sql: &str) -> Result<(), String> {
@@ -356,11 +378,8 @@ impl SqlSession {
                 ))
                 .await?;
             } else {
-                self.control(&format!(
-                    "SET SESSION max_execution_time = {}",
-                    request.timeout_secs * 1000
-                ))
-                .await?;
+                self.control(&self.mysql_timeout(request.timeout_secs * 1000))
+                    .await?;
             }
             let mut writer;
             match self
@@ -423,11 +442,8 @@ impl SqlSession {
             }
             self.rollback().await?;
             if !postgres {
-                self.control(&format!(
-                    "SET SESSION max_execution_time = {}",
-                    self.config.timeout_secs * 1000
-                ))
-                .await?;
+                self.control(&self.mysql_timeout(self.config.timeout_secs * 1000))
+                    .await?;
             }
             Ok::<_, String>(writer)
         };
@@ -788,9 +804,15 @@ impl SqlSession {
         // Names are values here; escaping is dialect-specific and metadata SQL stays one statement.
         let namespace = literal(&table.namespace, self.postgres());
         let name = literal(&table.name, self.postgres());
-        let sql = format!(
-            "SELECT c.column_name,c.data_type,c.is_nullable,CASE WHEN EXISTS (SELECT 1 FROM information_schema.table_constraints tc JOIN information_schema.key_column_usage ku ON tc.constraint_name=ku.constraint_name AND tc.constraint_schema=ku.constraint_schema AND tc.table_name=ku.table_name WHERE tc.constraint_type='PRIMARY KEY' AND tc.table_schema=c.table_schema AND tc.table_name=c.table_name AND ku.column_name=c.column_name) THEN 'YES' ELSE 'NO' END FROM information_schema.columns c WHERE c.table_schema={namespace} AND c.table_name={name} ORDER BY c.ordinal_position LIMIT 257"
-        );
+        let sql = if self.postgres() {
+            format!(
+                "SELECT c.column_name,CASE WHEN c.is_generated <> 'NEVER' OR c.is_identity='YES' THEN 'generated ' ELSE '' END || pg_catalog.format_type(a.atttypid,a.atttypmod),c.is_nullable,CASE WHEN EXISTS (SELECT 1 FROM information_schema.table_constraints tc JOIN information_schema.key_column_usage ku ON tc.constraint_name=ku.constraint_name AND tc.constraint_schema=ku.constraint_schema AND tc.table_name=ku.table_name WHERE tc.constraint_type='PRIMARY KEY' AND tc.table_schema=c.table_schema AND tc.table_name=c.table_name AND ku.column_name=c.column_name) THEN 'YES' ELSE 'NO' END FROM information_schema.columns c JOIN pg_catalog.pg_namespace n ON n.nspname=c.table_schema JOIN pg_catalog.pg_class t ON t.relnamespace=n.oid AND t.relname=c.table_name JOIN pg_catalog.pg_attribute a ON a.attrelid=t.oid AND a.attname=c.column_name WHERE c.table_schema={namespace} AND c.table_name={name} ORDER BY c.ordinal_position LIMIT 257"
+            )
+        } else {
+            format!(
+                "SELECT c.column_name,CONCAT(CASE WHEN c.generation_expression <> '' THEN 'generated ' ELSE '' END,c.column_type),c.is_nullable,CASE WHEN c.column_key='PRI' THEN 'YES' ELSE 'NO' END FROM information_schema.columns c WHERE c.table_schema={namespace} AND c.table_name={name} ORDER BY c.ordinal_position LIMIT 257"
+            )
+        };
         let result = self
             .metadata_query(&sql, "Tabela excede 256 colunas")
             .await?;
@@ -845,50 +867,63 @@ impl SqlSession {
                 self.limit() + 1
             ))
             .await?;
-        // MySQL marks utf8*_bin textual columns as BINARY in result metadata.
-        // Real table metadata lets us distinguish them from actual byte columns.
         if !self.postgres() {
-            for row in &mut result.rows {
-                for (value, column) in row.iter_mut().zip(&columns) {
-                    if matches!(
-                        column.data_type.as_str(),
-                        "varchar"
-                            | "char"
-                            | "tinytext"
-                            | "text"
-                            | "mediumtext"
-                            | "longtext"
-                            | "enum"
-                            | "set"
-                    ) && let Cell::Binary(bytes) = value
-                    {
-                        *value = Cell::Text(
-                            String::from_utf8(bytes.clone())
-                                .map_err(|_| "Texto MySQL contém UTF-8 inválido")?,
-                        );
-                    }
-                }
-            }
+            normalize_mysql_text(&mut result, &columns)?;
         }
         Ok((result, columns))
     }
 
-    /// Certify an editable result only when every value maps directly to a full
-    /// base-table row with its actual primary key. Unsupported query shapes stay read-only.
+    /// Preserve the immutable compatibility API. The worker uses certify_result
+    /// to normalize MySQL text whose wire metadata reports a binary collation.
     pub async fn editable_origin(
         &mut self,
         sql: &str,
         result: &RemoteResult,
     ) -> Result<Option<(TableRef, Vec<RemoteColumn>)>, String> {
-        if self.config.read_only
-            || result
-                .rows
-                .iter()
-                .flatten()
-                .any(|cell| matches!(cell, Cell::Binary(_)))
+        if result
+            .rows
+            .iter()
+            .flatten()
+            .any(|cell| matches!(cell, Cell::Binary(_)))
         {
-            // Unsupported wire types/binary-collated text cannot currently roundtrip
-            // through the bound editor, so the own-SELECT result stays read-only.
+            return Ok(None);
+        }
+        self.result_origin(sql, result).await
+    }
+
+    /// Certify and normalize a real SELECT result using authoritative table types.
+    /// BLOB/unknown wire types retain their bytes and never gain write permission.
+    pub async fn certify_result(
+        &mut self,
+        sql: &str,
+        result: &mut RemoteResult,
+    ) -> Result<Option<(TableRef, Vec<RemoteColumn>)>, String> {
+        let Some(origin) = self.result_origin(sql, result).await? else {
+            return Ok(None);
+        };
+        if !self.postgres() {
+            normalize_mysql_text(result, &origin.1)?;
+        }
+        if result
+            .rows
+            .iter()
+            .flatten()
+            .any(|cell| matches!(cell, Cell::Binary(_)))
+        {
+            return Ok(None);
+        }
+        Ok(Some(origin))
+    }
+
+    /// Direct base-table projections must contain the complete actual PK.
+    /// Projection order is preserved for row values and optimistic comparisons;
+    /// calculated/renamed/duplicate columns and joins remain read-only.
+    async fn result_origin(
+        &mut self,
+        sql: &str,
+        result: &RemoteResult,
+    ) -> Result<Option<(TableRef, Vec<RemoteColumn>)>, String> {
+        if self.config.read_only {
             return Ok(None);
         }
         let Some(candidate) = editable_candidate(sql, self.postgres()) else {
@@ -939,27 +974,34 @@ impl SqlSession {
                 name: text(&row[1]),
             }
         };
-        let columns = self.columns(&table).await?;
-        if !columns.iter().any(|column| column.primary_key)
-            || result.columns.len() != columns.len()
-            || result
-                .columns
+        let actual = self.columns(&table).await?;
+        let names = match candidate.projection {
+            ProjectionShape::All => actual.iter().map(|c| c.name.clone()).collect(),
+            ProjectionShape::Columns(names) => names,
+        };
+        if names.is_empty()
+            || names != result.columns
+            || names
                 .iter()
-                .zip(&columns)
-                .any(|(name, column)| *name != column.name)
-            || result.rows.iter().any(|row| row.len() != columns.len())
+                .collect::<std::collections::BTreeSet<_>>()
+                .len()
+                != names.len()
+            || result.rows.iter().any(|row| row.len() != names.len())
+            || !actual.iter().any(|c| c.primary_key)
+            || actual
+                .iter()
+                .filter(|c| c.primary_key)
+                .any(|c| !names.contains(&c.name))
         {
             return Ok(None);
         }
-        if let ProjectionShape::Columns(names) = candidate.projection
-            && (names.len() != columns.len()
-                || names
-                    .iter()
-                    .zip(&columns)
-                    .any(|(name, column)| *name != column.name))
-        {
+        let Some(columns) = names
+            .iter()
+            .map(|name| actual.iter().find(|c| c.name == *name).cloned())
+            .collect::<Option<Vec<_>>>()
+        else {
             return Ok(None);
-        }
+        };
         Ok(Some((table, columns)))
     }
 
@@ -971,7 +1013,20 @@ impl SqlSession {
             return Err("Lote precisa conter entre 1 e 500 edições".into());
         }
         let actual = self.columns(&batch.table).await?;
-        if actual != batch.columns {
+        if batch.columns.is_empty()
+            || batch
+                .columns
+                .iter()
+                .map(|c| &c.name)
+                .collect::<std::collections::BTreeSet<_>>()
+                .len()
+                != batch.columns.len()
+            || batch.columns.iter().any(|c| !actual.contains(c))
+            || actual
+                .iter()
+                .filter(|c| c.primary_key)
+                .any(|c| !batch.columns.contains(c))
+        {
             return Err("Schema mudou desde a leitura; recarregue a tabela".into());
         }
         if !actual.iter().any(|c| c.primary_key) {
@@ -983,8 +1038,28 @@ impl SqlSession {
                 return Err("Edição MySQL exige tabela InnoDB transacional".into());
             }
         }
+        // A normal base table only: views and traditional inheritance can make
+        // an UPDATE touch a different/multiple row despite a plausible key.
+        self.validate_import_table(&batch.table).await?;
+        if self.postgres() {
+            let check = self.execute(&format!("SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits i JOIN pg_catalog.pg_class c ON c.oid=i.inhparent JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname={} AND c.relname={} AND c.relkind <> 'p')",literal(&batch.table.namespace,true),literal(&batch.table.name,true))).await?;
+            if check.rows.first().and_then(|r| r.first()) == Some(&Cell::Bool(true)) {
+                return Err("Edição exige tabela sem herança tradicional".into());
+            }
+        }
         let statements = build_updates(batch, self.postgres())?;
         self.begin().await?;
+        // Hold the relation's transaction-scoped metadata lock while checking
+        // the schema again. Concurrent DDL cannot swap the target after validation.
+        self.execute(&format!(
+            "SELECT * FROM {} WHERE 1=0",
+            table_name(&batch.table, self.postgres())
+        ))
+        .await?;
+        if self.columns(&batch.table).await? != actual {
+            return Err("Schema mudou durante o envio; recarregue a tabela".into());
+        }
+        self.validate_import_table(&batch.table).await?;
         self.control("SAVEPOINT codisseu_grid_batch").await?;
         let started = Instant::now();
         let mut affected = 0;
@@ -1102,6 +1177,12 @@ impl SqlSession {
                     .cloned()
                     .ok_or_else(|| format!("Coluna {name} não existe na tabela"))?,
             );
+        }
+        if columns
+            .iter()
+            .any(|column| column.data_type.starts_with("generated "))
+        {
+            return Err("Coluna gerada/identidade não aceita importação explícita".into());
         }
         let pg = self.postgres();
         let mut placeholders = Vec::new();
@@ -1357,6 +1438,33 @@ impl SqlSession {
         self.transaction = false;
         result
     }
+}
+
+fn normalize_mysql_text(result: &mut RemoteResult, columns: &[RemoteColumn]) -> Result<(), String> {
+    // MySQL reports utf8*_bin textual columns with a BINARY flag; only real
+    // catalog types can distinguish such text from BLOB/VARBINARY payloads.
+    for row in &mut result.rows {
+        for (value, column) in row.iter_mut().zip(columns) {
+            if matches!(
+                base_type(column).as_str(),
+                "varchar"
+                    | "char"
+                    | "tinytext"
+                    | "text"
+                    | "mediumtext"
+                    | "longtext"
+                    | "enum"
+                    | "set"
+            ) && let Cell::Binary(bytes) = value
+            {
+                *value = Cell::Text(
+                    String::from_utf8(bytes.clone())
+                        .map_err(|_| "Texto MySQL contém UTF-8 inválido")?,
+                );
+            }
+        }
+    }
+    Ok(())
 }
 
 enum ProjectionShape {
@@ -1845,6 +1953,21 @@ fn build_updates(batch: &EditBatch, pg: bool) -> Result<Vec<BoundUpdate>, String
     if batch.edits.len() > 500 {
         return Err("Lote excede 500 edições".into());
     }
+    let mut bytes = 0usize;
+    for edit in &batch.edits {
+        for value in edit.row.iter().chain(std::iter::once(&edit.value)) {
+            let size = cell_bytes(value);
+            if size > MAX_CELL {
+                return Err("Célula excede 64 KiB".into());
+            }
+            bytes = bytes
+                .checked_add(size + std::mem::size_of::<Cell>())
+                .ok_or("Lote excede 4 MiB")?;
+            if bytes > MAX_BYTES {
+                return Err("Lote excede 4 MiB; envie menos células por vez".into());
+            }
+        }
+    }
     let columns = &batch.columns;
     if columns.is_empty() || columns.len() > MAX_COLUMNS || !columns.iter().any(|c| c.primary_key) {
         return Err("Edição exige schema limitado e chave primária".into());
@@ -1868,16 +1991,26 @@ fn build_updates(batch: &EditBatch, pg: bool) -> Result<Vec<BoundUpdate>, String
         {
             return Err("Chave primária nula não pode identificar uma linha".into());
         }
-        if edit.value == edit.row[index] {
+        let value = validate_cell_edit(&columns[index], &edit.value)?;
+        if value == edit.row[index] {
             continue;
         }
         if let Some((_, changes)) = rows.iter_mut().find(|(row, _)| *row == edit.row) {
             if changes.iter().any(|(i, _)| *i == index) {
                 return Err("Coluna repetida no lote".into());
             }
-            changes.push((index, edit.value.clone()));
+            changes.push((index, value.clone()));
         } else {
-            rows.push((edit.row.clone(), vec![(index, edit.value.clone())]));
+            if rows.iter().any(|(row, _)| {
+                columns
+                    .iter()
+                    .enumerate()
+                    .filter(|(_, c)| c.primary_key)
+                    .all(|(i, _)| row[i] == edit.row[i])
+            }) {
+                return Err("Mesma chave primária com originais divergentes no lote".into());
+            }
+            rows.push((edit.row.clone(), vec![(index, value)]));
         }
     }
     let mut updates = Vec::new();
@@ -1901,7 +2034,7 @@ fn build_updates(batch: &EditBatch, pg: bool) -> Result<Vec<BoundUpdate>, String
             predicates.push(if pg {
                 if columns[i].primary_key {
                     format!("{name}={bind}")
-                } else if columns[i].data_type == "json" {
+                } else if base_type(&columns[i]) == "json" {
                     format!(
                         "to_jsonb({name}) IS NOT DISTINCT FROM CAST(${0} AS jsonb)",
                         values.len()
@@ -1911,10 +2044,25 @@ fn build_updates(batch: &EditBatch, pg: bool) -> Result<Vec<BoundUpdate>, String
                 }
             } else if columns[i].primary_key {
                 format!("{name} <=> {bind}")
-            } else if columns[i].data_type == "json" {
+            } else if base_type(&columns[i]) == "json" {
                 format!("{name} <=> CAST({bind} AS JSON)")
-            } else {
+            } else if matches!(
+                crate::cell_edit::editor_kind(&RemoteColumn {
+                    data_type: columns[i]
+                        .data_type
+                        .strip_prefix("generated ")
+                        .unwrap_or(&columns[i].data_type)
+                        .to_owned(),
+                    ..columns[i].clone()
+                }),
+                crate::cell_edit::CellEditorKind::Text
+            ) {
                 format!("CAST({name} AS BINARY) <=> CAST({bind} AS BINARY)")
+            } else {
+                // Bound textual numbers/dates must be compared with the native
+                // type: binary comparison would reject equivalent representations
+                // such as DECIMAL 1.00 vs 1 or DATETIME(6)'s trailing zeroes.
+                format!("{name} <=> {bind}")
             });
         }
         updates.push((
@@ -1950,9 +2098,55 @@ fn bound_cell(cell: &Cell, pg: bool) -> Result<Option<String>, String> {
 }
 fn parameter(index: usize, column: &RemoteColumn, pg: bool) -> Result<String, String> {
     if !pg {
-        return Ok("?".into());
+        let base = base_type(column);
+        let unsigned = base.ends_with(" unsigned");
+        let kind = base.strip_suffix(" unsigned").unwrap_or(&base);
+        let cast = match kind {
+            "tinyint" | "smallint" | "mediumint" | "int" | "integer" | "bigint" | "boolean" => {
+                Some(if unsigned {
+                    "UNSIGNED".to_owned()
+                } else {
+                    "SIGNED".to_owned()
+                })
+            }
+            "decimal" | "numeric" => {
+                let dimensions = column
+                    .data_type
+                    .split_once('(')
+                    .and_then(|(_, rest)| rest.split_once(')'))
+                    .map(|(inside, _)| {
+                        inside
+                            .split(',')
+                            .map(|v| v.trim().parse::<u16>())
+                            .collect::<Result<Vec<_>, _>>()
+                    })
+                    .transpose()
+                    .map_err(|_| "Precisão decimal de metadados inválida")?;
+                let precision = dimensions
+                    .as_ref()
+                    .and_then(|v| v.first())
+                    .copied()
+                    .unwrap_or(65);
+                let scale = dimensions
+                    .as_ref()
+                    .and_then(|v| v.get(1))
+                    .copied()
+                    .unwrap_or(30);
+                if precision == 0 || precision > 65 || scale > precision {
+                    return Err("Precisão decimal de metadados inválida".into());
+                }
+                Some(format!("DECIMAL({precision},{scale})"))
+            }
+            "float" => Some("FLOAT".to_owned()),
+            "double" | "real" | "double precision" => Some("DOUBLE".to_owned()),
+            _ => None,
+        };
+        return Ok(cast.map_or_else(
+            || "?".into(),
+            |cast| format!("CAST(CAST(? AS CHAR) AS {cast})"),
+        ));
     }
-    let kind = match column.data_type.as_str() {
+    let kind = match base_type(column).as_str() {
         "smallint" => "smallint",
         "integer" => "integer",
         "bigint" => "bigint",
@@ -1966,7 +2160,7 @@ fn parameter(index: usize, column: &RemoteColumn, pg: bool) -> Result<String, St
         "date" => "date",
         "timestamp without time zone" => "timestamp",
         "timestamp with time zone" => "timestamptz",
-        "time without time zone" => "time",
+        "time without time zone" | "time" => "time",
         "uuid" => "uuid",
         "json" => "json",
         "jsonb" => "jsonb",

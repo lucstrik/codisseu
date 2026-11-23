@@ -540,8 +540,8 @@ async fn authorized_normal_profile_import_existing_ca_files_without_connecting()
 fn literal_shell_preserves_user_pipeline_order_database_and_int64() {
     let query = include_str!("../../../../fixtures/databases/mongo/aggregate-cte.js");
     let read = mongo_request(query, 100).unwrap();
-    assert_eq!(read.database.as_deref(), Some("docdb-ics-faturamento"));
-    assert_eq!(read.collection, "documento-cobranca-cte");
+    assert_eq!(read.database.as_deref(), Some("codisseu_aggregate_fixture"));
+    assert_eq!(read.collection, "sample_documents");
     let stages = read.pipeline.unwrap();
     assert_eq!(stages.len(), 5);
     let sort = stages[1].get_document("$sort").unwrap();

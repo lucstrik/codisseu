@@ -1,6 +1,7 @@
 //! Codisseu application commands backed by one SQLite connection per worker.
 //! Architecture and source decision: docs/contracts/database.md and
 //! docs/db-reuse-provenance.md. No GUI dependency or automatic connection.
+pub mod cell_edit;
 mod console_files;
 mod mongo_options;
 mod mongo_shell;
@@ -16,6 +17,7 @@ pub mod sql_completion;
 pub mod sql_formatting;
 pub mod sql_text;
 mod sqlite;
+mod sqlite_edit;
 mod tls_roots;
 pub mod transfer;
 pub mod transfer_formats_extra;
@@ -34,6 +36,11 @@ use std::{
     },
 };
 pub use value::{Value, display_value, value_type_name};
+
+/// Lossless presentation bridge shared by SQLite grid and remote grid editors.
+pub fn sqlite_cell(value: &Value) -> remote::Cell {
+    sqlite_edit::cell(value)
+}
 
 pub const QUERY_LIMIT: usize = 500;
 pub const CELL_BYTE_LIMIT: usize = 64 * 1024;
@@ -77,6 +84,12 @@ pub enum DbCommand {
         preview_id: u64,
     },
     Connect(PathBuf),
+    /// Explicit opt-in; still accepts only read-only SQL plus controlled grid writes.
+    ConnectWritable(PathBuf),
+    Apply(remote::EditBatch),
+    ApplyAndCommit(remote::EditBatch),
+    Commit,
+    Rollback,
     Disconnect,
     RefreshSchema,
     Execute {
@@ -102,15 +115,31 @@ enum Outcome {
     Connected {
         path: PathBuf,
         schema: Vec<TableInfo>,
+        writable: bool,
     },
     Disconnected,
     Schema(Vec<TableInfo>),
-    Query(QueryResult),
+    Query {
+        result: QueryResult,
+        origin: Option<sqlite_edit::Origin>,
+    },
+    Edited {
+        affected: usize,
+        result: Option<QueryResult>,
+        origin: Option<sqlite_edit::Origin>,
+        committed: bool,
+    },
+    Transaction {
+        committed: bool,
+        result: Option<QueryResult>,
+        origin: Option<sqlite_edit::Origin>,
+    },
 }
 struct Response {
     id: u64,
     generation: u64,
     result: Result<Outcome, String>,
+    transaction: bool,
 }
 #[derive(Clone, Copy, PartialEq, Eq)]
 enum Pending {
@@ -119,6 +148,7 @@ enum Pending {
     Transfer,
     Schema,
     Query,
+    Edit,
 }
 
 pub struct DbService {
@@ -129,6 +159,10 @@ pub struct DbService {
     pub transfer_revision: u64,
     pub config: Option<PathBuf>,
     pub connected: bool,
+    pub writable: bool,
+    pub transaction: bool,
+    pub origin: Option<sqlite_edit::Origin>,
+    pub apply_revision: u64,
     pub schema: Vec<TableInfo>,
     pub result: Option<QueryResult>,
     pub last_error: Option<String>,
@@ -174,6 +208,11 @@ impl DbService {
                     prepared_import: None,
                     preview_sequence: 0,
                     session: None,
+                    current_query: None,
+                    current_page: None,
+                    current_result: None,
+                    current_origin: None,
+                    current_schema: None,
                     interrupt: worker_interrupt,
                     epoch: worker_generation,
                     running: worker_running,
@@ -201,6 +240,10 @@ impl DbService {
             transfer_revision: 0,
             config: None,
             connected: false,
+            writable: false,
+            transaction: false,
+            origin: None,
+            apply_revision: 0,
             schema: Vec::new(),
             result: None,
             last_error: None,
@@ -254,8 +297,14 @@ impl DbService {
             .into();
             return Ok(());
         }
+        if self.pending.values().any(|p| *p == Pending::Edit) {
+            return Err("Aguarde a edição SQLite em andamento".into());
+        }
         if self.pending.values().any(|p| *p == Pending::Export) {
             return Err("Aguarde ou cancele a exportação SQLite".into());
+        }
+        if let DbCommand::Apply(batch) | DbCommand::ApplyAndCommit(batch) = &command {
+            sqlite_edit::validate_batch_budget(batch)?;
         }
         let kind = match &command {
             DbCommand::ExportQuery(request) => {
@@ -265,13 +314,19 @@ impl DbService {
                 }
                 Pending::Export
             }
-            DbCommand::Connect(_) | DbCommand::Disconnect => {
+            DbCommand::Connect(_) | DbCommand::ConnectWritable(_) | DbCommand::Disconnect => {
+                if self.transaction {
+                    return Err("Faça Commit ou Rollback antes de trocar a conexão SQLite".into());
+                }
                 if self.is_busy() {
                     return Err("Aguarde ou cancele a operação antes de trocar a conexão".into());
                 }
                 Pending::Connection
             }
             DbCommand::PreviewFileImport { path, .. } | DbCommand::ImportFileBatch { path, .. } => {
+                if self.transaction {
+                    return Err("Faça Commit ou Rollback antes de importar SQLite".into());
+                }
                 if self.is_busy() {
                     return Err("Aguarde as operações SQLite antes de importar".into());
                 }
@@ -279,6 +334,18 @@ impl DbService {
                     return Err("Arquivo SQLite mudou; abra novamente a importação".into());
                 }
                 Pending::Transfer
+            }
+            DbCommand::Apply(_)
+            | DbCommand::ApplyAndCommit(_)
+            | DbCommand::Commit
+            | DbCommand::Rollback => {
+                if !self.writable {
+                    return Err("SQLite somente leitura; habilite edição primeiro".into());
+                }
+                if self.is_busy() {
+                    return Err("Aguarde a operação SQLite antes de editar".into());
+                }
+                Pending::Edit
             }
             DbCommand::RefreshSchema => Pending::Schema,
             DbCommand::Execute { sql } => {
@@ -328,12 +395,13 @@ impl DbService {
         if kind == Pending::Query {
             self.latest_query = id;
             self.result = None;
+            self.origin = None;
         }
         if kind == Pending::Schema {
             self.latest_schema = id;
         }
         self.last_error = None;
-        self.status = "SQLite: operação em andamento · somente leitura".into();
+        self.status = "SQLite: operação em andamento".into();
         Ok(())
     }
 
@@ -363,6 +431,7 @@ impl DbService {
                 }
             };
             changed = true;
+            self.transaction = reply.transaction;
             let kind = self.pending.remove(&reply.id);
             if (kind == Some(Pending::Query) && reply.id != self.latest_query)
                 || (kind == Some(Pending::Schema) && reply.id != self.latest_schema)
@@ -372,6 +441,7 @@ impl DbService {
             let cancelled = reply.generation != self.generation.load(Ordering::SeqCst);
             if cancelled
                 && kind != Some(Pending::Connection)
+                && kind != Some(Pending::Edit)
                 && !(kind == Some(Pending::Export)
                     && matches!(&reply.result, Ok(Outcome::Export(_))))
                 && !(kind == Some(Pending::Transfer)
@@ -406,6 +476,9 @@ impl DbService {
                 }
                 Ok(Outcome::ImportClosed { report, error }) => {
                     self.connected = false;
+                    self.writable = false;
+                    self.transaction = false;
+                    self.origin = None;
                     self.config = None;
                     self.schema.clear();
                     self.result = None;
@@ -431,14 +504,29 @@ impl DbService {
                     self.status = error.clone();
                     self.last_error = Some(error);
                 }
-                Ok(Outcome::Connected { path, schema }) => {
+                Ok(Outcome::Connected {
+                    path,
+                    schema,
+                    writable,
+                }) => {
+                    self.writable = writable;
+                    self.origin = None;
+                    self.transaction = false;
                     self.config = Some(path);
                     self.connected = true;
                     self.schema = schema;
                     self.result = None;
-                    self.status = "SQLite conectado · somente leitura".into();
+                    self.status = if writable {
+                        "SQLite conectado · edição habilitada"
+                    } else {
+                        "SQLite conectado · somente leitura"
+                    }
+                    .into();
                 }
                 Ok(Outcome::Disconnected) => {
+                    self.writable = false;
+                    self.transaction = false;
+                    self.origin = None;
                     self.connected = false;
                     self.config = None;
                     self.schema.clear();
@@ -449,7 +537,43 @@ impl DbService {
                     self.schema = schema;
                     self.status = "Schema SQLite atualizado".into();
                 }
-                Ok(Outcome::Query(result)) => {
+                Ok(Outcome::Edited {
+                    affected,
+                    result,
+                    origin,
+                    committed,
+                }) => {
+                    self.apply_revision += 1;
+                    self.result = result;
+                    self.origin = origin;
+                    self.latest_query = reply.id;
+                    self.status = format!(
+                        "{affected} linha(s) alterada(s) · {}",
+                        if committed {
+                            "Commit concluído"
+                        } else {
+                            "Commit pendente"
+                        }
+                    );
+                }
+                Ok(Outcome::Transaction {
+                    committed,
+                    result,
+                    origin,
+                }) => {
+                    self.apply_revision += 1;
+                    self.result = result;
+                    self.origin = origin;
+                    self.latest_query = reply.id;
+                    self.status = if committed {
+                        "Commit SQLite concluído"
+                    } else {
+                        "Rollback SQLite concluído"
+                    }
+                    .into();
+                }
+                Ok(Outcome::Query { result, origin }) => {
+                    self.origin = origin;
                     self.status = if let Some(reason) = &result.limit_reason {
                         format!(
                             "{} linhas · resultado limitado: {reason} · {} ms",
@@ -457,11 +581,7 @@ impl DbService {
                             result.elapsed_ms
                         )
                     } else {
-                        format!(
-                            "{} linhas · {} ms · somente leitura",
-                            result.rows.len(),
-                            result.elapsed_ms
-                        )
+                        format!("{} linhas · {} ms", result.rows.len(), result.elapsed_ms)
                     };
                     self.result = Some(result);
                 }
@@ -485,6 +605,11 @@ struct Backend {
     prepared_import: Option<(u64, u64, sqlite::PreparedFileImport)>,
     preview_sequence: u64,
     session: Option<sqlite::Session>,
+    current_query: Option<String>,
+    current_page: Option<query_page::QueryPageRequest>,
+    current_result: Option<QueryResult>,
+    current_origin: Option<sqlite_edit::Origin>,
+    current_schema: Option<String>,
     interrupt: Arc<Mutex<Option<InterruptHandle>>>,
     epoch: Arc<AtomicU64>,
     running: Arc<AtomicBool>,
@@ -501,13 +626,29 @@ impl Backend {
             id: request.id,
             generation: request.generation,
             result,
+            transaction: self
+                .session
+                .as_ref()
+                .is_some_and(sqlite::Session::transaction),
         }
     }
 
     fn apply(&mut self, command: DbCommand, generation: u64) -> Result<Outcome, String> {
-        if let DbCommand::Connect(path) = command {
+        if let DbCommand::Connect(path) | DbCommand::ConnectWritable(path) = &command {
+            let writable = matches!(command, DbCommand::ConnectWritable(_));
+            if self
+                .session
+                .as_ref()
+                .is_some_and(sqlite::Session::transaction)
+            {
+                return Err("Faça Commit ou Rollback antes de trocar SQLite".into());
+            }
             self.prepared_import = None;
-            let candidate = sqlite::Session::open(&path, Arc::clone(&self.epoch), generation)?;
+            let candidate = if writable {
+                sqlite::Session::open_mode(path, Arc::clone(&self.epoch), generation, true)?
+            } else {
+                sqlite::Session::open(path, Arc::clone(&self.epoch), generation)?
+            };
             let schema = candidate.inspect()?;
             if generation != self.epoch.load(Ordering::SeqCst) {
                 return Err("Abertura SQLite cancelada; conexão anterior preservada".into());
@@ -518,9 +659,28 @@ impl Backend {
                 .lock()
                 .map_err(|_| "Controle SQLite indisponível")? = Some(candidate.interrupt_handle());
             self.session = Some(candidate);
-            return Ok(Outcome::Connected { path, schema });
+            self.current_query = None;
+            self.current_page = None;
+            self.current_result = None;
+            self.current_origin = None;
+            return Ok(Outcome::Connected {
+                path,
+                schema,
+                writable,
+            });
         }
         if matches!(command, DbCommand::Disconnect) {
+            if self
+                .session
+                .as_ref()
+                .is_some_and(sqlite::Session::transaction)
+            {
+                return Err("Faça Commit ou Rollback antes de desconectar SQLite".into());
+            }
+            self.current_query = None;
+            self.current_page = None;
+            self.current_result = None;
+            self.current_origin = None;
             self.prepared_import = None;
             self.interrupt
                 .lock()
@@ -569,6 +729,9 @@ impl Backend {
             if current.schema != plan.schema {
                 return Err("Schema SQLite mudou após a prévia".into());
             }
+            let restore_writable = self.session.as_ref().is_some_and(|s| s.writable);
+            self.current_result = None;
+            self.current_origin = None;
             self.interrupt
                 .lock()
                 .map_err(|_| "Controle SQLite indisponível")?
@@ -580,10 +743,11 @@ impl Backend {
                 .lock()
                 .map_err(|_| "Controle SQLite indisponível")?
                 .take();
-            let restored = sqlite::Session::open(
+            let restored = sqlite::Session::open_mode(
                 &plan.path,
                 self.epoch.clone(),
                 self.epoch.load(Ordering::SeqCst),
+                restore_writable,
             );
             if let Ok(session) = restored {
                 *self
@@ -609,6 +773,8 @@ impl Backend {
         }
         let session = self.session.as_ref().ok_or("SQLite está desconectado")?;
         session.begin_request(Arc::clone(&self.epoch), generation)?;
+        let commit_after = matches!(command, DbCommand::ApplyAndCommit(_));
+        let commit_transaction = matches!(command, DbCommand::Commit);
         match command {
             DbCommand::ExportQuery(request) => session
                 .export_query(
@@ -643,11 +809,119 @@ impl Backend {
             }
             DbCommand::Execute { sql } => {
                 self.prepared_import = None;
-                session.select(&sql).map(Outcome::Query)
+                self.current_result = None;
+                self.current_origin = None;
+                let result = session.select(&sql)?;
+                let origin = session.editable_origin(&sql, &result);
+                self.current_schema = origin
+                    .as_ref()
+                    .map(|(table, _)| session.grid_schema(table))
+                    .transpose()?;
+                self.current_query = Some(sql);
+                self.current_page = None;
+                self.current_result = Some(result.clone());
+                self.current_origin = origin.clone();
+                Ok(Outcome::Query { result, origin })
             }
             DbCommand::ExecutePage(request) => {
                 self.prepared_import = None;
-                session.select_page(&request).map(Outcome::Query)
+                self.current_query = None;
+                self.current_page = None;
+                self.current_result = None;
+                self.current_origin = None;
+                let result = session.select_page(&request)?;
+                // Only the user's original simple SELECT determines writability;
+                // the paging wrapper preserves those cell values and output ordinals.
+                let origin = session.editable_origin(&request.sql, &result);
+                self.current_schema = origin
+                    .as_ref()
+                    .map(|(table, _)| session.grid_schema(table))
+                    .transpose()?;
+                self.current_query = Some(request.sql.clone());
+                self.current_page = Some(request);
+                self.current_result = Some(result.clone());
+                self.current_origin = origin.clone();
+                Ok(Outcome::Query { result, origin })
+            }
+            DbCommand::Apply(batch) | DbCommand::ApplyAndCommit(batch) => {
+                let origin = self
+                    .current_origin
+                    .as_ref()
+                    .ok_or("Execute uma consulta SQLite editável novamente")?;
+                let original = self
+                    .current_result
+                    .as_ref()
+                    .ok_or("Resultado SQLite obsoleto")?;
+                let committed = commit_after;
+                if self.current_schema.as_ref() != Some(&session.grid_schema(&batch.table)?) {
+                    return Err("Schema SQLite mudou desde a consulta; execute novamente".into());
+                }
+                let expected_schema = self
+                    .current_schema
+                    .as_ref()
+                    .ok_or("Schema SQLite obsoleto")?;
+                let affected = session.apply_grid(&batch, origin, original, expected_schema)?;
+                if committed && let Err(error) = session.commit_grid() {
+                    let cleanup = session.rollback_grid();
+                    self.current_result = None;
+                    self.current_origin = None;
+                    return Err(match cleanup {
+                        Ok(()) => format!(
+                            "{error}; Commit SQLite falhou; toda a transação foi revertida, inclusive os envios anteriores"
+                        ),
+                        Err(cleanup) => format!(
+                            "{error}; falha ao reverter SQLite; estado da transação não confirmado: {cleanup}"
+                        ),
+                    });
+                }
+                let result = if let Some(page) = &self.current_page {
+                    session.select_page(page).ok()
+                } else {
+                    self.current_query
+                        .as_ref()
+                        .and_then(|sql| session.select(sql).ok())
+                };
+                let origin = result.as_ref().and_then(|r| {
+                    self.current_query
+                        .as_ref()
+                        .and_then(|sql| session.editable_origin(sql, r))
+                });
+                self.current_result = result.clone();
+                self.current_origin = origin.clone();
+                Ok(Outcome::Edited {
+                    affected,
+                    result,
+                    origin,
+                    committed,
+                })
+            }
+            DbCommand::Commit | DbCommand::Rollback => {
+                let committed = commit_transaction;
+                if committed {
+                    session.commit_grid()?;
+                } else {
+                    session.rollback_grid()?;
+                }
+                session.begin_request(Arc::clone(&self.epoch), generation)?;
+                let result = if let Some(page) = &self.current_page {
+                    session.select_page(page).ok()
+                } else {
+                    self.current_query
+                        .as_ref()
+                        .and_then(|sql| session.select(sql).ok())
+                };
+                let origin = result.as_ref().and_then(|r| {
+                    self.current_query
+                        .as_ref()
+                        .and_then(|sql| session.editable_origin(sql, r))
+                });
+                self.current_result = result.clone();
+                self.current_origin = origin.clone();
+                Ok(Outcome::Transaction {
+                    committed,
+                    result,
+                    origin,
+                })
             }
             DbCommand::RefreshSchema => session.inspect().map(Outcome::Schema),
             _ => Err("Pedido inválido ao worker SQLite".into()),

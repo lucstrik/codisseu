@@ -40,6 +40,7 @@ impl CodisseuApp {
             && !self.service.remote_db.is_busy()
             && !self.service.db.is_busy()
             && self.database_ui.staged.is_empty()
+            && self.database_ui.edit.is_none()
     }
     pub(super) fn query_execution_toolbar(&mut self, ui: &mut egui::Ui) {
         if !self.is_query_document() {

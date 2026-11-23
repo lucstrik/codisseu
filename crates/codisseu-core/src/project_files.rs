@@ -369,7 +369,7 @@ impl AppService {
         {
             return Err("Aguarde as operações ou encerre o debug antes de fechar o projeto".into());
         }
-        if self.remote_db.transaction {
+        if self.remote_db.transaction || self.db.transaction {
             return Err("Faça Commit ou Rollback no banco antes de fechar o projeto".into());
         }
         self.stop_project_languages()?;

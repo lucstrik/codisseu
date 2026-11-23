@@ -317,11 +317,7 @@ impl CodisseuApp {
         let identity = self.transfer_identity();
         let query = self.result_query().map(str::to_owned);
         let state = &mut self.transfer_ui;
-        state.proposals = if self.database_ui.remote_results {
-            self.database_ui.staged.clone()
-        } else {
-            Default::default()
-        };
+        state.proposals = self.database_ui.staged.clone();
         state.include_proposed = false;
         state.dialog = Some(dialog);
         state.from_grid = false;
@@ -999,7 +995,7 @@ impl CodisseuApp {
             return;
         };
         let mut visible = None;
-        if self.database_ui.remote_results && !self.database_ui.staged.is_empty() {
+        if !self.database_ui.staged.is_empty() {
             let mut changed = (*data).clone();
             for (&(row, column), cell) in &self.database_ui.staged {
                 if let Some(value) = changed.rows.get_mut(row).and_then(|r| r.get_mut(column)) {

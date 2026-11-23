@@ -167,7 +167,7 @@ impl ConnectionConfig {
         Ok(())
     }
 }
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum Cell {
     Null,
     Text(String),
@@ -314,6 +314,8 @@ pub enum RemoteCommand {
         offset: u64,
     },
     Apply(EditBatch),
+    /// Apply the proposed batch and commit on this exact session. Never replay.
+    ApplyAndCommit(EditBatch),
     Commit,
     Rollback,
     Cancel,
@@ -731,6 +733,35 @@ impl RemoteService {
         if self.is_busy() {
             return Err("Aguarde ou cancele a operação atual".into());
         }
+        if let RemoteCommand::Apply(batch) | RemoteCommand::ApplyAndCommit(batch) = &cmd {
+            let (table, columns) = self
+                .origin
+                .as_ref()
+                .ok_or("Execute novamente uma consulta editável antes de aplicar alterações")?;
+            let result = self
+                .result
+                .as_ref()
+                .ok_or("Resultado da edição não está mais disponível")?;
+            let originals: std::collections::HashSet<_> = result.rows.iter().collect();
+            if self
+                .active
+                .as_ref()
+                .is_none_or(|c| c.read_only || !c.engine.is_sql())
+                || table != &batch.table
+                || columns != &batch.columns
+                || batch.edits.is_empty()
+                || batch.edits.len() > 500
+                || batch
+                    .edits
+                    .iter()
+                    .any(|edit| !originals.contains(&edit.row))
+            {
+                return Err(
+                    "Origem, linha ou permissão da edição mudou; execute novamente a consulta"
+                        .into(),
+                );
+            }
+        }
         if let RemoteCommand::ExecuteConsole { sql, datasource_id } = &cmd {
             let source = self
                 .profiles
@@ -750,6 +781,7 @@ impl RemoteService {
         if matches!(
             cmd,
             RemoteCommand::Apply(_)
+                | RemoteCommand::ApplyAndCommit(_)
                 | RemoteCommand::ApplyImport(_)
                 | RemoteCommand::ApplyNoSqlImport(_)
         ) && self.active.as_ref().is_some_and(|active| {
@@ -1776,6 +1808,8 @@ fn worker(
         let recoverable_command = matches!(
             cmd,
             RemoteCommand::ExportQuery(_)
+                | RemoteCommand::Apply(_)
+                | RemoteCommand::ApplyAndCommit(_)
                 | RemoteCommand::Execute(_)
                 | RemoteCommand::Explain(_)
                 | RemoteCommand::ExecutePage(_)
@@ -1803,6 +1837,7 @@ fn worker(
                 | RemoteCommand::Commit
                 | RemoteCommand::Rollback
                 | RemoteCommand::Apply(_)
+                | RemoteCommand::ApplyAndCommit(_)
                 | RemoteCommand::PreviewImport(_)
                 | RemoteCommand::PreviewNoSqlImport(_)
         ) {
@@ -1968,19 +2003,24 @@ fn worker(
                             s.explain(&request.payload).await.map(|r|Event::Result(r,None))
                         },
                         (RemoteCommand::ExecutePage(request),Session::Sql(s))=>{
-                            let r=s.execute_page(&request.payload).await?;
-                            let origin=if cfg.read_only{None}else{s.editable_origin(&request.payload.sql,&r).await?};
+                            let mut r=s.execute_page(&request.payload).await?;
+                            let origin=if cfg.read_only{None}else{s.certify_result(&request.payload.sql,&mut r).await?};
                             Ok(Event::Result(r,origin))
                         },
                         (RemoteCommand::Execute(q)|RemoteCommand::ExecuteBound{sql:q,..}|RemoteCommand::ExecuteConsole{sql:q,..},Session::Sql(s))=>{
-                            let r=s.execute(&q).await?;
-                            let origin=if cfg.read_only{None}else{s.editable_origin(&q,&r).await?};
+                            let mut r=s.execute(&q).await?;
+                            let origin=if cfg.read_only{None}else{s.certify_result(&q,&mut r).await?};
                             Ok(Event::Result(r,origin))
                         },
                         (RemoteCommand::Execute(q)|RemoteCommand::ExecuteBound{sql:q,..}|RemoteCommand::ExecuteConsole{sql:q,..},Session::NoSql(s))=>s.execute(&q,cfg).await.map(|r|Event::Result(r,None)),
                         (RemoteCommand::LoadTable(t),Session::Sql(s))=>s.load_table(&t).await.map(|(r,c)|Event::Result(r,Some((t,c)))),
                         (RemoteCommand::LoadTablePage{table:t,offset},Session::Sql(s))=>s.load_table_page(&t,offset).await.map(|(r,c)|Event::Result(r,Some((t,c)))),
                         (RemoteCommand::Apply(batch),Session::Sql(s))=>s.apply(&batch).await.map(Event::Applied),
+                        (RemoteCommand::ApplyAndCommit(batch),Session::Sql(s))=>{
+                            let r=s.apply(&batch).await?;
+                            s.commit().await?;
+                            Ok(Event::Transaction(false,format!("Commit concluído · {} linha(s) alterada(s); recarregue os dados",r.affected_rows)))
+                        },
                         (RemoteCommand::Commit,Session::Sql(s))=>s.commit().await.map(|_|Event::Transaction(false,"Commit concluído".into())),
                         (RemoteCommand::Rollback,Session::Sql(s))=>s.rollback().await.map(|_|Event::Transaction(false,"Rollback concluído; recarregue os dados".into())),
                         _=>Err("Operação não disponível neste driver".into()),

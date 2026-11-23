@@ -417,7 +417,7 @@ impl CodisseuApp {
         if !self.sql_editor() {
             return;
         }
-        if !self.database_ui.staged.is_empty() {
+        if !self.database_ui.staged.is_empty() || self.database_ui.edit.is_some() {
             self.service.last_error =
                 Some("Envie ou descarte as alterações da grade antes de solicitar o plano".into());
             return;
