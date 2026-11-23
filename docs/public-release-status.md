@@ -23,7 +23,7 @@ Aurora precisa de teste próprio na AWS. MongoDB, Redis e Memcached não recebem
 este fluxo de UPDATE/transação SQL; não se anuncia cobertura de todos os drivers
 JDBC ou paridade integral com DataGrip.
 
-Validação local do recurso: 76 testes Rust de banco aprovados (41 de unidade,
+Validação local do recurso: 77 testes Rust de banco aprovados (42 de unidade,
 17 de tipos, 11 de SQLite e 7 cenários remotos). PostgreSQL18.6, MySQL8.0.46 e
 MariaDB11.4.10 foram exercitados em contêineres descartáveis. Duas variantes
 Aurora usam apenas os protocolos em servidores locais; não validam AWS.

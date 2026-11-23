@@ -92,6 +92,7 @@ jobs:
       - name: Testar edição tipada de células e transações SQLite
         run: |
           cargo test --release --locked -p codisseu-db --test cell_edit --test sqlite_grid_edit --jobs 2
+          cargo test --release --locked -p codisseu-db --lib remote_sql::tests --jobs 2
           cargo test --release --locked -p codisseu-ui --lib database_cell_edit_tests --jobs 2 -- --skip grid_remote_real
       - name: Testar edição transacional em PostgreSQL, MySQL e MariaDB
         env:

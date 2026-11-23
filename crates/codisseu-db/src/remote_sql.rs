@@ -92,7 +92,12 @@ fn import_value(cell: &Cell, column: &RemoteColumn, pg: bool) -> Result<ImportVa
             _ => Err("Coluna binária exige bytes ou texto0xhex".into()),
         };
     }
-    let kind = base_type(column);
+    // COLUMN_TYPE retains UNSIGNED and dimensions for the cell editor. Imports
+    // must still classify numeric types before the server can coerce text.
+    let kind = base_type(column)
+        .trim_end_matches(" zerofill")
+        .trim_end_matches(" unsigned")
+        .to_owned();
     let value = bound_cell(cell, pg)?;
     if let Some(v) = &value {
         if matches!(
@@ -2250,6 +2255,36 @@ fn render_sql(sql: &str, values: &[Option<String>], pg: bool) -> Result<String, 
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn formatted_unsigned_metadata_retains_import_numeric_validation() {
+        for kind in [
+            "bigint unsigned",
+            "int unsigned",
+            "tinyint(1) unsigned",
+            "decimal(30,10) unsigned",
+            "numeric(20,4)",
+            "double unsigned",
+            "bigint unsigned zerofill",
+        ] {
+            let column = RemoteColumn {
+                name: "amount".into(),
+                data_type: kind.into(),
+                primary_key: false,
+                nullable: true,
+            };
+            for invalid in ["not a number", "true", "[]", "{\"amount\":1}", "\"42\""] {
+                assert!(
+                    import_value(&Cell::Text(invalid.into()), &column, false).is_err(),
+                    "{kind}: {invalid}"
+                );
+            }
+            assert!(
+                import_value(&Cell::Number("42".into()), &column, false).is_ok(),
+                "{kind}"
+            );
+            assert!(import_value(&Cell::Null, &column, false).is_ok(), "{kind}");
+        }
+    }
     #[test]
     fn rejects_scripts_control_locks_and_data_modifying_ctes() {
         for sql in [

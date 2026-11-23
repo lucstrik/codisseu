@@ -62,9 +62,9 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "564f00f25f8a42519a8319bd0753cf78d9c29149a04b954834806f6afc91402d",
-      "source_sha256": "564f00f25f8a42519a8319bd0753cf78d9c29149a04b954834806f6afc91402d",
-      "bytes": 5583,
+      "sha256": "f6cf65e48695aa9cf823fc82b843d436418526ca259af0aac0aec36b36f4c5a2",
+      "source_sha256": "f6cf65e48695aa9cf823fc82b843d436418526ca259af0aac0aec36b36f4c5a2",
+      "bytes": 5671,
       "mode": "0o644",
       "transformations": []
     },
@@ -2091,9 +2091,9 @@
     },
     {
       "path": "crates/codisseu-db/src/remote_sql.rs",
-      "sha256": "0b7b61c60c58b838ea8da4e700abdce53b97087f5de657bbb16b0f2684c8a4dd",
-      "source_sha256": "0b7b61c60c58b838ea8da4e700abdce53b97087f5de657bbb16b0f2684c8a4dd",
-      "bytes": 95632,
+      "sha256": "97fee34fc7192aee556adbdde72aa59395e456c63bc4bdb16d72f6e7f032a517",
+      "source_sha256": "97fee34fc7192aee556adbdde72aa59395e456c63bc4bdb16d72f6e7f032a517",
+      "bytes": 96955,
       "mode": "0o644",
       "transformations": []
     },
@@ -7848,8 +7848,8 @@
     },
     {
       "path": "docs/public-release-status.md",
-      "sha256": "2d6aabbcf3d66e4684ac54a6d749a9d439eb05826d354a63ed222a28bf32f34b",
-      "source_sha256": "2d6aabbcf3d66e4684ac54a6d749a9d439eb05826d354a63ed222a28bf32f34b",
+      "sha256": "7a8cbcf942bf3dc1ab7a27f802ba277c66b99f5bb7976f6bd9c74736ae143d78",
+      "source_sha256": "7a8cbcf942bf3dc1ab7a27f802ba277c66b99f5bb7976f6bd9c74736ae143d78",
       "bytes": 10286,
       "mode": "0o644",
       "transformations": []
@@ -7938,7 +7938,7 @@
     },
     {
       "path": "docs/status.md",
-      "sha256": "2d6aabbcf3d66e4684ac54a6d749a9d439eb05826d354a63ed222a28bf32f34b",
+      "sha256": "7a8cbcf942bf3dc1ab7a27f802ba277c66b99f5bb7976f6bd9c74736ae143d78",
       "source_sha256": null,
       "bytes": 10286,
       "mode": "0o644",
