@@ -62,8 +62,8 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "6ad942f525a8c515293ea44d3ca86e5e475b1a9bcf4eb6400f98df2b5b218c48",
-      "source_sha256": "6ad942f525a8c515293ea44d3ca86e5e475b1a9bcf4eb6400f98df2b5b218c48",
+      "sha256": "e38670850e4215bee75fa119ea77f11ec32868cab133fb277f4bf2c2e193a3d8",
+      "source_sha256": "e38670850e4215bee75fa119ea77f11ec32868cab133fb277f4bf2c2e193a3d8",
       "bytes": 6320,
       "mode": "0o644",
       "transformations": []
@@ -5520,9 +5520,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/database_navigation.rs",
-      "sha256": "4617a2008e8d9818f4324ef7094e4355ac1b401355b294be5dc8d652e1c5cb55",
-      "source_sha256": "4617a2008e8d9818f4324ef7094e4355ac1b401355b294be5dc8d652e1c5cb55",
-      "bytes": 31958,
+      "sha256": "9d6f5bb1681687b5307d285bc63483578247e0bd05b0a3870f0a4be7cd555959",
+      "source_sha256": "9d6f5bb1681687b5307d285bc63483578247e0bd05b0a3870f0a4be7cd555959",
+      "bytes": 34457,
       "mode": "0o644",
       "transformations": []
     },
@@ -22243,9 +22243,9 @@
     },
     {
       "path": "tools/native_database_edit.py",
-      "sha256": "4482d5bcf34262bb2a7891811dd76432da37801a36be64a20854def50cb9b768",
-      "source_sha256": "4482d5bcf34262bb2a7891811dd76432da37801a36be64a20854def50cb9b768",
-      "bytes": 20532,
+      "sha256": "f260ecdf36427075c75ab5e5bf7c4ccfa1b5b3789e841fb12f251ce64ae350d4",
+      "source_sha256": "f260ecdf36427075c75ab5e5bf7c4ccfa1b5b3789e841fb12f251ce64ae350d4",
+      "bytes": 21405,
       "mode": "0o644",
       "transformations": []
     },
@@ -22488,9 +22488,9 @@
     },
     {
       "path": "tools/sql_console_fixtures.py",
-      "sha256": "3b3d89935c5a4e20e07f0f7d3e333ce2dc08c5ca15bfd3fd907aa2668b37c3a7",
-      "source_sha256": "3b3d89935c5a4e20e07f0f7d3e333ce2dc08c5ca15bfd3fd907aa2668b37c3a7",
-      "bytes": 4813,
+      "sha256": "9a6845bad9ff70d674d24d9e41d7e58b452afacd45981dc2a1e56275310adf94",
+      "source_sha256": "9a6845bad9ff70d674d24d9e41d7e58b452afacd45981dc2a1e56275310adf94",
+      "bytes": 4820,
       "mode": "0o644",
       "transformations": []
     },

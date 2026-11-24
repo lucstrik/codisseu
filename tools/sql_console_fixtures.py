@@ -33,7 +33,7 @@ def main():
             ('MY','mysql:8.0',3306,['MYSQL_DATABASE=codisseu','MYSQL_ROOT_PASSWORD=codisseu_fixture','MYSQL_ROOT_HOST=%'],['mysqladmin','--protocol=tcp','-h127.0.0.1','-uroot','-pcodisseu_fixture','ping'],['--skip-log-bin','--innodb-buffer-pool-size=64M']),
             ('MA','mariadb:11.4.10',3306,['MARIADB_DATABASE=codisseu','MARIADB_ROOT_PASSWORD=codisseu_fixture','MARIADB_ROOT_HOST=%'],['mariadb-admin','--protocol=tcp','-h127.0.0.1','-uroot','-pcodisseu_fixture','ping'],['--skip-log-bin','--innodb-buffer-pool-size=64M'])]:
             image_id=run('docker','image','inspect','--format','{{.Id}}',image).stdout.strip()
-            path='/var/lib/postgresql/data' if key=='PG' else '/var/lib/mysql'
+            path='/var/lib/postgresql' if key=='PG' else '/var/lib/mysql'
             command=['docker','run','--detach','--rm','--pull','never','--name',f'codisseu-console-{key.lower()}-{token}','--label',f'org.codisseu.fixture={token}','--memory','1g','--cpus','2','--publish',f'127.0.0.1::{port}','--tmpfs',f'{path}:rw,size=512m']
             for value in variables: command+=['--env',value]
             cid=run(*command,image,*options).stdout.strip(); created.append(cid)
@@ -47,7 +47,7 @@ def main():
         env['CODISSEU_SQL_PG_PORT']=env['CODISSEU_CONSOLE_PG_PORT']; env['CODISSEU_SQL_MY_PORT']=env['CODISSEU_CONSOLE_MY_PORT']
         commands.append(['cargo','test','-p','codisseu-db','--test','remote_sql','--locked','--jobs','2','--','--ignored','--nocapture','--test-threads=1'])
         if args.ui:
-            commands.append(['cargo','test','-p','codisseu-ui','--lib','native_sql_console','--locked','--jobs','2','--','--ignored','--nocapture','--test-threads=1'])
+            commands.append(['cargo','test','-p','codisseu-ui','--lib','native_sql','--locked','--jobs','2','--','--include-ignored','--nocapture','--test-threads=1'])
         report['tests']=[]
         for i,command in enumerate(commands):
             with (out/f'tests-{i}.log').open('w') as log:
@@ -60,7 +60,7 @@ def main():
         for cid in reversed(created):
             labels=json.loads(run('docker','inspect','--format','{{json .Config.Labels}}',cid).stdout)
             assert labels.get('org.codisseu.fixture')==token
-            run('docker','rm','--force',cid); report['removed'].append(cid)
+            run('docker','rm','--force','--volumes',cid); report['removed'].append(cid)
         report['after']=inventory()
         report['existing_resources_preserved']=all(set(report['before'][key])==set(report['after'][key]) for key in report['before'])
         (out/'manifest.json').write_text(json.dumps(report,indent=2)+'\n')

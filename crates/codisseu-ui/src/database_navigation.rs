@@ -584,6 +584,66 @@ mod tests {
     }
 
     #[test]
+    fn native_sqlite_console_typed_metadata_after_commit_renders() {
+        let dir = tempfile::tempdir().unwrap();
+        let database = dir.path().join("console.sqlite");
+        rusqlite::Connection::open(&database).unwrap().execute_batch("CREATE TABLE users(id INTEGER PRIMARY KEY,name TEXT); INSERT INTO users VALUES(1,'before')").unwrap();
+        let file = dir.path().join("console.sql");
+        std::fs::write(&file, "SELECT * FROM users;").unwrap();
+        let mut app = CodisseuApp::new(AppService::new(dir.path().join("session.json")));
+        while app.service.is_busy() {
+            app.service.poll();
+            std::thread::sleep(Duration::from_millis(1));
+        }
+        app.service.dispatch(Command::OpenFile(file)).unwrap();
+        app.service
+            .dispatch(Command::Database(DbCommand::ConnectWritable(database)))
+            .unwrap();
+        let mut h = Harness::builder()
+            .with_size([1280., 800.])
+            .with_step_dt(1. / 60.)
+            .with_max_steps(200)
+            .build_ui_state(|ui, a: &mut CodisseuApp| a.show(ui), app);
+        settle(&mut h);
+        for sql in [
+            "SELECT * FROM users;",
+            "UPDATE users SET name='pending' WHERE id=1;",
+            "ROLLBACK;",
+            "UPDATE users SET name='committed' WHERE id=1;",
+            "COMMIT;",
+            "PRAGMA table_info(users);",
+        ] {
+            h.get_by_role(egui::accesskit::Role::MultilineTextInput)
+                .click();
+            h.key_press_modifiers(egui::Modifiers::COMMAND, egui::Key::A);
+            h.event(egui::Event::Text(sql.into()));
+            h.run_steps(3);
+            h.key_press_modifiers(egui::Modifiers::COMMAND, egui::Key::Enter);
+            settle(&mut h);
+            assert!(
+                h.state().service.db.last_error.is_none(),
+                "{sql}: {:?}",
+                h.state().service.db.last_error
+            );
+            assert!(
+                h.state().service.db.result.is_some(),
+                "{sql}: {}",
+                h.state().service.status
+            );
+            assert!(
+                !h.state().database_ui.remote_results,
+                "{sql}: local result must be displayed"
+            );
+        }
+        assert_eq!(
+            h.state().service.db.result.as_ref().unwrap().columns[0],
+            "cid"
+        );
+        assert!(h.state().database_ui.sqlite_result_source.is_some());
+        let _ = h.get_by_label("Result 1");
+    }
+
+    #[test]
     #[ignore = "requires owned SQL console Docker fixtures via CODISSEU_CONSOLE_{PG,MY,MA}_PORT"]
     fn native_sql_console_keyboard_metadata_writes_and_saved_permission() {
         fn execute(

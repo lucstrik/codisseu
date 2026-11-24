@@ -108,7 +108,7 @@ jobs:
         run: |
           cargo test --release --locked -p codisseu-db --test sql_text --test sqlite_grid_edit --jobs 2
           cargo test --release --locked -p codisseu-db --test sql_console --jobs 2 -- --ignored --test-threads=1
-          cargo test --release --locked -p codisseu-ui --lib native_sql_console --jobs 2 -- --ignored --test-threads=1
+          cargo test --release --locked -p codisseu-ui --lib native_sql --jobs 2 -- --include-ignored --test-threads=1
       - name: Conferir empacotamento e exportação pública
         run: |
           python3 tools/test_deb_package.py

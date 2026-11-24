@@ -275,9 +275,23 @@ def main():
                 assert robot.pid(robot.window) == app.pid
                 robot.click(round(500*args.scale), round(190*args.scale))
                 key('a', ('Control_L',))
-                robot.text(text)
+                for char in text:
+                    if char in '_*':
+                        robot.key(char, ('Shift_L',))
+                    else:
+                        robot.text(char)
+                editor = wait(lambda: find(str(query)))
+                def exact_input():
+                    actual = Atspi.Text.get_text(editor, 0, -1)
+                    report['last_console_input'] = {'expected': text, 'actual': actual}
+                    return actual if actual == text else None
+                actual = wait(exact_input)
+                report.setdefault('console_inputs', []).append({'expected': text, 'actual': actual})
+                assert actual == text, {'expected': text, 'actual': actual}
                 key('Return', ('Control_L',))
-                wait(condition)
+                # Rollback is also disabled while a command is busy. Require
+                # the result ACK before treating its disabled state as complete.
+                wait(lambda: find('Result 1') and condition())
             execute_sql("UPDATE users SET name='Console pending' WHERE id=1;", lambda: enabled('Rollback'))
             record_rows('console UPDATE remains uncommitted', baseline)
             capture('console-update-pending')
