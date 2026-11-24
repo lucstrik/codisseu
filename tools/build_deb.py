@@ -241,7 +241,7 @@ def main():
     source.add_argument("--core-binary", type=Path)
     parser.add_argument("--notices", type=Path, help="Prepared application/Cargo/asset notices for --core-binary")
     parser.add_argument("--output", type=Path, default=Path("dist"))
-    parser.add_argument("--version", default="0.1.0~alpha.4")
+    parser.add_argument("--version", default="0.1.0~alpha.5")
     parser.add_argument("--maintainer", required=True)
     parser.add_argument("--homepage", default="https://github.com/lucstrik/codisseu")
     args = parser.parse_args()

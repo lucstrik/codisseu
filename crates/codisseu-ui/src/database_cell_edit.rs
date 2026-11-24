@@ -325,7 +325,7 @@ impl CodisseuApp {
                 .color(color(self.tokens.accent)),
             );
         } else if !self.can_edit_grid() {
-            ui.label(RichText::new("Somente leitura · edição exige tabela simples, chave primária completa e conexão com escrita habilitada").small().color(color(self.tokens.muted)));
+            ui.label(RichText::new("Edição de células indisponível · exige tabela simples, chave primária completa e conexão com escrita habilitada").small().color(color(self.tokens.muted)));
         }
         if let Some(error) = &self.database_ui.edit_error {
             ui.label(RichText::new(error).color(color(self.tokens.error)));

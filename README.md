@@ -7,7 +7,7 @@
 <p align="center">Código, banco de dados, Git e IA. Tudo no mesmo lugar.</p>
 
 <p align="center">
-  <a href="https://github.com/lucstrik/codisseu/releases/download/v0.1.0-alpha.4/codisseu_0.1.0-alpha.4_amd64.deb">Baixar .deb para Linux</a> ·
+  <a href="https://github.com/lucstrik/codisseu/releases/download/v0.1.0-alpha.5/codisseu_0.1.0-alpha.5_amd64.deb">Baixar .deb para Linux</a> ·
   <a href="https://lucstrik.github.io/codisseu/">Site do projeto</a> ·
   <a href="#instalação">Como instalar</a> ·
   <a href="#o-que-você-vai-encontrar">Recursos</a> ·
@@ -29,14 +29,14 @@ linguagens do projeto. O foco agora é Linux.
 ## Instalação
 
 O pacote `.deb` é para **Linux x86_64 / amd64**. Baixe o arquivo
-`codisseu_0.1.0-alpha.4_amd64.deb` na página de
+`codisseu_0.1.0-alpha.5_amd64.deb` na página de
 [Releases](https://github.com/lucstrik/codisseu/releases), junto com o arquivo
 de checksums da mesma versão.
 
 Na pasta onde você baixou os arquivos, instale com:
 
 ```sh
-sudo apt install './codisseu_0.1.0-alpha.4_amd64.deb'
+sudo apt install './codisseu_0.1.0-alpha.5_amd64.deb'
 ```
 
 Depois, é só procurar **Codisseu** no menu de aplicativos. Pelo terminal:

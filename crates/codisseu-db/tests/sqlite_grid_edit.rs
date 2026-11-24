@@ -54,6 +54,78 @@ fn query(db: &mut DbService, sql: &str) {
     send(db, DbCommand::Execute { sql: sql.into() });
     assert!(db.last_error.is_none(), "{:?}", db.last_error);
 }
+
+#[test]
+fn writable_native_console_tracks_dml_ddl_returning_and_explicit_transactions() {
+    let lab = Lab::new();
+    let mut db = lab.service(true);
+    query(
+        &mut db,
+        "CREATE TABLE console_native(id INTEGER PRIMARY KEY,name TEXT)",
+    );
+    assert!(!db.transaction);
+    query(&mut db, "INSERT INTO console_native VALUES(1,'before')");
+    assert!(db.transaction);
+    assert_eq!(db.result.as_ref().unwrap().affected_rows, 1);
+    query(&mut db, "COMMIT");
+    assert!(!db.transaction);
+    query(
+        &mut db,
+        "UPDATE console_native SET name='pending' RETURNING id,name",
+    );
+    assert_eq!(
+        db.result.as_ref().unwrap().rows,
+        vec![vec![Value::Integer(1), Value::Text("pending".into())]]
+    );
+    assert_eq!(db.result.as_ref().unwrap().affected_rows, 1);
+    assert!(db.origin.is_none());
+    let observe = || {
+        Connection::open(&lab.path)
+            .unwrap()
+            .query_row("SELECT name FROM console_native", [], |r| {
+                r.get::<_, String>(0)
+            })
+            .unwrap()
+    };
+    assert_eq!(observe(), "before");
+    query(&mut db, "ROLLBACK");
+    assert!(!db.transaction);
+    assert_eq!(observe(), "before");
+    query(&mut db, "BEGIN");
+    assert!(db.transaction);
+    query(&mut db, "DELETE FROM console_native");
+    send(&mut db, DbCommand::Rollback);
+    assert!(!db.transaction);
+    assert_eq!(observe(), "before");
+    send(
+        &mut db,
+        DbCommand::Execute {
+            sql: "INSERT INTO console_native VALUES(2,'bad'); DROP TABLE console_native".into(),
+        },
+    );
+    assert!(db.last_error.is_some());
+    assert!(!db.transaction);
+    assert_eq!(observe(), "before");
+    query(&mut db, "DROP TABLE console_native");
+    query(&mut db, "CREATE TABLE console_many(id INTEGER PRIMARY KEY)");
+    query(
+        &mut db,
+        "WITH RECURSIVE n(i) AS (VALUES(1) UNION ALL SELECT i+1 FROM n WHERE i<501) INSERT INTO console_many SELECT i FROM n RETURNING id",
+    );
+    assert_eq!(db.result.as_ref().unwrap().rows.len(), 500);
+    assert!(db.result.as_ref().unwrap().truncated);
+    assert_eq!(db.result.as_ref().unwrap().affected_rows, 501);
+    assert!(db.transaction);
+    send(&mut db, DbCommand::Rollback);
+    assert_eq!(
+        Connection::open(&lab.path)
+            .unwrap()
+            .query_row("SELECT count(*) FROM console_many", [], |r| r
+                .get::<_, i64>(0))
+            .unwrap(),
+        0
+    );
+}
 fn batch(db: &DbService, changes: &[(usize, usize, Cell)]) -> EditBatch {
     let (table, columns) = db.origin.clone().expect("editable origin");
     let result = db.result.as_ref().unwrap();
@@ -221,15 +293,13 @@ fn ambiguous_queries_nullable_identity_and_generated_cells_stay_protected() {
 }
 
 #[test]
-fn writable_opt_in_does_not_allow_arbitrary_sql_writes() {
+fn read_only_session_rejects_native_writes_and_transaction_controls() {
     let lab = Lab::new();
     let mut db = lab.service(false);
     query(&mut db, "SELECT * FROM readings");
     assert!(!db.writable);
     assert!(db.origin.is_none());
     assert!(db.dispatch(DbCommand::Commit).is_err());
-    send(&mut db, DbCommand::ConnectWritable(lab.path.clone()));
-    assert!(db.writable);
     for sql in [
         "UPDATE readings SET name='bad' RETURNING *",
         "BEGIN",

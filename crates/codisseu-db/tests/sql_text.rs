@@ -1,5 +1,35 @@
 use codisseu_db::sql_text::{SqlDialect::*, execution_range, statement_range};
 
+#[test]
+fn native_payload_is_one_unambiguous_statement_even_with_explicit_selection() {
+    use codisseu_db::sql_text::single_statement;
+    for sql in [
+        "describe console_transport.transports;",
+        "SHOW CREATE TABLE `update`; -- end",
+        "SHOW TABLES LIKE 'a;''b'",
+        "UPDATE t SET name='a;b';",
+    ] {
+        assert!(single_statement(sql, Mysql).is_ok(), "{sql}");
+    }
+    for sql in [
+        "SELECT 1; DELETE FROM t",
+        "SHOW TABLES /*!50000 ; DROP TABLE t */",
+        "SHOW TABLES /*M! ; DROP TABLE t */",
+        "SHOW TABLES LIKE 'a\\'; DROP TABLE t; -- '",
+        "SHOW TABLES; /* unfinished",
+        "/* empty */",
+    ] {
+        assert!(single_statement(sql, Mysql).is_err(), "{sql}");
+    }
+    assert!(
+        single_statement(
+            "CREATE FUNCTION f() RETURNS void LANGUAGE plpgsql AS $$ BEGIN PERFORM 1; END $$;",
+            Postgres
+        )
+        .is_ok()
+    );
+}
+
 fn at(text: &str, marker: &str) -> usize {
     text[..text.find(marker).unwrap()].chars().count()
 }

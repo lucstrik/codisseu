@@ -7,12 +7,12 @@ O ambiente validado nesta entrega fica registrado no relatório da release.
 ## Baixar e instalar
 
 1. Abra as [releases](https://github.com/lucstrik/codisseu/releases).
-2. Baixe `codisseu_0.1.0-alpha.4_amd64.deb` e o arquivo `.deb.sha256` ao lado.
+2. Baixe `codisseu_0.1.0-alpha.5_amd64.deb` e o arquivo `.deb.sha256` ao lado.
 3. Na pasta do download, confira e instale:
 
 ```sh
-sha256sum -c codisseu_0.1.0-alpha.4_amd64.deb.sha256
-sudo apt install ./codisseu_0.1.0-alpha.4_amd64.deb
+sha256sum -c codisseu_0.1.0-alpha.5_amd64.deb.sha256
+sudo apt install ./codisseu_0.1.0-alpha.5_amd64.deb
 ```
 
 Abra pelo menu de aplicativos ou pelo terminal:
@@ -69,7 +69,7 @@ só porque você abriu uma pasta.
 
 ## Editar resultados de consultas
 
-A alpha.4 permite editar células de consultas simples sobre uma tabela em
+A alpha.5 permite editar células de consultas simples sobre uma tabela em
 SQLite, PostgreSQL, MySQL e MariaDB. Para SQLite, use **Habilitar edição** na
 barra do resultado. Nas conexões remotas, desmarque **Read-only · somente leitura**
 e reconecte quando solicitado. A consulta precisa retornar a chave primária

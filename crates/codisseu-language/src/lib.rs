@@ -1577,6 +1577,10 @@ impl LanguageService {
                 .iter()
                 .any(|s| s.state == ProviderState::Starting)
     }
+    /// Accepted Start/Stop generation, independent of document and file jobs.
+    pub fn lifecycle_generation(&self) -> u64 {
+        self.epoch
+    }
 }
 impl Drop for LanguageService {
     fn drop(&mut self) {

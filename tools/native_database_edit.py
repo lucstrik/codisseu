@@ -28,6 +28,7 @@ def main():
     parser.add_argument('--resources', type=Path,
                         help='Extracted core share/codisseu with authoritative empty runtime.json')
     parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--console-sql', action='store_true', help='Exercise native console SQL instead of inline grid edits')
     parser.add_argument('--scale', type=float, choices=[1., 1.25], default=1.)
     args = parser.parse_args()
     assert Path(os.environ.get('XAUTHORITY', '/missing')).parent.name.startswith('storm-private-'), 'Use private_native_run.py'
@@ -267,73 +268,121 @@ def main():
         wait(lambda: find('Habilitar edição') is None and find('Ada'))
         report['checks'].append('explicit SQLite editing enablement reloads original query')
 
-        edit('Ada', 'name', 'Ada committed')
-        capture('inline-name')
-        key('Return')
-        wait(lambda: find('Editar name') is None and find('Ada committed'))
-        record_rows('staged text unchanged independently', baseline)
-        capture('pending-name')
-        report['checks'].append('double-click uses real inline input; Enter stages without writing')
-        click('Commit')
-        committed = [(1, 'Ada committed', 7, 1, 'Own target'), baseline[1]]
-        wait(lambda: rows() == committed)
-        wait(lambda: find('Ada committed') and not enabled('Rollback'))
-        record_rows('Commit changes exactly target row', committed)
-        capture('committed-name')
-        report['checks'].append('Commit directly submits pending edit and confirms exactly target row')
+        if args.console_sql:
+            report['scenario'] = 'native SQLite console SQL, DML manual, metadata, explicit COMMIT/ROLLBACK'
+            def execute_sql(text, condition):
+                # The same measured editor region used by native_core_release.
+                assert robot.pid(robot.window) == app.pid
+                robot.click(round(500*args.scale), round(190*args.scale))
+                key('a', ('Control_L',))
+                for char in text:
+                    if char in '_*':
+                        robot.key(char, ('Shift_L',))
+                    else:
+                        robot.text(char)
+                editor = wait(lambda: find(str(query)))
+                def exact_input():
+                    actual = Atspi.Text.get_text(editor, 0, -1)
+                    report['last_console_input'] = {'expected': text, 'actual': actual}
+                    return actual if actual == text else None
+                actual = wait(exact_input)
+                report.setdefault('console_inputs', []).append({'expected': text, 'actual': actual})
+                assert actual == text, {'expected': text, 'actual': actual}
+                key('Return', ('Control_L',))
+                # Rollback is also disabled while a command is busy. Require
+                # the result ACK before treating its disabled state as complete.
+                wait(lambda: find('Result 1') and condition())
+            execute_sql("UPDATE users SET name='Console pending' WHERE id=1;", lambda: enabled('Rollback'))
+            record_rows('console UPDATE remains uncommitted', baseline)
+            capture('console-update-pending')
+            report['checks'].append('native Ctrl+Enter DML returns with manual transaction pending')
+            execute_sql('ROLLBACK;', lambda: not enabled('Rollback'))
+            record_rows('console ROLLBACK preserves committed data', baseline)
+            report['checks'].append('SQL ROLLBACK matches independent observer')
+            execute_sql("UPDATE users SET name='Console committed' WHERE id=1;", lambda: enabled('Rollback'))
+            execute_sql('COMMIT;', lambda: not enabled('Rollback'))
+            committed = [(1,'Console committed',7,1,'Own target'),baseline[1]]
+            wait(lambda: rows() == committed)
+            record_rows('console COMMIT persists only requested row',committed)
+            report['checks'].append('SQL COMMIT persists requested DML without changing other row')
+            execute_sql('PRAGMA table_info(users);', lambda: find('cid') and find('notnull'))
+            capture('console-metadata')
+            report['checks'].append('native PRAGMA metadata result renders without SELECT wrapper')
+            execute_sql('SELECT * FROM users ORDER BY id;', lambda: find('Console committed') and find('Bruno'))
+            key('s',('Control_L',))
+            wait(lambda: query.read_text().strip() == 'SELECT * FROM users ORDER BY id;')
+            capture('console-final-select')
+            close_window()
+            report['checks'].append('native SQL source saved and clean WM_DELETE exit0')
+            report['success']=True
+        else:
+            edit('Ada', 'name', 'Ada committed')
+            capture('inline-name')
+            key('Return')
+            wait(lambda: find('Editar name') is None and find('Ada committed'))
+            record_rows('staged text unchanged independently', baseline)
+            capture('pending-name')
+            report['checks'].append('double-click uses real inline input; Enter stages without writing')
+            click('Commit')
+            committed = [(1, 'Ada committed', 7, 1, 'Own target'), baseline[1]]
+            wait(lambda: rows() == committed)
+            wait(lambda: find('Ada committed') and not enabled('Rollback'))
+            record_rows('Commit changes exactly target row', committed)
+            capture('committed-name')
+            report['checks'].append('Commit directly submits pending edit and confirms exactly target row')
 
-        edit('Ada committed', 'name', 'Ada rollback')
-        key('Return')
-        wait(lambda: find('Editar name') is None)
-        click('Submit')
-        wait(lambda: enabled('Rollback') and find('Ada rollback'))
-        record_rows('Submit remains invisible independently', committed)
-        capture('submitted-uncommitted')
-        click('Rollback')
-        wait(lambda: find('Ada committed') and not enabled('Rollback'))
-        record_rows('Rollback restores original committed row', committed)
-        report['checks'].append('Submit stays in same uncommitted session; Rollback restores it')
+            edit('Ada committed', 'name', 'Ada rollback')
+            key('Return')
+            wait(lambda: find('Editar name') is None)
+            click('Submit')
+            wait(lambda: enabled('Rollback') and find('Ada rollback'))
+            record_rows('Submit remains invisible independently', committed)
+            capture('submitted-uncommitted')
+            click('Rollback')
+            wait(lambda: find('Ada committed') and not enabled('Rollback'))
+            record_rows('Rollback restores original committed row', committed)
+            report['checks'].append('Submit stays in same uncommitted session; Rollback restores it')
 
-        click('7', double=True)
-        wait(lambda: find('Editar quantity'))
-        key('a', ('Control_L',))
-        robot.text('letters')
-        wait(lambda: input_text('quantity') == '7')
-        assert find('quantity exige', prefix=True)
-        record_rows('numeric letters rejected without writes', committed)
-        capture('numeric-rejected')
-        key('a', ('Control_L',))
-        robot.text('42')
-        wait(lambda: input_text('quantity') == '42')
-        key('Return')
-        wait(lambda: find('Editar quantity') is None and find('42'))
-        record_rows('integer staged only', committed)
-        click('Commit')
-        numeric = [(1, 'Ada committed', 42, 1, 'Own target'), baseline[1]]
-        wait(lambda: rows() == numeric)
-        wait(lambda: find('42') and not enabled('Rollback'))
-        record_rows('integer committed exactly', numeric)
-        report['checks'].append('BIGINT rejects alphabetic typing, accepts integer, persists without touching other row')
+            click('7', double=True)
+            wait(lambda: find('Editar quantity'))
+            key('a', ('Control_L',))
+            robot.text('letters')
+            wait(lambda: input_text('quantity') == '7')
+            assert find('quantity exige', prefix=True)
+            record_rows('numeric letters rejected without writes', committed)
+            capture('numeric-rejected')
+            key('a', ('Control_L',))
+            robot.text('42')
+            wait(lambda: input_text('quantity') == '42')
+            key('Return')
+            wait(lambda: find('Editar quantity') is None and find('42'))
+            record_rows('integer staged only', committed)
+            click('Commit')
+            numeric = [(1, 'Ada committed', 42, 1, 'Own target'), baseline[1]]
+            wait(lambda: rows() == numeric)
+            wait(lambda: find('42') and not enabled('Rollback'))
+            record_rows('integer committed exactly', numeric)
+            report['checks'].append('BIGINT rejects alphabetic typing, accepts integer, persists without touching other row')
 
-        click('42', double=True)
-        wait(lambda: find('Editar quantity'))
-        click('NULL')
-        key('Return')
-        wait(lambda: find('Editar quantity') is None)
-        record_rows('NULL stays pending independently', numeric)
-        capture('pending-null')
-        click('Commit')
-        nullable = [(1, 'Ada committed', None, 1, 'Own target'), baseline[1]]
-        wait(lambda: rows() == nullable)
-        wait(lambda: not enabled('Rollback'))
-        record_rows('nullable integer commits real SQL NULL', nullable)
-        report['checks'].append('nullable numeric column distinguishes SQL NULL and commits it')
-        assert query.read_text() == sql
-        report['checks'].append('SQL source and unrelated row/columns preserved')
-        capture('final-grid')
-        close_window()
-        report['checks'].append('clean native WM_DELETE exit0')
-        report['success'] = True
+            click('42', double=True)
+            wait(lambda: find('Editar quantity'))
+            click('NULL')
+            key('Return')
+            wait(lambda: find('Editar quantity') is None)
+            record_rows('NULL stays pending independently', numeric)
+            capture('pending-null')
+            click('Commit')
+            nullable = [(1, 'Ada committed', None, 1, 'Own target'), baseline[1]]
+            wait(lambda: rows() == nullable)
+            wait(lambda: not enabled('Rollback'))
+            record_rows('nullable integer commits real SQL NULL', nullable)
+            report['checks'].append('nullable numeric column distinguishes SQL NULL and commits it')
+            assert query.read_text() == sql
+            report['checks'].append('SQL source and unrelated row/columns preserved')
+            capture('final-grid')
+            close_window()
+            report['checks'].append('clean native WM_DELETE exit0')
+            report['success'] = True
     except Exception as error:
         report['failure'] = {'type': type(error).__name__, 'message': str(error),
                              'traceback': traceback.format_exc()}

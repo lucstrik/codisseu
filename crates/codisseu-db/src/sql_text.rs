@@ -88,6 +88,21 @@ fn scalar_to_byte(text: &str, scalar: usize) -> Option<usize> {
     }
 }
 
+/// Validate the complete payload before native execution (including explicit
+/// editor selections). Ambiguous quoting must never become a second command.
+pub fn single_statement(text: &str, dialect: SqlDialect) -> Result<(), String> {
+    let statements = scan(text, dialect);
+    let mut code = statements.iter().filter(|s| s.code);
+    let statement = code.next().ok_or("Nenhuma instrução SQL informada")?;
+    if code.next().is_some() {
+        return Err("Execute uma única instrução SQL por vez".into());
+    }
+    if let Some(error) = statement.error {
+        return Err(format!("{error}; execução nativa não enviada"));
+    }
+    Ok(())
+}
+
 fn identifier(byte: u8) -> bool {
     byte.is_ascii_alphanumeric() || byte == b'_' || byte == b'$' || byte >= 128
 }
@@ -139,7 +154,9 @@ fn scan(text: &str, dialect: SqlDialect) -> Vec<Statement> {
                 i += 1;
             }
         } else if byte == b'/' && bytes.get(i + 1) == Some(&b'*') {
-            if dialect == SqlDialect::Mysql && bytes.get(i + 2) == Some(&b'!') {
+            if dialect == SqlDialect::Mysql
+                && (bytes.get(i + 2) == Some(&b'!') || bytes.get(i + 2..i + 4) == Some(b"M!"))
+            {
                 code = true;
                 error = Some("Comentário executável MySQL exige seleção explícita");
             }

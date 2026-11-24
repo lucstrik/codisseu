@@ -24,11 +24,14 @@ pub struct BoundQueryPage {
 pub const MAX_PAGE_OFFSET: u64 = 1_000_000;
 
 pub fn is_select(sql: &str) -> bool {
-    sqlparser::parser::Parser::parse_sql(&sqlparser::dialect::SQLiteDialect {}, sql).is_ok_and(
-        |statements| {
+    let dialect = sqlparser::dialect::SQLiteDialect {};
+    let read_words = sqlparser::tokenizer::Tokenizer::new(&dialect, sql).tokenize().is_ok_and(|tokens| {
+        !tokens.iter().any(|t| matches!(t, sqlparser::tokenizer::Token::Word(w) if w.quote_style.is_none() && matches!(w.value.to_ascii_uppercase().as_str(), "INSERT" | "UPDATE" | "DELETE" | "MERGE" | "INTO")))
+    });
+    read_words
+        && sqlparser::parser::Parser::parse_sql(&dialect, sql).is_ok_and(|statements| {
             statements.len() == 1 && matches!(statements[0], sqlparser::ast::Statement::Query(_))
-        },
-    )
+        })
 }
 
 impl QueryPageRequest {
@@ -70,6 +73,13 @@ impl QueryPageRequest {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn returning_statements_never_expose_select_paging() {
+        assert!(!is_select(
+            "WITH x AS (SELECT 1) INSERT INTO t SELECT * FROM x RETURNING id"
+        ));
+        assert!(is_select("WITH x AS (SELECT 'UPDATE') SELECT * FROM x"));
+    }
     #[test]
     fn page_sql_preserves_inner_limit_and_uses_only_numeric_ordinals() {
         let request = QueryPageRequest {

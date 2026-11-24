@@ -47,7 +47,7 @@ portable_install.sh portable_notices.py portable_browser.py portable_python.py
 portable_rust.py portable_rust_linker.rs dependency_inventory.py
 test_cli_install.py test_provider_storage.py probe_provider_storage.py
 db_metadata_fixtures.py db_sql_fixtures.py docker_fixture.py
-grid_inspection_fixtures.py mongo_aggregate_fixture.py mongo_options_fixture.py
+grid_inspection_fixtures.py sql_console_fixtures.py mongo_aggregate_fixture.py mongo_options_fixture.py
 multi_project_mysql_fixture.py query_execution_fixtures.py
 create_git_merge_demo.py verify_transfer_exports.py
 native_smoke.py native_m2.py native_controls.py private_native_run.py native_drawings.py native_themes.py native_database_edit.py
@@ -67,7 +67,7 @@ laravel.md php-composer.md php-tests-usage.md php-tests-contract.md
 js-tests-usage.md js-tests-contract.md rust-usage.md rust-support-contract.md
 python-usage.md python-support-contract.md python-language-contract.md
 python-runtime-contract.md python-tests-contract.md
-m4-database-usage.md m4-data-transfer-contract.md m4-sql-workflow-contract.md grid-edit-contract-20261123.md
+m4-database-usage.md m4-data-transfer-contract.md m4-sql-workflow-contract.md grid-edit-contract-20261123.md sql-console-contract-20261124.md
 debugging.md m5-debug-contract.md m5-debug-backend.md
 ai-chat-usage.md ai-chat-concurrency-contract.md ai-chat-access-contract.md
 ai-chat-vscode-contract.md ai-chat-workspace-scope-contract.md
