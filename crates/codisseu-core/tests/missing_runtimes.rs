@@ -122,6 +122,7 @@ fn missing_php_node_python_and_rust_preserve_editing_saving_and_sqlite() {
             .all(|p| p.state == ProviderState::Failed)
     );
     assert!(app.language.statuses.iter().all(|p| !p.detail.is_empty()));
+    let failed_generation = app.language.lifecycle_generation();
     for (file, original, updated) in [
         ("index.php", "<?php // original\n", "<?php echo 'Olá 🌧';\n"),
         (
@@ -146,7 +147,15 @@ fn missing_php_node_python_and_rust_preserve_editing_saving_and_sqlite() {
     query(&mut app, temp.path());
     for _ in 0..100 {
         app.poll();
-        assert!(!app.is_busy(), "failed tools must not restart in a loop");
+        // File/history/Git acknowledgements may still be busy after the SQLite
+        // reply. Inspect actual accepted Start/Stop transitions, including a
+        // retry that failed completely between two polls.
+        assert_eq!(
+            app.language.lifecycle_generation(),
+            failed_generation,
+            "failed tools must not restart in a loop"
+        );
+        assert_eq!(app.language.statuses.len(), 4);
         assert!(
             app.language
                 .statuses

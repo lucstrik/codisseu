@@ -1520,9 +1520,9 @@
     },
     {
       "path": "crates/codisseu-core/tests/missing_runtimes.rs",
-      "sha256": "de6b65445eadfa4cf05749589c9ea319a96c5d7e3591a413c887367072619a25",
-      "source_sha256": "de6b65445eadfa4cf05749589c9ea319a96c5d7e3591a413c887367072619a25",
-      "bytes": 6785,
+      "sha256": "785b4b572c32be80d16727e326c514f19278c37c24d456abda1573400daf7920",
+      "source_sha256": "785b4b572c32be80d16727e326c514f19278c37c24d456abda1573400daf7920",
+      "bytes": 7208,
       "mode": "0o644",
       "transformations": []
     },
@@ -3184,9 +3184,9 @@
     },
     {
       "path": "crates/codisseu-language/src/lib.rs",
-      "sha256": "bd9d32bf7b83adcb6e101f453d2c88b5c669ea36a5f2a0b73d8fa70d87bf230c",
-      "source_sha256": "bd9d32bf7b83adcb6e101f453d2c88b5c669ea36a5f2a0b73d8fa70d87bf230c",
-      "bytes": 82645,
+      "sha256": "55883316765f2154fe6720b35733f992ec5bc03d8b6c569a7a54d54233946d58",
+      "source_sha256": "55883316765f2154fe6720b35733f992ec5bc03d8b6c569a7a54d54233946d58",
+      "bytes": 82797,
       "mode": "0o644",
       "transformations": []
     },
