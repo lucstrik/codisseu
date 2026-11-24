@@ -34,22 +34,34 @@ certificado/hostname. Memcached usa texto sem TLS/SASL; Mongo permite Auth datab
 a única sessão remota ativa e salva o cadastro. Com **Lembrar senha no cofre do sistema**, a senha é guardada no cofre do SO.
 Campo vazio reutiliza a senha salva; desmarcar e aplicar remove a entrada.
 Sem essa escolha, a senha fica apenas na sessão.
-Reabrir restaura cadastros desconectados. Opções salvas exigem reconexão; marcar
-Read-only bloqueia novas edições imediatamente na direção segura.
+Reabrir restaura cadastros desconectados. Salvar **Read-only** aplica essa
+permissão à mesma conexão SQL aberta; não é necessário reconectar para essa
+opção. Havendo transação pendente, faça Commit/Rollback antes de alterá-la.
+Mudanças de servidor, autenticação e TLS continuam exigindo reconexão.
 
 **Console** cria arquivo no editor comum, vinculado ao datasource. **Ctrl+Enter**
-executa a seleção explícita ou a instrução sob o cursor, incluindo consultas
-de várias linhas: uma consulta SELECT/WITH por vez. Separe instruções com `;`.
-Não há execução automática de script nem DDL/DML livres. O resultado
-informa limites; a prévia não executa COUNT e não carrega a base inteira.
+executa a seleção explícita ou a instrução sob o cursor. Use uma instrução por
+execução, separada das demais com `;`. O dialeto é o do servidor conectado.
+`DESCRIBE banco.tabela`, `DESC`, `SHOW` e `EXPLAIN` funcionam em MySQL/MariaDB;
+PostgreSQL usa seus comandos nativos, como `SHOW search_path` e `EXPLAIN SELECT`.
+Comandos psql (`\dt`) não são SQL e não são interpretados pelo aplicativo.
 
-Para editar SQL: desmarque Read-only em Options e reconecte. Use SELECT direto
-com todas as colunas/PK na ordem original, ou **Carregar objetos** e duplo clique
-na tabela. Duplo clique na célula abre editor, **Stage Change** mantém mudança
-local, **SQL Preview** mostra SQL copiável e parâmetros. **Submit** envia lote
-parametrizado na transação; **Commit** confirma e **Rollback** reverte. Alteração
-de chave, linhas sem PK, projeções ambíguas e tipos sem comparação segura ficam
-protegidos. Recarregue tabela após Submit/Rollback; não há confirmação automática.
+Com **Read-only** ativo, o servidor e o console protegem contra escritas.
+Desative e salve para executar também `INSERT`, `UPDATE`, `DELETE`,
+`CREATE`, `ALTER`, `DROP`, `SET`, `USE` e demais instruções nativas do servidor.
+DML abre transação manual: **Commit** confirma e **Rollback** reverte. Também
+é possível enviar `BEGIN`, `COMMIT` e `ROLLBACK` pelo editor. DDL segue a
+semântica nativa: MySQL/MariaDB podem confirmar implicitamente a transação.
+SQLite permite SQL nativo depois de **Habilitar edição**; inicia em leitura.
+A saída informa linhas afetadas; metadados/planos/RETURNING não habilitam edição
+pela grade nem recebem wrapper de paginação. SELECT compatível conserva páginas.
+Não há execução automática de scripts, DELIMITER ou comandos shell do cliente.
+
+Para editar células: use SELECT simples com PK completa ou carregue a tabela.
+Duplo clique/F2 abre o editor tipado, Enter aceita a proposta local e Escape
+cancela. **Commit** envia e confirma; **Submit** envia mantendo a transação aberta.
+**Rollback** desfaz o enviado sem confirmação. Identidade ambígua, colunas geradas,
+PK e tipos sem tratamento seguro permanecem protegidos na edição pela grade.
 **Revert** descarta apenas alterações locais. Fechar com alterações exige decisão.
 
 O padrão é leitura, 500 linhas, 10s por consulta e desconexão após 60s ociosos.

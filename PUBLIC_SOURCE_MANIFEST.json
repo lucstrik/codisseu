@@ -62,9 +62,9 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "f6cf65e48695aa9cf823fc82b843d436418526ca259af0aac0aec36b36f4c5a2",
-      "source_sha256": "f6cf65e48695aa9cf823fc82b843d436418526ca259af0aac0aec36b36f4c5a2",
-      "bytes": 5671,
+      "sha256": "6ad942f525a8c515293ea44d3ca86e5e475b1a9bcf4eb6400f98df2b5b218c48",
+      "source_sha256": "6ad942f525a8c515293ea44d3ca86e5e475b1a9bcf4eb6400f98df2b5b218c48",
+      "bytes": 6320,
       "mode": "0o644",
       "transformations": []
     },
@@ -134,8 +134,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "a6caa8ac848c8eed1a6ff34621992013227716b17247986aba51fe7a8911e622",
-      "source_sha256": "a6caa8ac848c8eed1a6ff34621992013227716b17247986aba51fe7a8911e622",
+      "sha256": "c1cef6910295f864763612c0a3a4ca971dff44e34de809be4b1c154814bfbcdf",
+      "source_sha256": "c1cef6910295f864763612c0a3a4ca971dff44e34de809be4b1c154814bfbcdf",
       "bytes": 10578,
       "mode": "0o644",
       "transformations": []
@@ -1986,9 +1986,9 @@
     },
     {
       "path": "crates/codisseu-db/src/lib.rs",
-      "sha256": "b7524394894a02695483169580bb73d6aa03b62f8435c301019d38eec22c0da1",
-      "source_sha256": "b7524394894a02695483169580bb73d6aa03b62f8435c301019d38eec22c0da1",
-      "bytes": 36963,
+      "sha256": "43bb206ced63d028031e90dee9339d91620333449ec0dca50441d354d02a13f2",
+      "source_sha256": "43bb206ced63d028031e90dee9339d91620333449ec0dca50441d354d02a13f2",
+      "bytes": 37221,
       "mode": "0o644",
       "transformations": []
     },
@@ -2026,17 +2026,17 @@
     },
     {
       "path": "crates/codisseu-db/src/query_page.rs",
-      "sha256": "0b60565eac323b74cd306ce64404423e7f73c6dc685eb4e26d1f9a253640eeaa",
-      "source_sha256": "0b60565eac323b74cd306ce64404423e7f73c6dc685eb4e26d1f9a253640eeaa",
-      "bytes": 3250,
+      "sha256": "89accef0a54ded1486ceed39a6ac3bf0728e66a26f637bc1d661ee2ca7103668",
+      "source_sha256": "89accef0a54ded1486ceed39a6ac3bf0728e66a26f637bc1d661ee2ca7103668",
+      "bytes": 3878,
       "mode": "0o644",
       "transformations": []
     },
     {
       "path": "crates/codisseu-db/src/remote.rs",
-      "sha256": "61e1ad092156777655c24731dafb40737f7bc2a2ea92047d1ed8a21625280e82",
-      "source_sha256": "61e1ad092156777655c24731dafb40737f7bc2a2ea92047d1ed8a21625280e82",
-      "bytes": 102147,
+      "sha256": "e7cb5c89294784271c12884233f81f8c40cd7f9014e6228dd0aa4aeb8e46e0b9",
+      "source_sha256": "e7cb5c89294784271c12884233f81f8c40cd7f9014e6228dd0aa4aeb8e46e0b9",
+      "bytes": 105037,
       "mode": "0o644",
       "transformations": []
     },
@@ -2091,9 +2091,9 @@
     },
     {
       "path": "crates/codisseu-db/src/remote_sql.rs",
-      "sha256": "97fee34fc7192aee556adbdde72aa59395e456c63bc4bdb16d72f6e7f032a517",
-      "source_sha256": "97fee34fc7192aee556adbdde72aa59395e456c63bc4bdb16d72f6e7f032a517",
-      "bytes": 96955,
+      "sha256": "bae59356fcc678b88ab083cc6f73e352b6d8f7b24d4b40a223dea81422ef0882",
+      "source_sha256": "bae59356fcc678b88ab083cc6f73e352b6d8f7b24d4b40a223dea81422ef0882",
+      "bytes": 113543,
       "mode": "0o644",
       "transformations": []
     },
@@ -2115,17 +2115,17 @@
     },
     {
       "path": "crates/codisseu-db/src/sql_text.rs",
-      "sha256": "16b2ffd73c8c20b34d10a58ed0d6c9a85da65bcd073a9f9c6c6584e0716c4cf4",
-      "source_sha256": "16b2ffd73c8c20b34d10a58ed0d6c9a85da65bcd073a9f9c6c6584e0716c4cf4",
-      "bytes": 8797,
+      "sha256": "0e2e3b54e8cb15659b5bc3c73141dea7dfa05a4e1444cc597722c180c619cf58",
+      "source_sha256": "0e2e3b54e8cb15659b5bc3c73141dea7dfa05a4e1444cc597722c180c619cf58",
+      "bytes": 9527,
       "mode": "0o644",
       "transformations": []
     },
     {
       "path": "crates/codisseu-db/src/sqlite.rs",
-      "sha256": "ca002255768119d37cd03d02b17b1c1505abc333a87279103d9d94b6dd8c8281",
-      "source_sha256": "ca002255768119d37cd03d02b17b1c1505abc333a87279103d9d94b6dd8c8281",
-      "bytes": 24340,
+      "sha256": "c40c170a67b1df3a74d1355f30a33aaf657cecc06d93b14599b42b4fce53c25f",
+      "source_sha256": "c40c170a67b1df3a74d1355f30a33aaf657cecc06d93b14599b42b4fce53c25f",
+      "bytes": 27849,
       "mode": "0o644",
       "transformations": []
     },
@@ -2367,10 +2367,18 @@
       "transformations": []
     },
     {
+      "path": "crates/codisseu-db/tests/sql_console.rs",
+      "sha256": "17063016be29807603e059d865e188ac7532cde1b578e2033adc27cd1dfd486c",
+      "source_sha256": "17063016be29807603e059d865e188ac7532cde1b578e2033adc27cd1dfd486c",
+      "bytes": 11695,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
       "path": "crates/codisseu-db/tests/sql_text.rs",
-      "sha256": "afce45b2a1a4ec5e50560f9ac130d95b3362d99a14b5874a914429afa4f653a0",
-      "source_sha256": "afce45b2a1a4ec5e50560f9ac130d95b3362d99a14b5874a914429afa4f653a0",
-      "bytes": 4479,
+      "sha256": "9bbfe208a8688e5aa9f1b7a0ee7019fabd3cce32b5644157dae0bfcecb243c75",
+      "source_sha256": "9bbfe208a8688e5aa9f1b7a0ee7019fabd3cce32b5644157dae0bfcecb243c75",
+      "bytes": 5414,
       "mode": "0o644",
       "transformations": []
     },
@@ -2384,9 +2392,9 @@
     },
     {
       "path": "crates/codisseu-db/tests/sqlite_grid_edit.rs",
-      "sha256": "38f4c94c0452c12b865aeca4dd323cce52c84c91ca0e1e2051b6d90126116fc0",
-      "source_sha256": "38f4c94c0452c12b865aeca4dd323cce52c84c91ca0e1e2051b6d90126116fc0",
-      "bytes": 15774,
+      "sha256": "3a89c2d2e8ff50bef8baf9b3feb8090ae4af5168a3592b88ffa1a0a19487dd50",
+      "source_sha256": "3a89c2d2e8ff50bef8baf9b3feb8090ae4af5168a3592b88ffa1a0a19487dd50",
+      "bytes": 18164,
       "mode": "0o644",
       "transformations": []
     },
@@ -5456,17 +5464,17 @@
     },
     {
       "path": "crates/codisseu-ui/src/database.rs",
-      "sha256": "91963ec8f8dd416b52af463dc434e42befdb769c01dfc09a48f371d0f710373d",
-      "source_sha256": "91963ec8f8dd416b52af463dc434e42befdb769c01dfc09a48f371d0f710373d",
-      "bytes": 115259,
+      "sha256": "3484d97d70492b54a17dd602f89db346e99d23ea1d8bcff30ca981ca76897671",
+      "source_sha256": "3484d97d70492b54a17dd602f89db346e99d23ea1d8bcff30ca981ca76897671",
+      "bytes": 115558,
       "mode": "0o644",
       "transformations": []
     },
     {
       "path": "crates/codisseu-ui/src/database_cell_edit.rs",
-      "sha256": "b40f23e7b44edc992c30aa5c6b79cf8863161762b3c6a4a7b47c059455ef92c9",
-      "source_sha256": "b40f23e7b44edc992c30aa5c6b79cf8863161762b3c6a4a7b47c059455ef92c9",
-      "bytes": 23202,
+      "sha256": "aef909bfa0cd76d37c6a6898471bacc3f878eac50f205ca7161ac934e4371036",
+      "source_sha256": "aef909bfa0cd76d37c6a6898471bacc3f878eac50f205ca7161ac934e4371036",
+      "bytes": 23212,
       "mode": "0o644",
       "transformations": []
     },
@@ -5512,9 +5520,9 @@
     },
     {
       "path": "crates/codisseu-ui/src/database_navigation.rs",
-      "sha256": "dcb86b9ab8cfd75ac57bc53dc178ee5b9b978110677389be8ad54c75d7be0d60",
-      "source_sha256": "dcb86b9ab8cfd75ac57bc53dc178ee5b9b978110677389be8ad54c75d7be0d60",
-      "bytes": 24745,
+      "sha256": "4617a2008e8d9818f4324ef7094e4355ac1b401355b294be5dc8d652e1c5cb55",
+      "source_sha256": "4617a2008e8d9818f4324ef7094e4355ac1b401355b294be5dc8d652e1c5cb55",
+      "bytes": 31958,
       "mode": "0o644",
       "transformations": []
     },
@@ -7656,8 +7664,8 @@
     },
     {
       "path": "docs/install-linux.md",
-      "sha256": "c09e83ca5b5dfc782a9fce02088682f210f8c05596f419c2d8f61c5371324c34",
-      "source_sha256": "74a76b1c5b77ed35ce1e1c9db672a3c5fbc6d8acb1f8a637f9cb2d9e83f6abb1",
+      "sha256": "4fca11842e48e7d60a4326865b56f2e35328ccd2501ffb48f1d1d370470ee1dd",
+      "source_sha256": "587d513e00c5a6d7427d8033e95245c8bb9c98b7d962769898d0839a83c82d1d",
       "bytes": 5100,
       "mode": "0o644",
       "transformations": [
@@ -7715,9 +7723,9 @@
     },
     {
       "path": "docs/m4-database-usage.md",
-      "sha256": "d688dabcd0e398a31ffa54111632bb89bd256f2379138ea57029045aeb3862fb",
-      "source_sha256": "ee003b2130ba880c281a51bf3308450b2d1263030d26c8ddc98d10c78f05741b",
-      "bytes": 19040,
+      "sha256": "6e916d693de40aaf4c2d0669dcfdedfe8d741196d61458ee506f7058c631858a",
+      "source_sha256": "dd2e80d47f892b6664d514f85cb3c3344395071cc72a422c01730f830ad3abd0",
+      "bytes": 19911,
       "mode": "0o644",
       "transformations": [
         {
@@ -7848,9 +7856,9 @@
     },
     {
       "path": "docs/public-release-status.md",
-      "sha256": "7a8cbcf942bf3dc1ab7a27f802ba277c66b99f5bb7976f6bd9c74736ae143d78",
-      "source_sha256": "7a8cbcf942bf3dc1ab7a27f802ba277c66b99f5bb7976f6bd9c74736ae143d78",
-      "bytes": 10286,
+      "sha256": "d25494dab6a04d35b3ece96bfc660ae12f681156e92da07fae02c4597f3ebad1",
+      "source_sha256": "d25494dab6a04d35b3ece96bfc660ae12f681156e92da07fae02c4597f3ebad1",
+      "bytes": 12203,
       "mode": "0o644",
       "transformations": []
     },
@@ -7937,10 +7945,18 @@
       ]
     },
     {
+      "path": "docs/sql-console-contract-20261124.md",
+      "sha256": "94ab62e7824c087682f9f8a23caf9778f13dd731ec99308baf8f663ee8bef802",
+      "source_sha256": "94ab62e7824c087682f9f8a23caf9778f13dd731ec99308baf8f663ee8bef802",
+      "bytes": 3359,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
       "path": "docs/status.md",
-      "sha256": "7a8cbcf942bf3dc1ab7a27f802ba277c66b99f5bb7976f6bd9c74736ae143d78",
+      "sha256": "d25494dab6a04d35b3ece96bfc660ae12f681156e92da07fae02c4597f3ebad1",
       "source_sha256": null,
-      "bytes": 10286,
+      "bytes": 12203,
       "mode": "0o644",
       "transformations": [
         {
@@ -22035,8 +22051,8 @@
     },
     {
       "path": "tools/build_deb.py",
-      "sha256": "cfffcc979ac0003aa0ce47d91739d4e9d5c482db0f8b9ac3afd857d007228bb4",
-      "source_sha256": "cfffcc979ac0003aa0ce47d91739d4e9d5c482db0f8b9ac3afd857d007228bb4",
+      "sha256": "2a7231f7d294be6b21c5d8a2bffce66b59e3f15bd25cd5390a393cfc9f1bb3d9",
+      "source_sha256": "2a7231f7d294be6b21c5d8a2bffce66b59e3f15bd25cd5390a393cfc9f1bb3d9",
       "bytes": 14735,
       "mode": "0o644",
       "transformations": []
@@ -22099,9 +22115,9 @@
     },
     {
       "path": "tools/export_public_source.py",
-      "sha256": "5076e19549f05668101600efd14115e275bd2542feda101783571c74bf3af1b5",
-      "source_sha256": "5076e19549f05668101600efd14115e275bd2542feda101783571c74bf3af1b5",
-      "bytes": 23171,
+      "sha256": "af4f2cc6935d8725fb2616ccd8ccbcb99230fcfe876a9a688ca8822643e5ca1d",
+      "source_sha256": "af4f2cc6935d8725fb2616ccd8ccbcb99230fcfe876a9a688ca8822643e5ca1d",
+      "bytes": 23228,
       "mode": "0o644",
       "transformations": []
     },
@@ -22227,9 +22243,9 @@
     },
     {
       "path": "tools/native_database_edit.py",
-      "sha256": "3e380ac4d4ff2bb7b0bb26b7bea9ff8b73ce5e0ca1955d90b995c8ab6e6dfa6c",
-      "source_sha256": "3e380ac4d4ff2bb7b0bb26b7bea9ff8b73ce5e0ca1955d90b995c8ab6e6dfa6c",
-      "bytes": 17880,
+      "sha256": "4482d5bcf34262bb2a7891811dd76432da37801a36be64a20854def50cb9b768",
+      "source_sha256": "4482d5bcf34262bb2a7891811dd76432da37801a36be64a20854def50cb9b768",
+      "bytes": 20532,
       "mode": "0o644",
       "transformations": []
     },
@@ -22467,6 +22483,14 @@
       "sha256": "6ce68670e027c2b23930d518c974657ab049f4b8fa2830010bdab5ec992c530f",
       "source_sha256": "6ce68670e027c2b23930d518c974657ab049f4b8fa2830010bdab5ec992c530f",
       "bytes": 6681,
+      "mode": "0o644",
+      "transformations": []
+    },
+    {
+      "path": "tools/sql_console_fixtures.py",
+      "sha256": "3b3d89935c5a4e20e07f0f7d3e333ce2dc08c5ca15bfd3fd907aa2668b37c3a7",
+      "source_sha256": "3b3d89935c5a4e20e07f0f7d3e333ce2dc08c5ca15bfd3fd907aa2668b37c3a7",
+      "bytes": 4813,
       "mode": "0o644",
       "transformations": []
     },

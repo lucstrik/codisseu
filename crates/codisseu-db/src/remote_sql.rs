@@ -12,7 +12,7 @@ use sqlparser::{
 };
 mod sqlx {
     pub use sqlx_core::{
-        Error, column::Column, connection::Connection, executor::Executor, query::query,
+        Either, Error, column::Column, connection::Connection, executor::Executor, query::query,
         raw_sql::raw_sql, row::Row, statement::Statement, type_info::TypeInfo, types,
         value::ValueRef,
     };
@@ -246,7 +246,14 @@ impl SqlSession {
                         "SET idle_in_transaction_session_timeout = '{}ms'",
                         session.config.idle_secs.clamp(5, 3600) * 1000
                     ),
-                    "SET default_transaction_read_only = on".into(),
+                    format!(
+                        "SET default_transaction_read_only = {}",
+                        if session.config.read_only {
+                            "on"
+                        } else {
+                            "off"
+                        }
+                    ),
                 ] {
                     sqlx::query(&sql)
                         .execute(&mut *connection)
@@ -261,7 +268,14 @@ impl SqlSession {
                         .into(),
                     "SET SESSION innodb_lock_wait_timeout = 1".into(),
                     "SET SESSION lock_wait_timeout = 1".into(),
-                    "SET SESSION TRANSACTION READ ONLY".into(),
+                    format!(
+                        "SET SESSION TRANSACTION READ {}",
+                        if session.config.read_only {
+                            "ONLY"
+                        } else {
+                            "WRITE"
+                        }
+                    ),
                     format!(
                         "SET SESSION wait_timeout = {}",
                         session.config.idle_secs.clamp(5, 3600)
@@ -311,6 +325,9 @@ impl SqlSession {
     }
 
     async fn control(&mut self, sql: &str) -> Result<(), String> {
+        if !self.is_connected() {
+            return Err("Sessão SQL encerrada; reconecte".into());
+        }
         let future = async {
             match self
                 .connection
@@ -348,7 +365,7 @@ impl SqlSession {
             let sql = if self.config.read_only {
                 "START TRANSACTION READ ONLY"
             } else {
-                "START TRANSACTION READ WRITE"
+                "START TRANSACTION"
             };
             self.control(sql).await?;
             self.transaction = true;
@@ -473,9 +490,172 @@ impl SqlSession {
         }
     }
 
+    /// Applying this saved permission never commits pending user work.
+    pub async fn set_read_only(&mut self, value: bool) -> Result<(), String> {
+        if self.config.read_only == value {
+            return Ok(());
+        }
+        if self.transaction {
+            return Err("Faça Commit ou Rollback antes de alterar Read-only".into());
+        }
+        let sql = if self.postgres() {
+            format!(
+                "SET default_transaction_read_only = {}",
+                if value { "on" } else { "off" }
+            )
+        } else {
+            format!(
+                "SET SESSION TRANSACTION READ {}",
+                if value { "ONLY" } else { "WRITE" }
+            )
+        };
+        self.control(&sql).await?;
+        self.config.read_only = value;
+        Ok(())
+    }
+
     pub async fn execute(&mut self, text: &str) -> Result<RemoteResult, String> {
-        self.execute_page(&crate::query_page::QueryPageRequest::first(text.to_owned()))
-            .await
+        if text.len() > MAX_SQL {
+            return Err("Comando excede 256 KiB".into());
+        }
+        crate::sql_text::single_statement(
+            text,
+            if self.postgres() {
+                crate::sql_text::SqlDialect::Postgres
+            } else {
+                crate::sql_text::SqlDialect::Mysql
+            },
+        )?;
+        if validate_query(text, self.postgres()).is_ok() {
+            return self
+                .execute_page(&crate::query_page::QueryPageRequest::first(text.to_owned()))
+                .await;
+        }
+        let kind = native_statement(text, self.postgres())?;
+        if self.config.read_only && !readonly_inspection(text, self.postgres()) {
+            return Err("Conexão Read-only: somente consultas e inspeção são permitidas. Desative Read-only e salve para executar escritas e comandos de sessão".into());
+        }
+        let temporary_read = self.config.read_only && !kind.diagnostics;
+        if temporary_read {
+            self.control("START TRANSACTION READ ONLY").await?;
+            self.transaction = true;
+        } else if !self.config.read_only && kind.manual_dml {
+            self.begin().await?;
+        }
+        let savepoint = !temporary_read && self.transaction && kind.manual_dml;
+        if savepoint {
+            self.control("SAVEPOINT codisseu_console_query").await?;
+        }
+        // SHOW WARNINGS/ERRORS must see the previous server diagnostics: no
+        // prepare, transaction setup or status probe may precede these commands.
+        let mut result = self.query_mode(text, false).await;
+        if kind.inspection
+            && let Ok(result) = &mut result
+        {
+            // MySQL reports several SHOW/DESCRIBE fields with binary charset
+            // even though their payload is textual metadata (Type, Key, ...).
+            // Never apply this conversion to user table/query binary values.
+            for cell in result.rows.iter_mut().flatten() {
+                if let Cell::Binary(bytes) = cell
+                    && let Ok(value) = String::from_utf8(bytes.clone())
+                {
+                    *cell = Cell::Text(value);
+                }
+            }
+        }
+        if self.is_connected() {
+            if temporary_read {
+                self.rollback().await?;
+            }
+            if savepoint {
+                if result.is_err() {
+                    self.control("ROLLBACK TO SAVEPOINT codisseu_console_query")
+                        .await?;
+                }
+                self.control("RELEASE SAVEPOINT codisseu_console_query")
+                    .await?;
+            }
+            if !kind.inspection && !kind.transaction_setting {
+                self.sync_transaction().await?;
+            }
+        }
+        result
+    }
+
+    /// SQLx does not expose server transaction status. Savepoint probes use
+    /// server acknowledgements instead of guessing from DDL/SET text. They also
+    /// detect implicit MySQL commits and PostgreSQL's aborted transactions.
+    async fn sync_transaction(&mut self) -> Result<(), String> {
+        let pg = self.postgres();
+        let operation = async {
+            match self.connection.as_mut().ok_or("Sessão SQL encerrada")? {
+                ConnectionKind::Pg(c) => match sqlx::raw_sql("SAVEPOINT codisseu_state_probe")
+                    .execute(&mut *c)
+                    .await
+                {
+                    Ok(_) => {
+                        sqlx::raw_sql("RELEASE SAVEPOINT codisseu_state_probe")
+                            .execute(c)
+                            .await
+                            .map_err(db_error)?;
+                        Ok(true)
+                    }
+                    Err(sqlx::Error::Database(e)) if e.code().as_deref() == Some("25P01") => {
+                        Ok(false)
+                    }
+                    Err(sqlx::Error::Database(e)) if e.code().as_deref() == Some("25P02") => {
+                        Ok(true)
+                    }
+                    Err(e) => Err(db_error(e)),
+                },
+                ConnectionKind::My(c) => {
+                    sqlx::raw_sql("SAVEPOINT codisseu_state_probe")
+                        .execute(&mut *c)
+                        .await
+                        .map_err(db_error)?;
+                    let active = match sqlx::raw_sql("RELEASE SAVEPOINT codisseu_state_probe")
+                        .execute(&mut *c)
+                        .await
+                    {
+                        Ok(_) => true,
+                        Err(sqlx::Error::Database(e))
+                            if e.try_downcast_ref::<sqlx_mysql::MySqlDatabaseError>()
+                                .is_some_and(|e| e.number() == 1305) =>
+                        {
+                            false
+                        }
+                        Err(e) => return Err(db_error(e)),
+                    };
+                    // autocommit=0 promises a manual session even before its
+                    // first transactional table access; retain the close guard.
+                    let automatic: i64 = sqlx::query("SELECT @@session.autocommit")
+                        .fetch_one(c)
+                        .await
+                        .map_err(db_error)?
+                        .try_get(0)
+                        .map_err(db_error)?;
+                    Ok(active || automatic == 0)
+                }
+            }
+        };
+        match tokio::time::timeout(Duration::from_secs(3), operation).await {
+            Ok(Ok(active)) => {
+                self.transaction = active;
+                Ok(())
+            }
+            other => {
+                self.interrupted = true;
+                self.transaction = false;
+                let detail = match other {
+                    Ok(Err(e)) => e,
+                    _ => "Prazo de sincronização excedido".into(),
+                };
+                Err(format!(
+                    "Estado da transação {} não confirmado; sessão encerrada: {detail}",
+                    if pg { "PostgreSQL" } else { "MySQL" }
+                ))
+            }
+        }
     }
 
     pub async fn execute_page(
@@ -485,16 +665,17 @@ impl SqlSession {
         request.validate()?;
         let canonical = validate_query(&request.sql, self.postgres())?;
         let bounded = request.wrapped_sql(&canonical, self.limit());
-        let temporary_read = !self.transaction;
+        let temporary_read = self.config.read_only && !self.transaction;
         if temporary_read {
-            // Reading a writable datasource is not a pending edit. Avoid an idle
-            // manual transaction/snapshot until Apply actually needs one.
+            // Read-only permission is enforced by the server as well as the
+            // lexical guard. Writable standalone reads use server autocommit.
             self.control("START TRANSACTION READ ONLY").await?;
             self.transaction = true;
         }
         // A failed PostgreSQL statement aborts its transaction. A savepoint lets
         // a console typo recover without losing earlier uncommitted grid edits.
-        if !self.config.read_only && !temporary_read {
+        let savepoint = !self.config.read_only && self.transaction;
+        if savepoint {
             self.control("SAVEPOINT codisseu_console_query").await?;
         }
         let result = self.query(&bounded).await;
@@ -502,7 +683,7 @@ impl SqlSession {
             if self.config.read_only || temporary_read {
                 // Standalone reads never keep snapshots/locks between queries.
                 self.rollback().await?;
-            } else {
+            } else if savepoint {
                 if result.is_err() {
                     self.control("ROLLBACK TO SAVEPOINT codisseu_console_query")
                         .await?;
@@ -535,6 +716,13 @@ impl SqlSession {
     }
 
     async fn query(&mut self, text: &str) -> Result<RemoteResult, String> {
+        self.query_mode(text, true).await
+    }
+
+    async fn query_mode(&mut self, text: &str, prepared: bool) -> Result<RemoteResult, String> {
+        if !self.is_connected() {
+            return Err("Sessão SQL encerrada; reconecte".into());
+        }
         let started = Instant::now();
         let limit = self.limit();
         let cancel = Arc::clone(&self.cancel);
@@ -559,57 +747,34 @@ impl SqlSession {
                 .ok_or("Conexão SQL encerrada; reconecte")?
             {
                 ConnectionKind::Pg(connection) => {
-                    let statement = connection
-                        .prepare(text)
-                        .await
-                        .map_err(&mut map_query_error)?;
-                    result.columns = statement
-                        .columns()
-                        .iter()
-                        .map(|c| c.name().to_owned())
-                        .collect();
+                    if prepared {
+                        let statement = connection
+                            .prepare(text)
+                            .await
+                            .map_err(&mut map_query_error)?;
+                        result.columns = statement
+                            .columns()
+                            .iter()
+                            .map(|c| c.name().to_owned())
+                            .collect();
+                    }
                     if result.columns.len() > MAX_COLUMNS {
                         return Err("Resultado excede 256 colunas".into());
                     }
-                    let mut stream = sqlx::query(text).persistent(false).fetch(&mut *connection);
-                    while let Some(row) = stream.try_next().await.map_err(&mut map_query_error)? {
-                        if result.rows.len() == limit {
-                            result.truncated = true;
-                            break;
-                        }
-                        if row.columns().iter().enumerate().any(|(i, _)| {
-                            row.try_get_raw(i).is_ok_and(|raw| {
-                                !raw.is_null() && raw.as_bytes().is_ok_and(|b| b.len() > MAX_CELL)
-                            })
-                        }) {
-                            result.truncated = true;
-                            break;
-                        }
-                        let cells = pg_cells(&row)?;
-                        if !accept_row(&cells, &mut bytes) {
-                            result.truncated = true;
-                            break;
-                        }
-                        result.rows.push(cells);
-                    }
-                }
-                ConnectionKind::My(connection) => {
-                    let statement = connection
-                        .prepare(text)
-                        .await
-                        .map_err(&mut map_query_error)?;
-                    result.columns = statement
-                        .columns()
-                        .iter()
-                        .map(|c| c.name().to_owned())
-                        .collect();
-                    if result.columns.len() > MAX_COLUMNS {
-                        return Err("Resultado excede 256 colunas".into());
-                    }
-                    let mut stream = sqlx::query(text).persistent(false).fetch(&mut *connection);
-                    while let Some(row) = stream.try_next().await.map_err(&mut map_query_error)? {
-                        // MySQL may describe EXPLAIN with no columns at prepare
-                        // time; its execution packets carry the actual plan metadata.
+                    let mut stream = if prepared {
+                        connection.fetch_many(sqlx::query(text).persistent(false))
+                    } else {
+                        sqlx::raw_sql(text).fetch_many(&mut *connection)
+                    };
+                    while let Some(item) = stream.try_next().await.map_err(&mut map_query_error)? {
+                        let row = match item {
+                            sqlx::Either::Left(done) => {
+                                result.affected_rows =
+                                    result.affected_rows.saturating_add(done.rows_affected());
+                                continue;
+                            }
+                            sqlx::Either::Right(row) => row,
+                        };
                         if result.columns.is_empty() {
                             result.columns =
                                 row.columns().iter().map(|c| c.name().to_owned()).collect();
@@ -617,15 +782,71 @@ impl SqlSession {
                                 return Err("Resultado excede 256 colunas".into());
                             }
                         }
-                        if result.rows.len() == limit {
+                        if result.truncated || result.rows.len() == limit {
                             result.truncated = true;
-                            break;
+                            continue;
                         }
-                        if row.columns().iter().enumerate().any(|(i,_)| row.try_get_raw(i).is_ok_and(|raw| !raw.is_null() && <&[u8] as sqlx_core::decode::Decode<'_,sqlx_mysql::MySql>>::decode(raw).is_ok_and(|b|b.len()>MAX_CELL))) {result.truncated=true;break;}
+                        if row.columns().iter().enumerate().any(|(i, _)| {
+                            row.try_get_raw(i).is_ok_and(|raw| {
+                                !raw.is_null() && raw.as_bytes().is_ok_and(|b| b.len() > MAX_CELL)
+                            })
+                        }) {
+                            result.truncated = true;
+                            continue;
+                        }
+                        let cells = pg_cells(&row)?;
+                        if !accept_row(&cells, &mut bytes) {
+                            result.truncated = true;
+                            continue;
+                        }
+                        result.rows.push(cells);
+                    }
+                }
+                ConnectionKind::My(connection) => {
+                    if prepared {
+                        let statement = connection
+                            .prepare(text)
+                            .await
+                            .map_err(&mut map_query_error)?;
+                        result.columns = statement
+                            .columns()
+                            .iter()
+                            .map(|c| c.name().to_owned())
+                            .collect();
+                    }
+                    if result.columns.len() > MAX_COLUMNS {
+                        return Err("Resultado excede 256 colunas".into());
+                    }
+                    let mut stream = if prepared {
+                        connection.fetch_many(sqlx::query(text).persistent(false))
+                    } else {
+                        sqlx::raw_sql(text).fetch_many(&mut *connection)
+                    };
+                    while let Some(item) = stream.try_next().await.map_err(&mut map_query_error)? {
+                        let row = match item {
+                            sqlx::Either::Left(done) => {
+                                result.affected_rows =
+                                    result.affected_rows.saturating_add(done.rows_affected());
+                                continue;
+                            }
+                            sqlx::Either::Right(row) => row,
+                        };
+                        if result.columns.is_empty() {
+                            result.columns =
+                                row.columns().iter().map(|c| c.name().to_owned()).collect();
+                            if result.columns.len() > MAX_COLUMNS {
+                                return Err("Resultado excede 256 colunas".into());
+                            }
+                        }
+                        if result.truncated || result.rows.len() == limit {
+                            result.truncated = true;
+                            continue;
+                        }
+                        if row.columns().iter().enumerate().any(|(i,_)| row.try_get_raw(i).is_ok_and(|raw| !raw.is_null() && <&[u8] as sqlx_core::decode::Decode<'_,sqlx_mysql::MySql>>::decode(raw).is_ok_and(|b|b.len()>MAX_CELL))) {result.truncated=true;continue;}
                         let cells = my_cells(&row)?;
                         if !accept_row(&cells, &mut bytes) {
                             result.truncated = true;
-                            break;
+                            continue;
                         }
                         result.rows.push(cells);
                     }
@@ -1333,6 +1554,7 @@ impl SqlSession {
         if self.transaction {
             self.control("COMMIT").await?;
             self.transaction = false;
+            self.sync_transaction().await?;
         }
         Ok(())
     }
@@ -1340,6 +1562,9 @@ impl SqlSession {
         if self.transaction {
             self.control("ROLLBACK").await?;
             self.transaction = false;
+            if !self.config.read_only {
+                self.sync_transaction().await?;
+            }
         }
         Ok(())
     }
@@ -1673,8 +1898,8 @@ fn recoverable_query_error(error: &sqlx::Error) -> bool {
     };
     // Only completed statement failures with well-defined transaction recovery.
     // Network errors, cancellation, deadlocks and lock/statement timeouts close.
-    matches!(code.get(..2), Some("42" | "22" | "23" | "0A"))
-        || matches!(code.as_ref(), "25006" | "25000")
+    matches!(code.get(..2), Some("42" | "22" | "23" | "25" | "0A"))
+        || matches!(code.as_ref(), "25006" | "25000" | "25P02")
 }
 
 fn db_error(error: sqlx::Error) -> String {
@@ -1706,6 +1931,153 @@ fn db_error(error: sqlx::Error) -> String {
         _ => "Falha de transporte ou protocolo SQL; verifique conexão, autenticação e TLS".into(),
     }
 }
+struct NativeStatement {
+    manual_dml: bool,
+    inspection: bool,
+    diagnostics: bool,
+    transaction_setting: bool,
+}
+
+fn native_statement(sql: &str, postgres: bool) -> Result<NativeStatement, String> {
+    let tokens = if postgres {
+        sqlparser::tokenizer::Tokenizer::new(&PostgreSqlDialect {}, sql).tokenize()
+    } else {
+        sqlparser::tokenizer::Tokenizer::new(&MySqlDialect {}, sql).tokenize()
+    }
+    .map_err(|_| "SQL não tokenizável")?;
+    let first = tokens
+        .iter()
+        .find(|t| !matches!(t, sqlparser::tokenizer::Token::Whitespace(_)));
+    let word = match first {
+        Some(sqlparser::tokenizer::Token::Word(w)) if w.quote_style.is_none() => {
+            w.value.to_ascii_uppercase()
+        }
+        _ => String::new(),
+    };
+    let words = tokens
+        .iter()
+        .filter_map(|t| match t {
+            sqlparser::tokenizer::Token::Word(w) if w.quote_style.is_none() => {
+                Some(w.value.to_ascii_uppercase())
+            }
+            _ => None,
+        })
+        .collect::<Vec<_>>();
+    let diagnostics = words.first().is_some_and(|w| w == "SHOW")
+        && (words
+            .get(1)
+            .is_some_and(|w| matches!(w.as_str(), "WARNINGS" | "ERRORS"))
+            || (words.get(1).is_some_and(|w| w == "COUNT")
+                && words
+                    .get(2)
+                    .is_some_and(|w| matches!(w.as_str(), "WARNINGS" | "ERRORS"))));
+    let transaction_setting = word == "SET"
+        && (words.get(1).is_some_and(|w| w == "TRANSACTION")
+            || (words
+                .get(1)
+                .is_some_and(|w| matches!(w.as_str(), "SESSION" | "LOCAL" | "GLOBAL"))
+                && words.get(2).is_some_and(|w| w == "TRANSACTION")));
+    Ok(NativeStatement {
+        diagnostics,
+        transaction_setting,
+        manual_dml: matches!(
+            word.as_str(),
+            "SELECT" | "WITH" | "INSERT" | "UPDATE" | "DELETE" | "MERGE" | "REPLACE"
+        ),
+        inspection: matches!(word.as_str(), "SHOW" | "DESCRIBE" | "DESC" | "EXPLAIN"),
+    })
+}
+
+fn readonly_inspection(sql: &str, postgres: bool) -> bool {
+    if first_native_word(sql, postgres).is_some_and(|w| matches!(w.as_str(), "SELECT" | "WITH")) {
+        return validate_read_words(sql, postgres).is_ok();
+    }
+    if !postgres {
+        use sqlparser::tokenizer::Token;
+        if let Ok(tokens) = sqlparser::tokenizer::Tokenizer::new(&MySqlDialect {}, sql).tokenize() {
+            let tokens: Vec<_> = tokens
+                .into_iter()
+                .filter(|t| !matches!(t, Token::Whitespace(_)))
+                .collect();
+            let word = |index: usize, expected: &str| matches!(tokens.get(index), Some(Token::Word(w)) if w.quote_style.is_none() && w.value.eq_ignore_ascii_case(expected));
+            if word(0, "EXPLAIN")
+                && word(1, "FORMAT")
+                && tokens.get(2) == Some(&Token::Eq)
+                && (word(3, "JSON") || word(3, "TREE") || word(3, "TRADITIONAL"))
+            {
+                let query = tokens[4..]
+                    .iter()
+                    .map(ToString::to_string)
+                    .collect::<Vec<_>>()
+                    .join(" ");
+                return validate_query(&query, false).is_ok();
+            }
+        }
+    }
+    let Ok(statements) = (if postgres {
+        Parser::parse_sql(&PostgreSqlDialect {}, sql)
+    } else {
+        Parser::parse_sql(&MySqlDialect {}, sql)
+    }) else {
+        // MySQL SHOW INDEX/GRANTS/ENGINE and DESCRIBE with a column filter
+        // exceed sqlparser's grammar. Their native syntax is server validated.
+        return !postgres
+            && native_statement(sql, false).is_ok_and(|s| s.inspection)
+            && first_native_word(sql, false)
+                .is_some_and(|w| matches!(w.as_str(), "SHOW" | "DESC" | "DESCRIBE"))
+            && validate_read_words(sql, false).is_ok();
+    };
+    if statements.len() != 1 || validate_read_words(sql, postgres).is_err() {
+        return false;
+    }
+    match &statements[0] {
+        Statement::Explain {
+            analyze,
+            options,
+            statement,
+            ..
+        } => {
+            !analyze
+                && options.as_ref().is_none_or(|opts| {
+                    !opts
+                        .iter()
+                        .any(|o| o.name.value.eq_ignore_ascii_case("analyze"))
+                })
+                && validate_query(&statement.to_string(), postgres).is_ok()
+        }
+        Statement::ExplainTable { .. } => !postgres,
+        _ => first_native_word(sql, postgres).is_some_and(|w| w == "SHOW"),
+    }
+}
+
+/// Only statements accepted by the SELECT wrapper expose SQL paging controls.
+pub fn supports_query_pages(sql: &str, engine: Engine) -> bool {
+    engine.is_sql()
+        && validate_query(
+            sql,
+            matches!(engine, Engine::Postgres | Engine::AuroraPostgres),
+        )
+        .is_ok()
+}
+
+fn first_native_word(sql: &str, postgres: bool) -> Option<String> {
+    let tokens = if postgres {
+        sqlparser::tokenizer::Tokenizer::new(&PostgreSqlDialect {}, sql).tokenize()
+    } else {
+        sqlparser::tokenizer::Tokenizer::new(&MySqlDialect {}, sql).tokenize()
+    }
+    .ok()?;
+    match tokens
+        .into_iter()
+        .find(|t| !matches!(t, sqlparser::tokenizer::Token::Whitespace(_)))?
+    {
+        sqlparser::tokenizer::Token::Word(w) if w.quote_style.is_none() => {
+            Some(w.value.to_ascii_uppercase())
+        }
+        _ => None,
+    }
+}
+
 fn validate_query(sql: &str, postgres: bool) -> Result<String, String> {
     if sql.is_empty() || sql.len() > MAX_SQL {
         return Err("Informe uma única consulta SQL de até 256 KiB".into());
@@ -1717,8 +2089,13 @@ fn validate_query(sql: &str, postgres: bool) -> Result<String, String> {
     }
     .map_err(|_| "SQL inválido ou não suportado pelo parser".to_owned())?;
     if statements.len() != 1 || !matches!(statements.first(), Some(Statement::Query(_))) {
-        return Err("Execute uma única consulta SELECT/WITH. Edições são enviadas pela grade em transação manual".into());
+        return Err("Paginação e exportação completa exigem uma única consulta SELECT/WITH".into());
     }
+    validate_read_words(sql, postgres)?;
+    Ok(statements[0].to_string())
+}
+
+fn validate_read_words(sql: &str, postgres: bool) -> Result<(), String> {
     // Inspect lexical words, never string literals/comments. The server read-only
     // transaction remains the enforcement boundary; this also blocks control helpers.
     let tokens = if postgres {
@@ -1730,24 +2107,24 @@ fn validate_query(sql: &str, postgres: bool) -> Result<String, String> {
     for token in tokens {
         if let sqlparser::tokenizer::Token::Word(word) = token {
             let name = word.value.to_ascii_lowercase();
-            if matches!(
-                name.as_str(),
-                "into"
-                    | "update"
-                    | "insert"
-                    | "delete"
-                    | "merge"
-                    | "share"
-                    | "set_config"
-                    | "pg_terminate_backend"
-                    | "pg_cancel_backend"
-                    | "get_lock"
-                    | "release_lock"
-                    | "load_file"
-                    | "sleep"
-                    | "benchmark"
-                    | "pg_sleep"
-            ) || name.starts_with("pg_advisory_")
+            if (word.quote_style.is_none()
+                && matches!(
+                    name.as_str(),
+                    "into" | "update" | "insert" | "delete" | "merge" | "share"
+                ))
+                || matches!(
+                    name.as_str(),
+                    "set_config"
+                        | "pg_terminate_backend"
+                        | "pg_cancel_backend"
+                        | "get_lock"
+                        | "release_lock"
+                        | "load_file"
+                        | "sleep"
+                        | "benchmark"
+                        | "pg_sleep"
+                )
+                || name.starts_with("pg_advisory_")
                 || name.starts_with("pg_try_advisory_")
             {
                 return Err(
@@ -1757,7 +2134,7 @@ fn validate_query(sql: &str, postgres: bool) -> Result<String, String> {
             }
         }
     }
-    Ok(statements[0].to_string())
+    Ok(())
 }
 fn quote(name: &str, pg: bool) -> String {
     if pg {
@@ -2295,11 +2672,49 @@ mod tests {
             "SELECT * FROM users FOR UPDATE",
             "WITH x AS (DELETE FROM users RETURNING *) SELECT * FROM x",
             "SELECT pg_catalog.set_config('transaction_read_only','off',true)",
+            "SELECT pg_catalog.\"set_config\"('default_transaction_read_only','off',false)",
         ] {
             assert!(validate_query(sql, true).is_err(), "{sql}");
         }
         assert!(validate_query("SELECT '; UPDATE DELETE INTO' AS name /* ; */", true).is_ok());
         assert!(validate_query("WITH x AS (SELECT 1) SELECT * FROM x", false).is_ok());
+    }
+    #[test]
+    fn console_inspection_does_not_require_a_pageable_select() {
+        for sql in [
+            "describe console_transport.transports;",
+            "DESC `db`.`update`",
+            "SHOW CREATE TABLE t",
+            "SHOW FULL COLUMNS FROM t",
+            "SHOW INDEX FROM t",
+            "SHOW GRANTS FOR CURRENT_USER",
+            "SHOW WARNINGS",
+            "EXPLAIN SELECT * FROM t",
+        ] {
+            assert!(readonly_inspection(sql, false), "{sql}");
+            assert!(validate_query(sql, false).is_err(), "{sql}");
+        }
+        for sql in [
+            "SHOW search_path",
+            "SHOW ALL",
+            "EXPLAIN (FORMAT JSON) SELECT 1",
+        ] {
+            assert!(readonly_inspection(sql, true), "{sql}");
+        }
+        for pg in [false, true] {
+            for sql in [
+                "UPDATE t SET n=1",
+                "CREATE TABLE t(id int)",
+                "SET transaction_read_only=off",
+                "EXPLAIN ANALYZE DELETE FROM t",
+                "EXPLAIN (ANALYZE true) SELECT 1",
+                "SELECT set_config('transaction_read_only','off',true)",
+                "COMMIT",
+                "CALL f()",
+            ] {
+                assert!(!readonly_inspection(sql, pg), "{sql}");
+            }
+        }
     }
     #[test]
     fn import_binary_validation_rejects_unicode_without_panicking() {

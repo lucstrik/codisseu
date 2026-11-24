@@ -33,6 +33,86 @@ pub(crate) fn explain(error: rusqlite::Error) -> String {
 }
 
 impl Session {
+    /// Writable SQL is explicit opt-in. Restore the read authorizer even when
+    /// preparing/executing fails; grid/export paths keep their own contracts.
+    pub fn execute_console(&self, sql: &str) -> Result<QueryResult, String> {
+        if !self.writable {
+            return self.select(sql);
+        }
+        self.database
+            .authorizer(Some(|_: AuthContext<'_>| Authorization::Allow))
+            .map_err(explain)?;
+        let result = (|| {
+            let timer = Instant::now();
+            // SQLite's own parser handles one statement, including trigger
+            // bodies; rusqlite rejects any trailing executable statement.
+            let mut prepared = self.database.prepare(sql).map_err(explain)?;
+            let words =
+                sqlparser::tokenizer::Tokenizer::new(&sqlparser::dialect::SQLiteDialect {}, sql)
+                    .tokenize()
+                    .map_err(|_| "SQL não tokenizável")?;
+            let dml = !prepared.readonly() && words.iter().find(|t| !matches!(t, sqlparser::tokenizer::Token::Whitespace(_)))
+                .is_some_and(|t| matches!(t, sqlparser::tokenizer::Token::Word(w) if w.quote_style.is_none() && matches!(w.value.to_ascii_uppercase().as_str(), "INSERT" | "UPDATE" | "DELETE" | "REPLACE" | "WITH")));
+            if dml && self.database.is_autocommit() {
+                self.database.execute_batch("BEGIN").map_err(explain)?;
+            }
+            let columns = prepared
+                .column_names()
+                .into_iter()
+                .map(str::to_owned)
+                .collect::<Vec<_>>();
+            let width = columns.len();
+            let mut output = QueryResult {
+                columns,
+                rows: Vec::new(),
+                truncated: false,
+                affected_rows: 0,
+                elapsed_ms: 0,
+                limit_reason: None,
+            };
+            let mut budget = Budget {
+                used: output
+                    .columns
+                    .iter()
+                    .map(|s| s.len() + std::mem::size_of::<String>())
+                    .sum(),
+            };
+            if width == 0 {
+                prepared.execute([]).map_err(explain)?;
+            } else {
+                let mut rows = prepared.query([]).map_err(explain)?;
+                while let Some(row) = rows.next().map_err(explain)? {
+                    if output.limit_reason.is_some() {
+                        continue;
+                    }
+                    if output.rows.len() == QUERY_LIMIT {
+                        output.limit_reason = Some("500 linhas".into());
+                        continue;
+                    }
+                    if let Err(reason) = budget.reserve(row, width) {
+                        output.limit_reason = Some(reason);
+                        continue;
+                    }
+                    output.rows.push(
+                        (0..width)
+                            .map(|i| row.get::<_, Value>(i).map_err(explain))
+                            .collect::<Result<Vec<_>, _>>()?,
+                    );
+                }
+            }
+            if dml {
+                output.affected_rows = self.database.changes() as usize;
+            }
+            output.truncated = output.limit_reason.is_some();
+            output.elapsed_ms = timer.elapsed().as_millis();
+            Ok(output)
+        })();
+        self.database
+            .authorizer(Some(permit_read))
+            .map_err(explain)?;
+        result
+    }
+
     pub fn open(path: &Path, epoch: Arc<AtomicU64>, expected: u64) -> Result<Self, String> {
         Self::open_mode(path, epoch, expected, false)
     }

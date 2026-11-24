@@ -356,6 +356,7 @@ enum Event {
     Profiles(Vec<ConnectionConfig>),
     ProfilesChanged(Vec<ConnectionConfig>),
     Saved(Vec<ConnectionConfig>),
+    ReadOnlyApplied(bool),
     Bindings(BTreeMap<PathBuf, String>),
     Connected(ConnectionConfig),
     ConnectedForQuery(ConnectionConfig),
@@ -693,6 +694,19 @@ impl RemoteService {
         self.stopped.load(Ordering::SeqCst)
     }
     pub fn dispatch(&mut self, cmd: RemoteCommand) -> Result<(), String> {
+        let saved = match &cmd {
+            RemoteCommand::Save(c) | RemoteCommand::SaveRemembered { config: c, .. } => Some(c),
+            _ => None,
+        };
+        if self.transaction
+            && saved.is_some_and(|c| {
+                self.active
+                    .as_ref()
+                    .is_some_and(|active| live_permission_change(active, c))
+            })
+        {
+            return Err("Faça Commit ou Rollback antes de alterar Read-only".into());
+        }
         if let RemoteCommand::Delete(id) | RemoteCommand::DeleteRemembered(id) = &cmd
             && self.transaction
             && self.active.as_ref().is_some_and(|c| &c.id == id)
@@ -1020,8 +1034,15 @@ impl RemoteService {
                     self.profiles = p;
                     self.busy = false;
                     self.status =
-                        "Configuração salva; reconecte para aplicar alterações à sessão ativa"
+                        "Configuração salva; Read-only aplicado à mesma conexão SQL; outras opções exigem reconexão"
                             .into();
+                }
+                Event::ReadOnlyApplied(value) => {
+                    if let Some(active) = &mut self.active {
+                        active.read_only = value;
+                    }
+                    self.origin = None;
+                    self.revision += 1;
                 }
                 Event::Profiles(p) => {
                     if self.project_pending {
@@ -1172,8 +1193,15 @@ impl RemoteService {
                 }
                 Event::Result(r, origin) => {
                     self.status = format!(
-                        "{} linhas · {} ms{}",
-                        r.rows.len(),
+                        "{} · {} ms{}",
+                        if r.columns.is_empty() {
+                            format!(
+                                "Comando executado · {} linha(s) afetada(s)",
+                                r.affected_rows
+                            )
+                        } else {
+                            format!("{} linhas", r.rows.len())
+                        },
                         r.elapsed_ms,
                         if r.truncated {
                             " · resultado limitado"
@@ -1260,6 +1288,9 @@ impl Session {
 pub fn preview(batch: &EditBatch, engine: Engine) -> Result<String, String> {
     crate::remote_sql::preview(batch, engine)
 }
+pub fn supports_query_pages(sql: &str, engine: Engine) -> bool {
+    crate::remote_sql::supports_query_pages(sql, engine)
+}
 fn same_credential_target(a: &ConnectionConfig, b: &ConnectionConfig) -> bool {
     a.id == b.id
         && a.engine == b.engine
@@ -1271,6 +1302,34 @@ fn same_credential_target(a: &ConnectionConfig, b: &ConnectionConfig) -> bool {
         && (a.engine != Engine::Mongo
             || (a.mongo.replica_set == b.mongo.replica_set
                 && a.mongo.authentication == b.mongo.authentication))
+}
+fn live_permission_change(active: &ConnectionConfig, saved: &ConnectionConfig) -> bool {
+    active.id == saved.id
+        && active.engine.is_sql()
+        && active.read_only != saved.read_only
+        && (saved.read_only
+            || (same_credential_target(active, saved)
+                && active.tls == saved.tls
+                && active.ca_pem == saved.ca_pem
+                && active.ca_file == saved.ca_file))
+}
+
+async fn apply_saved_permission(
+    config: &mut Option<ConnectionConfig>,
+    session: &mut Option<Session>,
+    saved: &ConnectionConfig,
+    tx: &SyncSender<Event>,
+) -> Result<(), String> {
+    if let Some(active) = config.as_mut()
+        && live_permission_change(active, saved)
+    {
+        if let Some(Session::Sql(s)) = session.as_mut() {
+            s.set_read_only(saved.read_only).await?;
+        }
+        active.read_only = saved.read_only;
+        let _ = tx.send(Event::ReadOnlyApplied(saved.read_only));
+    }
+    Ok(())
 }
 fn redact(error: String, password: &str) -> String {
     if password.is_empty() {
@@ -1879,6 +1938,14 @@ fn worker(
                 session=Some(restored);
                 let _=tx.send(Event::Resumed);
             }
+            let saved_permission = match &cmd {
+                RemoteCommand::Save(c) | RemoteCommand::SaveRemembered { config:c, .. } => Some(c),
+                _ => None,
+            };
+            if saved_permission.is_some_and(|c| config.as_ref().is_some_and(|active| live_permission_change(active,c)))
+                && matches!(&session,Some(Session::Sql(s)) if s.transaction_active()) {
+                return Err("Faça Commit ou Rollback antes de alterar Read-only".into());
+            }
             match cmd {
                 RemoteCommand::SaveRemembered{config:mut c,password:p}=>{
                     crate::tls_roots::prepare_saved_certificate(&mut c)?;
@@ -1890,6 +1957,7 @@ fn worker(
                         credentials.delete(&c).await.map_err(|e|e.to_string())?;
                     }
                     profiles=mutation.commit(Some(c.clone()))?;
+                    apply_saved_permission(&mut config,&mut session,&c,&tx).await?;
                     if let Some(old)=old.filter(|old|old.save_credentials && !same_credential_target(old,&c))
                         && let Err(error)=credentials.delete(&old).await {
                         let _=tx.send(Event::Saved(profiles.clone()));
@@ -1904,7 +1972,7 @@ fn worker(
                     if config.as_ref().is_some_and(|c|c.id==id) { if let Some(s)=session.take(){s.close().await;}config=None;password.clear();prepared_import=None;let _=tx.send(Event::Disconnected("Desconectado".into())); }
                     Ok(Event::Profiles(profiles.clone()))
                 },
-                RemoteCommand::Save(mut c)=>{crate::tls_roots::prepare_saved_certificate(&mut c)?;let mutation=ProfileMutation::prepare(&path,&profiles,&c.id)?;profiles=mutation.commit(Some(c))?;Ok(Event::Saved(profiles.clone()))},
+                RemoteCommand::Save(mut c)=>{crate::tls_roots::prepare_saved_certificate(&mut c)?;let mutation=ProfileMutation::prepare(&path,&profiles,&c.id)?;profiles=mutation.commit(Some(c.clone()))?;apply_saved_permission(&mut config,&mut session,&c,&tx).await?;Ok(Event::Saved(profiles.clone()))},
                 RemoteCommand::Delete(id)=>{let mutation=ProfileMutation::prepare(&path,&profiles,&id)?;profiles=mutation.commit(None)?;
                     if config.as_ref().is_some_and(|c|c.id==id) { if let Some(s)=session.take(){s.close().await;}config=None;password.clear();prepared_import=None;let _=tx.send(Event::Disconnected("Desconectado".into())); }
                     Ok(Event::Profiles(profiles.clone()))},

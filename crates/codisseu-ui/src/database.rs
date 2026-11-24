@@ -255,6 +255,13 @@ impl CodisseuApp {
                             .as_ref()
                             .is_some_and(|c| c.engine.is_sql())
                     })
+                    .filter(|sql| {
+                        self.service
+                            .remote_db
+                            .active
+                            .as_ref()
+                            .is_some_and(|c| remote::supports_query_pages(sql, c.engine))
+                    })
                     .map(|sql| codisseu_core::query_page::QueryPageRequest::first(sql.clone()));
                 self.database_ui.remote_page_starts.clear();
             }

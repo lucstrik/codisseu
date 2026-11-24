@@ -84,7 +84,7 @@ pub enum DbCommand {
         preview_id: u64,
     },
     Connect(PathBuf),
-    /// Explicit opt-in; still accepts only read-only SQL plus controlled grid writes.
+    /// Explicit opt-in for native SQL and controlled grid writes.
     ConnectWritable(PathBuf),
     Apply(remote::EditBatch),
     ApplyAndCommit(remote::EditBatch),
@@ -580,6 +580,11 @@ impl DbService {
                             result.rows.len(),
                             result.elapsed_ms
                         )
+                    } else if result.columns.is_empty() {
+                        format!(
+                            "Comando executado · {} linha(s) afetada(s) · {} ms",
+                            result.affected_rows, result.elapsed_ms
+                        )
                     } else {
                         format!("{} linhas · {} ms", result.rows.len(), result.elapsed_ms)
                     };
@@ -811,7 +816,7 @@ impl Backend {
                 self.prepared_import = None;
                 self.current_result = None;
                 self.current_origin = None;
-                let result = session.select(&sql)?;
+                let result = session.execute_console(&sql)?;
                 let origin = session.editable_origin(&sql, &result);
                 self.current_schema = origin
                     .as_ref()

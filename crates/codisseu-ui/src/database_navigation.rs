@@ -584,6 +584,178 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "requires owned SQL console Docker fixtures via CODISSEU_CONSOLE_{PG,MY,MA}_PORT"]
+    fn native_sql_console_keyboard_metadata_writes_and_saved_permission() {
+        fn execute(
+            h: &mut Harness<'_, CodisseuApp>,
+            root: &std::path::Path,
+            index: usize,
+            sql: &str,
+        ) {
+            let path = root.join(format!("console-{index}.sql"));
+            std::fs::write(&path, sql).unwrap();
+            h.state_mut()
+                .service
+                .dispatch(Command::OpenFile(path))
+                .unwrap();
+            settle(h);
+            h.get_by_role(egui::accesskit::Role::MultilineTextInput)
+                .click();
+            h.key_press_modifiers(egui::Modifiers::COMMAND, egui::Key::Home);
+            h.key_press_modifiers(egui::Modifiers::COMMAND, egui::Key::Enter);
+            settle(h);
+        }
+        fn capture(h: &mut Harness<'_, CodisseuApp>, key: &str, scale: f32, phase: &str) {
+            if key == "MY"
+                && let Ok(root) = std::env::var("CODISSEU_CONSOLE_SCREENSHOTS")
+            {
+                let root = std::path::PathBuf::from(root);
+                std::fs::create_dir_all(&root).unwrap();
+                h.render()
+                    .unwrap()
+                    .save(root.join(format!("mysql-{scale}-{phase}.png")))
+                    .unwrap();
+            }
+        }
+        for (engine, key, user) in [
+            (remote::Engine::Postgres, "PG", "postgres"),
+            (remote::Engine::Mysql, "MY", "root"),
+            (remote::Engine::Mysql, "MA", "root"),
+        ] {
+            for scale in [1., 1.25] {
+                let dir = tempfile::tempdir().unwrap();
+                let mut app = CodisseuApp::new(AppService::new(dir.path().join("session.json")));
+                app.show_project = false;
+                let mut h = Harness::builder()
+                    .with_size([1440., 900.])
+                    .with_pixels_per_point(scale)
+                    .with_step_dt(1. / 60.)
+                    .with_max_steps(200)
+                    .build_ui_state(|ui, app: &mut CodisseuApp| app.show(ui), app);
+                settle(&mut h);
+                let mut cfg = remote::ConnectionConfig {
+                    id: format!("console-ui-{key}"),
+                    name: "Disposable console UI".into(),
+                    engine,
+                    host: "127.0.0.1".into(),
+                    port: std::env::var(format!("CODISSEU_CONSOLE_{key}_PORT"))
+                        .unwrap()
+                        .parse()
+                        .unwrap(),
+                    database: "codisseu".into(),
+                    username: user.into(),
+                    tls: false,
+                    read_only: true,
+                    save_credentials: false,
+                    ..Default::default()
+                };
+                h.state_mut()
+                    .service
+                    .dispatch(Command::RemoteDatabase(remote::RemoteCommand::Connect {
+                        config: cfg.clone(),
+                        password: "codisseu_fixture".into(),
+                        test: false,
+                    }))
+                    .unwrap();
+                settle(&mut h);
+                let metadata = if engine == remote::Engine::Postgres {
+                    "SHOW server_version;"
+                } else {
+                    "DESCRIBE codisseu.console_saved;"
+                };
+                execute(&mut h, dir.path(), 0, metadata);
+                assert!(
+                    h.state().service.remote_db.error.is_none(),
+                    "{:?}",
+                    h.state().service.remote_db.error
+                );
+                assert!(
+                    !h.state()
+                        .service
+                        .remote_db
+                        .result
+                        .as_ref()
+                        .unwrap()
+                        .rows
+                        .is_empty()
+                );
+                assert!(h.state().database_ui.remote_page.is_none());
+                assert!(h.state().service.remote_db.origin.is_none());
+                capture(&mut h, key, scale, "describe");
+                cfg.read_only = false;
+                h.state_mut()
+                    .service
+                    .dispatch(Command::RemoteDatabase(
+                        remote::RemoteCommand::SaveRemembered {
+                            config: cfg.clone(),
+                            password: String::new(),
+                        },
+                    ))
+                    .unwrap();
+                settle(&mut h);
+                for (index, sql) in [
+                    "DROP TABLE IF EXISTS console_ui",
+                    "CREATE TABLE console_ui(id INTEGER PRIMARY KEY)",
+                    "INSERT INTO console_ui VALUES(7)",
+                ]
+                .iter()
+                .enumerate()
+                {
+                    execute(&mut h, dir.path(), index + 1, sql);
+                    assert!(
+                        h.state().service.remote_db.error.is_none(),
+                        "{:?}",
+                        h.state().service.remote_db.error
+                    );
+                    assert!(h.state().database_ui.remote_page.is_none());
+                }
+                assert!(h.state().service.remote_db.transaction);
+                assert_eq!(
+                    h.state()
+                        .service
+                        .remote_db
+                        .result
+                        .as_ref()
+                        .unwrap()
+                        .affected_rows,
+                    1
+                );
+                capture(&mut h, key, scale, "insert-pending");
+                execute(&mut h, dir.path(), 4, "COMMIT;");
+                assert!(!h.state().service.remote_db.transaction);
+                execute(&mut h, dir.path(), 5, "SELECT * FROM console_ui;");
+                assert_eq!(
+                    h.state().service.remote_db.result.as_ref().unwrap().rows[0][0],
+                    remote::Cell::Number("7".into())
+                );
+                assert!(h.state().database_ui.remote_page.is_some());
+                cfg.read_only = true;
+                h.state_mut()
+                    .service
+                    .dispatch(Command::RemoteDatabase(remote::RemoteCommand::Save(cfg)))
+                    .unwrap();
+                settle(&mut h);
+                execute(&mut h, dir.path(), 6, "DELETE FROM console_ui;");
+                assert!(
+                    h.state()
+                        .service
+                        .remote_db
+                        .error
+                        .as_ref()
+                        .is_some_and(|e| e.contains("Read-only"))
+                );
+                assert!(!h.state().service.remote_db.transaction);
+                capture(&mut h, key, scale, "read-only-denied");
+                h.state_mut()
+                    .service
+                    .dispatch(Command::RemoteDatabase(remote::RemoteCommand::Disconnect))
+                    .unwrap();
+                settle(&mut h);
+            }
+        }
+    }
+
+    #[test]
     #[ignore = "requires task-owned MySQL on explicit CODISSEU_IDLE_MY_PORT"]
     fn remote_query_after_idle_resumes_through_the_same_editor_without_error() {
         let dir = tempfile::tempdir().unwrap();

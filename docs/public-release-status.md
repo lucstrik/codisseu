@@ -1,3 +1,35 @@
+# Codisseu 0.1.0-alpha.5 — console SQL nativo
+
+O console executa DESCRIBE/DESC, SHOW e EXPLAIN de MySQL/MariaDB, além dos
+comandos nativos de PostgreSQL e SQLite. Com Read-only desativado e salvo,
+aceita também DML, DDL e controles de sessão/transação, uma instrução por vez.
+Salvar Read-only aplica a permissão à mesma conexão SQL aberta, sem reconectar;
+transações pendentes exigem Commit/Rollback antes dessa troca. SQLite continua
+iniciando em leitura e permite SQL nativo após Habilitar edição.
+
+DML mantém transação manual e informa linhas afetadas. COMMIT/ROLLBACK pelo
+editor e pela toolbar acompanham o estado do servidor. DDL segue a semântica
+nativa, incluindo commits implícitos de MySQL/MariaDB. Metadados e planos não
+recebem wrapper de paginação nem edição por célula. Campos textuais de
+DESCRIBE são exibidos como texto mesmo quando o protocolo marca charset binário.
+SELECT compatível conserva paginação e edição tipada já existentes.
+
+O [guia de banco](m4-database-usage.md) explica o uso e o
+[contrato do console](sql-console-contract-20261124.md) descreve os limites:
+sem scripts/DELIMITER, interpretação de comandos psql ou alegação de suporte
+universal a todos os comandos/extensões. Protocolos SQL locais são testados em
+PostgreSQL, MySQL e MariaDB descartáveis; AWS Aurora continua sem certificação
+própria. NoSQL conserva seu contrato separado.
+
+Validação local: suíte Rust de banco, testes reais dos três servidores com
+permissão salva/Commit/Rollback/DDL/RETURNING, e Ctrl+Enter real do editor em
+100/125%. Capturas foram inspecionadas; recursos Docker e perfis de testes eram
+exclusivos e recolhidos. A publicação usa o pacote exato produzido pelo CI,
+com verificações de hashes, CLI e janela nativa em perfil isolado.
+Distribuição alpha core Linux amd64/glibc2.39+, conforme [guia Linux](install-linux.md).
+
+## Histórico alpha.4
+
 # Codisseu 0.1.0-alpha.4 — edição de células no resultado
 
 Duplo clique abre a edição na própria célula de uma consulta simples em SQLite,
