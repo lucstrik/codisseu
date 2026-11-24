@@ -4,7 +4,9 @@ O console executa DESCRIBE/DESC, SHOW e EXPLAIN de MySQL/MariaDB, além dos
 comandos nativos de PostgreSQL e SQLite. Com Read-only desativado e salvo,
 aceita também DML, DDL e controles de sessão/transação, uma instrução por vez.
 Salvar Read-only aplica a permissão à mesma conexão SQL aberta, sem reconectar;
-transações pendentes exigem Commit/Rollback antes dessa troca. SQLite continua
+transações pendentes exigem Commit/Rollback antes dessa troca. Uma sessão que
+permitiu escrita exige reconexão explícita após expirar por inatividade, para
+não perder silenciosamente USE/search_path e o contexto SQL. SQLite continua
 iniciando em leitura e permite SQL nativo após Habilitar edição.
 
 DML mantém transação manual e informa linhas afetadas. COMMIT/ROLLBACK pelo

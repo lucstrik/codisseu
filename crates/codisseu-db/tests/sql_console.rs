@@ -317,6 +317,101 @@ fn saved_permission(engine: Engine, key: &str) {
     service.dispatch(RemoteCommand::Disconnect).unwrap();
     settle(&mut service);
 }
+fn idle_context(engine: Engine, key: &str) {
+    let dir = tempfile::tempdir().unwrap();
+    let mut service = RemoteService::new(dir.path().join("connections.json"));
+    settle(&mut service);
+    let mut cfg = config(engine, key, false);
+    cfg.idle_secs = 5;
+    service
+        .dispatch(RemoteCommand::Connect {
+            config: cfg.clone(),
+            password: "codisseu_fixture".into(),
+            test: false,
+        })
+        .unwrap();
+    settle(&mut service);
+    let (create, change, check, default_check) = if engine == Engine::Postgres {
+        (
+            "CREATE SCHEMA IF NOT EXISTS console_context",
+            "SET search_path TO console_context",
+            "SELECT current_schema()='console_context'",
+            "SELECT current_schema()='public'",
+        )
+    } else {
+        (
+            "CREATE DATABASE IF NOT EXISTS console_context",
+            "USE console_context",
+            "SELECT DATABASE()='console_context'",
+            "SELECT DATABASE()='codisseu'",
+        )
+    };
+    for sql in [create, change, check] {
+        service
+            .dispatch(RemoteCommand::Execute(sql.into()))
+            .unwrap();
+        settle(&mut service);
+        assert!(service.error.is_none(), "{:?}", service.error);
+    }
+    assert!(
+        matches!(
+            &service.result.as_ref().unwrap().rows[0][0],
+            Cell::Bool(true)
+        ) || service.result.as_ref().unwrap().rows[0][0] == Cell::Number("1".into())
+    );
+    // Turning read-only back on must not certify the previous session context
+    // as reconstructible from the datasource's original default database.
+    cfg.read_only = true;
+    service.dispatch(RemoteCommand::Save(cfg.clone())).unwrap();
+    settle(&mut service);
+    let deadline = Instant::now() + Duration::from_secs(9);
+    while service.active.is_some() {
+        service.poll();
+        assert!(Instant::now() < deadline, "{}", service.status);
+        std::thread::sleep(Duration::from_millis(5));
+    }
+    assert!(!service.suspended);
+    let generation = service.connection_generation;
+    service
+        .dispatch(RemoteCommand::ExecuteConsole {
+            sql: check.into(),
+            datasource_id: cfg.id.clone(),
+        })
+        .unwrap();
+    settle(&mut service);
+    assert!(
+        service
+            .error
+            .as_ref()
+            .is_some_and(|e| e.contains("Reconecte explicitamente")),
+        "{:?}",
+        service.error
+    );
+    assert!(service.active.is_none());
+    assert_eq!(service.connection_generation, generation);
+    service
+        .dispatch(RemoteCommand::Connect {
+            config: cfg,
+            password: "codisseu_fixture".into(),
+            test: false,
+        })
+        .unwrap();
+    settle(&mut service);
+    service
+        .dispatch(RemoteCommand::Execute(default_check.into()))
+        .unwrap();
+    settle(&mut service);
+    assert!(service.error.is_none(), "{:?}", service.error);
+    assert!(
+        matches!(
+            &service.result.as_ref().unwrap().rows[0][0],
+            Cell::Bool(true)
+        ) || service.result.as_ref().unwrap().rows[0][0] == Cell::Number("1".into())
+    );
+    service.dispatch(RemoteCommand::Disconnect).unwrap();
+    settle(&mut service);
+}
+
 #[test]
 #[ignore = "requires owned loopback PostgreSQL/MySQL/MariaDB fixtures via CODISSEU_CONSOLE_{PG,MY,MA}_PORT"]
 fn native_console_all_three_servers_and_saved_permission() {
@@ -331,5 +426,6 @@ fn native_console_all_three_servers_and_saved_permission() {
     ] {
         rt.block_on(exercise(engine, key));
         saved_permission(engine, key);
+        idle_context(engine, key);
     }
 }

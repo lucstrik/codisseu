@@ -62,9 +62,9 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "e38670850e4215bee75fa119ea77f11ec32868cab133fb277f4bf2c2e193a3d8",
-      "source_sha256": "e38670850e4215bee75fa119ea77f11ec32868cab133fb277f4bf2c2e193a3d8",
-      "bytes": 6320,
+      "sha256": "67f169a4d0ed7a627f3e9f7c47e546fdeea6c3841c82483202719397a2f72cf7",
+      "source_sha256": "67f169a4d0ed7a627f3e9f7c47e546fdeea6c3841c82483202719397a2f72cf7",
+      "bytes": 6508,
       "mode": "0o644",
       "transformations": []
     },
@@ -2034,9 +2034,9 @@
     },
     {
       "path": "crates/codisseu-db/src/remote.rs",
-      "sha256": "e7cb5c89294784271c12884233f81f8c40cd7f9014e6228dd0aa4aeb8e46e0b9",
-      "source_sha256": "e7cb5c89294784271c12884233f81f8c40cd7f9014e6228dd0aa4aeb8e46e0b9",
-      "bytes": 105037,
+      "sha256": "55d1c628bf018aaeff40764d033140158e9ff11a905261035ba1551b8a163196",
+      "source_sha256": "55d1c628bf018aaeff40764d033140158e9ff11a905261035ba1551b8a163196",
+      "bytes": 106133,
       "mode": "0o644",
       "transformations": []
     },
@@ -2091,9 +2091,9 @@
     },
     {
       "path": "crates/codisseu-db/src/remote_sql.rs",
-      "sha256": "bae59356fcc678b88ab083cc6f73e352b6d8f7b24d4b40a223dea81422ef0882",
-      "source_sha256": "bae59356fcc678b88ab083cc6f73e352b6d8f7b24d4b40a223dea81422ef0882",
-      "bytes": 113543,
+      "sha256": "f30df25e4d2b67aaaa54a7c9b0d9dc904193c2355f6a8e90f6db155553f2b34b",
+      "source_sha256": "f30df25e4d2b67aaaa54a7c9b0d9dc904193c2355f6a8e90f6db155553f2b34b",
+      "bytes": 113953,
       "mode": "0o644",
       "transformations": []
     },
@@ -2368,9 +2368,9 @@
     },
     {
       "path": "crates/codisseu-db/tests/sql_console.rs",
-      "sha256": "17063016be29807603e059d865e188ac7532cde1b578e2033adc27cd1dfd486c",
-      "source_sha256": "17063016be29807603e059d865e188ac7532cde1b578e2033adc27cd1dfd486c",
-      "bytes": 11695,
+      "sha256": "f5dc81207284d2249231fba274232afe4095b42e0df7559aee1f23b3c25d53ed",
+      "source_sha256": "f5dc81207284d2249231fba274232afe4095b42e0df7559aee1f23b3c25d53ed",
+      "bytes": 14973,
       "mode": "0o644",
       "transformations": []
     },
@@ -7723,9 +7723,9 @@
     },
     {
       "path": "docs/m4-database-usage.md",
-      "sha256": "6e916d693de40aaf4c2d0669dcfdedfe8d741196d61458ee506f7058c631858a",
-      "source_sha256": "dd2e80d47f892b6664d514f85cb3c3344395071cc72a422c01730f830ad3abd0",
-      "bytes": 19911,
+      "sha256": "06cd0e7c80d9dfa89d41a7e8b5e6e4037c2ba2e63e85de532475a618da8d7d37",
+      "source_sha256": "cf662fb883ccd80c5b068910a29e44f897ff034a2d0dc15a41ed660f33858e56",
+      "bytes": 20142,
       "mode": "0o644",
       "transformations": [
         {
@@ -7856,9 +7856,9 @@
     },
     {
       "path": "docs/public-release-status.md",
-      "sha256": "d25494dab6a04d35b3ece96bfc660ae12f681156e92da07fae02c4597f3ebad1",
-      "source_sha256": "d25494dab6a04d35b3ece96bfc660ae12f681156e92da07fae02c4597f3ebad1",
-      "bytes": 12203,
+      "sha256": "9f6f73aac5adfa9dc317361f087ce2259f10600ed1b267903acbde649b536fae",
+      "source_sha256": "9f6f73aac5adfa9dc317361f087ce2259f10600ed1b267903acbde649b536fae",
+      "bytes": 12362,
       "mode": "0o644",
       "transformations": []
     },
@@ -7946,17 +7946,17 @@
     },
     {
       "path": "docs/sql-console-contract-20261124.md",
-      "sha256": "94ab62e7824c087682f9f8a23caf9778f13dd731ec99308baf8f663ee8bef802",
-      "source_sha256": "94ab62e7824c087682f9f8a23caf9778f13dd731ec99308baf8f663ee8bef802",
-      "bytes": 3359,
+      "sha256": "6107da438b5c9aff3f1c7d0533b71d29a93d83963e851ab72c8438fb0b860ecf",
+      "source_sha256": "6107da438b5c9aff3f1c7d0533b71d29a93d83963e851ab72c8438fb0b860ecf",
+      "bytes": 4049,
       "mode": "0o644",
       "transformations": []
     },
     {
       "path": "docs/status.md",
-      "sha256": "d25494dab6a04d35b3ece96bfc660ae12f681156e92da07fae02c4597f3ebad1",
+      "sha256": "9f6f73aac5adfa9dc317361f087ce2259f10600ed1b267903acbde649b536fae",
       "source_sha256": null,
-      "bytes": 12203,
+      "bytes": 12362,
       "mode": "0o644",
       "transformations": [
         {
@@ -22488,9 +22488,9 @@
     },
     {
       "path": "tools/sql_console_fixtures.py",
-      "sha256": "9a6845bad9ff70d674d24d9e41d7e58b452afacd45981dc2a1e56275310adf94",
-      "source_sha256": "9a6845bad9ff70d674d24d9e41d7e58b452afacd45981dc2a1e56275310adf94",
-      "bytes": 4820,
+      "sha256": "8eb76c667ad86f945926349fe85a5210095ea251e49e95c71c872c420615c107",
+      "source_sha256": "8eb76c667ad86f945926349fe85a5210095ea251e49e95c71c872c420615c107",
+      "bytes": 5042,
       "mode": "0o644",
       "transformations": []
     },

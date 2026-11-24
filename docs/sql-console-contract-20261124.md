@@ -49,3 +49,14 @@ são enviados sem prepare/controles prévios, mas controles de transação/probe
 operações anteriores podem substituir avisos do servidor. Estados XA/prepared,
 COPY streaming e resultados múltiplos de rotinas não têm certificação própria.
 Nenhuma alegação de todos os comandos, servidores ou paridade integral DataGrip.
+
+## Inatividade e contexto SQL
+
+Uma sessão que permitiu escrita pode executar USE, SET search_path, SET ROLE e
+criar objetos temporários. Esse estado não pode ser reconstruído apenas com o
+cadastro. Após a inatividade configurada, ela é fechada e requer Connect explícito
+antes de executar outra query; ExecuteConsole não reconecta silenciosamente.
+Marcar Read-only novamente não apaga essa condição da conexão já utilizada.
+Sessões iniciadas e mantidas em Read-only conservam retomada das leituras.
+Commit/Rollback não são repetidos em outra conexão. Nova conexão explícita começa
+com o contexto do cadastro; SQL de inicialização próprio deve ser executado de novo.

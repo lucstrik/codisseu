@@ -5,7 +5,7 @@ use crate::transfer::{
 };
 use crate::transfer_nosql::NoSqlExportRequest;
 use serde::{Deserialize, Serialize};
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::{
     path::PathBuf,
     sync::{
@@ -1483,8 +1483,8 @@ fn command_binding(command: &RemoteCommand) -> Option<(&str, u64)> {
     }
 }
 
-/// Only commands whose adapters enforce reads may acquire a fresh idle socket.
-/// Writes, Commit and Rollback must never continue on a replacement transaction.
+/// A fresh idle socket is allowed only after a resumable session. Writable SQL
+/// context loss and pending transactions are handled before this command gate.
 fn resumes_idle_session(command: &RemoteCommand) -> bool {
     matches!(
         command,
@@ -1608,6 +1608,7 @@ fn worker(
     let mut password = String::new();
     let mut session_generation = 0u64;
     let mut connection_generation = 0u64;
+    let mut expired_sql_contexts = BTreeSet::new();
     let mut current_project: Option<PathBuf> = None;
     let credentials = crate::remote_credentials::CredentialStore::new();
     let mut last = Instant::now();
@@ -1660,14 +1661,24 @@ fn worker(
                 .is_some_and(|c| last.elapsed() >= Duration::from_secs(c.idle_secs))
         {
             let transaction = matches!(&session, Some(Session::Sql(s)) if s.transaction_active());
+            let native_context =
+                matches!(&session, Some(Session::Sql(s)) if s.requires_explicit_reconnect());
+            if native_context && let Some(c) = &config {
+                expired_sql_contexts.retain(|id| profiles.iter().any(|p| &p.id == id));
+                expired_sql_contexts.insert(c.id.clone());
+            }
             if let Some(s) = session.take() {
                 rt.block_on(s.close());
             }
             prepared_import = None;
-            let event = if transaction {
+            let event = if transaction || native_context {
                 let message = closed_message(
                     config.as_ref().map(|c| c.engine),
-                    "Sessão fechada por inatividade",
+                    if native_context {
+                        "Sessão fechada por inatividade; reconecte explicitamente e restabeleça o contexto SQL"
+                    } else {
+                        "Sessão fechada por inatividade"
+                    },
                 );
                 config = None;
                 password.clear();
@@ -1714,6 +1725,7 @@ fn worker(
                     config = None;
                     password.clear();
                     prepared_import = None;
+                    expired_sql_contexts.clear();
                     if matches!(storage, Some(Err(_))) {
                         storage = Some(crate::remote_scope::Storage::new(scoped_anchor.clone()));
                     }
@@ -1909,6 +1921,10 @@ fn worker(
         let mut force_close = false;
         let event:Result<Event,String>=rt.block_on(async {
             if let RemoteCommand::ExecuteConsole { datasource_id, .. } = &cmd
+                && expired_sql_contexts.contains(datasource_id) {
+                return Err("Reconecte explicitamente este datasource após a inatividade e restabeleça o contexto SQL antes de executar. USE, search_path e demais opções não são recriados automaticamente".into());
+            }
+            if let RemoteCommand::ExecuteConsole { datasource_id, .. } = &cmd
                 && config.as_ref().is_none_or(|c| &c.id != datasource_id) {
                 let target=profiles.iter().find(|c| &c.id==datasource_id)
                     .ok_or("Conexão desta query não encontrada; restaure o cadastro da origem")?.clone();
@@ -1997,7 +2013,7 @@ fn worker(
                         profiles=match mutation.commit(Some(c.clone())){Ok(next)=>next,Err(error)=>{s.close().await;return Err(error)}};
                         let _=tx.send(Event::ProfilesChanged(profiles.clone()));
                         if credential_connect && let Some(old)=old && let Err(error)=credentials.delete(&old).await {s.close().await;return Err(error.to_string());}
-                        config=Some(c.clone());password=p;session=Some(s);session_generation=session_generation.saturating_add(1);connection_generation=connection_generation.saturating_add(1);Ok(Event::Connected(c))}
+                        expired_sql_contexts.remove(&c.id);config=Some(c.clone());password=p;session=Some(s);session_generation=session_generation.saturating_add(1);connection_generation=connection_generation.saturating_add(1);Ok(Event::Connected(c))}
                 },
                 RemoteCommand::Disconnect=>{let message=closed_message(config.as_ref().map(|c|c.engine),"Desconectado");if let Some(s)=session.take(){s.close().await}config=None;password.clear();Ok(Event::Disconnected(message))},
                 command @ (RemoteCommand::CreateConsole | RemoteCommand::CreateConsoleFor(_)) => {

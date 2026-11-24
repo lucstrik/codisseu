@@ -140,6 +140,9 @@ pub struct SqlSession {
     config: ConnectionConfig,
     cancel: Arc<AtomicBool>,
     transaction: bool,
+    /// Native SQL may change schema, role, variables or temporary objects. Once
+    /// writes were allowed, reconnecting cannot silently restore this context.
+    explicit_reconnect: bool,
     interrupted: bool,
     backend_id: u64,
     mariadb: bool,
@@ -234,6 +237,7 @@ impl SqlSession {
             config: config.clone(),
             cancel: Arc::new(AtomicBool::new(false)),
             transaction: false,
+            explicit_reconnect: !config.read_only,
         };
         let millis = session.config.timeout_secs.clamp(1, 120) * 1000;
         let mysql_timeout = session.mysql_timeout(millis);
@@ -302,6 +306,9 @@ impl SqlSession {
     }
     pub fn transaction_active(&self) -> bool {
         self.transaction
+    }
+    pub fn requires_explicit_reconnect(&self) -> bool {
+        self.explicit_reconnect
     }
     fn postgres(&self) -> bool {
         matches!(
@@ -497,6 +504,9 @@ impl SqlSession {
         }
         if self.transaction {
             return Err("Faça Commit ou Rollback antes de alterar Read-only".into());
+        }
+        if !value {
+            self.explicit_reconnect = true;
         }
         let sql = if self.postgres() {
             format!(

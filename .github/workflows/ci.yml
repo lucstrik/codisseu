@@ -105,9 +105,11 @@ jobs:
           CODISSEU_CONSOLE_PG_PORT: ${{ job.services.postgres.ports['5432'] }}
           CODISSEU_CONSOLE_MY_PORT: ${{ job.services.mysql.ports['3306'] }}
           CODISSEU_CONSOLE_MA_PORT: ${{ job.services.mariadb.ports['3306'] }}
+          CODISSEU_IDLE_MY_PORT: ${{ job.services.mysql.ports['3306'] }}
         run: |
           cargo test --release --locked -p codisseu-db --test sql_text --test sqlite_grid_edit --jobs 2
           cargo test --release --locked -p codisseu-db --test sql_console --jobs 2 -- --ignored --test-threads=1
+          cargo test --release --locked -p codisseu-db --test idle_recovery --jobs 2 -- --ignored --test-threads=1
           cargo test --release --locked -p codisseu-ui --lib native_sql --jobs 2 -- --include-ignored --test-threads=1
       - name: Conferir empacotamento e exportação pública
         run: |

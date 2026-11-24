@@ -53,6 +53,9 @@ DML abre transação manual: **Commit** confirma e **Rollback** reverte. Também
 é possível enviar `BEGIN`, `COMMIT` e `ROLLBACK` pelo editor. DDL segue a
 semântica nativa: MySQL/MariaDB podem confirmar implicitamente a transação.
 SQLite permite SQL nativo depois de **Habilitar edição**; inicia em leitura.
+Quando uma sessão que permitiu escrita expira por inatividade, use **Connect**
+explicitamente e restabeleça seu contexto (`USE`, `search_path`, variáveis etc.).
+O console não recria esse estado automaticamente em outro socket.
 A saída informa linhas afetadas; metadados/planos/RETURNING não habilitam edição
 pela grade nem recebem wrapper de paginação. SELECT compatível conserva páginas.
 Não há execução automática de scripts, DELIMITER ou comandos shell do cliente.

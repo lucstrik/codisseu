@@ -44,8 +44,9 @@ def main():
             env[f'CODISSEU_CONSOLE_{key}_PORT']=address.rsplit(':',1)[1]
             report['servers'].append({'key':key,'container':cid,'image':image,'image_id':image_id,'address':address,'storage':'tmpfs'})
         commands=[['cargo','test','-p','codisseu-db','--test','sql_console','--locked','--jobs','2','--','--ignored','--nocapture','--test-threads=1']]
-        env['CODISSEU_SQL_PG_PORT']=env['CODISSEU_CONSOLE_PG_PORT']; env['CODISSEU_SQL_MY_PORT']=env['CODISSEU_CONSOLE_MY_PORT']
+        env['CODISSEU_SQL_PG_PORT']=env['CODISSEU_CONSOLE_PG_PORT']; env['CODISSEU_SQL_MY_PORT']=env['CODISSEU_CONSOLE_MY_PORT']; env['CODISSEU_IDLE_MY_PORT']=env['CODISSEU_CONSOLE_MY_PORT']
         commands.append(['cargo','test','-p','codisseu-db','--test','remote_sql','--locked','--jobs','2','--','--ignored','--nocapture','--test-threads=1'])
+        commands.append(['cargo','test','-p','codisseu-db','--test','idle_recovery','--locked','--jobs','2','--','--ignored','--nocapture','--test-threads=1'])
         if args.ui:
             commands.append(['cargo','test','-p','codisseu-ui','--lib','native_sql','--locked','--jobs','2','--','--include-ignored','--nocapture','--test-threads=1'])
         report['tests']=[]
